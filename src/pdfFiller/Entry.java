@@ -4,8 +4,6 @@ import java.io.IOException;
 import ascentric.Ascentric;
 import com.itextpdf.text.DocumentException;
 
-
-
 public class Entry {
 
 	

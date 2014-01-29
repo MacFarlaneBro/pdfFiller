@@ -3,8 +3,6 @@ package ascentric;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-import pdfFiller.FillForm;
-
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Phrase;
@@ -13,7 +11,7 @@ import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.PdfStamper;
 
-public class AscentricPage1 implements FillForm {
+public class AscentricPage1 implements Page{
 	
 	private PdfReader reader;
 	private PdfStamper stamper;
@@ -23,9 +21,19 @@ public class AscentricPage1 implements FillForm {
 	private int dobDepth = 440;
 	private int firstRow = 100;
 	private int contactDepth = 370;
+	private int tickDepth = 560;
+	private int addInfoRow = 45;
 
-	public void tickBox(){
-		
+	
+	public void tickBox(String s){
+		if(s.equals("singleApp")){
+			ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase("X"), 193, tickDepth, 0);
+		} else if(s.equals("twoApp")){
+			ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase("X"), 275, tickDepth, 0);
+		} else if(s.equals("joint")){
+			ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase("X"), 354, tickDepth, 0);
+		}
+
 	}
 	
 	public void fillPersonalDetails() {
@@ -67,9 +75,32 @@ public class AscentricPage1 implements FillForm {
 		 canvas = stamper.getOverContent(1);
 	}
 
+	public void natInsurance(boolean natIn){
+		if(!natIn){
+			ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase("5"), 272, 332, 0);		
+		}
+	}
+	
+	public void additionalInfo(String[] info) {
+		
+		if(info[0]!= null){
+			ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(info[0]), addInfoRow, 295, 0);
+		}
+		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(info[1]), addInfoRow, 262, 0);
+		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(info[2]), addInfoRow, 228, 0);
+	}
+	
+	public void usPerson(boolean b) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	public void shutDown() throws DocumentException, IOException {
 		stamper.close();		
 	}
+
+
+
+
 
 }

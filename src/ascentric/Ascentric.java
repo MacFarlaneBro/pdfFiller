@@ -1,7 +1,6 @@
 package ascentric;
 
 import java.io.IOException;
-import pdfFiller.FillForm;
 import com.itextpdf.text.DocumentException;
 
 /*
@@ -10,19 +9,31 @@ import com.itextpdf.text.DocumentException;
  */
 public class Ascentric{
 	
-	private FillForm pageInPlay;
+	private AscentricPage1 pageInPlay;
 	
     public void fillPage1() throws IOException, DocumentException{
     	
     	pageInPlay = new AscentricPage1();
     	
     	pageInPlay.setUp("AscentricForm.pdf", "John");
-    	    	
+    	
+    	pageInPlay.tickBox("singleApp");
+    	pageInPlay.tickBox("twoApp");
+    	pageInPlay.tickBox("joint");
+    	
 		pageInPlay.fillPersonalDetails();
 				
 		pageInPlay.fillNatInsure();
 		
 		pageInPlay.fillContactDetails();
+		
+		pageInPlay.natInsurance(false);
+		
+		pageInPlay.usPerson(true);
+		
+		String[] info = {"123456", "English", "Ukraine"};
+		
+		pageInPlay.additionalInfo(info);
 		
 		pageInPlay.shutDown();
     }
