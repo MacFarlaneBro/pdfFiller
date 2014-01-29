@@ -7,7 +7,7 @@ import java.io.IOException;
 import org.junit.Before;
 import org.junit.Test;
 
-import pdfFiller.AscentricPage1;
+import ascentric.AscentricPage1;
 
 import com.itextpdf.text.DocumentException;
 
@@ -27,9 +27,6 @@ public class AscentricTest {
 		
 		asc.setUp("asc", "james");
 		
-		String client = asc.getClient();
-		
-		assertNotNull(client);
 	}
 	
 	@Test public void setUpTest_clientNotNull(){

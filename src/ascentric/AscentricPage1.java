@@ -1,7 +1,9 @@
-package pdfFiller;
+package ascentric;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
+
+import pdfFiller.FillForm;
 
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
@@ -21,8 +23,11 @@ public class AscentricPage1 implements FillForm {
 	private int dobDepth = 440;
 	private int firstRow = 100;
 	private int contactDepth = 370;
-	private String client;
 
+	public void tickBox(){
+		
+	}
+	
 	public void fillPersonalDetails() {
 		
 		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase("Mr"), firstRow, 500, 0);
@@ -54,11 +59,9 @@ public class AscentricPage1 implements FillForm {
 		for(int i = 0 ; i <= 7; i++){
 			ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase("07917165900"),contactDepth, 500 - (i*20), 0);
 		}
-
 	}
 		
 	public void setUp(String form, String client) throws IOException, DocumentException {
-		 this.setClient(client);
 		 reader = new PdfReader(form);
 		 stamper = new PdfStamper(reader, new FileOutputStream("John" + form));
 		 canvas = stamper.getOverContent(1);
@@ -68,14 +71,5 @@ public class AscentricPage1 implements FillForm {
 	public void shutDown() throws DocumentException, IOException {
 		stamper.close();		
 	}
-
-	public String getClient() {
-		return client;
-	}
-
-	public void setClient(String client) {
-		this.client = client;
-	}
-
 
 }
