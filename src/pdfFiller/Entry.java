@@ -9,9 +9,9 @@ public class Entry {
 	
 	public static void main(String[] args) throws DocumentException, IOException{
 		
-		Ascentric formfiller = new Ascentric();
+		Ascentric ascentric = new Ascentric();
 		
-		formfiller.fillIt();
+		ascentric.fillIt();
 		
 		
 	}

@@ -10,41 +10,46 @@ import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.PdfStamper;
 
-public class AscentricPersonalInfo implements Page{
+public class AscentricPersonalInfo2 implements PersonalInfo{
 	
+	private String fileName;
+	private int pageNumber;
 	private PdfReader reader;
 	private PdfStamper stamper;
 	private PdfContentByte canvas;
-	
-	private int natInsureDepth = 403;
-	private int dobDepth = 440;
-	private int firstRow = 100;
-	private int contactDepth = 370;
-	private int tickDepth = 560;
-	private int addInfoRow = 45;
-	private float tinDepth = 127;
-	private int pageNumber;
+		
+	private int natInsureDepth = 478;
+	private int detailDepth = 675;
+	private int dobDepth = 515;
+	private int contactDepth = 575;
+	private int tickDepth = 635;
+	private int tinDepth = 202;
 
-	public AscentricPersonalInfo(int pageNumber){
-		this.pageNumber = pageNumber;
+	private int firstRow = 100;
+	private int contactWidth = 370;
+	private int addInfoRow = 45;
+
+	public AscentricPersonalInfo2(String fileName){
+		this.fileName = fileName;
 	}
 	
 	public void tickBox(String s){
-		if(s.equals("singleApp")){
-			ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase("X"), 193, tickDepth, 0);
-		} else if(s.equals("twoApp")){
-			ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase("X"), 275, tickDepth, 0);
-		} else if(s.equals("joint")){
-			ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase("X"), 354, tickDepth, 0);
+		if(pageNumber == 1){
+			if(s.equals("singleApp")){
+				ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase("X"), 193, tickDepth, 0);
+			} else if(s.equals("twoApp")){
+				ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase("X"), 275, tickDepth, 0);
+			} else if(s.equals("joint")){
+				ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase("X"), 354, tickDepth, 0);
+			}
 		}
-
 	}
 	
 	public void fillPersonalDetails() {
 		
-		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase("Mr"), firstRow, 500, 0);
-		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase("Hoskins"), firstRow, 480, 0);		
-		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase("Bob"), firstRow, 460, 0);		
+		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase("Mr"), firstRow, detailDepth, 0);
+		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase("Hoskins"), firstRow, detailDepth-20, 0);		
+		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase("Bob"), firstRow, detailDepth-40, 0);		
 		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase("1"), firstRow, dobDepth, 0);
 		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase("2"), 120, dobDepth, 0);		
 		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase("3"), 155, dobDepth, 0);		
@@ -69,13 +74,13 @@ public class AscentricPersonalInfo implements Page{
 	
 	public void fillContactDetails() {
 		for(int i = 0 ; i <= 7; i++){
-			ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase("07917165900"),contactDepth, 500 - (i*20), 0);
+			ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase("07917165900"),contactWidth, contactDepth - (i*20), 0);
 		}
 	}
 		
 	public void setUp(String form, String client) throws IOException, DocumentException {
-		 reader = new PdfReader(form);
-		 stamper = new PdfStamper(reader, new FileOutputStream("John" + form));
+		 reader = new PdfReader(fileName);
+		 stamper = new PdfStamper(reader, new FileOutputStream(fileName));
 		 canvas = stamper.getOverContent(pageNumber);
 	}
 
@@ -119,9 +124,11 @@ public class AscentricPersonalInfo implements Page{
 		}
 		
 	}
+
 	
-	public void shutDown() throws DocumentException, IOException {
-		stamper.close();		
+	public String shutDown() throws DocumentException, IOException {
+		return fileName;
+		
 	}
 
 

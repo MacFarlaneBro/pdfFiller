@@ -9,21 +9,20 @@ import com.itextpdf.text.DocumentException;
  */
 public class Ascentric{
 	
-	private AscentricPersonalInfo pageInPlay;
-	private String clientInfo;
+	private PersonalInfo pageInPlay;
 	
 	public void fillIt() throws IOException, DocumentException{
 		
-		personalInfo(1);
+		personalInfo("JohnFile");
 		
-		if(clientInfo!=null){
-			personalInfo(2);
-		}
+		String altered = pageInPlay.shutDown();
+		
 	}
 
-    private void personalInfo(int pageNumber) throws IOException, DocumentException{
+    private void personalInfo(String fileName) throws IOException, DocumentException{
     	
-    	pageInPlay = new AscentricPersonalInfo(pageNumber);
+
+    	pageInPlay = new AscentricPersonalInfo1(fileName);
     	
     	pageInPlay.setUp("AscentricForm.pdf", "John");
     	
@@ -44,8 +43,10 @@ public class Ascentric{
 		String[] info = {"123456", "English", "Ukraine", "12826294291234322842", "London", "Guinea-Bissau"};
 		
 		pageInPlay.additionalInfo(info);
-				
-		pageInPlay.shutDown();
+		
+		PersonalInfo jam = new AscentricPersonalInfo2(fileName);
     }
+    
+    
     
 }
