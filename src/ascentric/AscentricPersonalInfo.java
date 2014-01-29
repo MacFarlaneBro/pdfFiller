@@ -2,7 +2,6 @@ package ascentric;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
-
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Phrase;
@@ -11,7 +10,7 @@ import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.PdfStamper;
 
-public class AscentricPage1 implements Page{
+public class AscentricPersonalInfo implements Page{
 	
 	private PdfReader reader;
 	private PdfStamper stamper;
@@ -23,7 +22,12 @@ public class AscentricPage1 implements Page{
 	private int contactDepth = 370;
 	private int tickDepth = 560;
 	private int addInfoRow = 45;
+	private float tinDepth = 127;
+	private int pageNumber;
 
+	public AscentricPersonalInfo(int pageNumber){
+		this.pageNumber = pageNumber;
+	}
 	
 	public void tickBox(String s){
 		if(s.equals("singleApp")){
@@ -72,7 +76,7 @@ public class AscentricPage1 implements Page{
 	public void setUp(String form, String client) throws IOException, DocumentException {
 		 reader = new PdfReader(form);
 		 stamper = new PdfStamper(reader, new FileOutputStream("John" + form));
-		 canvas = stamper.getOverContent(1);
+		 canvas = stamper.getOverContent(pageNumber);
 	}
 
 	public void natInsurance(boolean natIn){
@@ -84,23 +88,41 @@ public class AscentricPage1 implements Page{
 	public void additionalInfo(String[] info) {
 		
 		if(info[0]!= null){
-			ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(info[0]), addInfoRow, 295, 0);
+			ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase("X"), addInfoRow, 295, 0);
 		}
 		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(info[1]), addInfoRow, 262, 0);
 		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(info[2]), addInfoRow, 228, 0);
+		
+		//PassportCity
+		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(info[4]), 150, 95, 0);
+		//Passport Country
+		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(info[5]), 150, 75, 0);
+		
+		//TaxInfoNumber input with loop in separate method
+		if(info[3]!= null){
+			tinNumber(info[3]);
+		}
 	}
 	
+	private void tinNumber(String tin) {
+		for(int i = 0; i < tin.length(); i++){
+			ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase("" + tin.charAt(i)),addInfoRow+(i*12)+1,  tinDepth, 0);
+		}
+		
+	}
+
 	public void usPerson(boolean b) {
-		// TODO Auto-generated method stub
+		if(b){
+			ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase("X"), 403, 305, 0);
+		} else {
+			ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase("X"), 440, 305, 0);
+		}
 		
 	}
 	
 	public void shutDown() throws DocumentException, IOException {
 		stamper.close();		
 	}
-
-
-
 
 
 }

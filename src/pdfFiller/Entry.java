@@ -11,7 +11,8 @@ public class Entry {
 		
 		Ascentric formfiller = new Ascentric();
 		
-		formfiller.fillPage1();
+		formfiller.fillIt();
+		
 		
 	}
 

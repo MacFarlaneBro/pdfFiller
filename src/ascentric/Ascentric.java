@@ -9,11 +9,21 @@ import com.itextpdf.text.DocumentException;
  */
 public class Ascentric{
 	
-	private AscentricPage1 pageInPlay;
+	private AscentricPersonalInfo pageInPlay;
+	private String clientInfo;
 	
-    public void fillPage1() throws IOException, DocumentException{
+	public void fillIt() throws IOException, DocumentException{
+		
+		personalInfo(1);
+		
+		if(clientInfo!=null){
+			personalInfo(2);
+		}
+	}
+
+    private void personalInfo(int pageNumber) throws IOException, DocumentException{
     	
-    	pageInPlay = new AscentricPage1();
+    	pageInPlay = new AscentricPersonalInfo(pageNumber);
     	
     	pageInPlay.setUp("AscentricForm.pdf", "John");
     	
@@ -29,14 +39,13 @@ public class Ascentric{
 		
 		pageInPlay.natInsurance(false);
 		
-		pageInPlay.usPerson(true);
+		pageInPlay.usPerson(false);
 		
-		String[] info = {"123456", "English", "Ukraine"};
+		String[] info = {"123456", "English", "Ukraine", "12826294291234322842", "London", "Guinea-Bissau"};
 		
 		pageInPlay.additionalInfo(info);
-		
+				
 		pageInPlay.shutDown();
     }
-    
     
 }

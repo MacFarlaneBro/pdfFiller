@@ -7,18 +7,17 @@ import java.io.IOException;
 import org.junit.Before;
 import org.junit.Test;
 
-import ascentric.AscentricPage1;
+import ascentric.AscentricPersonalInfo;
 
 import com.itextpdf.text.DocumentException;
 
 public class AscentricTest {
 	
-	private AscentricPage1 asc;
+	private AscentricPersonalInfo asc;
 	
 	@Before
 	public void setUp(){
-		asc = new AscentricPage1();
-		
+		asc = new AscentricPersonalInfo(1);
 	}
 	
 
