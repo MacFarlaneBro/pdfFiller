@@ -13,7 +13,7 @@ import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.PdfStamper;
 
-public class AscentricPersonalInfo1 implements AscentricPage{
+public class AscentricPage1 implements AscentricPage{
 	
 	protected PdfReader reader;
 	protected PdfStamper stamper;
@@ -36,7 +36,7 @@ public class AscentricPersonalInfo1 implements AscentricPage{
 	protected int usPerson = 453;
 	protected int natInYN = 332;
 	
-	public AscentricPersonalInfo1(String client){
+	public AscentricPage1(String client){
 		this.client = client;
 	}
 	

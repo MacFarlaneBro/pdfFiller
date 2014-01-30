@@ -11,9 +11,9 @@ public class Entry {
 		
 		Ascentric ascentric = new Ascentric();
 		
-		String next = ascentric.fillIt(new AscentricPersonalInfo1("Bob Hoskins"));
+		String next = ascentric.fillIt(new AscentricPage1("Bob Hoskins"));
 		
-		ascentric.fillIt(new AscentricPersonalInfo2(next));
+		ascentric.fillIt(new AscentricPage2(next));
 		
 	}
 

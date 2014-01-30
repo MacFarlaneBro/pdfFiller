@@ -2,19 +2,17 @@ package formTests;
 
 import static org.junit.Assert.assertNotNull;
 
-import java.io.IOException;
 import org.junit.Before;
 import org.junit.Test;
-import ascentric.AscentricPersonalInfo1;
-import com.itextpdf.text.DocumentException;
+import ascentric.AscentricPage1;
 
 public class AscentricTest {
 	
-	private AscentricPersonalInfo1 asc;
+	private AscentricPage1 asc;
 	
 	@Before
 	public void setUp(){
-		asc = new AscentricPersonalInfo1("a");
+		asc = new AscentricPage1("a");
 	}
 	
 	@Test 
