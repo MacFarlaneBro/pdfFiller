@@ -1,23 +1,16 @@
 package ascentric;
 
 import java.io.IOException;
-
-import pdfFiller.AscentricPage;
-
 import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Element;
-import com.itextpdf.text.Phrase;
-import com.itextpdf.text.pdf.ColumnText;
 
-public class AscentricPage2 extends AscentricPage1  implements AscentricPage{
+public class AscentricPage2 extends AscentricPage1{
 	
 	protected String fileName;
-	protected int pageNumber = 2;	
+	public static final int PAGENUMBER = 2;	
 	
 	public AscentricPage2(String fileName){
 		super(fileName);
 		this.fileName = fileName;
-		pageNumber = 2;
 		natInsureDepth+=176;
 		detailDepth +=175;
 		dobDepth+=177;
@@ -30,7 +23,7 @@ public class AscentricPage2 extends AscentricPage1  implements AscentricPage{
 	
 	@Override
 	public String fillPage() throws DocumentException, IOException{
-		setUp(pageNumber);
+		setUp(PAGENUMBER);
 		fillPersonalDetails();	
 		fillNatInsure();
 		fillContactDetails();
@@ -44,9 +37,8 @@ public class AscentricPage2 extends AscentricPage1  implements AscentricPage{
 
 	private void sameDetails(boolean b) {
 		if(b){
-			ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase("X"), 540, 674, 0);
-		}
-		
+			stamp(540, 674, "X");
+		}	
 	}
 	
 }
