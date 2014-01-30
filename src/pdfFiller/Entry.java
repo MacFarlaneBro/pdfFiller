@@ -1,7 +1,7 @@
 package pdfFiller;
 
 import java.io.IOException;
-import ascentric.Ascentric;
+import ascentric.*;
 import com.itextpdf.text.DocumentException;
 
 public class Entry {
@@ -11,8 +11,9 @@ public class Entry {
 		
 		Ascentric ascentric = new Ascentric();
 		
-		ascentric.fillIt();
+		String next = ascentric.fillIt(new AscentricPersonalInfo1("Bob Hoskins"));
 		
+		ascentric.fillIt(new AscentricPersonalInfo2(next));
 		
 	}
 

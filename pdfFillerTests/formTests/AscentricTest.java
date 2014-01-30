@@ -17,15 +17,8 @@ public class AscentricTest {
 		asc = new AscentricPersonalInfo1("a");
 	}
 	
-
-	@Test
-	public void setUpTest_formNotNull() throws IOException, DocumentException {
-		
-		asc.setUp("asc", "james");
-		
-	}
-	
-	@Test public void setUpTest_clientNotNull(){
+	@Test 
+	public void setUpTest_clientNotNull(){
 		
 		
 	}
