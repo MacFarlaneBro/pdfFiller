@@ -18,6 +18,7 @@ public class AscentricPage2 extends AscentricPage1{
 		cliRef+=168;
 		passInfo += 150;
 		natInYN +=165;
+		usPersonDepth +=148;
 	}
 	
 	@Override

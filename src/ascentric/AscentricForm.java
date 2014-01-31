@@ -2,8 +2,6 @@ package ascentric;
 
 import java.io.IOException;
 
-import pdfFiller.AscentricPage;
-
 import com.itextpdf.text.DocumentException;
 
 /*
@@ -24,8 +22,8 @@ public class AscentricForm{
 		page.fillPage();
 		page = new AscentricPage2();
 		page.fillPage();
-		page = new AscentricPage3();
-		page.fillPage();
+//		page = new AscentricPage3();
+//		page.fillPage();
 		
 	}
 

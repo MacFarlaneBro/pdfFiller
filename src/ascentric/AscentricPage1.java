@@ -1,20 +1,13 @@
 package ascentric;
 
-import java.io.FileOutputStream;
 import java.io.IOException;
 
-import pdfFiller.AscentricPage;
-
 import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Element;
-import com.itextpdf.text.Phrase;
-import com.itextpdf.text.pdf.ColumnText;
-import com.itextpdf.text.pdf.PdfReader;
-import com.itextpdf.text.pdf.PdfStamper;
+
 
 public class AscentricPage1 extends AscentricPage{
 	
-	public static int pageNumber = 1;
+	public static final int PAGENUMBER = 1;
 		
 	protected int natInsureDepth = 403;
 	protected int detailDepth = 500;
@@ -29,15 +22,9 @@ public class AscentricPage1 extends AscentricPage{
 	protected int cliRef = 295;
 	protected int usPersonDepth = 305;
 	protected int natInYN = 332;
-	
-	private void setUp() throws IOException, DocumentException {
-		 reader = new PdfReader(FORM);
-		 stamper = new PdfStamper(reader, new FileOutputStream(pageNumber + FORM));
-		 canvas = stamper.getOverContent(pageNumber);
-	}
 
 	public void fillPage() throws IOException, DocumentException {
-		setUp();
+		setUp(PAGENUMBER);
     	tickBox("singleApp");
     	tickBox("twoApp");
     	tickBox("joint");
@@ -101,13 +88,13 @@ public class AscentricPage1 extends AscentricPage{
 	
 	protected void fillContactDetails() {
 		for(int i = 0 ; i <= 7; i++){
-			ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase("07917165900"),contactWidth, contactDepth - (i*20), 0);
+			stamp(contactWidth, contactDepth - (i*20), "07197165900");
 		}
 	}
 
 	protected void natInsurance(boolean natIn){
 		if(!natIn){
-			ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase("X"), 272, natInYN, 0);		
+			stamp(272, natInYN, "X");
 		}
 	}
 	
@@ -115,17 +102,16 @@ public class AscentricPage1 extends AscentricPage{
 		
 		if(info[0]!= null){
 			//ClientReference
-			ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase("X"), addInfoRow, cliRef, 0);
+			stamp(addInfoRow, cliRef, "X");
 		}
 		//Nationality
-		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(info[1]), addInfoRow, cliRef-33, 0);
+		stamp(addInfoRow, cliRef-33, info[1]);
 		//Domiciled
-		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(info[2]), addInfoRow, cliRef-67, 0);
+		stamp(addInfoRow, cliRef-67, info[2]);
 		//PassportCity
-		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(info[4]), 150, passInfo+20, 0);
+		stamp(150, passInfo+20, info[4]);
 		//Passport Country
-		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(info[5]), 150, passInfo, 0);
-		
+		stamp(150, passInfo, info[5]);		
 		//TaxInfoNumber input with loop in separate method
 		if(info[3]!= null){
 			tinNumber(info[3]);
@@ -134,18 +120,16 @@ public class AscentricPage1 extends AscentricPage{
 	
 	protected void tinNumber(String tin) {
 		for(int i = 0; i < tin.length(); i++){
-			ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase("" + tin.charAt(i)),addInfoRow+(i*12)+1, tinDepth, 0);
+			stamp(addInfoRow+(i*12)+1, tinDepth, "" + tin.charAt(i));
 		}
 		
 	}
 
 	protected void usPerson(boolean b) {
 		if(b){
-			ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase("X"), 403, usPersonDepth, 0);
+			stamp(403, usPersonDepth, "X");
 		} else {
-			ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase("X"), 440, usPersonDepth, 0);
-		}
-		
+			stamp(440, usPersonDepth, "X");
+		}		
 	}
-
 }

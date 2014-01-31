@@ -1,4 +1,4 @@
-package pdfFiller;
+package ascentric;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -23,7 +23,11 @@ public abstract class AscentricPage {
 	}
 	
 	protected void setUp(int pageNumber) throws IOException, DocumentException {
-		 reader = new PdfReader(FORM);
+		if(pageNumber > 1){
+		 reader = new PdfReader(pageNumber-1 + FORM);
+		} else {
+			reader = new PdfReader(FORM);
+		}
 		 stamper = new PdfStamper(reader, new FileOutputStream(pageNumber + FORM));
 		 canvas = stamper.getOverContent(pageNumber);
 	}

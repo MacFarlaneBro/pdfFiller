@@ -1,8 +1,8 @@
 package ascentric;
 
 import java.io.IOException;
+
 import com.itextpdf.text.DocumentException;
-import pdfFiller.AscentricPage;
 
 public class AscentricPage3 extends AscentricPage{
 	
@@ -34,7 +34,6 @@ public class AscentricPage3 extends AscentricPage{
 		accessRights();
 		
 	}
-	
 	
 
 	private void accessRights() {
