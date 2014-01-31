@@ -11,6 +11,16 @@ import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.PdfStamper;
 
+/**
+ * 
+ * @author charliebrodie
+ *
+ * This is the default template for all the remaining ascentric pages, containing the fundamentals necessary to fill
+ * in all the forms with none of the implementation details for doing so.
+ * 
+ * Each of the pages contains a series of integer values ending in either width, indicating their distance from the left margin of the page
+ * or depth, indicating their distance from the bottom of the page.
+ */
 public abstract class AscentricPage {
 	
 	public static final String FORM = "AscentricForm.pdf";

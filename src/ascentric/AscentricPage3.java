@@ -29,15 +29,14 @@ public class AscentricPage3 extends AscentricPage{
 	private int famGroupDepth = 566;
 	
 	private int pageNumber = 3;
-	private int firstSingleDepth = 424;
-	private int giaDepth = 309;
-	private int wrapWidth = 127;
-	private int sasDepth = giaDepth-22;
-	private int thirdPartyWidth = 50;
-	private int thirdPartyDepth = 228;
+	protected int firstSingleDepth = 424;
+	protected int giaDepth = 309;
+	protected int wrapWidth = 127;
+	protected int sasDepth = 287;
+	protected int thirdPartyWidth = 50;
+	protected int thirdPartyDepth = 228;
 	
 
-	@Override
 	public void fillPage() throws IOException, DocumentException {
 		setUp(pageNumber);
 		accessRights();
@@ -45,20 +44,6 @@ public class AscentricPage3 extends AscentricPage{
 		firstOrSingle();
 		thirdParty();
 		shutDown();
-	}
-
-	private void thirdParty() {
-		//Third Party Name
-		stamp(thirdPartyWidth, thirdPartyDepth, "Dave");
-		//Amount to be received
-		stamp(thirdPartyWidth+150, thirdPartyDepth, "99");
-		//source of funds
-		stamp(thirdPartyWidth+200, thirdPartyDepth, "cheques");
-		//Advisory Wrapper
-		stamp(thirdPartyWidth+300, thirdPartyDepth, "99");
-		//Discretionary Wrapper
-		stamp(thirdPartyWidth+400, thirdPartyDepth, "99");
-
 	}
 
 	private void familyGroups(boolean moreThan1, boolean ascLink) {
@@ -110,7 +95,7 @@ public class AscentricPage3 extends AscentricPage{
 		}
 	}
 
-	private void firstOrSingle() {
+	protected void firstOrSingle() {
 		//fill platform account name field
 		stamp(315, firstSingleDepth , "Roger Rabbit");
 		
@@ -118,13 +103,13 @@ public class AscentricPage3 extends AscentricPage{
 		wrapper(true, true);
 	}
 
-	private void wrapper(boolean gia, boolean sas) {
+	protected void wrapper(boolean gia, boolean sas) {
 		if(gia)fillWrappers(1);
 		if(sas)fillWrappers(2);
 		
 	}
 
-	private void fillWrappers(int lineNumber) {
+	protected void fillWrappers(int lineNumber) {
 		int yAxis;
 		if(lineNumber ==1){
 			yAxis = giaDepth;
@@ -149,4 +134,17 @@ public class AscentricPage3 extends AscentricPage{
 		stamp(wrapWidth+395, yAxis, "X");
 	}
 
+	protected void thirdParty() {
+		//Third Party Name
+		stamp(thirdPartyWidth, thirdPartyDepth, "Dave");
+		//Amount to be received
+		stamp(thirdPartyWidth+150, thirdPartyDepth, "99");
+		//source of funds
+		stamp(thirdPartyWidth+200, thirdPartyDepth, "cheques");
+		//Advisory Wrapper
+		stamp(thirdPartyWidth+340, thirdPartyDepth, "X");
+		//Discretionary Wrapper
+		stamp(thirdPartyWidth+440, thirdPartyDepth, "X");
+
+	}
 }
