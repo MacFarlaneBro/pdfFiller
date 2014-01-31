@@ -26,6 +26,8 @@ public class AscentricForm{
 		page.fillPage();
 		page = new AscentricPage4();
 		page.fillPage();
+		page = new AscentricPage5();
+		page.fillPage();
 		
 	}
 
