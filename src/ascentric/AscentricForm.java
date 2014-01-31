@@ -10,7 +10,7 @@ import com.itextpdf.text.DocumentException;
  * This Class is used to collate the necessary information on each client to successfully fill in an ascentric form
  * the information collected from SQL is then used by each of the pages in turn to from 
  */
-public class Ascentric{
+public class AscentricForm{
 	
 	private AscentricPage page;
 	

@@ -27,7 +27,7 @@ public class AscentricPage1 extends AscentricPage{
 	protected int tinDepth = 127;
 	protected int passInfo = 75;
 	protected int cliRef = 295;
-	protected int usPerson = 453;
+	protected int usPersonDepth = 305;
 	protected int natInYN = 332;
 	
 	private void setUp() throws IOException, DocumentException {
@@ -91,17 +91,12 @@ public class AscentricPage1 extends AscentricPage{
 		String nin = "45673456J";
 		stamp(firstRow, natInsureDepth, "" + nin.charAt(0));
 		for(int i = 1; i < nin.length(); i++){
-			stamp(firstRow+=20, natInsureDepth, "" + nin.charAt(i));
+			if(i %2 == 0 && i < 9){
+				stamp(firstRow+=23, natInsureDepth, "" + nin.charAt(i));
+			} else {
+				stamp(firstRow+=20, natInsureDepth, "" + nin.charAt(i));
+			}
 		}
-//		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase("4"), firstRow, natInsureDepth, 0);		
-//		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase("5"), 120, natInsureDepth, 0);		
-//		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase("6"), 145, natInsureDepth, 0);		
-//		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase("7"), 165, natInsureDepth, 0);		
-//		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase("3"), 185, natInsureDepth, 0);
-//		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase("4"), 205, natInsureDepth, 0);
-//		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase("5"), 230, natInsureDepth, 0);
-//		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase("6"), 250, natInsureDepth, 0);
-//		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase("J"), 273, natInsureDepth, 0);
 	}
 	
 	protected void fillContactDetails() {
@@ -146,9 +141,9 @@ public class AscentricPage1 extends AscentricPage{
 
 	protected void usPerson(boolean b) {
 		if(b){
-			ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase("X"), 403, usPerson, 0);
+			ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase("X"), 403, usPersonDepth, 0);
 		} else {
-			ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase("X"), 440, usPerson, 0);
+			ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase("X"), 440, usPersonDepth, 0);
 		}
 		
 	}

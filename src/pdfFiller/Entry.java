@@ -9,7 +9,7 @@ public class Entry {
 	
 	public static void main(String[] args) throws DocumentException, IOException{
 		
-		Ascentric ascentric = new Ascentric();
+		AscentricForm ascentric = new AscentricForm();
 		
 		//Filling page 1
 		ascentric.fillIt("Bob Hoskins");
