@@ -30,8 +30,12 @@ public class AscentricPage3 extends AscentricPage{
 	
 	private int pageNumber = 3;
 	private int firstSingleDepth = 424;
-	private int giaDepth = 308;
-	private int wrapWidth = 100;
+	private int giaDepth = 309;
+	private int wrapWidth = 127;
+	private int sasDepth = giaDepth-22;
+	private int thirdPartyWidth = 50;
+	private int thirdPartyDepth = 228;
+	
 
 	@Override
 	public void fillPage() throws IOException, DocumentException {
@@ -39,7 +43,22 @@ public class AscentricPage3 extends AscentricPage{
 		accessRights();
 		familyGroups(true, true);
 		firstOrSingle();
+		thirdParty();
 		shutDown();
+	}
+
+	private void thirdParty() {
+		//Third Party Name
+		stamp(thirdPartyWidth, thirdPartyDepth, "Dave");
+		//Amount to be received
+		stamp(thirdPartyWidth+150, thirdPartyDepth, "99");
+		//source of funds
+		stamp(thirdPartyWidth+200, thirdPartyDepth, "cheques");
+		//Advisory Wrapper
+		stamp(thirdPartyWidth+300, thirdPartyDepth, "99");
+		//Discretionary Wrapper
+		stamp(thirdPartyWidth+400, thirdPartyDepth, "99");
+
 	}
 
 	private void familyGroups(boolean moreThan1, boolean ascLink) {
@@ -91,7 +110,6 @@ public class AscentricPage3 extends AscentricPage{
 		}
 	}
 
-	
 	private void firstOrSingle() {
 		//fill platform account name field
 		stamp(315, firstSingleDepth , "Roger Rabbit");
@@ -100,22 +118,35 @@ public class AscentricPage3 extends AscentricPage{
 		wrapper(true, true);
 	}
 
-
 	private void wrapper(boolean gia, boolean sas) {
-		if(gia)fill(1);
-		if(sas)fill(2);
+		if(gia)fillWrappers(1);
+		if(sas)fillWrappers(2);
 		
 	}
 
-
-	private void fill(int lineNumber) {
-		String[] filler = {"X", "999", "999", "999", "999", "999", "999", "999", "999"};
+	private void fillWrappers(int lineNumber) {
+		int yAxis;
 		if(lineNumber ==1){
-			for(int i = 0; i < 7; i++){
-				stamp(wrapWidth+= 30, giaDepth, filler[i]);
-			}
+			yAxis = giaDepth;
+		} else {
+			yAxis = sasDepth ;
 		}
-		
+		//Wrappers
+		stamp(wrapWidth, yAxis, "X");
+		//Cash
+		stamp(wrapWidth+30, yAxis, "999");
+		//Source of funds
+		stamp(wrapWidth+85, yAxis, "999");
+		//Transfer/Approx
+		stamp(wrapWidth+150, yAxis, "999");
+		//Transfer/Assets
+		stamp(wrapWidth+215, yAxis, "999");
+		//Reserve Account
+		stamp(wrapWidth+275, yAxis, "999");
+		//AdvWrapper
+		stamp(wrapWidth+350, yAxis, "X");
+		//DiscWrapper
+		stamp(wrapWidth+395, yAxis, "X");
 	}
-	
+
 }
