@@ -27,18 +27,12 @@ public class AscentricPage3 extends AscentricPage{
 	private int tradAccDepth = 560;
 	
 	private int pageNumber = 3;
-	
-	
-	public AscentricPage3(String next) {
-
-	}
 
 	@Override
-	public String fillPage() throws IOException, DocumentException {
+	public void fillPage() throws IOException, DocumentException {
 		setUp(pageNumber);
 		accessRights();
 		
-		return null;
 	}
 	
 	

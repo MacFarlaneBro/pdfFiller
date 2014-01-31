@@ -18,9 +18,15 @@ public class Ascentric{
 	 * Fills the page chosen by the calling class
 	 * @return String address of the form with corresponding page filled
 	 */
-	public String fillIt(AscentricPage page) throws IOException, DocumentException{	
-
-		return page.fillPage();
+	public void fillIt(String client) throws IOException, DocumentException {
+		
+		page = new AscentricPage1();
+		page.fillPage();
+		page = new AscentricPage2();
+		page.fillPage();
+		page = new AscentricPage3();
+		page.fillPage();
+		
 	}
 
 }

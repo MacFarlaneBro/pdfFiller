@@ -1,15 +1,20 @@
 package ascentric;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
+
 import pdfFiller.AscentricPage;
+
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.ColumnText;
+import com.itextpdf.text.pdf.PdfReader;
+import com.itextpdf.text.pdf.PdfStamper;
 
 public class AscentricPage1 extends AscentricPage{
 	
-	public static final int PAGENUMBER = 1;
+	public static int pageNumber = 1;
 		
 	protected int natInsureDepth = 403;
 	protected int detailDepth = 500;
@@ -25,12 +30,14 @@ public class AscentricPage1 extends AscentricPage{
 	protected int usPerson = 453;
 	protected int natInYN = 332;
 	
-	public AscentricPage1(String client){
-		this.client = client;
+	private void setUp() throws IOException, DocumentException {
+		 reader = new PdfReader(FORM);
+		 stamper = new PdfStamper(reader, new FileOutputStream(pageNumber + FORM));
+		 canvas = stamper.getOverContent(pageNumber);
 	}
-	
-	public String fillPage() throws IOException, DocumentException {
-		setUp(PAGENUMBER);
+
+	public void fillPage() throws IOException, DocumentException {
+		setUp();
     	tickBox("singleApp");
     	tickBox("twoApp");
     	tickBox("joint");
@@ -41,7 +48,7 @@ public class AscentricPage1 extends AscentricPage{
 		usPerson(false);
 		String[] info = {"123456", "English", "Ukraine", "12826294291234322842", "London", "Guinea-Bissau"};
 		additionalInfo(info);
-		return shutDown();
+		shutDown();
 	}
 	
 	private void tickBox(String s){
@@ -84,17 +91,17 @@ public class AscentricPage1 extends AscentricPage{
 		String nin = "45673456J";
 		stamp(firstRow, natInsureDepth, "" + nin.charAt(0));
 		for(int i = 1; i < nin.length(); i++){
-			stamp(firstRow + 20, natInsureDepth, "" + nin.charAt(i));
+			stamp(firstRow+=20, natInsureDepth, "" + nin.charAt(i));
 		}
-		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase("4"), firstRow, natInsureDepth, 0);		
-		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase("5"), 120, natInsureDepth, 0);		
-		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase("6"), 145, natInsureDepth, 0);		
-		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase("7"), 165, natInsureDepth, 0);		
-		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase("3"), 185, natInsureDepth, 0);
-		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase("4"), 205, natInsureDepth, 0);
-		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase("5"), 230, natInsureDepth, 0);
-		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase("6"), 250, natInsureDepth, 0);
-		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase("J"), 273, natInsureDepth, 0);
+//		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase("4"), firstRow, natInsureDepth, 0);		
+//		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase("5"), 120, natInsureDepth, 0);		
+//		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase("6"), 145, natInsureDepth, 0);		
+//		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase("7"), 165, natInsureDepth, 0);		
+//		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase("3"), 185, natInsureDepth, 0);
+//		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase("4"), 205, natInsureDepth, 0);
+//		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase("5"), 230, natInsureDepth, 0);
+//		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase("6"), 250, natInsureDepth, 0);
+//		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase("J"), 273, natInsureDepth, 0);
 	}
 	
 	protected void fillContactDetails() {
@@ -144,11 +151,6 @@ public class AscentricPage1 extends AscentricPage{
 			ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase("X"), 440, usPerson, 0);
 		}
 		
-	}
-	
-	protected String shutDown() throws DocumentException, IOException {
-		stamper.close();		
-		return output;
 	}
 
 }

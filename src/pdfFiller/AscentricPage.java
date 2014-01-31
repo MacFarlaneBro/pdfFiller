@@ -17,22 +17,25 @@ public abstract class AscentricPage {
 	protected PdfReader reader;
 	protected PdfStamper stamper;
 	protected PdfContentByte canvas;
-	protected String client;
-	protected String output;
 	
 	protected void stamp(int x, int y, String text){
-		ColumnText.showTextAligned(
-				canvas, Element.ALIGN_LEFT, new Phrase(text), x, y, 0);
+		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(text), x, y, 0);
 	}
-	
 	
 	protected void setUp(int pageNumber) throws IOException, DocumentException {
 		 reader = new PdfReader(FORM);
-		 output = client + FORM;
-		 stamper = new PdfStamper(reader, new FileOutputStream(output));
+		 stamper = new PdfStamper(reader, new FileOutputStream(pageNumber + FORM));
 		 canvas = stamper.getOverContent(pageNumber);
 	}
 	
-	public abstract String fillPage() throws IOException, DocumentException;
+	public abstract void fillPage() throws IOException, DocumentException;
+	
+	protected void shutDown() throws DocumentException, IOException {
+		
+		System.out.println("beforeStamp");
+		stamper.close();
+		System.out.println("afterStamp");
+
+	}
 
 }

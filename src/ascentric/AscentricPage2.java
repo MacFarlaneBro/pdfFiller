@@ -1,16 +1,15 @@
 package ascentric;
 
 import java.io.IOException;
+
 import com.itextpdf.text.DocumentException;
 
 public class AscentricPage2 extends AscentricPage1{
 	
-	protected String fileName;
 	public static final int PAGENUMBER = 2;	
 	
-	public AscentricPage2(String fileName){
-		super(fileName);
-		this.fileName = fileName;
+	public AscentricPage2(){
+		super();
 		natInsureDepth+=176;
 		detailDepth +=175;
 		dobDepth+=177;
@@ -22,7 +21,7 @@ public class AscentricPage2 extends AscentricPage1{
 	}
 	
 	@Override
-	public String fillPage() throws DocumentException, IOException{
+	public void fillPage() throws IOException, DocumentException{
 		setUp(PAGENUMBER);
 		fillPersonalDetails();	
 		fillNatInsure();
@@ -32,7 +31,8 @@ public class AscentricPage2 extends AscentricPage1{
 		String[] info = {"123456", "Dummy", "Ukraine", "12826294291234322842", "London", "Guinea-Bissau"};
 		additionalInfo(info);
 		sameDetails(true);
-		return shutDown();
+		shutDown();
+		
 	}
 
 	private void sameDetails(boolean b) {
