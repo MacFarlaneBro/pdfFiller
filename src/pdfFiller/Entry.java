@@ -17,12 +17,11 @@ public class Entry {
 		
 		GetDatabase db = new ChinookDB();
 		
-		ResultSet formInfo = db.getDatabase();
+		ResultSet formInfo = db.getDatabase("AC/DC");
 		
 		AscentricForm ascentric = new AscentricForm();
 		
 		ascentric.fillIt("Bob Hoskins");
 		
 	}
-
 }

@@ -17,7 +17,7 @@ public class Database implements GetDatabase{
 	protected Connection conn;
 	protected DatabaseMetaData md;
 		
-	public boolean makeConnection() throws SQLException{
+	public void makeConnection() throws SQLException{
 		
       try {
       Class.forName(driver).newInstance();
@@ -26,19 +26,17 @@ public class Database implements GetDatabase{
       md = conn.getMetaData();
       
       showTables();
-      getDatabase();
+      
       
       if(!conn.equals(null)){
     	  conn.close();
     	  System.out.println("disconnected from mySQL Database");
-    	  return true;
       }
       
       } catch (Exception e) {
     	  e.printStackTrace();
       }
       
-	return false;
 }
 		
 	public void showTables() throws SQLException{
@@ -49,8 +47,8 @@ public class Database implements GetDatabase{
 	}
 
 		@Override
-		public ResultSet getDatabase(){
-			
-			return null;
+		public ResultSet getDatabase(String artist){
+			ResultSet rs = null;
+			return rs;
 		}
 }

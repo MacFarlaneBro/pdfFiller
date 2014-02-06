@@ -1,6 +1,7 @@
 package databaseAccess;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -42,12 +43,25 @@ public class ChinookDB extends Database{
 	public String getFirstLineOfArtist() throws SQLException {
 		Statement stmt = conn.createStatement();
 		ResultSet returner = stmt.executeQuery("SELECT *"
-				+ "FROM ARTIST"
-				+ "WHERE ARTIST = 'ACDC';");
+				+ "FROM ARTIST where ArtistId % 5 = 2");
 		
-		String returnerman = returner.toString();
-		System.out.println(returnerman);
+		while(returner.next()){
+			 String artist = returner.getString("NAME");
+			 System.out.println(artist);
+		}
 		return dbName;
+	}
+
+	public void open() throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
+		Class.forName(driver).newInstance();
+	    conn = DriverManager.getConnection(url + dbName,userName,password);
+	    System.out.println("Connected to mySQL Database");
+	}
+
+	public void close() throws SQLException {
+		
+		conn.close();
+		System.out.println("closed");
 	}
 
 

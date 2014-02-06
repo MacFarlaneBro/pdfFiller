@@ -24,13 +24,7 @@ public class chinookDbTest {
 	public void breakDown(){
 		db = null;
 	}
-	
-	@Test
-	public void dbConnectionTest() throws SQLException{
-		boolean connect = db.makeConnection();
-		
-		assertTrue(connect);
-	}
+
 	
 	@Test
 	public void valueTest() throws SQLException{
