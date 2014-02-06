@@ -4,7 +4,6 @@ import java.io.IOException;
 
 import com.itextpdf.text.DocumentException;
 
-
 public class AscentricPage1 extends AscentricPage{
 	
 	public static final int PAGENUMBER = 1;
