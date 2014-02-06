@@ -3,11 +3,12 @@ package pdfFiller;
 import java.io.IOException;
 import java.sql.ResultSet;
 
-import ascentric.*;
+import ascentric.AscentricForm;
 
 import com.itextpdf.text.DocumentException;
 
-import databaseAccess.*;
+import databaseAccess.ChinookDB;
+import databaseAccess.GetDatabase;
 
 public class Entry {
 

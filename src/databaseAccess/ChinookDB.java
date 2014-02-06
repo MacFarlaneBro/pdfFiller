@@ -1,8 +1,9 @@
 package databaseAccess;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 
 public class ChinookDB extends Database{
@@ -11,32 +12,43 @@ public class ChinookDB extends Database{
 	    dbName = "chinook";//The database name is not necessary for connection to the database
 	    userName = "root"; 
 	}
-	
-	public void makeConnection(){
-	      try {
-	      Class.forName(driver).newInstance();
-	      Connection conn = DriverManager.getConnection(url + dbName,userName,password);
-	      System.out.println("Connected to mySQL Database");
-	      
-	      ResultSet rs=conn.getMetaData().getSchemas();
-	      while(rs.next()) {
-	         System.out.println(rs.getString(1));
-	      }
-	      	      
-	      conn.close();
-	      System.out.println("Disconnected from mySQL Database");
-	      
+		
+	public void viewTable(Connection con, String dbName) throws SQLException{
+		Statement stmt = null;
+	    String query =
+	        "select *" +
+	        "from " + dbName + ".ARTISTS";
 
-	      } catch (Exception e) {
-	    	  e.printStackTrace();
-	      } finally {
-	      }
+	    try {
+	        stmt = con.createStatement();
+	        ResultSet rs = stmt.executeQuery(query);
+	        while (rs.next()) {
+	            String coffeeName = rs.getString("COF_NAME");
+	            int supplierID = rs.getInt("SUP_ID");
+	            float price = rs.getFloat("PRICE");
+	            int sales = rs.getInt("SALES");
+	            int total = rs.getInt("TOTAL");
+	            System.out.println(coffeeName + "\t" + supplierID +
+	                               "\t" + price + "\t" + sales +
+	                               "\t" + total);
+	        }
+	    } catch (SQLException e ) {
+	        e.printStackTrace();
+	    } finally {
+	        if (stmt != null) { stmt.close(); }
+	    }
 	}
 
-	@Override
-	public ResultSet getDatabase() {
-		// TODO Auto-generated method stub
-		return null;
+	public String getFirstLineOfArtist() throws SQLException {
+		Statement stmt = conn.createStatement();
+		ResultSet returner = stmt.executeQuery("SELECT *"
+				+ "FROM ARTIST"
+				+ "WHERE ARTIST = 'ACDC';");
+		
+		String returnerman = returner.toString();
+		System.out.println(returnerman);
+		return dbName;
 	}
+
 
 }
