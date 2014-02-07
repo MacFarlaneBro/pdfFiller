@@ -1,6 +1,6 @@
 package ascentricClientDetails;
 
-public class IndividualDetails {
+public class IndividualDetails implements Individual{
 	
 	private String title;
 	private String surname;
@@ -164,5 +164,10 @@ public class IndividualDetails {
 	}
 	public void setExisingAcctRefNumber(String exisingAcctRefNumber) {
 		this.exisingAcctRefNumber = exisingAcctRefNumber;
+	}
+	@Override
+	public void fill() {
+		// TODO Auto-generated method stub
+		
 	}
 }

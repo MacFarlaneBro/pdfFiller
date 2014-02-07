@@ -6,23 +6,23 @@ public class ClientInformation {
 	private Client secondClient;
 	private Client jointAccount;
 	
+	public ClientInformation(String clientNumber){
+		
+	}
+	
 	public Client getFirstClient() {
+		firstClient = new Client();
 		return firstClient;
 	}
-	public void setFirstClient(Client firstClient) {
-		this.firstClient = firstClient;
-	}
+	
 	public Client getSecondClient() {
+		secondClient = new Client();
 		return secondClient;
 	}
-	public void setSecondClient(Client secondClient) {
-		this.secondClient = secondClient;
-	}
+	
 	public Client getJointAccount() {
+		jointAccount = new Client();
 		return jointAccount;
-	}
-	public void setJointAccount(Client jointAccount) {
-		this.jointAccount = jointAccount;
 	}	
 	
 }
