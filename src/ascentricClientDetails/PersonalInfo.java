@@ -1,4 +1,4 @@
-package ascentric;
+package ascentricClientDetails;
 
 import java.io.IOException;
 
