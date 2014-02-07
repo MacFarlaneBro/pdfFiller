@@ -2,6 +2,10 @@ package ascentricForm;
 
 import java.io.IOException;
 
+import ascentricClientDetails.Client;
+import ascentricClientDetails.ClientInformation;
+import ascentricClientDetails.IndividualDetails;
+
 import com.itextpdf.text.DocumentException;
 
 public class AscentricPage2 extends AscentricPage1{
@@ -22,16 +26,19 @@ public class AscentricPage2 extends AscentricPage1{
 	}
 	
 	@Override
-	public void fillPage() throws IOException, DocumentException{
+	public void fillPage(Client theClient) throws IOException, DocumentException{
 		setUp(PAGENUMBER);
-		fillPersonalDetails();	
-		fillNatInsure();
-		fillContactDetails();
-		natInsurance(false);
-		usPerson(false);
-		String[] info = {"123456", "Dummy", "Ukraine", "12826294291234322842", "London", "Guinea-Bissau"};
-		additionalInfo(info);
-		sameDetails(true);
+		IndividualDetails id = theClient.getIndividualDetails();
+		fillPersonalDetails(id);	
+		if(id.getNationalInsuranceNumber().equals(null)){
+			natInsurance(false);
+		} else {
+			fillNatInsure(id.getNationalInsuranceNumber());
+		}
+		fillContactDetails(id);
+		usPerson(id.isUsPerson());
+		additionalInfo(id);
+		sameDetails(id.isSameDetails());
 		shutDown();
 		
 	}

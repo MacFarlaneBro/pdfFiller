@@ -2,31 +2,30 @@ package ascentricClientDetails;
 
 public class Client {
 	
-	private Individual individualDetails;
-	private Product productDetails;
-	private Bank bankAccountDetails;
-	private Adviser financialAdviserDetails;
+	private IndividualDetails individualDetails;
+	private ProductDetails productDetails;
+	private BankAccountDetails bankAccountDetails;
+	private FinancialAdviserDetails financialAdviserDetails;
 	
-    public Client(){
-    	
-    }
     
-    public void fillIndividualDetails(){
+    public IndividualDetails getIndividualDetails(){
     	individualDetails = new IndividualDetails();
-    	individualDetails.fill();
+    	return individualDetails;
     }
     
-    public void fillBankAccountDetails(){
+    public BankAccountDetails getBankAccountDetails(){
     	bankAccountDetails = new BankAccountDetails();
-    	bankAccountDetails.fill();
+    	return bankAccountDetails;
     }
-    public void fillProductDetails(){
+    
+    public ProductDetails getProductDetails(){
     	productDetails = new ProductDetails();
-    	productDetails.fill();
+    	return productDetails;
     }
-    public void financialAdviserDetails(){
+    
+    public FinancialAdviserDetails getfinancialAdviserDetails(){
     	financialAdviserDetails = new FinancialAdviserDetails();
-    	financialAdviserDetails.fill();
+    	return financialAdviserDetails;
     }
 
 }

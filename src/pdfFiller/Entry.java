@@ -1,9 +1,9 @@
 package pdfFiller;
 
 import java.io.IOException;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import ascentricClientDetails.ClientInformation;
 import ascentricForm.AscentricForm;
 
 import com.itextpdf.text.DocumentException;
@@ -17,6 +17,7 @@ public class Entry {
 	public static void main(String[] args) throws DocumentException, IOException, SQLException{
 		
 		GetDatabase db = new ChinookDB();
+		ClientInformation theClient = new ClientInformation("Bob Harris");
 		
 		String[] formInfo = db.fetchInfoUsingID(58);
 				
@@ -27,7 +28,8 @@ public class Entry {
 		
 		AscentricForm ascentric = new AscentricForm();
 		
-		ascentric.fillIt("Bob Hoskins");
+		
+		ascentric.fillIt(theClient);
 		
 	}
 }

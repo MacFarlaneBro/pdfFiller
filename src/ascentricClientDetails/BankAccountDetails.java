@@ -1,6 +1,6 @@
 package ascentricClientDetails;
 
-public class BankAccountDetails implements Bank {
+public class BankAccountDetails{
 	
 	private String accountHolderNames;
 	private String bankAccountNumber;
@@ -110,11 +110,5 @@ public class BankAccountDetails implements Bank {
 	public void setStartDate(String startDate) {
 		this.startDate = startDate;
 	}
-	@Override
-	public void fill() {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	
+
 }

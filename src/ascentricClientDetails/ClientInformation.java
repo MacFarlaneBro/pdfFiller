@@ -5,9 +5,10 @@ public class ClientInformation {
 	private Client firstClient;
 	private Client secondClient;
 	private Client jointAccount;
+	private String clientNumber;
 	
 	public ClientInformation(String clientNumber){
-		
+		this.clientNumber = clientNumber;
 	}
 	
 	public Client getFirstClient() {

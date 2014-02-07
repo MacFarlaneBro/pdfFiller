@@ -2,6 +2,8 @@ package ascentricForm;
 
 import java.io.IOException;
 
+import ascentricClientDetails.ClientInformation;
+
 import com.itextpdf.text.DocumentException;
 
 public class AscentricPage8 extends AscentricPage {
@@ -11,7 +13,7 @@ public class AscentricPage8 extends AscentricPage {
 	private int app2Width = 320;
 
 	@Override
-	public void fillPage() throws IOException, DocumentException {
+	public void fillPage(ClientInformation theClient) throws IOException, DocumentException {
 		setUp(PAGENUMBER);
 		int applicants = 2;
 		applicant(app1Width);

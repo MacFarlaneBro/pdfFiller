@@ -2,6 +2,8 @@ package ascentricForm;
 
 import java.io.IOException;
 
+import ascentricClientDetails.ClientInformation;
+
 import com.itextpdf.text.DocumentException;
 
 public class AscentricPage3 extends AscentricPage{
@@ -37,7 +39,7 @@ public class AscentricPage3 extends AscentricPage{
 	protected int thirdPartyDepth = 228;
 	
 
-	public void fillPage() throws IOException, DocumentException {
+	public void fillPage(ClientInformation theClient) throws IOException, DocumentException {
 		setUp(pageNumber);
 		accessRights();
 		familyGroups(true, true);

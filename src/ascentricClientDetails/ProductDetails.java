@@ -1,6 +1,6 @@
 package ascentricClientDetails;
 
-public class ProductDetails  implements Product{
+public class ProductDetails{
 	
 	private String platformAccountNameChoice;
 	private Wrapper generalInvestmentAccount;
@@ -60,10 +60,5 @@ public class ProductDetails  implements Product{
 	public void setDiscretionaryWrapper(boolean discretionaryWrapper) {
 		this.discretionaryWrapper = discretionaryWrapper;
 	}
-	@Override
-	public void fill() {
-		// TODO Auto-generated method stub
-		
-	}
-	
+
 }

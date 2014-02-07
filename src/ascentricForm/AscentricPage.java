@@ -3,6 +3,8 @@ package ascentricForm;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import ascentricClientDetails.Client;
+
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Phrase;
@@ -27,6 +29,7 @@ public abstract class AscentricPage {
 	protected PdfReader reader;
 	protected PdfStamper stamper;
 	protected PdfContentByte canvas;
+	protected Client theClient;
 	
 	protected void stamp(int x, int y, String text){
 		ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, new Phrase(text), x, y, 0);
@@ -42,7 +45,7 @@ public abstract class AscentricPage {
 		 canvas = stamper.getOverContent(pageNumber);
 	}
 	
-	public abstract void fillPage() throws IOException, DocumentException;
+	public abstract void fillPage(Client theClient) throws IOException, DocumentException;
 	
 	protected void shutDown() throws DocumentException, IOException {
 		
@@ -51,5 +54,4 @@ public abstract class AscentricPage {
 		System.out.println("afterStamp");
 
 	}
-
 }

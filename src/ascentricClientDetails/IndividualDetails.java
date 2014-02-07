@@ -1,6 +1,6 @@
 package ascentricClientDetails;
 
-public class IndividualDetails implements Individual{
+public class IndividualDetails{
 	
 	private String title;
 	private String surname;
@@ -19,6 +19,7 @@ public class IndividualDetails implements Individual{
 	private String tin;
 	private String city;
 	private String country;
+	private String email;
 	private boolean onlineAccess;
 	private boolean enquiryOnly;
 	private boolean tradingAccess;
@@ -26,7 +27,9 @@ public class IndividualDetails implements Individual{
 	private boolean existingAccount;
 	private String exisingAcctRefNumber;
 	
-	
+	public void setEmail(String email){
+		this.email = email;
+	}
 	public String getTitle() {
 		return title;
 	}
@@ -165,9 +168,12 @@ public class IndividualDetails implements Individual{
 	public void setExisingAcctRefNumber(String exisingAcctRefNumber) {
 		this.exisingAcctRefNumber = exisingAcctRefNumber;
 	}
-	@Override
-	public void fill() {
-		// TODO Auto-generated method stub
+
+	public String getEmail() {
+		return email;
+	}
+	public boolean isSameDetails() {
 		
+		return false;
 	}
 }

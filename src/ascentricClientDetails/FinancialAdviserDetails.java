@@ -1,6 +1,6 @@
 package ascentricClientDetails;
 
-public class FinancialAdviserDetails implements Adviser {
+public class FinancialAdviserDetails{
 	private Charge initAdviser;
 	private Charge regContributions;
 	private Charge tradingCharge;
@@ -74,9 +74,5 @@ public class FinancialAdviserDetails implements Adviser {
 	public void setFaceToFaceContact(boolean faceToFaceContact) {
 		this.faceToFaceContact = faceToFaceContact;
 	}
-	@Override
-	public void fill() {
-		// TODO Auto-generated method stub
-		
-	}
+
 }

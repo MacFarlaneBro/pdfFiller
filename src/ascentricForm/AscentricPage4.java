@@ -2,6 +2,8 @@ package ascentricForm;
 
 import java.io.IOException;
 
+import ascentricClientDetails.ClientInformation;
+
 import com.itextpdf.text.DocumentException;
 
 /**
@@ -21,7 +23,7 @@ public class AscentricPage4 extends AscentricPage3{
 	
 	
 	@Override
-	public void fillPage() throws IOException, DocumentException{
+	public void fillPage(ClientInformation theClient) throws IOException, DocumentException{
 		setUp(pageNumber);
 		
 		//These three methods fill in the second Applicant form section

@@ -2,6 +2,8 @@ package ascentricForm;
 
 import java.io.IOException;
 
+import ascentricClientDetails.ClientInformation;
+
 import com.itextpdf.text.DocumentException;
 
 public class AscentricPage6 extends AscentricPage {
@@ -13,7 +15,7 @@ public class AscentricPage6 extends AscentricPage {
 	private int thirdColumnWidth = 220;
 	private int fourthColumnWidth = 412;
 	
-	public void fillPage() throws IOException, DocumentException {
+	public void fillPage(ClientInformation theClient) throws IOException, DocumentException {
 		setUp(PAGENUMBER);
 		boolean[] financialAdviserDetails = {true, true, true, true};
 		if(financialAdviserDetails[0]){

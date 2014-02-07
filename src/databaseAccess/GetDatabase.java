@@ -1,6 +1,5 @@
 package databaseAccess;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public interface GetDatabase {
