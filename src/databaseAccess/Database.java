@@ -16,22 +16,23 @@ public class Database implements GetDatabase{
 	protected String password;
 	protected Connection conn;
 	protected DatabaseMetaData md;
+	protected ResultSet rs;
 		
 	public void makeConnection() throws SQLException{
 		
       try {
-      Class.forName(driver).newInstance();
-      conn = DriverManager.getConnection(url + dbName,userName,password);
-      System.out.println("Connected to mySQL Database");
-      md = conn.getMetaData();
-      
-      showTables();
-      
-      
-      if(!conn.equals(null)){
-    	  conn.close();
-    	  System.out.println("disconnected from mySQL Database");
-      }
+	      Class.forName(driver).newInstance();
+	      conn = DriverManager.getConnection(url + dbName,userName,password);
+	      System.out.println("Connected to mySQL Database");
+	      md = conn.getMetaData();
+	      
+	      showTables();
+	      
+	      
+	      if(!conn.equals(null)){
+	    	  conn.close();
+	    	  System.out.println("disconnected from mySQL Database");
+	      }
       
       } catch (Exception e) {
     	  e.printStackTrace();
@@ -47,8 +48,14 @@ public class Database implements GetDatabase{
 	}
 
 		@Override
-		public ResultSet getDatabase(String artist){
-			ResultSet rs = null;
-			return rs;
+		public String[] fetchInfoUsingID(int idNumber) throws SQLException {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public int fetchInfoUsingName(String Name) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
+			// TODO Auto-generated method stub
+			return 0;
 		}
 }

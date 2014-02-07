@@ -1,6 +1,5 @@
 package databaseAccess;
 
-import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,42 +13,17 @@ public class ChinookDB extends Database{
 	    userName = "root"; 
 	}
 		
-	public void viewTable(Connection con, String dbName) throws SQLException{
-		Statement stmt = null;
-	    String query =
-	        "select *" +
-	        "from " + dbName + ".ARTISTS";
-
-	    try {
-	        stmt = con.createStatement();
-	        ResultSet rs = stmt.executeQuery(query);
-	        while (rs.next()) {
-	            String coffeeName = rs.getString("COF_NAME");
-	            int supplierID = rs.getInt("SUP_ID");
-	            float price = rs.getFloat("PRICE");
-	            int sales = rs.getInt("SALES");
-	            int total = rs.getInt("TOTAL");
-	            System.out.println(coffeeName + "\t" + supplierID +
-	                               "\t" + price + "\t" + sales +
-	                               "\t" + total);
-	        }
-	    } catch (SQLException e ) {
-	        e.printStackTrace();
-	    } finally {
-	        if (stmt != null) { stmt.close(); }
-	    }
-	}
-
 	public String getFirstLineOfArtist() throws SQLException {
 		Statement stmt = conn.createStatement();
 		ResultSet returner = stmt.executeQuery("SELECT *"
-				+ "FROM ARTIST where ArtistId % 5 = 2");
+				+ "FROM ARTIST where ArtistId = 1");
 		
+		String artist = null;
 		while(returner.next()){
-			 String artist = returner.getString("NAME");
+			 artist = returner.getString("NAME");
 			 System.out.println(artist);
 		}
-		return dbName;
+		return artist;
 	}
 
 	public void open() throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
@@ -58,10 +32,55 @@ public class ChinookDB extends Database{
 	    System.out.println("Connected to mySQL Database");
 	}
 
+	//This needs to be the last thing done, the result set is not a java object but rather a link retained to a relation
+	//created within the database, therefore when the connection is closed, the result set is lost, as such it seems it would
+	//be best to do all the work with the result set object in the Database package and then export the necessary information
+	//in an array or a list or something.
 	public void close() throws SQLException {
 		
 		conn.close();
 		System.out.println("closed");
+	}
+
+	public String[] fetchInfoUsingID(int idNumber) throws SQLException {
+		
+		try {
+			open();		
+			conn.createStatement();
+			Statement stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT *"
+					+ "FROM ARTIST where ArtistId =" + idNumber);
+			
+			
+			String[] moon = new String[(rs.last() ? rs.getRow(): 0)];
+					
+			for(int i = 0; i < moon.length; i++){
+				moon[i] = rs.getString("Name");
+			}
+
+			return moon;			
+		} catch (InstantiationException | IllegalAccessException
+				| ClassNotFoundException e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+		return null;
+	}
+	
+	@Override
+	public int fetchInfoUsingName(String name) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
+		open();
+		Statement stmt = conn.createStatement();
+		String query = "SELECT *"
+				+ "FROM ARTIST "
+				+ "where NAME =" + name;
+		rs = stmt.executeQuery(query);
+		int returner = 0;
+		while(rs.next()){
+			returner = rs.getInt("ArtistId");
+		}
+		return returner;
 	}
 
 
