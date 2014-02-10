@@ -7,7 +7,7 @@ public class ClientFactory implements MakeClients {
 	 */
 	@Override
 	public Client getFirstClient() {
-		Client firstClient = new Client("first");
+		Client firstClient = new Client("single");
 		return firstClient;
 	}
 	

@@ -30,6 +30,7 @@ public class AscentricPage3 extends AscentricPage{
 	
 	private String joint = "joint";
 	private String singleApp = "single";
+	private String second = "second";
 	
 
 	public void fillPage(Client theClient) throws IOException, DocumentException {
@@ -75,9 +76,11 @@ public class AscentricPage3 extends AscentricPage{
 	private void tradingAccess(String tradAcc) {
 		if(tradAcc.equals(joint)){
 			stamp(jointAccWidth, tradAccDepth, "X");
-		} else if(tradAcc.equals(singleApp)){
+		} 
+		if(tradAcc.equals(singleApp)){
 			stamp(singleAppWidth, tradAccDepth, "X");
-		} else {
+		} 
+		if(tradAcc.equals(second )) {
 			stamp(secondAppWidth, tradAccDepth, "X");
 		}
 	}
@@ -86,9 +89,11 @@ public class AscentricPage3 extends AscentricPage{
 	private void enquiryOnly(String enqOnly) {
 		if(enqOnly.equals(joint)){
 			stamp(jointAccWidth, enqOnlyDepth, "X");
-		} else if(enqOnly.equals(singleApp)){
+		}
+		if(enqOnly.equals(singleApp)){
 			stamp(singleAppWidth, enqOnlyDepth, "X");
-		} else {
+		} 
+		if(enqOnly.equals(second)) {
 			stamp(secondAppWidth, enqOnlyDepth, "X");
 		}
 	}
@@ -97,9 +102,11 @@ public class AscentricPage3 extends AscentricPage{
 	private void onlineAccess(String onAcc) {
 		if(onAcc.equals(joint)){
 			stamp(jointAccWidth, noAccDepth, "X");
-		} else if(onAcc.equals(singleApp)){
+		} 
+		if(onAcc.equals(singleApp)){
 			stamp(singleAppWidth, noAccDepth, "X");
-		} else {
+		} 
+		if(onAcc.equals(second)) {
 			stamp(secondAppWidth, noAccDepth, "X");
 		}
 	}
