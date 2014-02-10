@@ -35,7 +35,8 @@ public class AscentricPage3 extends AscentricPage{
 		this.theClient = theClient;
 		setUp(pageNumber);
 		accessRights(theClient.getIndividualDetails());
-		familyGroups(true, true);
+		familyGroups(theClient.getIndividualDetails().isFamilyGroup(),
+				theClient.getIndividualDetails().isExistingAccount());
 		firstOrSingle();
 		thirdParty();
 		shutDown();
@@ -46,7 +47,7 @@ public class AscentricPage3 extends AscentricPage{
 		if(moreThan1) stamp(jointAccWidth, famGroupDepth, "X");
 		if(ascLink){
 			stamp(jointAccWidth, famGroupDepth-23, "X");
-			stamp(315, famGroupDepth-67, "920292");
+			stamp(315, famGroupDepth-67, theClient.getIndividualDetails().getClientRef());
 		}
 		
 	}
