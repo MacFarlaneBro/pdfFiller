@@ -3,7 +3,6 @@ package ascentricForm;
 import java.io.IOException;
 
 import ascentricClientDetails.Client;
-import ascentricClientDetails.ClientInformation;
 import ascentricClientDetails.IndividualDetails;
 
 import com.itextpdf.text.DocumentException;

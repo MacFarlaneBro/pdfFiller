@@ -60,5 +60,19 @@ public class ProductDetails{
 	public void setDiscretionaryWrapper(boolean discretionaryWrapper) {
 		this.discretionaryWrapper = discretionaryWrapper;
 	}
+	public boolean isStocksAndSharesISA() {
+		if(stocksAndSharesISA != null){
+			return true;
+		} else {
+			return false;
+		}
+	}
+	public boolean isGeneralInvestmentAccount() {
+		if(generalInvestmentAccount != null){
+			return true;
+		} else {
+			return false;
+		}
+	}
 
 }

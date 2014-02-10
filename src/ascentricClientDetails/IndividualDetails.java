@@ -26,6 +26,7 @@ public class IndividualDetails{
 	private boolean familyGroup;
 	private boolean existingAccount;
 	private String exisingAcctRefNumber;
+	private boolean isSameDetails;
 
 	
 	public void setEmail(String email){
@@ -172,6 +173,11 @@ public class IndividualDetails{
 
 	public String getEmail() {
 		return email;
+	}
+	
+	public boolean isSameDetails() {
+		// TODO Auto-generated method stub
+		return isSameDetails;
 	}
 
 }

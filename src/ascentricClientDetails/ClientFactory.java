@@ -1,6 +1,6 @@
 package ascentricClientDetails;
 
-public class ClientInformation {
+public class ClientFactory {
 	
 	private Client firstClient;
 	private Client secondClient;
@@ -8,7 +8,7 @@ public class ClientInformation {
 	private Client nonSpecifiedInfo;
 	private String clientNumber;
 	
-	public ClientInformation(String clientNumber){
+	public ClientFactory(String clientNumber){
 		this.clientNumber = clientNumber;
 	}
 	

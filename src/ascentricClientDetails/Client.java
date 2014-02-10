@@ -10,8 +10,9 @@ public class Client {
 	
     
     public Client(String type) {
-		this.setClientType(type);
+		this.clientType = type;
 	}
+
 
 	public IndividualDetails getIndividualDetails(){
     	individualDetails = new IndividualDetails();

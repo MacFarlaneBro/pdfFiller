@@ -3,7 +3,7 @@ package ascentricForm;
 import java.io.IOException;
 
 import ascentricClientDetails.Client;
-import ascentricClientDetails.ClientInformation;
+import ascentricClientDetails.ClientFactory;
 import ascentricClientDetails.IndividualDetails;
 
 import com.itextpdf.text.DocumentException;
@@ -42,7 +42,7 @@ public class AscentricPage1 extends AscentricPage{
 		shutDown();
 	}
 	
-	public void tickBox(ClientInformation theClient){
+	public void tickBox(ClientFactory theClient){
 		if(!theClient.getJointAccount().equals(null)){
 			stamp(354, tickDepth, "X");
 		} else if(!theClient.getSecondClient().equals(null)){

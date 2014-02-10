@@ -3,8 +3,9 @@ package ascentricForm;
 import java.io.IOException;
 
 import ascentricClientDetails.Client;
-import ascentricClientDetails.ClientInformation;
 import ascentricClientDetails.IndividualDetails;
+import ascentricClientDetails.ProductDetails;
+import ascentricClientDetails.Wrapper;
 
 import com.itextpdf.text.DocumentException;
 
@@ -33,12 +34,16 @@ public class AscentricPage3 extends AscentricPage{
 
 	public void fillPage(Client theClient) throws IOException, DocumentException {
 		this.theClient = theClient;
+		IndividualDetails id = theClient.getIndividualDetails();
+		ProductDetails pd = theClient.getProductDetails();
 		setUp(pageNumber);
-		accessRights(theClient.getIndividualDetails());
-		familyGroups(theClient.getIndividualDetails().isFamilyGroup(),
-				theClient.getIndividualDetails().isExistingAccount());
-		firstOrSingle();
-		thirdParty();
+		accessRights(id);
+		familyGroups(id.isFamilyGroup(),
+				id.isExistingAccount());
+		if(theClient.getClientType().equals("first")){
+			firstOrSingleProduct(pd);
+			thirdParty(pd);
+		}
 		shutDown();
 	}
 
@@ -99,23 +104,23 @@ public class AscentricPage3 extends AscentricPage{
 		}
 	}
 
-	protected void firstOrSingle() {
+	protected void firstOrSingleProduct(ProductDetails pd) {
 		//fill platform account name field
-		stamp(315, firstSingleDepth , "Roger Rabbit");
+		stamp(315, firstSingleDepth , pd.getPlatformAccountNameChoice());
 		
 		//indicates which wrappers the client wishes to open
-		wrapper(true, true);
+		wrapper(pd.getGeneralInvestmentAccount(), pd.getStocksAndSharesISA());
 	}
 
-	protected void wrapper(boolean gia, boolean sas) {
-		if(gia)fillWrappers(1);
-		if(sas)fillWrappers(2);
+	protected void wrapper(Wrapper generalInvestment, Wrapper stocksAndShares) {
+		if(generalInvestment!= null)fillWrappers(generalInvestment, true);
+		if(stocksAndShares!= null)fillWrappers(stocksAndShares, false);
 		
 	}
 
-	protected void fillWrappers(int lineNumber) {
+	protected void fillWrappers(Wrapper wrapper, boolean isGeneralInvestment) {
 		int yAxis;
-		if(lineNumber ==1){
+		if(isGeneralInvestment){
 			yAxis = giaDepth;
 		} else {
 			yAxis = sasDepth ;
@@ -123,32 +128,43 @@ public class AscentricPage3 extends AscentricPage{
 		//Wrappers
 		stamp(wrapWidth, yAxis, "X");
 		//Cash
-		stamp(wrapWidth+30, yAxis, "999");
+		stamp(wrapWidth+30, yAxis,"" + wrapper.getCash());
 		//Source of funds
-		stamp(wrapWidth+85, yAxis, "999");
+		stamp(wrapWidth+85, yAxis, wrapper.getSourceOfFunds());
 		//Transfer/Approx
-		stamp(wrapWidth+150, yAxis, "999");
+		stamp(wrapWidth+150, yAxis, "" + wrapper.getCashToBeTransferred());
 		//Transfer/Assets
-		stamp(wrapWidth+215, yAxis, "999");
+		stamp(wrapWidth+215, yAxis,"" + wrapper.getAssetsToBeReregistered());
 		//Reserve Account
-		stamp(wrapWidth+275, yAxis, "999");
+		stamp(wrapWidth+275, yAxis, wrapper.getReserverAccount());
+		
 		//AdvWrapper
-		stamp(wrapWidth+350, yAxis, "X");
+		if(wrapper.isAdvisoryWrapper()){
+			stamp(wrapWidth+350, yAxis, "X");
+		}
+		
 		//DiscWrapper
-		stamp(wrapWidth+395, yAxis, "X");
+		if(wrapper.isDiscretionaryWrapper()){
+			stamp(wrapWidth+395, yAxis, "X");
+		}
 	}
 
-	protected void thirdParty() {
+	protected void thirdParty(ProductDetails pd) {
 		//Third Party Name
-		stamp(thirdPartyWidth, thirdPartyDepth, "Dave");
+		stamp(thirdPartyWidth, thirdPartyDepth, pd.getThirdPartyProductAccounts());
 		//Amount to be received
-		stamp(thirdPartyWidth+150, thirdPartyDepth, "99");
+		stamp(thirdPartyWidth+150, thirdPartyDepth,"" + pd.getAmountToBeReceived());
 		//source of funds
-		stamp(thirdPartyWidth+200, thirdPartyDepth, "cheques");
+		stamp(thirdPartyWidth+200, thirdPartyDepth, pd.getSourceOfFunds());
+		
 		//Advisory Wrapper
-		stamp(thirdPartyWidth+340, thirdPartyDepth, "X");
+		if(pd.isAdvisoryWrapper()){
+			stamp(thirdPartyWidth+340, thirdPartyDepth, "X");
+		}
 		//Discretionary Wrapper
-		stamp(thirdPartyWidth+440, thirdPartyDepth, "X");
+		if(pd.isDiscretionaryWrapper()){
+			stamp(thirdPartyWidth+440, thirdPartyDepth, "X");
+		}
 
 	}
 }

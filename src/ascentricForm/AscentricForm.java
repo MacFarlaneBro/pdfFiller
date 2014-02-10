@@ -2,7 +2,7 @@ package ascentricForm;
 
 import java.io.IOException;
 
-import ascentricClientDetails.ClientInformation;
+import ascentricClientDetails.ClientFactory;
 
 import com.itextpdf.text.DocumentException;
 
@@ -18,7 +18,7 @@ public class AscentricForm{
 	 * Fills the page chosen by the calling class
 	 * @return String address of the form with corresponding page filled
 	 */
-	public void fillIt(ClientInformation theClient) throws IOException, DocumentException {
+	public void fillIt(ClientFactory theClient) throws IOException, DocumentException {
 		
 		page = new AscentricPage1();
 		//This is an absurdly shitty lazy workaround, I'm going to have to change this some time soon
@@ -35,8 +35,8 @@ public class AscentricForm{
 		
 		page = new AscentricPage3();
 		page.fillPage(theClient.getFirstClient());//Filling in the separate access rights applying to each of the applicants if
-		if(!theClient.getSecondClient().equals(null)){
-			page.fillPage(theClient.getSecondClient());//they exist
+		if(!theClient.getSecondClient().equals(null)){//they exist
+			page.fillPage(theClient.getSecondClient());
 		}
 		if(!theClient.getJointAccount().equals(null)){
 			page.fillPage(theClient.getJointAccount());
