@@ -6,9 +6,14 @@ public class Client {
 	private ProductDetails productDetails;
 	private BankAccountDetails bankAccountDetails;
 	private FinancialAdviserDetails financialAdviserDetails;
+	private String clientType;
 	
     
-    public IndividualDetails getIndividualDetails(){
+    public Client(String type) {
+		this.setClientType(type);
+	}
+
+	public IndividualDetails getIndividualDetails(){
     	individualDetails = new IndividualDetails();
     	return individualDetails;
     }
@@ -27,6 +32,10 @@ public class Client {
     	financialAdviserDetails = new FinancialAdviserDetails();
     	return financialAdviserDetails;
     }
+
+	public String getClientType() {
+		return clientType;
+	}
 
 }
 

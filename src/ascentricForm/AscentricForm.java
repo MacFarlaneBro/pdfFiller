@@ -27,13 +27,21 @@ public class AscentricForm{
 		d.tickBox(theClient);
 		page.fillPage(theClient.getFirstClient());
 		
+		//If a second Client exists then the relevant information is filled in.
 		if(theClient.getSecondClient()!=null){
 			page = new AscentricPage2();
 			page.fillPage(theClient.getSecondClient());
 		}
 		
 		page = new AscentricPage3();
-		page.fillPage(theClient);
+		page.fillPage(theClient.getFirstClient());//Filling in the separate access rights applying to each of the applicants if
+		if(!theClient.getSecondClient().equals(null)){
+			page.fillPage(theClient.getSecondClient());//they exist
+		}
+		if(!theClient.getJointAccount().equals(null)){
+			page.fillPage(theClient.getJointAccount());
+		}
+		
 		page = new AscentricPage4();
 		page.fillPage(theClient);
 		page = new AscentricPage5();

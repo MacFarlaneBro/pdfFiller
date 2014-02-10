@@ -2,32 +2,21 @@ package ascentricForm;
 
 import java.io.IOException;
 
+import ascentricClientDetails.Client;
 import ascentricClientDetails.ClientInformation;
+import ascentricClientDetails.IndividualDetails;
 
 import com.itextpdf.text.DocumentException;
 
 public class AscentricPage3 extends AscentricPage{
 	
-	private String joint = "joint";
 	private int jointAccWidth = 527;
-
-	private String secondApp = "secondApp";
-	private int secondAppWidth = jointAccWidth - 63;
-	
-	private String singleApp = "singleApp";
+	private int secondAppWidth = jointAccWidth - 63; 
 	private int singleAppWidth = jointAccWidth - 126;
 
-	//These three strings and the strings above need to be sorted when I integrate
-	//the sql as they are just tester stand-ins.
-	private String onAcc = joint;
 	private int noAccDepth = 677;
-	
-	private String enqOnly = secondApp;
-	private int enqOnlyDepth = 657;
-	
-	private String tradAcc = singleApp;
+	private int enqOnlyDepth = 657;	
 	private int tradAccDepth = 637;
-	
 	private int famGroupDepth = 566;
 	
 	private int pageNumber = 3;
@@ -38,10 +27,14 @@ public class AscentricPage3 extends AscentricPage{
 	protected int thirdPartyWidth = 50;
 	protected int thirdPartyDepth = 228;
 	
+	private String joint = "joint";
+	private String singleApp = "single";
+	
 
-	public void fillPage(ClientInformation theClient) throws IOException, DocumentException {
+	public void fillPage(Client theClient) throws IOException, DocumentException {
+		this.theClient = theClient;
 		setUp(pageNumber);
-		accessRights();
+		accessRights(theClient.getIndividualDetails());
 		familyGroups(true, true);
 		firstOrSingle();
 		thirdParty();
@@ -57,11 +50,19 @@ public class AscentricPage3 extends AscentricPage{
 		}
 		
 	}
-
-	private void accessRights() {
-		onlineAccess(onAcc);
-		enquiryOnly(enqOnly);
-		tradingAccess(tradAcc);
+	
+	//Checks the access rights that each client possesses then passes the client type through to a stamping method
+	//to fill in the various tickboxes.
+	private void accessRights(IndividualDetails id) {
+		if(id.isOnlineAccess()){//if the client has online access rights
+			onlineAccess(theClient.getClientType());
+		}
+		if(id.isEnquiryOnly()){//if the client has enquiry only rights
+			enquiryOnly(theClient.getClientType());
+		}
+		if(id.isTradingAccess()){//if the client has trading access rights
+			tradingAccess(theClient.getClientType());
+		}
 	}
 	
 	//fills in the trading Access checkboxes

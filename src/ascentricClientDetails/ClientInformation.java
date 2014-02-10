@@ -5,6 +5,7 @@ public class ClientInformation {
 	private Client firstClient;
 	private Client secondClient;
 	private Client jointAccount;
+	private Client nonSpecifiedInfo;
 	private String clientNumber;
 	
 	public ClientInformation(String clientNumber){
@@ -12,17 +13,17 @@ public class ClientInformation {
 	}
 	
 	public Client getFirstClient() {
-		firstClient = new Client();
+		firstClient = new Client("first");
 		return firstClient;
 	}
 	
 	public Client getSecondClient() {
-		secondClient = new Client();
+		secondClient = new Client("second");
 		return secondClient;
 	}
 	
 	public Client getJointAccount() {
-		jointAccount = new Client();
+		jointAccount = new Client("joint");
 		return jointAccount;
 	}	
 	
