@@ -1,29 +1,31 @@
 package ascentricClientDetails;
 
-public class ClientFactory {
+public class ClientFactory implements MakeClients {
 	
-	private Client firstClient;
-	private Client secondClient;
-	private Client jointAccount;
-	private Client nonSpecifiedInfo;
-	private String clientNumber;
-	
-	public ClientFactory(String clientNumber){
-		this.clientNumber = clientNumber;
-	}
-	
+	/* (non-Javadoc)
+	 * @see ascentricClientDetails.MakeClients#getFirstClient()
+	 */
+	@Override
 	public Client getFirstClient() {
-		firstClient = new Client("first");
+		Client firstClient = new Client("first");
 		return firstClient;
 	}
 	
+	/* (non-Javadoc)
+	 * @see ascentricClientDetails.MakeClients#getSecondClient()
+	 */
+	@Override
 	public Client getSecondClient() {
-		secondClient = new Client("second");
+		Client secondClient = new Client("second");
 		return secondClient;
 	}
 	
+	/* (non-Javadoc)
+	 * @see ascentricClientDetails.MakeClients#getJointAccount()
+	 */
+	@Override
 	public Client getJointAccount() {
-		jointAccount = new Client("joint");
+		Client jointAccount = new Client("joint");
 		return jointAccount;
 	}	
 	

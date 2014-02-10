@@ -2,7 +2,7 @@ package ascentricForm;
 
 import java.io.IOException;
 
-import ascentricClientDetails.ClientFactory;
+import ascentricClientDetails.MakeClients;
 
 import com.itextpdf.text.DocumentException;
 
@@ -18,7 +18,7 @@ public class AscentricForm{
 	 * Fills the page chosen by the calling class
 	 * @return String address of the form with corresponding page filled
 	 */
-	public void fillIt(ClientFactory theClient) throws IOException, DocumentException {
+	public void fillIt(MakeClients theClient) throws IOException, DocumentException {
 		
 		page = new AscentricPage1();
 		//This is an absurdly shitty lazy workaround, I'm going to have to change this some time soon
@@ -59,13 +59,13 @@ public class AscentricForm{
 				page.fillPage(theClient.getSecondClient());
 			}
 		}
-		
-		page = new AscentricPage6();
-		page.fillPage(theClient);
-		page = new AscentricPage7();
-		page.fillPage(theClient);
-		page = new AscentricPage8();
-		page.fillPage(theClient);
+//		
+//		page = new AscentricPage6();
+//		page.fillPage(theClient);
+//		page = new AscentricPage7();
+//		page.fillPage(theClient);
+//		page = new AscentricPage8();
+//		page.fillPage(theClient);
 	}
 
 }

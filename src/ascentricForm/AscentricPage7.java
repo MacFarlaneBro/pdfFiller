@@ -2,7 +2,7 @@ package ascentricForm;
 
 import java.io.IOException;
 
-import ascentricClientDetails.ClientFactory;
+import ascentricClientDetails.makeClients;
 
 import com.itextpdf.text.DocumentException;
 
@@ -12,7 +12,7 @@ public class AscentricPage7 extends AscentricPage {
 	
 
 	@Override
-	public void fillPage(ClientFactory theClient) throws IOException, DocumentException {
+	public void fillPage(makeClients theClient) throws IOException, DocumentException {
 		setUp(PAGENUMBER);
 		tickFacetoFace();
 		declaration();

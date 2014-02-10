@@ -2,7 +2,7 @@ package ascentricForm;
 
 import java.io.IOException;
 
-import ascentricClientDetails.ClientFactory;
+import ascentricClientDetails.makeClients;
 
 import com.itextpdf.text.DocumentException;
 
@@ -16,7 +16,7 @@ public class AscentricPage5 extends AscentricPage {
 	private int bankDetailsWidth = 370;
 
 	
-	public void fillPage(ClientFactory theClient) throws IOException, DocumentException {
+	public void fillPage(ClientHolder theClient) throws IOException, DocumentException {
 		boolean secondSame = false;
 		setUp(PAGENUMBER);
 		//Sets the data to fill in the first applicant account details

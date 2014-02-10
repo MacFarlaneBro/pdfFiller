@@ -11,26 +11,25 @@ public class Client {
     
     public Client(String type) {
 		this.clientType = type;
+		individualDetails = new IndividualDetails();
+    	bankAccountDetails = new BankAccountDetails();
+    	productDetails = new ProductDetails();
+    	financialAdviserDetails = new FinancialAdviserDetails();
 	}
 
-
 	public IndividualDetails getIndividualDetails(){
-    	individualDetails = new IndividualDetails();
     	return individualDetails;
     }
     
     public BankAccountDetails getBankAccountDetails(){
-    	bankAccountDetails = new BankAccountDetails();
     	return bankAccountDetails;
     }
     
     public ProductDetails getProductDetails(){
-    	productDetails = new ProductDetails();
     	return productDetails;
     }
     
     public FinancialAdviserDetails getfinancialAdviserDetails(){
-    	financialAdviserDetails = new FinancialAdviserDetails();
     	return financialAdviserDetails;
     }
 

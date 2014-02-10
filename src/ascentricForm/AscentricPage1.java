@@ -3,8 +3,8 @@ package ascentricForm;
 import java.io.IOException;
 
 import ascentricClientDetails.Client;
-import ascentricClientDetails.ClientFactory;
 import ascentricClientDetails.IndividualDetails;
+import ascentricClientDetails.MakeClients;
 
 import com.itextpdf.text.DocumentException;
 
@@ -31,7 +31,7 @@ public class AscentricPage1 extends AscentricPage{
 		IndividualDetails id = theClient.getIndividualDetails();
 		setUp(PAGENUMBER);
 		fillPersonalDetails(id);	
-		if(id.getNationalInsuranceNumber().equals(null)){
+		if(id.getNationalInsuranceNumber()== null){
 			natInsurance(false);
 		} else {
 			fillNatInsure(id.getNationalInsuranceNumber());
@@ -42,10 +42,10 @@ public class AscentricPage1 extends AscentricPage{
 		shutDown();
 	}
 	
-	public void tickBox(ClientFactory theClient){
-		if(!theClient.getJointAccount().equals(null)){
+	public void tickBox(MakeClients theClient){
+		if(theClient.getJointAccount()!=null){//If a joint account is present
 			stamp(354, tickDepth, "X");
-		} else if(!theClient.getSecondClient().equals(null)){
+		} else if(theClient.getSecondClient()!=null){//If a second client is present
 			stamp(275, tickDepth, "X");
 		} else {
 			stamp(193, tickDepth, "X");
@@ -92,21 +92,25 @@ public class AscentricPage1 extends AscentricPage{
 	
 	protected void fillContactDetails(IndividualDetails id) {
 		//Home Telephone Number
-		stamp(contactWidth, contactDepth - 20, id.getHomeNumber());
+		stamp(contactWidth, contactDepth, id.getHomeNumber());
 		//Work Telephone Number
-		stamp(contactWidth, contactDepth - 40, id.getWorkNumber());
+		stamp(contactWidth, contactDepth - 20, id.getWorkNumber());
 		//Mobile Telephone Number
-		stamp(contactWidth, contactDepth - 60, id.getMobileNumber());
+		stamp(contactWidth, contactDepth - 40, id.getMobileNumber());
+		
+		//Splitting the address string
+		String[] addressParts = id.getAddress().split(":");
+		
+		int addPart = 60;
 		//Address
-		stamp(contactWidth, contactDepth - 80, id.getAddress());
-		//It's likely that I'll have to put in some kind of string splitting structure here but I'll cross that bridge
-		//when I invitably come to it
-//		stamp(contactWidth, contactDepth - 100, "07197165900");
-//		stamp(contactWidth, contactDepth - 120, "07197165900");
+		for(String part: addressParts){
+			stamp(contactWidth, contactDepth - addPart, part);
+			addPart+=20;
+		}
 		//Postcode
-		stamp(contactWidth, contactDepth - 140, id.getPostcode());
+		stamp(contactWidth, contactDepth - 120, id.getPostcode());
 		//E-mail
-		stamp(contactWidth, contactDepth - 160, id.getEmail());
+		stamp(contactWidth, contactDepth - 140, id.getEmail());
 	}
 
 	protected void natInsurance(boolean natIn){
