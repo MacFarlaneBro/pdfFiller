@@ -41,7 +41,7 @@ public class AscentricPage3 extends AscentricPage{
 		familyGroups(id.isFamilyGroup(),
 				id.isExistingAccount());
 		if(theClient.getClientType().equals("first")){
-			firstOrSingleProduct(pd);
+			applicantWrapperInfo(pd);
 			thirdParty(pd);
 		}
 		shutDown();
@@ -104,7 +104,7 @@ public class AscentricPage3 extends AscentricPage{
 		}
 	}
 
-	protected void firstOrSingleProduct(ProductDetails pd) {
+	protected void applicantWrapperInfo(ProductDetails pd) {
 		//fill platform account name field
 		stamp(315, firstSingleDepth , pd.getPlatformAccountNameChoice());
 		

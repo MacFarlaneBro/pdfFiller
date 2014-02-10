@@ -43,9 +43,23 @@ public class AscentricForm{
 		}
 		
 		page = new AscentricPage4();
-		page.fillPage(theClient);
+		if(!theClient.getSecondClient().equals(null)){//fills the product information on page 4 for the second applicant
+			page.fillPage(theClient.getSecondClient());//if they exist
+		}
+		if(!theClient.getJointAccount().equals(null)){//fills the product infromation on page 4 for the joint application
+			page.fillPage(theClient.getJointAccount());// if it exists
+		}
+		
 		page = new AscentricPage5();
-		page.fillPage(theClient);
+		if(!theClient.getJointAccount().equals(null)){
+			page.fillPage(theClient.getJointAccount());
+		} else {
+			page.fillPage(theClient.getFirstClient());
+			if(!theClient.getSecondClient().equals(null)){
+				page.fillPage(theClient.getSecondClient());
+			}
+		}
+		
 		page = new AscentricPage6();
 		page.fillPage(theClient);
 		page = new AscentricPage7();

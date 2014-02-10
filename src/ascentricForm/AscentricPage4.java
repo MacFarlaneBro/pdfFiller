@@ -2,7 +2,9 @@ package ascentricForm;
 
 import java.io.IOException;
 
+import ascentricClientDetails.Client;
 import ascentricClientDetails.ClientFactory;
+import ascentricClientDetails.ProductDetails;
 
 import com.itextpdf.text.DocumentException;
 
@@ -23,18 +25,23 @@ public class AscentricPage4 extends AscentricPage3{
 	
 	
 	@Override
-	public void fillPage(ClientFactory theClient) throws IOException, DocumentException{
+	public void fillPage(Client theClient) throws IOException, DocumentException{
 		setUp(pageNumber);
 		
-		//These three methods fill in the second Applicant form section
-		changeDepth(secondApplicantDepthIncrease);
-		firstOrSingle();
-		thirdParty();
+		//Setting the secondClients product details
+		ProductDetails pd = theClient.getProductDetails();
 		
+		//These three methods fill in the second Applicant product section
+		changeDepth(secondApplicantDepthIncrease);
+		applicantWrapperInfo(pd);
+		thirdParty(pd);
+		
+		//Setting the joint account product details
+		pd = theClient.getProductDetails();
 		//These three methods fill in the joint Applicant form section
 		changeDepth(jointApplicantDepthDecrease);
-		firstOrSingle();
-		thirdParty();
+		applicantWrapperInfo(pd);
+		thirdParty(pd);
 		shutDown();
 	}
 	
