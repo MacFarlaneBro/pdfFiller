@@ -175,6 +175,10 @@ public class IndividualDetails{
 		return email;
 	}
 	
+	public void setSameDetails(boolean isSame){
+		this.isSameDetails = isSame;
+	}
+	
 	public boolean isSameDetails() {
 		// TODO Auto-generated method stub
 		return isSameDetails;

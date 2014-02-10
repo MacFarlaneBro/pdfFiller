@@ -29,15 +29,18 @@ public class AscentricPage2 extends AscentricPage1{
 		setUp(PAGENUMBER);
 		IndividualDetails id = theClient.getIndividualDetails();
 		fillPersonalDetails(id);	
-		if(id.getNationalInsuranceNumber().equals(null)){
+		if(id.getNationalInsuranceNumber()==null){
 			natInsurance(false);
 		} else {
 			fillNatInsure(id.getNationalInsuranceNumber());
 		}
-		fillContactDetails(id);
+		if(id.isSameDetails()){
+			sameDetails(id.isSameDetails());
+		} else {
+			fillContactDetails(id);
+		}
 		usPerson(id.isUsPerson());
 		additionalInfo(id);
-		sameDetails(id.isSameDetails());
 		shutDown();
 		
 	}
