@@ -3,7 +3,7 @@ package ascentricForm;
 import java.io.IOException;
 
 import ascentricClientDetails.Client;
-import ascentricClientDetails.ClientFactory;
+import ascentricClientDetails.ClientHolder;
 import ascentricClientDetails.ProductDetails;
 
 import com.itextpdf.text.DocumentException;
@@ -58,6 +58,26 @@ public class AscentricPage4 extends AscentricPage3{
 			firstSingleDepth += applicant-15;
 		}		
 			sasDepth += applicant;
+	}
+	
+	/**
+	 * As information from all three potential clients is necessary on this page and the printing mechanism
+	 * wipes the page with every run, this additional fillPage method is used
+	 * 
+	 * @param theClient
+	 * @throws IOException
+	 * @throws DocumentException
+	 */
+	public void fillPage(ClientHolder theClient) throws IOException, DocumentException {
+		setUp(pageNumber);
+
+		Client[] clients = {theClient.getFirstClient(),
+				theClient.getSecondClient(),
+				theClient.getJointAccount()};
+		for(Client current:clients){
+			if(current != null) fillPage(current);
+		}
+		shutDown();
 	}
 
 }

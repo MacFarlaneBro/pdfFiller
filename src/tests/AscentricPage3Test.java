@@ -78,9 +78,7 @@ public class AscentricPage3Test {
 		fpd.setStocksAndSharesISA(sas);
 	}
 	
-	@Test//There is a bug here whereby if the fillpage method is called on
-	//more than one method in a row then the imprint of all but the last
-	//client are wiped for some reason
+	@Test
 	public void fillPage() throws IOException, DocumentException{
 		System.out.println(theClient.getFirstClient().getProductDetails().getGeneralInvestmentAccount().getCash());
 		thePage.fillPage(theClient);
