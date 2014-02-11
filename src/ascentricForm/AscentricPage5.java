@@ -2,7 +2,9 @@ package ascentricForm;
 
 import java.io.IOException;
 
-import ascentricClientDetails.makeClients;
+import ascentricClientDetails.BankAccountDetails;
+import ascentricClientDetails.Client;
+import ascentricClientDetails.ClientHolder;
 
 import com.itextpdf.text.DocumentException;
 
@@ -17,18 +19,33 @@ public class AscentricPage5 extends AscentricPage {
 
 	
 	public void fillPage(ClientHolder theClient) throws IOException, DocumentException {
-		boolean secondSame = false;
+		
 		setUp(PAGENUMBER);
-		//Sets the data to fill in the first applicant account details
-		accDetails(firstJointDepth);
+		
+		if(theClient.getFirstClient() != null){//If the account is not joint use the first client information
+			accDetails(theClient.getFirstClient().getBankAccountDetails());
+		} else {
+			accDetails(theClient.getJointAccount().getBankAccountDetails());
+		}
+		if(theClient.getSecondClient() != null){//If a second client without a joint account is present, fill in their details
+			accDetails(theClient.getSecondClient().getBankAccountDetails());
+		}
+		
 		//this little stamp selects whether the second applicants details
 		//are the same as those in the first.
-		secondApp(secondSame);
-		incomePayment();
+		secondApp(theClient.getSecondClient().getBankAccountDetails());
+		incomePayment(theClient.getFirstClient().getBankAccountDetails());
 		shutDown();
 	}
+	
+	@Override
+	public void fillPage(Client theClient) throws IOException,
+			DocumentException {
+		// TODO Auto-generated method stub
+		
+	}
 
-	private void incomePayment() {
+	private void incomePayment(BankAccountDetails bankAccountDetails) {
 		//Natural Income Payment Instructions
 		int firstColumnDepth = 270;
 		for(int i = 0; i < 3; i++){
@@ -65,45 +82,49 @@ public class AscentricPage5 extends AscentricPage {
 		}
 	}
 
-	private void accDetails(int depth) {
-		//as with other such arrays scattered about the code, these are stand ins
-		//for positional purposes until the SQL is working
-		int[] accountNumber = {1, 2, 3, 4, 5, 6, 7, 8};
-		int[] sortCode = {1,2,3,4,5,6};
-		String[] bankDetails = {"Natwest", "23 Geroge st", "oppenham", "Surrey", "NE4 TGH"};
+	private void accDetails(BankAccountDetails bad) {
+		
 		//Names of account holders
-		stamp(accDetailsWidth, depth, "Jenny");
-		stamp(accDetailsWidth, depth+ 20, "Jenny");
-		accountNumber(accountNumber, depth-37);
-		sortCode(sortCode, depth-70);
-		bankDetails(bankDetails, depth+19);
+		String[] names = bad.getAccountHolderNames().split(" ");
+		stamp(accDetailsWidth, firstJointDepth, names[0]);
+		stamp(accDetailsWidth, firstJointDepth+ 20, names[1]);
+		accountNumber(bad.getBankAccountNumber(), firstJointDepth-37);
+		sortCode(bad.getBranchSortCode(), firstJointDepth-70);
+		bankDetails(bad, firstJointDepth+19);
 	}
 
-	private void secondApp(boolean secondSame) {
-		if(secondSame){
+	private void secondApp(BankAccountDetails bad) {
+		if(bad.hasSameDetails()){//Checks to see whether the second applicants bank details are the same as the first
 			stamp(bankDetailsWidth-28, secondDepth+57, "X");
 		} else {
-			accDetails(secondDepth);
+			accDetails(bad);
 		}
 	}
 	
-	private void bankDetails(String[] bankDetails, int depth) {
-		for(int i = 0; i < 5; i++){
-			stamp(bankDetailsWidth, depth -(i*20), bankDetails[i]);
+	private void bankDetails(BankAccountDetails bad, int depth) {
+		//Bank Name
+		stamp(bankDetailsWidth, depth, bad.getBankName());
+		//Split the bank address into lines and then print them out
+		String[] bankAddress = bad.getBankAddress().split("/");
+		for(int i = 0; i < bankAddress.length; i++){
+			stamp(bankDetailsWidth, depth -(i*20), bankAddress[i]);
 		}
+		//Bank postcode
+		stamp(bankDetailsWidth, depth-80, bad.getBankPostCode());
+
 	}
 
-	private void sortCode(int[] sortCode, int depth) {
+	private void sortCode(String sortCode, int depth) {
 		int tempWidth = accDetailsWidth-20;
 		for(int i = 0; i <= 5; i++){
-			stamp(tempWidth+=22, depth, ""+ sortCode[i]);
+			stamp(tempWidth+=22, depth, ""+ sortCode.charAt(i));
 		}		
 	}
 
-	private void accountNumber(int[] accountNumber, int depth) {
+	private void accountNumber(String accNum, int depth) {
 		int tempWidth = accDetailsWidth-20;
-		for(int i = 0; i < 8; i++){
-			stamp(tempWidth+=21, depth, ""+ accountNumber[i]);
+		for(int i = 0; i < accNum.length(); i++){
+			stamp(tempWidth+=21, depth, ""+ accNum.charAt(i));
 		}
 		
 	}

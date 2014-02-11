@@ -18,50 +18,40 @@ import com.itextpdf.text.DocumentException;
 public class AscentricPage4 extends AscentricPage3{
 	
 	private int pageNumber = 4;
-	// the increase in depth required to access the second applicant form
-	private int secondApplicantDepthIncrease = 263;
-	// the decrease in depth required to access the joint applicant form
-	private int jointApplicantDepthDecrease = -300;
+	private int nameS = 690;
+	private int giaS = nameS-120;
+	private int sasS = nameS-143;
+	private int thirdS = nameS-200;
+	
+	private int nameJ = 370;
+	private int giaJ = nameJ-120;
+	private int sasJ = nameJ-143;
+	private int thirdJ = nameJ-180;
 	
 	
 	@Override
 	public void fillPage(Client theClient) throws IOException, DocumentException{
-		setUp(pageNumber);
 		
 		//Setting the secondClients product details
 		ProductDetails pd = theClient.getProductDetails();
-		
 		//These three methods fill in the second Applicant product section
-		changeDepth(secondApplicantDepthIncrease);
+		if(theClient.getClientType().equals("second")){
+			sasDepth = sasS;
+			giaDepth = giaS;
+			firstSingleDepth = nameS;
+			thirdPartyDepth = thirdS;
+		} else if(theClient.getClientType().equals("joint")){
+			sasDepth = sasJ;
+			giaDepth = giaJ;
+			firstSingleDepth = nameJ;
+			thirdPartyDepth = thirdJ;
+		}
 		applicantWrapperInfo(pd);
 		thirdParty(pd);
-		
-		//Setting the joint account product details
-		pd = theClient.getProductDetails();
-		//These three methods fill in the joint Applicant form section
-		changeDepth(jointApplicantDepthDecrease);
-		applicantWrapperInfo(pd);
-		thirdParty(pd);
-		shutDown();
-	}
-	
-	private void changeDepth(int applicant){
-		
-		thirdPartyDepth += applicant;
-		//This is a fairly dreadful workaround whereby as there is no general investment account option for joint accounts
-		//The line needs to not exist, therefore it is jettisoned off the page by adding 1000 to its depth
-		if(applicant > 0){ 
-			giaDepth += applicant;
-			firstSingleDepth += applicant;
-		} else {
-			giaDepth +=1000;
-			firstSingleDepth += applicant-15;
-		}		
-			sasDepth += applicant;
 	}
 	
 	/**
-	 * As information from all three potential clients is necessary on this page and the printing mechanism
+	 * As information from two potential client states is necessary on this page and the printing mechanism
 	 * wipes the page with every run, this additional fillPage method is used
 	 * 
 	 * @param theClient
@@ -70,13 +60,9 @@ public class AscentricPage4 extends AscentricPage3{
 	 */
 	public void fillPage(ClientHolder theClient) throws IOException, DocumentException {
 		setUp(pageNumber);
-
-		Client[] clients = {theClient.getFirstClient(),
-				theClient.getSecondClient(),
-				theClient.getJointAccount()};
-		for(Client current:clients){
-			if(current != null) fillPage(current);
-		}
+		
+		fillPage(theClient.getSecondClient());
+		fillPage(theClient.getJointAccount());
 		shutDown();
 	}
 

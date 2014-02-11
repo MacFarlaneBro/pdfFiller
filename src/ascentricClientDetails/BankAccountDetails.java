@@ -19,6 +19,7 @@ public class BankAccountDetails{
 	private String depositPayTiming;
 	private String regWithdrawlWrappers;
 	private String startDate;
+	private boolean sameDetails;
 	
 	public String getAccountHolderNames() {
 		return accountHolderNames;
@@ -109,6 +110,12 @@ public class BankAccountDetails{
 	}
 	public void setStartDate(String startDate) {
 		this.startDate = startDate;
+	}
+	public boolean hasSameDetails() {
+		return sameDetails;
+	}
+	public void setSameDetails(boolean same){
+		this.sameDetails = same;
 	}
 
 }

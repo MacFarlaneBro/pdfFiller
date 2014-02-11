@@ -8,7 +8,6 @@ import org.junit.Test;
 import ascentricClientDetails.ClientHolder;
 import ascentricClientDetails.ProductDetails;
 import ascentricClientDetails.Wrapper;
-import ascentricForm.AscentricPage3;
 import ascentricForm.AscentricPage4;
 
 import com.itextpdf.text.DocumentException;
@@ -24,11 +23,22 @@ public class AscentricPage4Test {
 		theClient.makeNewJointClient();
 
 		ProductDetails spd = theClient.getSecondClient().getProductDetails();
+		
+		Wrapper sas = new Wrapper();
+		sas.setCash(436426);
+		sas.setSourceOfFunds("BACS");
+		sas.setCashToBeTransferred(3984384);
+		sas.setAssetsToBeReregistered(839382);
+		sas.setReserverAccount("Account");
+		sas.setAdvisoryWrapper(true);
+		sas.setDiscretionaryWrapper(true);
+		spd.setStocksAndSharesISA(sas);
+		
 		ProductDetails jpd = theClient.getJointAccount().getProductDetails();
 		
 		setProductDetails(spd);
 		setProductDetails(jpd);
-		
+
 		fillPage();
 	}
 	
@@ -44,15 +54,11 @@ public class AscentricPage4Test {
 		gia.setDiscretionaryWrapper(true);
 		fpd.setGeneralInvestmentAccount(gia);
 		
-		Wrapper sas = new Wrapper();
-		sas.setCash(436426);
-		sas.setSourceOfFunds("BACS");
-		sas.setCashToBeTransferred(3984384);
-		sas.setAssetsToBeReregistered(839382);
-		sas.setReserverAccount("Account");
-		sas.setAdvisoryWrapper(true);
-		sas.setDiscretionaryWrapper(true);
-		fpd.setStocksAndSharesISA(sas);
+		fpd.setThirdPartyProductAccounts("Dooleys");
+		fpd.setAmountToBeReceived(839834);
+		fpd.setSourceOfFunds("Cheque");
+		fpd.setAdvisoryWrapper(true);
+		fpd.setDiscretionaryWrapper(true);	
 	}
 	
 	@Test

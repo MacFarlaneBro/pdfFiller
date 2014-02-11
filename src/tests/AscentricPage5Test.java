@@ -12,23 +12,28 @@ import com.itextpdf.text.DocumentException;
 import ascentricClientDetails.BankAccountDetails;
 import ascentricClientDetails.Client;
 import ascentricClientDetails.ClientFactory;
+import ascentricClientDetails.ClientHolder;
 import ascentricClientDetails.MakeClients;
 import ascentricForm.AscentricForm;
+import ascentricForm.AscentricPage5;
 
 public class AscentricPage5Test {
-	MakeClients theClient = new ClientFactory("Bob Hoskins");
+	
+	ClientHolder theClient = new ClientHolder();
+	AscentricPage5 thePage = new AscentricPage5();
 	
 	@Before
 	public void setUp() throws IOException, DocumentException{
-		Client first = theClient.getFirstClient();
-		BankAccountDetails bd = first.getBankAccountDetails();
-		setBankAccountDetails(bd);
-		AscentricForm form = new AscentricForm();
-		form.fillIt(theClient);
+		theClient.makeNewFirstClient();
+		theClient.makeNewSecondClient();
+		BankAccountDetails fbd = theClient.getFirstClient().getBankAccountDetails();
+		BankAccountDetails sbd = theClient.getSecondClient().getBankAccountDetails();
+		setBankAccountDetails(fbd);
+		setBankAccountDetails(sbd);
 	}
 	
 	private void setBankAccountDetails(BankAccountDetails bd) {
-		bd.setAccountHolderNames("Daniel");
+		bd.setAccountHolderNames("Daniel Orthodox");
 		bd.setBankAccountNumber("2949291");
 		bd.setBankAddress("23 Sutton road, Dumblefor, Yorkshire");
 		bd.setBankName("Natwest");
@@ -47,8 +52,8 @@ public class AscentricPage5Test {
 	}
 
 	@Test
-	public void testWrapperExistence(){
-		assertNotNull(theClient.getFirstClient().getProductDetails().getStocksAndSharesISA());
+	public void fillPage() throws IOException, DocumentException{
+		thePage.fillPage(theClient);
 	}
 
 }
