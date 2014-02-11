@@ -70,7 +70,7 @@ public class AscentricPage3Test {
 		Wrapper sas = new Wrapper();
 		sas.setCash(436426);
 		sas.setSourceOfFunds("BACS");
-		sas.setCashToBeTransferred(398429384);
+		sas.setCashToBeTransferred(3984384);
 		sas.setAssetsToBeReregistered(839382);
 		sas.setReserverAccount("Account");
 		sas.setAdvisoryWrapper(true);
@@ -83,9 +83,7 @@ public class AscentricPage3Test {
 	//client are wiped for some reason
 	public void fillPage() throws IOException, DocumentException{
 		System.out.println(theClient.getFirstClient().getProductDetails().getGeneralInvestmentAccount().getCash());
-		thePage.fillPage(theClient.getFirstClient());
-		thePage.fillPage(theClient.getSecondClient());
-		thePage.fillPage(theClient.getJointAccount());
+		thePage.fillPage(theClient);
 
 	}
 

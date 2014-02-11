@@ -3,6 +3,7 @@ package ascentricForm;
 import java.io.IOException;
 
 import ascentricClientDetails.Client;
+import ascentricClientDetails.ClientHolder;
 import ascentricClientDetails.IndividualDetails;
 import ascentricClientDetails.ProductDetails;
 import ascentricClientDetails.Wrapper;
@@ -36,16 +37,15 @@ public class AscentricPage3 extends AscentricPage{
 	public void fillPage(Client theClient) throws IOException, DocumentException {
 		this.theClient = theClient;
 		IndividualDetails id = theClient.getIndividualDetails();
-		ProductDetails pd = theClient.getProductDetails();
-		setUp(pageNumber);
+		ProductDetails pd = theClient.getProductDetails();		
 		accessRights(id);
 		familyGroups(id.isFamilyGroup(),
 				id.isExistingAccount());
-		if(theClient.getClientType().equals("first")){
+		if(theClient.getClientType().equals("single")){
+			System.out.println("The client type equalled first");
 			applicantWrapperInfo(pd);
 			thirdParty(pd);
-		}
-		shutDown();
+		}		
 	}
 
 	private void familyGroups(boolean moreThan1, boolean ascLink) {
@@ -135,15 +135,15 @@ public class AscentricPage3 extends AscentricPage{
 		//Wrappers
 		stamp(wrapWidth, yAxis, "X");
 		//Cash
-		stamp(wrapWidth+30, yAxis,"" + wrapper.getCash());
+		stamp(wrapWidth+25, yAxis,"" + wrapper.getCash());
 		//Source of funds
-		stamp(wrapWidth+85, yAxis, wrapper.getSourceOfFunds());
+		stamp(wrapWidth+77, yAxis, wrapper.getSourceOfFunds());
 		//Transfer/Approx
 		stamp(wrapWidth+150, yAxis, "" + wrapper.getCashToBeTransferred());
 		//Transfer/Assets
-		stamp(wrapWidth+215, yAxis,"" + wrapper.getAssetsToBeReregistered());
+		stamp(wrapWidth+212, yAxis,"" + wrapper.getAssetsToBeReregistered());
 		//Reserve Account
-		stamp(wrapWidth+275, yAxis, wrapper.getReserverAccount());
+		stamp(wrapWidth+260, yAxis, wrapper.getReserverAccount());
 		
 		//AdvWrapper
 		if(wrapper.isAdvisoryWrapper()){
@@ -173,5 +173,25 @@ public class AscentricPage3 extends AscentricPage{
 			stamp(thirdPartyWidth+440, thirdPartyDepth, "X");
 		}
 
+	}
+	
+	/**
+	 * As information from all three potential clients is necessary on this page and the printing mechanism
+	 * wipes the page with every run, this additional fillPage method is used
+	 * 
+	 * @param theClient
+	 * @throws IOException
+	 * @throws DocumentException
+	 */
+	public void fillPage(ClientHolder theClient) throws IOException, DocumentException {
+		setUp(pageNumber);
+
+		Client[] clients = {theClient.getFirstClient(),
+				theClient.getSecondClient(),
+				theClient.getJointAccount()};
+		for(Client current:clients){
+			if(current != null) fillPage(current);
+		}
+		shutDown();
 	}
 }
