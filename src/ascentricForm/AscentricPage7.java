@@ -2,7 +2,8 @@ package ascentricForm;
 
 import java.io.IOException;
 
-import ascentricClientDetails.makeClients;
+import ascentricClientDetails.Client;
+import ascentricClientDetails.ClientHolder;
 
 import com.itextpdf.text.DocumentException;
 
@@ -10,9 +11,7 @@ public class AscentricPage7 extends AscentricPage {
 
 	private static final int PAGENUMBER = 7;
 	
-
-	@Override
-	public void fillPage(makeClients theClient) throws IOException, DocumentException {
+	public void fillPage(ClientHolder theClient) throws IOException, DocumentException {
 		setUp(PAGENUMBER);
 		tickFacetoFace();
 		declaration();
@@ -54,6 +53,13 @@ public class AscentricPage7 extends AscentricPage {
 
 	private void tickFacetoFace() {
 		stamp(271, 477, "X");
+	}
+
+	@Override
+	public void fillPage(Client theClient) throws IOException,
+			DocumentException {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

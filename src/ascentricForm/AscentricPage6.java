@@ -2,7 +2,10 @@ package ascentricForm;
 
 import java.io.IOException;
 
-import ascentricClientDetails.makeClients;
+import ascentricClientDetails.Charge;
+import ascentricClientDetails.Client;
+import ascentricClientDetails.ClientHolder;
+import ascentricClientDetails.FinancialAdviserDetails;
 
 import com.itextpdf.text.DocumentException;
 
@@ -15,25 +18,25 @@ public class AscentricPage6 extends AscentricPage {
 	private int thirdColumnWidth = 220;
 	private int fourthColumnWidth = 412;
 	
-	public void fillPage(makeClients theClient) throws IOException, DocumentException {
+	public void fillPage(ClientHolder theClient) throws IOException, DocumentException {
 		setUp(PAGENUMBER);
-		boolean[] financialAdviserDetails = {true, true, true, true};
-		if(financialAdviserDetails[0]){
-			initAdvCharge();
+		FinancialAdviserDetails fad = theClient.getFirstClient().getfinancialAdviserDetails();
+		if(fad.getInitAdviser()!= null){
+			initAdvCharge(fad.getInitAdviser());
 		}
-		if(financialAdviserDetails[0]){
-			regContribCharge();
+		if(fad.getRegContributions()!= null){
+			regContribCharge(fad.getRegContributions());
 		}
-		if(financialAdviserDetails[0]){
-			tradingCharge();
+		if(fad.getTradingCharge()!= null){
+			tradingCharge(fad.getTradingCharge());
 		}
-		if(financialAdviserDetails[0]){
-			ongoingAdvCharge();
+		if(fad.getOngoingAdviser()!= null){
+			ongoingAdvCharge(fad.getOngoingAdviser());
 		}
 		shutDown();
 	}
 
-	private void ongoingAdvCharge() {
+	private void ongoingAdvCharge(Charge charge) {
 		int firstRowHeight = 404;
 		//Tick option selection
 		stamp(firstColumnWidth, firstRowHeight , "X");
@@ -55,7 +58,7 @@ public class AscentricPage6 extends AscentricPage {
 		
 	}
 
-	private void tradingCharge() {
+	private void tradingCharge(Charge charge) {
 			int firstRowHeight = 487;
 			//Tick option selection
 			stamp(firstColumnWidth, firstRowHeight , "X");
@@ -70,7 +73,7 @@ public class AscentricPage6 extends AscentricPage {
 			stamp(fourthColumnWidth, secondRowHeight, "X");	
 	}
 
-	private void regContribCharge() {
+	private void regContribCharge(Charge charge) {
 		int firstRowHeight = 565;
 		//Tick option selection
 		stamp(firstColumnWidth, firstRowHeight , "X");
@@ -82,7 +85,7 @@ public class AscentricPage6 extends AscentricPage {
 
 	}
 
-	private void initAdvCharge() {
+	private void initAdvCharge(Charge charge) {
 		int firstRowHeight = 668;
 		//Tick option selection
 		stamp(firstColumnWidth, firstRowHeight , "X");
@@ -99,5 +102,12 @@ public class AscentricPage6 extends AscentricPage {
 		stamp(fourthColumnWidth, secondRowHeight, "X");	
 		//C
 		stamp(fourthColumnWidth, secondRowHeight-25, "X");
+	}
+
+	@Override
+	public void fillPage(Client theClient) throws IOException,
+			DocumentException {
+		// TODO Auto-generated method stub
+		
 	}
 }

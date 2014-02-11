@@ -2,7 +2,8 @@ package ascentricForm;
 
 import java.io.IOException;
 
-import ascentricClientDetails.makeClients;
+import ascentricClientDetails.Client;
+import ascentricClientDetails.ClientHolder;
 
 import com.itextpdf.text.DocumentException;
 
@@ -12,8 +13,7 @@ public class AscentricPage8 extends AscentricPage {
 	private int app1Width = 50;
 	private int app2Width = 320;
 
-	@Override
-	public void fillPage(makeClients theClient) throws IOException, DocumentException {
+	public void fillPage(ClientHolder theClient) throws IOException, DocumentException {
 		setUp(PAGENUMBER);
 		int applicants = 2;
 		applicant(app1Width);
@@ -39,6 +39,13 @@ public class AscentricPage8 extends AscentricPage {
 				stamp(temp+=20, dateHeight, date.charAt(i) + "");
 			}
 		}
+	}
+
+	@Override
+	public void fillPage(Client theClient) throws IOException,
+			DocumentException {
+		// TODO Auto-generated method stub
+		
 	}
 	
 
