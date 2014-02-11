@@ -1,21 +1,15 @@
 package tests;
 
-import static org.junit.Assert.*;
-
 import java.io.IOException;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import com.itextpdf.text.DocumentException;
-
 import ascentricClientDetails.BankAccountDetails;
-import ascentricClientDetails.Client;
-import ascentricClientDetails.ClientFactory;
 import ascentricClientDetails.ClientHolder;
-import ascentricClientDetails.MakeClients;
-import ascentricForm.AscentricForm;
 import ascentricForm.AscentricPage5;
+
+import com.itextpdf.text.DocumentException;
 
 public class AscentricPage5Test {
 	
@@ -30,6 +24,13 @@ public class AscentricPage5Test {
 		BankAccountDetails sbd = theClient.getSecondClient().getBankAccountDetails();
 		setBankAccountDetails(fbd);
 		setBankAccountDetails(sbd);
+		
+		fbd.setNoIncomeWithdrawl(true);
+		fbd.setLeaveInIncomeAccount(true);
+		fbd.setRegWithdrawalAmount("3342");
+		fbd.setNatIncomePayTiming("Annually");
+		fbd.setRegWithdrawalPayTiming("Annually");
+		
 	}
 	
 	private void setBankAccountDetails(BankAccountDetails bd) {
@@ -39,12 +40,11 @@ public class AscentricPage5Test {
 		bd.setBankName("Natwest");
 		bd.setBankPostCode("YWD 4XP");
 		bd.setBranchSortCode("602847");
-		bd.setDepositPayTiming("3934234");
 		bd.setLeaveInIncomeAccount(true);
 		bd.setNatIncomeWrappers("Turnabout");
 		bd.setNoIncomeWithdrawl(false);
 		bd.setPaymentFromDeposit(999);
-		bd.setPayTiming("38439");
+		bd.setNatIncomePayTiming("38439");
 		bd.setRegWithdrawlWrappers("These are wrappers");
 		bd.setStartDate("30092014");
 		bd.setWithdrawNaturalIncome(true);

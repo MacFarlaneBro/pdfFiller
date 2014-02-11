@@ -20,6 +20,7 @@ public class BankAccountDetails{
 	private String regWithdrawlWrappers;
 	private String startDate;
 	private boolean sameDetails;
+	private String regWithdrawalAmount;
 	
 	public String getAccountHolderNames() {
 		return accountHolderNames;
@@ -84,7 +85,7 @@ public class BankAccountDetails{
 	public String getPayTiming() {
 		return payTiming;
 	}
-	public void setPayTiming(String payTiming) {
+	public void setNatIncomePayTiming(String payTiming) {
 		this.payTiming = payTiming;
 	}
 	public int getPaymentFromDeposit() {
@@ -96,7 +97,7 @@ public class BankAccountDetails{
 	public String getDepositPayTiming() {
 		return depositPayTiming;
 	}
-	public void setDepositPayTiming(String depositPayTiming) {
+	public void setRegWithdrawalPayTiming(String depositPayTiming) {
 		this.depositPayTiming = depositPayTiming;
 	}
 	public String getRegWithdrawlWrappers() {
@@ -116,6 +117,13 @@ public class BankAccountDetails{
 	}
 	public void setSameDetails(boolean same){
 		this.sameDetails = same;
+	}
+	public String getRegWithdrawalAmount() {
+		// TODO Auto-generated method stub
+		return regWithdrawalAmount;
+	}
+	public void setRegWithdrawalAmount(String regw){
+		this.regWithdrawalAmount = regw;
 	}
 
 }

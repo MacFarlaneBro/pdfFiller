@@ -23,17 +23,19 @@ public class AscentricPage5 extends AscentricPage {
 		setUp(PAGENUMBER);
 		
 		if(theClient.getFirstClient() != null){//If the account is not joint use the first client information
-			accDetails(theClient.getFirstClient().getBankAccountDetails());
+			accDetails(theClient.getFirstClient().getBankAccountDetails(), "first");
 		} else {
-			accDetails(theClient.getJointAccount().getBankAccountDetails());
-		}
-		if(theClient.getSecondClient() != null){//If a second client without a joint account is present, fill in their details
-			accDetails(theClient.getSecondClient().getBankAccountDetails());
+			accDetails(theClient.getJointAccount().getBankAccountDetails(), "joint");
 		}
 		
 		//this little stamp selects whether the second applicants details
 		//are the same as those in the first.
-		secondApp(theClient.getSecondClient().getBankAccountDetails());
+		System.out.println("Second Might be Null");
+		if(theClient.getSecondClient()!=null){
+			System.out.println("secondNotNull");
+			secondApp(theClient.getSecondClient().getBankAccountDetails());
+		}
+		
 		incomePayment(theClient.getFirstClient().getBankAccountDetails());
 		shutDown();
 	}
@@ -45,59 +47,93 @@ public class AscentricPage5 extends AscentricPage {
 		
 	}
 
-	private void incomePayment(BankAccountDetails bankAccountDetails) {
+	private void incomePayment(BankAccountDetails bad) {
 		//Natural Income Payment Instructions
 		int firstColumnDepth = 270;
-		for(int i = 0; i < 3; i++){
-			stamp(225, firstColumnDepth-= 20, "X");
+		
+		if(bad.isNoIncomeWithdrawl()){
+			stamp(225, firstColumnDepth-20, "X");
 		}
-		//Wrappers
-		stamp(95, 170, "A Wrapper");
-		int firstRowWidth = 10;
-		for(int i = 0; i < 4; i++){
-			stamp(firstRowWidth+=65, 148, "X");
+		if(bad.isLeaveInIncomeAccount()){
+			stamp(225, firstColumnDepth-40, "X");
+		}
+		if(bad.isWithdrawNaturalIncome()){
+			stamp(225, firstColumnDepth-60, "X");
 		}
 		
+
+		//National Income Payment Wrappers
+		stamp(95, 170, bad.getNatIncomeWrappers());
+		int firstRowWidth = 10;
+		if(bad.getPayTiming().equals("Quarterly")){
+			firstRowWidth+=65;
+		}
+		if(bad.getPayTiming().equals("HalfYearly")){
+			firstRowWidth+=130;
+		}
+		if(bad.getPayTiming().equals("Annually")){
+			firstRowWidth+=195;
+		}
+		stamp(firstRowWidth+=65, 148, "X");
 		//Regular Withdrawal Instructions
 		int rwiDepth = 254;
 		//Amount
-		stamp(482, rwiDepth, "100");
+		stamp(482, rwiDepth, bad.getRegWithdrawalAmount());
 		//TimeFrame
-		int secondRowWidth = 280;
-		for(int i = 0; i < 4; i++){
-			stamp(secondRowWidth+=65, 230, "X");
+		int secondRowWidth = 282;
+
+		//Regular WithdrawalWrappers
+		System.out.println(bad.getDepositPayTiming());
+		if(bad.getDepositPayTiming().equals("Monthly")){
+			secondRowWidth+=65;
 		}
-		//Wrappers
-		stamp(370, 208, "A Wrapper");
+		if(bad.getDepositPayTiming().equals("Quarterly")){
+			secondRowWidth+=130;
+		}
+		if(bad.getDepositPayTiming().equals("HalfYearly")){
+			secondRowWidth+=195;
+		}
+		if(bad.getDepositPayTiming().equals("Annually")){
+			secondRowWidth+=260;
+		}
+		stamp(370, 208, bad.getRegWithdrawlWrappers());
+		stamp(secondRowWidth, 229, "X");
 		
-		int[] startDate = {1,5,2,3,5,2,7,2};
+		
 		secondRowWidth = 350;
 		//StartDate
+		String startDate = bad.getStartDate();
 		for(int i = 0; i < 8; i++){
 			if(i == 2 ||i == 4){
-				stamp(secondRowWidth+=35, 188, ""+startDate[i]);
+				stamp(secondRowWidth+=35, 188,""+startDate.charAt(i));
 			} else {
-				stamp(secondRowWidth+=20, 188, ""+startDate[i]);
+				stamp(secondRowWidth+=20, 188,""+startDate.charAt(i));
 			}
 		}
 	}
 
-	private void accDetails(BankAccountDetails bad) {
-		
+	private void accDetails(BankAccountDetails bad, String ct) {
+		int depth;
+		if(ct.equals("first")){
+			depth = firstJointDepth;
+		} else {
+			depth = secondDepth;
+		}
+		System.out.println(depth);
 		//Names of account holders
 		String[] names = bad.getAccountHolderNames().split(" ");
-		stamp(accDetailsWidth, firstJointDepth, names[0]);
-		stamp(accDetailsWidth, firstJointDepth+ 20, names[1]);
-		accountNumber(bad.getBankAccountNumber(), firstJointDepth-37);
-		sortCode(bad.getBranchSortCode(), firstJointDepth-70);
-		bankDetails(bad, firstJointDepth+19);
+		stamp(accDetailsWidth, depth+20, names[0]);
+		stamp(accDetailsWidth, depth, names[1]);
+		accountNumber(bad.getBankAccountNumber(), depth-37);
+		sortCode(bad.getBranchSortCode(), depth-70);
+		bankDetails(bad, depth+19);
 	}
 
 	private void secondApp(BankAccountDetails bad) {
 		if(bad.hasSameDetails()){//Checks to see whether the second applicants bank details are the same as the first
 			stamp(bankDetailsWidth-28, secondDepth+57, "X");
 		} else {
-			accDetails(bad);
+			accDetails(bad, "second");
 		}
 	}
 	
@@ -105,9 +141,9 @@ public class AscentricPage5 extends AscentricPage {
 		//Bank Name
 		stamp(bankDetailsWidth, depth, bad.getBankName());
 		//Split the bank address into lines and then print them out
-		String[] bankAddress = bad.getBankAddress().split("/");
+		String[] bankAddress = bad.getBankAddress().split(",");
 		for(int i = 0; i < bankAddress.length; i++){
-			stamp(bankDetailsWidth, depth -(i*20), bankAddress[i]);
+			stamp(bankDetailsWidth, depth-20 -(i*20), bankAddress[i]);
 		}
 		//Bank postcode
 		stamp(bankDetailsWidth, depth-80, bad.getBankPostCode());
