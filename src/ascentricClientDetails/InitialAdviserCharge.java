@@ -1,6 +1,6 @@
 package ascentricClientDetails;
 
-public class InitialAdviserCharge{
+public class InitialAdviserCharge extends Charge{
 	
 	private int fixedAmount;
 	private boolean appCashLump;

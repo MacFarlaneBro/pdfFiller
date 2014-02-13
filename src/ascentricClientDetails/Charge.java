@@ -1,6 +1,6 @@
 package ascentricClientDetails;
 
-public abstract class Charge {
+public class Charge {
 	
 	protected boolean vatApplied;
 	protected int ofInvestment;
