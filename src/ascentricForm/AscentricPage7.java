@@ -51,7 +51,7 @@ public class AscentricPage7 extends AscentricPage {
 		stamp(temp, formHeight-206, fad.getDate().charAt(0) + "");
 		for(int i = 1; i < fad.getDate().length(); i++){
 			if(i %2 == 0 && i < 5){
-				stamp(temp+=35, formHeight-206, fad.getDate().charAt(i) + "");
+				//stamp(temp+=35, formHeight-206, fad.getDate().charAt(i) + "");
 			} else {
 				stamp(temp+=20, formHeight-206, fad.getDate().charAt(i) + "");
 			}
