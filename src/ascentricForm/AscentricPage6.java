@@ -6,6 +6,9 @@ import ascentricClientDetails.Charge;
 import ascentricClientDetails.Client;
 import ascentricClientDetails.ClientHolder;
 import ascentricClientDetails.FinancialAdviserDetails;
+import ascentricClientDetails.InitialAdviserCharge;
+import ascentricClientDetails.OngoingAdviserCharge;
+import ascentricClientDetails.TradingCharge;
 
 import com.itextpdf.text.DocumentException;
 
@@ -22,55 +25,70 @@ public class AscentricPage6 extends AscentricPage {
 		setUp(PAGENUMBER);
 		FinancialAdviserDetails fad = theClient.getFirstClient().getfinancialAdviserDetails();
 		if(fad.getInitAdviser()!= null){
-			initAdvCharge(fad.getInitAdviser());
+			initAdvCharge((InitialAdviserCharge) fad.getInitAdviser());
 		}
 		if(fad.getRegContributions()!= null){
 			regContribCharge(fad.getRegContributions());
 		}
 		if(fad.getTradingCharge()!= null){
-			tradingCharge(fad.getTradingCharge());
+			tradingCharge((TradingCharge)fad.getTradingCharge());
 		}
 		if(fad.getOngoingAdviser()!= null){
-			ongoingAdvCharge(fad.getOngoingAdviser());
+			ongoingAdvCharge((OngoingAdviserCharge) fad.getOngoingAdviser());
 		}
 		shutDown();
 	}
 
-	private void ongoingAdvCharge(Charge charge) {
+	private void ongoingAdvCharge(OngoingAdviserCharge oac) {
 		int firstRowHeight = 404;
 		//Tick option selection
 		stamp(firstColumnWidth, firstRowHeight , "X");
 		//VAT applied?
-		stamp(firstColumnWidth+150, firstRowHeight, "X");
+		if(oac.isVatApplied()){
+			stamp(firstColumnWidth+150, firstRowHeight, "X");
+		}
 		int secondRowHeight = 368;
 		//of investment
-		stamp(secondColumnWidth, secondRowHeight, "999");
+		stamp(secondColumnWidth, secondRowHeight,"" + oac.getOfInvestment());
 		//fixed amount
-		stamp(thirdColumnWidth, secondRowHeight, "999");
+		stamp(thirdColumnWidth, secondRowHeight,"" + oac.getAnnualFixedAmount());
 		//A
-		stamp(fourthColumnWidth, secondRowHeight+15, "X");
+		if(oac.isCollectives()){
+			stamp(fourthColumnWidth, secondRowHeight+15, "X");
+		}
 		//B
-		stamp(fourthColumnWidth, secondRowHeight-10, "X");	
+		if(oac.isCash()){
+			stamp(fourthColumnWidth, secondRowHeight-10, "X");
+		}
 		//C
-		stamp(fourthColumnWidth, secondRowHeight-32, "X");
+		if(oac.isStocksAndShares()){
+			stamp(fourthColumnWidth, secondRowHeight-32, "X");
+		}
 		//D
-		stamp(fourthColumnWidth, secondRowHeight-57, "X");
-		
+		if(oac.isNonCustodyAssets()){
+			stamp(fourthColumnWidth, secondRowHeight-57, "X");
+		}	
 	}
 
-	private void tradingCharge(Charge charge) {
-			int firstRowHeight = 487;
-			//Tick option selection
-			stamp(firstColumnWidth, firstRowHeight , "X");
-			//VAT applied?
+	private void tradingCharge(TradingCharge charge) {
+		int firstRowHeight = 487;
+		//Tick option selection
+		stamp(firstColumnWidth, firstRowHeight , "X");
+		//VAT applied?
+		if(charge.isVatApplied()){
 			stamp(firstColumnWidth+155, firstRowHeight, "X");
-			int secondRowHeight = 444;
-			//of investment
-			stamp(secondColumnWidth, secondRowHeight, "999");
-			//A
+		}
+		int secondRowHeight = 444;
+		//of investment
+		stamp(secondColumnWidth, secondRowHeight,"" + charge.getOfInvestment());
+		//A
+		if(charge.isSingleFundBuyTrades()){
 			stamp(fourthColumnWidth, secondRowHeight+23, "X");
-			//B
+		}
+		//B
+		if(charge.isSwitchFundBuyTrades()){
 			stamp(fourthColumnWidth, secondRowHeight, "X");	
+		}
 	}
 
 	private void regContribCharge(Charge charge) {
@@ -78,30 +96,40 @@ public class AscentricPage6 extends AscentricPage {
 		//Tick option selection
 		stamp(firstColumnWidth, firstRowHeight , "X");
 		//VAT applied?
-		stamp(firstColumnWidth+155, firstRowHeight, "X");
+		if(charge.isVatApplied()){
+			stamp(firstColumnWidth+155, firstRowHeight, "X");
+		}
 		int secondRowHeight = 530;
 		//of investment
-		stamp(secondColumnWidth, secondRowHeight, "999");
+		stamp(secondColumnWidth, secondRowHeight, "" + charge.getOfInvestment());
 
 	}
 
-	private void initAdvCharge(Charge charge) {
+	private void initAdvCharge(InitialAdviserCharge iac) {
 		int firstRowHeight = 668;
 		//Tick option selection
 		stamp(firstColumnWidth, firstRowHeight , "X");
 		//VAT applied?
-		stamp(firstColumnWidth+155, firstRowHeight, "X");
+		if(iac.isVatApplied()){
+			stamp(firstColumnWidth+155, firstRowHeight, "X");
+		}
 		int secondRowHeight = 620;
 		//of investment
-		stamp(secondColumnWidth, secondRowHeight, "999");
+		stamp(secondColumnWidth, secondRowHeight,"" + iac.getOfInvestment());
 		//fixed amount
-		stamp(thirdColumnWidth, secondRowHeight, "999");
+		stamp(thirdColumnWidth, secondRowHeight,"" + iac.getFixedAmount());
 		//A
-		stamp(fourthColumnWidth, secondRowHeight+25, "X");
+		if(iac.isAppCashLump()){
+			stamp(fourthColumnWidth, secondRowHeight+25, "X");
+		}
 		//B
-		stamp(fourthColumnWidth, secondRowHeight, "X");	
+		if(iac.isAppCashTransfer()){
+			stamp(fourthColumnWidth, secondRowHeight, "X");	
+		}
 		//C
-		stamp(fourthColumnWidth, secondRowHeight-25, "X");
+		if(iac.isAppStockTransfers()){
+			stamp(fourthColumnWidth, secondRowHeight-25, "X");
+		}
 	}
 
 	@Override
