@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.BorderLayout;
+import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -16,50 +17,42 @@ public class MainWindow {
 	public static void createGui(){
 		JFrame guiFrame = new JFrame();
 		
-		guiFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		guiFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//Closes the application on the closing of the window
 		guiFrame.setTitle("PDF Filler");
 		guiFrame.setSize(300, 250);
 		
 		guiFrame.setLocationRelativeTo(null);
 		
-		String[] fruitOptions = {"Ascentric"};
-		
-		String[] vegOptions = {"Automatic", "Manual"};
-		
+		String[] formDropDownOptions = {"Ascentric", "Standard Life", "Scottish Provident"};
+				
 		//The first JPanel contains a JLabel and a JCombobox
 		final JPanel comboPanel = new JPanel();
 		
 		JLabel comboLabel = new JLabel();
-		JComboBox fruits = new JComboBox(fruitOptions);
+		@SuppressWarnings({ "rawtypes", "unchecked" })
+		JComboBox formDropDown = new JComboBox(formDropDownOptions);
 		
 		//Adding the Label to the Panel
 		comboPanel.add(comboLabel);
-		comboPanel.add(fruits);
+		comboPanel.add(formDropDown);
 		
-		final JPanel listPanel = new JPanel();
+		TextField clientNumber = new TextField();
+				
+		comboPanel.add(formDropDown);
+		comboPanel.add(clientNumber);
 		
-		listPanel.setVisible(false);
-		JLabel listLabel = new JLabel("Vegetables");
-		JList vegs = new JList(vegOptions);
-		vegs.setLayoutOrientation(JList.HORIZONTAL_WRAP);
+		JButton fillFormButton = new JButton("Fill Form");
 		
-		comboPanel.add(listLabel);
-		comboPanel.add(vegs);
-		
-		JButton vegFruitBut = new JButton("Fill Form");
-		
-		vegFruitBut.addActionListener(new ActionListener(){
+		fillFormButton.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent event){
-				listPanel.setVisible(!listPanel.isVisible());
 				comboPanel.setVisible(!comboPanel.isVisible());
 			}
 
 		});
 		
 		guiFrame.add(comboPanel, BorderLayout.NORTH);
-		guiFrame.add(listPanel, BorderLayout.CENTER);
-		guiFrame.add(vegFruitBut, BorderLayout.SOUTH);
+		guiFrame.add(fillFormButton, BorderLayout.SOUTH);
 		
 		guiFrame.setVisible(true);
 		
