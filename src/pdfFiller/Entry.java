@@ -27,8 +27,8 @@ public class Entry {
 			i++;
 		}
 		
-		AscentricForm ascentric = new AscentricForm();
 		
+		AscentricForm ascentric = AscentricForm.INSTANCE;
 		
 		ascentric.fillIt(theClient);
 		

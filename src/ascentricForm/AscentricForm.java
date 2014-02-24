@@ -8,17 +8,22 @@ import com.itextpdf.text.DocumentException;
 
 /*
  * This Class is used to collate the necessary information on each client to successfully fill in an ascentric form
- * the information collected from SQL is then used by each of the pages in turn to from 
+ * the information collected from SQL is then used by each of the pages in turn to from.
+ * 
+ * The class has since been converted to an enum to enforce it as a singleton whilst allowing serializable access
+ * with maximum safety, as per Joshua Blochs advice in Item 3 of effective Java.
  */
-public class AscentricForm{
+public enum AscentricForm{
 	
-	private AscentricPage page;
+	INSTANCE;
 	
 	/*
 	 * Fills the page chosen by the calling class
 	 * @return String address of the form with corresponding page filled
 	 */
 	public void fillIt(MakeClients theClient) throws IOException, DocumentException {
+		
+		AscentricPage page;
 		
 		page = new AscentricPage1();
 		//This is an absurdly shitty lazy workaround, I'm going to have to change this some time soon
