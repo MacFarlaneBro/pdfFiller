@@ -27,7 +27,8 @@ public class ChinookDB extends Database{
 	}
 
 	public void open() throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
-		Class.forName(driver).newInstance();
+		//The variable driver seems to be implemented in the Database class
+		Class.forName(mySqlDriver).newInstance();
 	    conn = DriverManager.getConnection(url + dbName,userName,password);
 	    System.out.println("Connected to mySQL Database");
 	}

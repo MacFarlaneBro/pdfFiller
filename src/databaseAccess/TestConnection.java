@@ -16,29 +16,29 @@ public class TestConnection{
          * [portNumber] the port on servername to connect to, if not specified then default 1433 is used
          * [property]one or more optional connection properties
          */
-        db.dbConnect("jdbc:sqlserver://localhost:1433", "charlieb", "brodiec");
+        db.loadDriver();
     }
 }
 
-class DB{
+class DB extends Database{
+
+	public void loadDriver() {
+		try{
+			//This attempts to load the jdbc-odbc bridge driver which should be present on sun Jdk implementations
+			//Apparently ODBC is only present on windows systems so there you go
+			//Not only that but ODBC is going to be completely removed in Java 8 which seems like an odd move for 
+			//language famed for its purported backwards compatibility but there you go again.
+//			Class c = Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
+//			System.out.println("Loaded " + c);
+			
+			//Try to load an Oracle driver
+			Class d = Class.forName(msSqlDriver);
+			System.out.println("Loaded " + d);
+		} catch (ClassNotFoundException ex){
+			System.err.println(ex);
+		}
+		
+	}
 	
-	Connection conn;
-	
-    public void dbConnect(  String db_connect_string, 
-                            String db_userid, 
-                            String db_password) throws SQLException{
-        try{
-        Class.forName( "com.microsoft.sqlserver.jdbc.SQLServerDriver" );
-            Connection conn = DriverManager.getConnection(
-                            db_connect_string, 
-                        db_userid, 
-                        db_password);
-            System.out.println( "connected" );
-        }
-        catch( Exception e ){
-            e.printStackTrace();
-        } finally {
-        	conn.close();
-        }
-    }
+
 };

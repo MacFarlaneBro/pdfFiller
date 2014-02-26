@@ -23,7 +23,7 @@ import com.itextpdf.text.pdf.PdfStamper;
  * Each of the pages contains a series of integer values ending in either width, indicating their distance from the left margin of the page
  * or depth, indicating their distance from the bottom of the page.
  */
-public abstract class AscentricPage {
+public abstract class AscentricPage{
 	
 	public static final String FORM = "AscentricForm.pdf";
 	protected PdfReader reader;
