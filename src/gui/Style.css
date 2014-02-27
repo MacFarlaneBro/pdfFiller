@@ -8,16 +8,8 @@ and open the template in the editor.
     Author     : charliebrodie
 */
 
-.root{
-    -fx-background-image: url("background.jpg");
-}
-
 .label{
     -fx-font-size: 14px;
     -fx-font-weight: bold;
     -fx-text-fill: #333333;
-}
-
-.button:hover{
-    -fx-background-color: white;
 }

@@ -1,6 +1,5 @@
 package gui;
 
-import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -20,28 +19,32 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
  
-public class MainWindow extends Application {
-    public static void main(String[] args) {
-        launch(args);
-    }
+public class CurrentClient{
+    
+    private Stage primaryStage;
+    private Scene firstScene;
     
     /*
     The start method is the entry point for all javaFX applications, the main
     method is included only to meet requirements 
     */
-    @Override
-    public void start(Stage primaryStage) {
-        primaryStage.setTitle("JavaFX Welcome");
+    public void start(Stage primaryStage, Scene firstScene) {
+        this.firstScene = firstScene;
+        primaryStage.setTitle("PDF Filler 0.01");
+        GridPane grid = new GridPane();
+        grid.setHgap(15);
+        grid.setVgap(15);
         
-        GridPane grid = createStartForm(primaryStage);
-        
+        Scene thisScene = new Scene(grid);
+                
         createFormFields(grid);
         
-        createButton(grid);
-                
-//        grid.setGridLinesVisible(true);
+        createGetInfoButton(grid);
+        
+        createBackButton(grid);
 
-        primaryStage.show();
+//        grid.setGridLinesVisible(true);
+        primaryStage.setScene(thisScene);
     }
     
     /*
@@ -61,7 +64,7 @@ public class MainWindow extends Application {
         Scene scene = new Scene(grid, 350, 350);
         primaryStage.setScene(scene);
         scene.getStylesheets().add(
-                MainWindow.class//This must be the class that the stylesheet is styling
+                CurrentClient.class//This must be the class that the stylesheet is styling
                 .getResource("Style.css").toExternalForm());
         
         return grid;
@@ -80,7 +83,8 @@ public class MainWindow extends Application {
     */
     
     private void createFormFields(GridPane grid) {
-        Text sceneTitle = new Text("PDF Filler");
+        double fieldWidth = 120;
+        Text sceneTitle = new Text("Welcome to the PDF Filler mark 0.01");
         sceneTitle.setFont(Font.font("courier", FontWeight.NORMAL, 20));
         sceneTitle.setId("sceneTitle");
         grid.add(sceneTitle, 0, 0, 2, 1);
@@ -89,12 +93,13 @@ public class MainWindow extends Application {
         grid.add(pw, 0, 2);
         
         TextField clientTextField = new TextField();
+        clientTextField.setPrefWidth(fieldWidth);
         grid.add(clientTextField, 1, 2);
         
         Label formType = new Label("Choose Form Type");
         grid.add(formType, 0, 3);
         
-        //This list is to populate the combobox for debugging purposes
+        //List of form types
         ObservableList<String> formTypes =
             FXCollections.observableArrayList(
                     "Ascentric",
@@ -103,15 +108,30 @@ public class MainWindow extends Application {
             );
         
         ComboBox comboBox = new ComboBox(formTypes);
+        comboBox.setPrefWidth(fieldWidth);
+        grid.add(comboBox, 1, 3);
         
+        
+        Label fillMethod = new Label("Choose Fill Method");
+        grid.add(fillMethod, 0, 4);
+        
+        ObservableList<String> manAuto =
+        FXCollections.observableArrayList(
+                    "Manual",
+                    "Automatic"
+            );
+        
+        ComboBox manAutoBox = new ComboBox(manAuto);
+        manAutoBox.setPrefWidth(fieldWidth);
+        grid.add(manAutoBox, 1, 4);
     }
 
-    private void createButton(GridPane grid) {
+    private void createGetInfoButton(GridPane grid) {
         Button btn = new Button("Get Info");//Create button with the name sign in
         HBox hbBtn = new HBox(10);//Layout pane with 10 pixel spacing
         hbBtn.setAlignment(Pos.BOTTOM_RIGHT);
         hbBtn.getChildren().add(btn);
-        grid.add(hbBtn, 1, 4);
+        grid.add(hbBtn, 2, 5);
         
         final Text actionTarget = new Text();
         grid.add(actionTarget, 1, 6);
@@ -120,7 +140,23 @@ public class MainWindow extends Application {
             @Override
             public void handle(ActionEvent e){
                 actionTarget.setFill(Color.FIREBRICK);
-                actionTarget.setText("Sign in button Pressed");
+                actionTarget.setText("Finding Client");
+            }
+        });
+    }
+
+    private void createBackButton(GridPane grid) {
+        Button btn = new Button("Back");//Create button with the name sign in
+        HBox hbBtn = new HBox(10);//Layout pane with 10 pixel spacing
+        hbBtn.setAlignment(Pos.BOTTOM_LEFT);
+        hbBtn.getChildren().add(btn);
+        grid.add(hbBtn, 1, 5);
+        
+        btn.setOnAction(new EventHandler<ActionEvent>(){
+            
+            @Override
+            public void handle(ActionEvent e){
+                primaryStage.setScene(firstScene);
             }
         });
     }
