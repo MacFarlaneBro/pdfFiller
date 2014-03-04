@@ -6,6 +6,7 @@
 
 package gui;
 
+import ascentricGui.Page1;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -18,6 +19,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -34,7 +36,7 @@ public class Main extends Application{
     public static void main(String[] args){
         launch(args);
     }
-    private double fieldWidth;
+    private double fieldWidth = 100d;
 
 
     @Override
@@ -45,6 +47,7 @@ public class Main extends Application{
         primaryStage.initStyle(StageStyle.DECORATED);
         
         GridPane grid = new GridPane();
+        Scene firstScene = new Scene(grid, 300, 300, Color.WHITE);
         
         grid.setAlignment(Pos.CENTER);
         //sets the horizontal and vertical gaps around the border of the application
@@ -71,26 +74,30 @@ public class Main extends Application{
         ComboBox comboBox = new ComboBox(formTypes);
         comboBox.setPrefWidth(fieldWidth);
         grid.add(comboBox, 1, 3);
-          
-        grid.add(formType, 2, 4);
-     
+        
+        Button go = new Button("Go");
+        go.setPrefWidth(fieldWidth);
+        grid.add(go, 2, 3);
+        
+        setUpFormFiller(go);
+               
         primaryStage.show();
         this.firstScene = firstScene;
         
         primaryStage.setScene(firstScene);
-        firstScene.getStylesheets().add(
-                CurrentClient.class//This must be the class that the stylesheet is styling
-                .getResource("Style.css").toExternalForm());
+//        firstScene.getStylesheets().add(
+//                Page1.class//This must be the class that the stylesheet is styling
+//                .getResource("gui/Style.css").toExternalForm());
     }   
     
-    public void setUpExistingClientButton(Button btn){
-        CurrentClient client = new CurrentClient();
-        final Text actionTarget = new Text();
-        btn.setOnAction(new EventHandler<ActionEvent>(){
+    public void setUpFormFiller(Button btn){
+        Page1 client = new Page1();
+        final Text actionTarget = new Text(); 
+       btn.setOnAction(new EventHandler<ActionEvent>(){
             
             @Override
             public void handle(ActionEvent e){
-                CurrentClient client = new CurrentClient();
+                Page1 client = new Page1();
                 client.start(primaryStage, firstScene);
             }
         });

@@ -1,14 +1,11 @@
-package gui;
+package ascentricGui;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
@@ -19,7 +16,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
  
-public class CurrentClient{
+public class Page1{
     
     private Stage primaryStage;
     private Scene firstScene;
@@ -39,7 +36,7 @@ public class CurrentClient{
                 
         createFormFields(grid);
         
-        createGetInfoButton(grid);
+        autoFillClientInfo(grid);
         
         createBackButton(grid);
 
@@ -64,7 +61,7 @@ public class CurrentClient{
         Scene scene = new Scene(grid, 350, 350);
         primaryStage.setScene(scene);
         scene.getStylesheets().add(
-                CurrentClient.class//This must be the class that the stylesheet is styling
+                Page1.class//This must be the class that the stylesheet is styling
                 .getResource("Style.css").toExternalForm());
         
         return grid;
@@ -84,47 +81,55 @@ public class CurrentClient{
     
     private void createFormFields(GridPane grid) {
         double fieldWidth = 120;
-        Text sceneTitle = new Text("Welcome to the PDF Filler mark 0.01");
+        Text sceneTitle = new Text("Client Info");
         sceneTitle.setFont(Font.font("courier", FontWeight.NORMAL, 20));
         sceneTitle.setId("sceneTitle");
         grid.add(sceneTitle, 0, 0, 2, 1);
         
-        Label pw = new Label("Select Client");
-        grid.add(pw, 0, 2);
+        //Client Surname
+        Label surname = new Label("Surname");
+        grid.add(surname, 0, 2);
+        TextField clientSurname = new TextField();
+        clientSurname.setPrefWidth(fieldWidth);
+        grid.add(clientSurname, 1, 2);
         
-        TextField clientTextField = new TextField();
-        clientTextField.setPrefWidth(fieldWidth);
-        grid.add(clientTextField, 1, 2);
-
-        Label fillMethod = new Label("Choose Fill Method");
-        grid.add(fillMethod, 0, 4);
+        //Client First Name
+        Label firstName = new Label("First name");
+        grid.add(firstName, 0, 3);
+        TextField ClientFirstName = new TextField();
+        ClientFirstName.setPrefWidth(fieldWidth);
+        grid.add(ClientFirstName, 1, 3);
         
-        ObservableList<String> manAuto =
-        FXCollections.observableArrayList(
-                    "Manual",
-                    "Automatic"
-            );
+        //Client PostCode
+        Label postcode = new Label("Postcode");
+        grid.add(postcode, 0, 4);
+        TextField clientPostcode = new TextField();
+        clientPostcode.setPrefWidth(fieldWidth);
+        grid.add(clientPostcode, 1, 4);
         
-        ComboBox manAutoBox = new ComboBox(manAuto);
-        manAutoBox.setPrefWidth(fieldWidth);
-        grid.add(manAutoBox, 1, 4);
+        //Client Telephone Number
+        Label telNumber = new Label("Telephone Number");
+        grid.add(telNumber, 0, 5);
+        TextField clientTelNumber = new TextField();
+        clientTelNumber.setPrefWidth(fieldWidth);
+        grid.add(clientTelNumber, 1, 5);
     }
 
-    private void createGetInfoButton(GridPane grid) {
-        Button btn = new Button("Get Info");//Create button with the name sign in
+    private void autoFillClientInfo(GridPane grid) {
+        Button btn = new Button("Fill Personal Info");//Create button with the name sign in
         HBox hbBtn = new HBox(10);//Layout pane with 10 pixel spacing
         hbBtn.setAlignment(Pos.BOTTOM_RIGHT);
         hbBtn.getChildren().add(btn);
-        grid.add(hbBtn, 2, 5);
+        grid.add(hbBtn, 2, 2);
         
         final Text actionTarget = new Text();
-        grid.add(actionTarget, 1, 6);
+        grid.add(actionTarget, 2, 7);
         btn.setOnAction(new EventHandler<ActionEvent>(){
             
             @Override
             public void handle(ActionEvent e){
                 actionTarget.setFill(Color.FIREBRICK);
-                actionTarget.setText("Finding Client");
+                actionTarget.setText("Finding Client...");
             }
         });
     }
@@ -134,7 +139,7 @@ public class CurrentClient{
         HBox hbBtn = new HBox(10);//Layout pane with 10 pixel spacing
         hbBtn.setAlignment(Pos.BOTTOM_LEFT);
         hbBtn.getChildren().add(btn);
-        grid.add(hbBtn, 1, 5);
+        grid.add(hbBtn, 1, 6);
         
         btn.setOnAction(new EventHandler<ActionEvent>(){
             
@@ -144,7 +149,4 @@ public class CurrentClient{
             }
         });
     }
-
-    
-    
 }
