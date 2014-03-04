@@ -5,8 +5,6 @@ import java.io.IOException;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.itextpdf.text.DocumentException;
-
 import ascentricClientDetails.Charge;
 import ascentricClientDetails.Client;
 import ascentricClientDetails.ClientHolder;
@@ -15,6 +13,8 @@ import ascentricClientDetails.InitialAdviserCharge;
 import ascentricClientDetails.OngoingAdviserCharge;
 import ascentricClientDetails.TradingCharge;
 import ascentricForm.AscentricPage6;
+
+import com.itextpdf.text.DocumentException;
 
 public class AscentricPage6Test {
 	

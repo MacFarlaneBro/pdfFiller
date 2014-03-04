@@ -1,8 +1,9 @@
 package ascentricGui;
 
+import java.sql.SQLException;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -15,11 +16,15 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import databaseAccess.GetDatabase;
+import databaseAccess.MSSQLDatabase;
  
 public class Page1{
     
     private Stage primaryStage;
     private Scene firstScene;
+    private TextField clientSurname;
+    private TextField clientFirstName;
     
     /*
     The start method is the entry point for all javaFX applications, the main
@@ -43,29 +48,7 @@ public class Page1{
 //        grid.setGridLinesVisible(true);
         primaryStage.setScene(thisScene);
     }
-    
-    /*
-    When attaching a css file to a JavaFx Gui it must be attached to each
-    individual scene, thus allowing a different layout for each 
-    */
 
-    private GridPane createStartForm(Stage primaryStage) {
-        
-        GridPane grid = new GridPane();
-        grid.setAlignment(Pos.CENTER);
-        //sets the horizontal and vertical gaps around the border of the application
-        grid.setHgap(10);
-        grid.setVgap(10);
-        grid.setPadding(new Insets(25, 25, 25, 25));
-        
-        Scene scene = new Scene(grid, 350, 350);
-        primaryStage.setScene(scene);
-        scene.getStylesheets().add(
-                Page1.class//This must be the class that the stylesheet is styling
-                .getResource("Style.css").toExternalForm());
-        
-        return grid;
-    }
     
     /*
     the numbers in the grid.add() method specify the number of rows and columns
@@ -89,16 +72,16 @@ public class Page1{
         //Client Surname
         Label surname = new Label("Surname");
         grid.add(surname, 0, 2);
-        TextField clientSurname = new TextField();
+        clientSurname = new TextField();
         clientSurname.setPrefWidth(fieldWidth);
         grid.add(clientSurname, 1, 2);
         
         //Client First Name
         Label firstName = new Label("First name");
         grid.add(firstName, 0, 3);
-        TextField ClientFirstName = new TextField();
-        ClientFirstName.setPrefWidth(fieldWidth);
-        grid.add(ClientFirstName, 1, 3);
+        clientFirstName = new TextField();
+        clientFirstName.setPrefWidth(fieldWidth);
+        grid.add(clientFirstName, 1, 3);
         
         //Client PostCode
         Label postcode = new Label("Postcode");
@@ -128,13 +111,32 @@ public class Page1{
             
             @Override
             public void handle(ActionEvent e){
-                actionTarget.setFill(Color.FIREBRICK);
+                actionTarget.setFill(Color.BLUE);
                 actionTarget.setText("Finding Client...");
+                
+                try {
+					accessDatabase();
+				} catch (InstantiationException | IllegalAccessException
+						| ClassNotFoundException | SQLException e1) {
+					// TODO Auto-generated catch block
+					System.out.println("Error, Could Not Access Database");
+					e1.printStackTrace();
+					actionTarget.setFill(Color.FIREBRICK);
+					actionTarget.setText("Problem Accessing Database, Please check connection and retry");
+				}
             }
         });
     }
 
-    private void createBackButton(GridPane grid) {
+    protected void accessDatabase() throws InstantiationException,
+    IllegalAccessException, ClassNotFoundException, SQLException {
+		GetDatabase db = new MSSQLDatabase();
+		
+		db.fetchInfoUsingName(clientSurname.getText() + "," + clientFirstName.getText());
+		
+	}
+
+	private void createBackButton(GridPane grid) {
         Button btn = new Button("Back");//Create button with the name sign in
         HBox hbBtn = new HBox(10);//Layout pane with 10 pixel spacing
         hbBtn.setAlignment(Pos.BOTTOM_LEFT);

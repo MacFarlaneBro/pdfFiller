@@ -6,7 +6,6 @@
 
 package gui;
 
-import ascentricGui.Page1;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -23,6 +22,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import ascentricGui.Page1;
 
 /**
  *
@@ -36,8 +36,8 @@ public class Main extends Application{
     public static void main(String[] args){
         launch(args);
     }
+    
     private double fieldWidth = 100d;
-
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -71,7 +71,8 @@ public class Main extends Application{
                     "Scot Prov"
             );
         
-        ComboBox comboBox = new ComboBox(formTypes);
+        ComboBox<String> comboBox = 
+        		new ComboBox<String>(formTypes);
         comboBox.setPrefWidth(fieldWidth);
         grid.add(comboBox, 1, 3);
         
@@ -90,7 +91,7 @@ public class Main extends Application{
 //                .getResource("gui/Style.css").toExternalForm());
     }   
     
-    public void setUpFormFiller(Button btn){
+	public void setUpFormFiller(Button btn){
         Page1 client = new Page1();
         final Text actionTarget = new Text(); 
        btn.setOnAction(new EventHandler<ActionEvent>(){

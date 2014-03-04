@@ -5,12 +5,12 @@ import java.io.IOException;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.itextpdf.text.DocumentException;
-
 import ascentricClientDetails.Client;
 import ascentricClientDetails.ClientHolder;
 import ascentricClientDetails.FinancialAdviserDetails;
 import ascentricForm.AscentricPage7;
+
+import com.itextpdf.text.DocumentException;
 
 public class AscentricPage7Test {
 	

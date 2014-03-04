@@ -20,7 +20,7 @@ public interface GetDatabase {
 	 * @throws IllegalAccessException 
 	 * @throws InstantiationException 
 	 */
-	public int fetchInfoUsingName(String Name) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException;
+	public String[] fetchInfoUsingName(String Name) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException;
 
 
 }

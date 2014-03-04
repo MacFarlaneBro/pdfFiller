@@ -7,10 +7,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 
-public class Database implements GetDatabase{
+public class MSSQLDatabase implements GetDatabase{
 	
 	protected String url =  "jdbc:mysql://localhost:3306/";
-	protected String driver = "com.mysql.jdbc.Driver";
+	protected String driver = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
 	protected String dbName;
 	protected String userName;
 	protected String password;
@@ -18,16 +18,15 @@ public class Database implements GetDatabase{
 	protected DatabaseMetaData md;
 	protected ResultSet rs;
 		
-	public void makeConnection() throws SQLException{
+	private void getPersonalDetails(String Name) throws SQLException{
 		
       try {
 	      Class.forName(driver).newInstance();
 	      conn = DriverManager.getConnection(url + dbName,userName,password);
-	      System.out.println("Connected to mySQL Database");
+	      System.out.println("Connected to MSSQL Database");
 	      md = conn.getMetaData();
 	      
 	      showTables();
-	      
 	      
 	      if(!conn.equals(null)){
 	    	  conn.close();
@@ -54,8 +53,8 @@ public class Database implements GetDatabase{
 		}
 
 		@Override
-		public int fetchInfoUsingName(String Name) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
-			// TODO Auto-generated method stub
-			return 0;
+		public String[] fetchInfoUsingName(String Name) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
+			getPersonalDetails(Name);
+			return null;
 		}
 }
