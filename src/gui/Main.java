@@ -7,12 +7,16 @@
 package gui;
 
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -30,6 +34,7 @@ public class Main extends Application{
     public static void main(String[] args){
         launch(args);
     }
+    private double fieldWidth;
 
 
     @Override
@@ -51,39 +56,32 @@ public class Main extends Application{
         sceneTitle.setId("sceneTitle");
         sceneTitle.setLayoutX(20);
         grid.add(sceneTitle, 0, 0, 3, 1);
+
+        Label formType = new Label("Choose Form Type");
+        grid.add(formType, 0, 3);
         
-        Button newClient = new Button("New Client");
-        newClient.setMinWidth(100);
-        setUpNewClientButton(newClient);
-        Button existingClient = new Button("Existing Client");
-        setUpExistingClientButton(existingClient);
-        Scene firstScene = new Scene(grid, 420, 400);
+        //List of form types
+        ObservableList<String> formTypes =
+            FXCollections.observableArrayList(
+                    "Ascentric",
+                    "Standard Life",
+                    "Scot Prov"
+            );
+        
+        ComboBox comboBox = new ComboBox(formTypes);
+        comboBox.setPrefWidth(fieldWidth);
+        grid.add(comboBox, 1, 3);
+          
+        grid.add(formType, 2, 4);
+     
+        primaryStage.show();
+        this.firstScene = firstScene;
         
         primaryStage.setScene(firstScene);
         firstScene.getStylesheets().add(
                 CurrentClient.class//This must be the class that the stylesheet is styling
                 .getResource("Style.css").toExternalForm());
-
-//        grid.setGridLinesVisible(true);
-        
-        grid.add(newClient, 1, 4);
-        grid.add(existingClient, 2, 4);
-                
-        primaryStage.show();
-        this.firstScene = firstScene;
-
     }   
-    
-    public void setUpNewClientButton(Button btn){
-        final Text actionTarget = new Text();
-        btn.setOnAction(new EventHandler<ActionEvent>(){
-            
-            @Override
-            public void handle(ActionEvent e){
-                NewClient client = new NewClient();
-            }
-        });
-    }
     
     public void setUpExistingClientButton(Button btn){
         CurrentClient client = new CurrentClient();

@@ -95,23 +95,7 @@ public class CurrentClient{
         TextField clientTextField = new TextField();
         clientTextField.setPrefWidth(fieldWidth);
         grid.add(clientTextField, 1, 2);
-        
-        Label formType = new Label("Choose Form Type");
-        grid.add(formType, 0, 3);
-        
-        //List of form types
-        ObservableList<String> formTypes =
-            FXCollections.observableArrayList(
-                    "Ascentric",
-                    "Standard Life",
-                    "Scot Prov"
-            );
-        
-        ComboBox comboBox = new ComboBox(formTypes);
-        comboBox.setPrefWidth(fieldWidth);
-        grid.add(comboBox, 1, 3);
-        
-        
+
         Label fillMethod = new Label("Choose Fill Method");
         grid.add(fillMethod, 0, 4);
         
