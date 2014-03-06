@@ -20,7 +20,7 @@ public class TestConnection{
     }
 }
 
-class DB extends Database{
+class DB extends MSSQLDatabase{
 
 	public void loadDriver() {
 		try{

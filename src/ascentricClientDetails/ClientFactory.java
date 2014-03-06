@@ -7,8 +7,8 @@ public class ClientFactory implements MakeClients {
 	 */
 	@Override
 	public Client getFirstClient() {
-		
-		return new Client("single");
+		Client firstClient = new Client("single");
+		return firstClient;
 	}
 	
 	/* (non-Javadoc)
@@ -16,8 +16,8 @@ public class ClientFactory implements MakeClients {
 	 */
 	@Override
 	public Client getSecondClient() {
-		
-		return new Client("second");
+		Client secondClient = new Client("second");
+		return secondClient;
 	}
 	
 	/* (non-Javadoc)
@@ -25,8 +25,8 @@ public class ClientFactory implements MakeClients {
 	 */
 	@Override
 	public Client getJointAccount() {
-		
-		return new Client("joint");
+		Client jointAccount = new Client("joint");
+		return jointAccount;
 	}	
 	
 }
