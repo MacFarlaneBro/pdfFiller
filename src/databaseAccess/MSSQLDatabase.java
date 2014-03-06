@@ -9,7 +9,7 @@ import java.sql.SQLException;
 
 public class MSSQLDatabase implements GetDatabase{
 	
-	protected String url =  "jdbc:mysql://localhost:3306/";
+	protected String url =  "jdbc:sqlserver://localhost;databaseName=Main1st;integratedSecurity=true";
 	protected String driver = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
 	protected String dbName;
 	protected String userName;
@@ -22,7 +22,7 @@ public class MSSQLDatabase implements GetDatabase{
 		
       try {
 	      Class.forName(driver).newInstance();
-	      conn = DriverManager.getConnection(url + dbName,userName,password);
+	      conn = DriverManager.getConnection(url);
 	      System.out.println("Connected to MSSQL Database");
 	      md = conn.getMetaData();
 	      
