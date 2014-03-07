@@ -2,11 +2,15 @@ package ascentricGui;
 
 import java.sql.SQLException;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
@@ -25,6 +29,7 @@ public class Page1{
     private Scene firstScene;
     private TextField clientSurname;
     private TextField clientFirstName;
+    private int gridVert = 1;
     
     /*
     The start method is the entry point for all javaFX applications, the main
@@ -64,40 +69,62 @@ public class Page1{
     
     private void createFormFields(GridPane grid) {
         double fieldWidth = 120;
+        
         Text sceneTitle = new Text("Client Info");
         sceneTitle.setFont(Font.font("courier", FontWeight.NORMAL, 20));
         sceneTitle.setId("sceneTitle");
         grid.add(sceneTitle, 0, 0, 2, 1);
         
+      //Client Surname
+        Label appType = new Label("Application Type");
+        grid.add(appType, 0, ++gridVert);
+        ObservableList<String> formTypes =
+                FXCollections.observableArrayList(
+                        "Single Client",
+                        "Two Clients",
+                        "Joint Account"
+                );
+            
+            ComboBox<String> comboBox = 
+            		new ComboBox<String>(formTypes);
+            comboBox.setPrefWidth(fieldWidth);
+            grid.add(comboBox, 1, gridVert);
+        
+        
         //Client Surname
         Label surname = new Label("Surname");
-        grid.add(surname, 0, 2);
+        grid.add(surname, 0, ++gridVert);
         clientSurname = new TextField();
         clientSurname.setPrefWidth(fieldWidth);
-        grid.add(clientSurname, 1, 2);
+        grid.add(clientSurname, 1, gridVert);
         
         //Client First Name
         Label firstName = new Label("First name");
-        grid.add(firstName, 0, 3);
+        grid.add(firstName, 0, ++gridVert);
         clientFirstName = new TextField();
         clientFirstName.setPrefWidth(fieldWidth);
-        grid.add(clientFirstName, 1, 3);
+        grid.add(clientFirstName, 1, gridVert);
         
         //Client PostCode
         Label postcode = new Label("Postcode");
-        grid.add(postcode, 0, 4);
+        grid.add(postcode, 0, ++gridVert);
         TextField clientPostcode = new TextField();
         clientPostcode.setPrefWidth(fieldWidth);
-        grid.add(clientPostcode, 1, 4);
+        grid.add(clientPostcode, 1, gridVert);
         
         //Client Telephone Number
         Label telNumber = new Label("Telephone Number");
-        grid.add(telNumber, 0, 5);
+        grid.add(telNumber, 0, ++gridVert);
         TextField clientTelNumber = new TextField();
         clientTelNumber.setPrefWidth(fieldWidth);
-        grid.add(clientTelNumber, 1, 5);
+        grid.add(clientTelNumber, 1, gridVert);
     }
-
+    
+    /**
+     * Takes an argument in the form of the surname of a client and searches the database for said client
+     * then proceeds to autofill all the fields with the necessary client information
+     * @param grid
+     */
     private void autoFillClientInfo(GridPane grid) {
         Button btn = new Button("Fill Personal Info");//Create button with the name sign in
         HBox hbBtn = new HBox(10);//Layout pane with 10 pixel spacing
@@ -106,13 +133,11 @@ public class Page1{
         grid.add(hbBtn, 2, 2);
         
         final Text actionTarget = new Text();
-        grid.add(actionTarget, 2, 7);
+        grid.add(actionTarget, 2, ++gridVert);
         btn.setOnAction(new EventHandler<ActionEvent>(){
             
             @Override
             public void handle(ActionEvent e){
-                
-                
                 try {
                 	System.out.println(clientSurname.getText());
                 	if(clientSurname.getText().equals("")){
@@ -139,7 +164,7 @@ public class Page1{
     protected void accessDatabase() throws InstantiationException,
     IllegalAccessException, ClassNotFoundException, SQLException {
     	
-		GetDatabase db = new MSSQLDatabase();
+		GetDatabase db = MSSQLDatabase.getDatabaseConnector();
 		
 		db.fetchInfoUsingName(clientSurname.getText() + "," + clientFirstName.getText());
 	}
