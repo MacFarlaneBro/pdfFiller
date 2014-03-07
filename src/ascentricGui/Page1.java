@@ -111,11 +111,19 @@ public class Page1{
             
             @Override
             public void handle(ActionEvent e){
-                actionTarget.setFill(Color.BLUE);
-                actionTarget.setText("Finding Client...");
+                
                 
                 try {
-					accessDatabase();
+                	System.out.println(clientSurname.getText());
+                	if(clientSurname.getText().equals("")){
+                		actionTarget.setFill(Color.FIREBRICK);
+                		actionTarget.setText("Please enter a surname to search for the client");
+                	} else {
+                		actionTarget.setFill(Color.BLUE);
+                        actionTarget.setText("Finding Client...");
+						accessDatabase();
+						actionTarget.setFill(null);
+                	}
 				} catch (InstantiationException | IllegalAccessException
 						| ClassNotFoundException | SQLException e1) {
 					// TODO Auto-generated catch block
@@ -130,10 +138,10 @@ public class Page1{
 
     protected void accessDatabase() throws InstantiationException,
     IllegalAccessException, ClassNotFoundException, SQLException {
+    	
 		GetDatabase db = new MSSQLDatabase();
 		
 		db.fetchInfoUsingName(clientSurname.getText() + "," + clientFirstName.getText());
-		
 	}
 
 	private void createBackButton(GridPane grid) {

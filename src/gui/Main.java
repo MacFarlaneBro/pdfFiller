@@ -26,7 +26,7 @@ import ascentricGui.Page1;
 
 /**
  *
- * @author charliebrodie
+ * @author charlie brodie
  */
 public class Main extends Application{
     
