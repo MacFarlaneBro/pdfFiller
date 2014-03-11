@@ -39,6 +39,7 @@ public class Page1{
     private double fieldWidth = 221;
     private Set<Label> theLabels;
     private String[] firstnames;
+    private String[] clientData;
     private GridPane grid;
     
     /*
@@ -47,7 +48,7 @@ public class Page1{
     */
     public void start(Stage primaryStage, Scene firstScene) {
         this.firstScene = firstScene;
-        primaryStage.setTitle("PDF Filler 1.12");
+        primaryStage.setTitle("Personal Information");
         grid = new GridPane();
         grid.setHgap(25);
         grid.setVgap(25);
@@ -59,16 +60,71 @@ public class Page1{
         
         createRemainingFields(grid);
         
+        findClient(grid);
+        
         autoFillClientInfo(grid);
         
         createBackButton(grid);
 
-        grid.setGridLinesVisible(true);
+       // grid.setGridLinesVisible(true);
         primaryStage.setScene(thisScene);
     }
 
     
-    private void createRemainingFields(GridPane grid) {
+    private void autoFillClientInfo(GridPane grid2) {
+    	Button btn = new Button("Fill Personal Information");//Create button with the name sign in
+        HBox hbBtn = new HBox(21);//Layout pane with 21 pixel spacing
+        hbBtn.setAlignment(Pos.BOTTOM_RIGHT);
+        hbBtn.getChildren().add(btn);
+        grid.add(hbBtn, 3, 2);
+        
+        final Text actionTarget = new Text();
+        grid.add(actionTarget, 2, ++gridVert);
+        btn.setOnAction(new EventHandler<ActionEvent>(){
+            
+            @Override
+            public void handle(ActionEvent e){
+                try {
+                	System.out.println(clientSurname.getText());
+                	if(clientSurname.getText().equals("")){
+                		actionTarget.setFill(Color.FIREBRICK);
+                		actionTarget.setText("More information Required, please enter a Surname and click 'Find Client'"
+                				+ " first, then select the clients first name from the dropdown when it appears");
+                	} else {
+                		actionTarget.setFill(Color.BLUE);
+                        actionTarget.setText("Finding Client Information");
+						getClientInfo();
+						fillClientInfo();
+						actionTarget.setFill(null);
+                	}
+				} catch (InstantiationException | IllegalAccessException
+						| ClassNotFoundException | SQLException e2) {
+					// TODO Auto-generated catch block
+					System.out.println("Error, Could Not Access Database");
+					e2.printStackTrace();
+					actionTarget.setFill(Color.FIREBRICK);
+					actionTarget.setText("Problem Accessing Database, Please check connection and retry");
+				}
+            }
+        });
+		
+	}
+    
+	protected void fillClientInfo() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@SuppressWarnings("unchecked")
+	private String[] getClientInfo() throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
+		GetDatabase db = MSSQLDatabase.getDatabaseConnector();
+		clientData = db.fetchInfoUsingName(clientSurname.getText() + ((ComboBox<String>)clientFirstName).getValue());
+		return clientData;
+	}
+
+
+	private void createRemainingFields(GridPane grid) {
     	
     	theLabels = new HashSet<Label>();
         
@@ -105,62 +161,72 @@ public class Page1{
         clientNatIns.setPrefWidth(fieldWidth);
         grid.add(clientNatIns, 2, gridVert);
         
+        //At his point the second column is creating, resetting the height of the fields
+        gridVert = 2;
+        
         //Client Home Number
         Label homeNumber = new Label("Home Telephone Number");
         theLabels.add(homeNumber);
-        grid.add(homeNumber, 1, ++gridVert);
+        grid.add(homeNumber, 3, ++gridVert);
         TextField clientHomeNumber = new TextField();
         clientHomeNumber.setPrefWidth(fieldWidth);
-        grid.add(clientHomeNumber, 2, gridVert);
+        grid.add(clientHomeNumber, 4, gridVert);
         
         //Client Work Number
         Label workNumber = new Label("Work Telephone Number");
         theLabels.add(workNumber);
-        grid.add(workNumber, 1, ++gridVert);
+        grid.add(workNumber, 3, ++gridVert);
         TextField clientWorkNumber = new TextField();
         clientWorkNumber.setPrefWidth(fieldWidth);
-        grid.add(clientWorkNumber, 2, gridVert);
+        grid.add(clientWorkNumber, 4, gridVert);
         
         //Client Mobile
         Label mobile = new Label("Mobile Number");
         theLabels.add(mobile);
-        grid.add(mobile, 1, ++gridVert);
+        grid.add(mobile, 3, ++gridVert);
         TextField clientMobile = new TextField();
         clientMobile.setPrefWidth(fieldWidth);
-        grid.add(clientMobile, 2, gridVert);
+        grid.add(clientMobile, 4, gridVert);
         
         //Client Address - possible 3 lines of input
         Label address = new Label("Address");
         theLabels.add(address);
-        grid.add(address, 1, ++gridVert);
-        //line 2
+        grid.add(address, 3, ++gridVert);
+        
+        //resetting a small horizontal gap between the three lines of address
+        grid.setHgap(4);
+        
+        //line 1
         TextField clientAddress1 = new TextField();
         clientAddress1.setPrefWidth(fieldWidth);
-        grid.add(clientAddress1, 2, gridVert);
+        grid.add(clientAddress1, 4, gridVert);
         //line 2
         TextField clientAddress2 = new TextField();
         clientAddress2.setPrefWidth(fieldWidth);
-        grid.add(clientAddress2, 2, gridVert);
+        grid.add(clientAddress2, 4, ++gridVert);
         //line3
         TextField clientAddress3 = new TextField();
         clientAddress3.setPrefWidth(fieldWidth);
-        grid.add(clientAddress3, 2, gridVert);
+        grid.add(clientAddress3, 4, ++gridVert);
+        
+        //resetting the Hgap to the normal level for the remaining fields
+        grid.setHgap(25);
         
         //Client PostCode
         Label postcode = new Label("Postcode");
         theLabels.add(postcode);
-        grid.add(postcode, 1, ++gridVert);
+        grid.add(postcode, 3, ++gridVert);
         TextField clientPostcode = new TextField();
         clientPostcode.setPrefWidth(fieldWidth);
-        grid.add(clientPostcode, 2, gridVert);
+        grid.add(clientPostcode, 4, gridVert);
         
         //Client email
         Label email = new Label("E-mail");
         theLabels.add(email);
-        grid.add(email, 1, ++gridVert);
+        grid.add(email, 3, ++gridVert);
         TextField clientEmail = new TextField();
         clientEmail.setPrefWidth(fieldWidth);
-        grid.add(clientEmail, 2, gridVert);
+        grid.add(clientEmail, 4, gridVert);
 		
 	}
 
@@ -212,7 +278,7 @@ public class Page1{
      * then proceeds to autofill all the fields with the necessary client information
      * @param grid
      */
-    private void autoFillClientInfo(GridPane grid) {
+    private void findClient(GridPane grid) {
         Button btn = new Button("Find Client");//Create button with the name sign in
         HBox hbBtn = new HBox(21);//Layout pane with 21 pixel spacing
         hbBtn.setAlignment(Pos.BOTTOM_RIGHT);
@@ -233,7 +299,7 @@ public class Page1{
                 	} else {
                 		actionTarget.setFill(Color.BLUE);
                         actionTarget.setText("Finding Client...");
-						accessDatabase();
+						getFirstNames();
 						setFirstNameDropdown();
 						actionTarget.setFill(null);
                 	}
@@ -262,7 +328,7 @@ public class Page1{
 		grid.add(clientFirstName, 2, 5);
 	}
 
-    protected void accessDatabase() throws InstantiationException,
+    protected void getFirstNames() throws InstantiationException,
     IllegalAccessException, ClassNotFoundException, SQLException {
 		GetDatabase db = MSSQLDatabase.getDatabaseConnector();
 		firstnames = db.fetchInfoUsingName(clientSurname.getText());

@@ -6,6 +6,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.HashSet;
+import java.util.Set;
 
 
 public class MSSQLDatabase implements GetDatabase{
@@ -70,20 +72,20 @@ public class MSSQLDatabase implements GetDatabase{
 	private String[] clientInformation(String surname) throws SQLException {
 			Statement st = conn.createStatement();
 			System.out.println(surname);
-			String sample = "Select * From Clients Where Surname = 'Brodie';";
-			String query = "Select * From Clients Where Surname = '";
+
+			String query = "Select Forenames From Clients Where Surname = '";
 			ResultSet rs = st.executeQuery(query + surname + "';");
 			
-			String[] firstNames = new String[50];
+			Set<String> firstNames = new HashSet<String>();
 			
-			System.out.println(rs.findColumn("Forenames"));
-			int i = 0;
 			while(rs.next()){
-				System.out.println(rs.getString(4));
-				firstNames[i] = rs.getString("Forenames");
-				i++;
+				System.out.println(rs.getString("Forenames"));
+				firstNames.add(rs.getString("Forenames"));
 			}
-			return firstNames;
+			
+			//converting the set to an array before it is returned to the form
+			String[] returner = (String[]) firstNames.toArray(new String[0]);
+			return returner;
 	}
 		
 	public void showTables() throws SQLException{
