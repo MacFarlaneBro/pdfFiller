@@ -46,7 +46,7 @@ public class MSSQLDatabase implements GetDatabase{
 	      
 	      //fill the matrix with the clients data
 	      clientData[0] = clientInformation(name);
-	      
+	  
 	      //If the application is for two people then fill the second array in the matrix with the client partner data
 	      if(partner){
 	      }
@@ -67,13 +67,18 @@ public class MSSQLDatabase implements GetDatabase{
 	 * @return an array containing all the available client data
 	 * @throws SQLException
 	 */
-	private String[] clientInformation(String surName) throws SQLException {
+	private String[] clientInformation(String surname) throws SQLException {
 			Statement st = conn.createStatement();
-			ResultSet rs = st.executeQuery("Select * From Clients Where Surname = 'Brodie';");
+			ResultSet rs = st.executeQuery("Select * From Clients Where Surname = '" + surname + "';");
 			
 			String[] clientData = new String[10];
+			int i = 0;
 			while(rs.next()){
-				System.out.println(rs.getString("ForeNames"));
+				System.out.println(rs.getFetchSize());
+				System.out.println(rs.getString("Forenames"));
+				clientData[i] = rs.getString("Forenames");
+				i++;
+				if(i == 10) break;
 			}
 			return clientData;
 	}
@@ -92,10 +97,21 @@ public class MSSQLDatabase implements GetDatabase{
 	}
 
 	@Override
-	public String[] fetchInfoUsingName(String Name)
+	public String[] fetchInfoUsingName(String name)
 			throws InstantiationException, IllegalAccessException,
 			ClassNotFoundException, SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		
+		  Class.forName(driver).newInstance();
+	      conn = DriverManager.getConnection(url);
+	      System.out.println("Connected to MSSQL Database");
+	      md = conn.getMetaData();
+	      
+	      String[] result = clientInformation(name);
+		
+	      if(!conn.equals(null)){
+	    	  conn.close();
+	    	  System.out.println("disconnected from mySQL Database");
+	      }
+		return result;
 	}
 }

@@ -1,6 +1,11 @@
 package ascentricGui;
 
 import java.sql.SQLException;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
+
+import javax.swing.GroupLayout.Alignment;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -9,7 +14,6 @@ import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -19,6 +23,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import databaseAccess.GetDatabase;
 import databaseAccess.MSSQLDatabase;
@@ -29,7 +34,9 @@ public class Page1{
     private Scene firstScene;
     private TextField clientSurname;
     private TextField clientFirstName;
-    private int gridVert = 1;
+    private int gridVert = 2;
+    private double fieldWidth = 221;
+    private Set<Label> theLabels;
     
     /*
     The start method is the entry point for all javaFX applications, the main
@@ -37,14 +44,18 @@ public class Page1{
     */
     public void start(Stage primaryStage, Scene firstScene) {
         this.firstScene = firstScene;
-        primaryStage.setTitle("PDF Filler 0.01");
+        primaryStage.setTitle("PDF Filler 1.12");
         GridPane grid = new GridPane();
-        grid.setHgap(15);
-        grid.setVgap(15);
+        grid.setHgap(25);
+        grid.setVgap(25);
+        grid.setGridLinesVisible(true);
+        grid.setAlignment(Pos.CENTER_RIGHT);
         
         Scene thisScene = new Scene(grid);
-                
-        createFormFields(grid);
+        
+        createAutoFillFields(grid);
+        
+        createRemainingFields(grid);
         
         autoFillClientInfo(grid);
         
@@ -55,7 +66,104 @@ public class Page1{
     }
 
     
-    /*
+    private void createRemainingFields(GridPane grid) {
+    	
+    	theLabels = new HashSet<Label>();
+        
+        //Client First Name
+        Label firstName = new Label("First name");
+        theLabels.add(firstName);
+        firstName.setTextAlignment(TextAlignment.RIGHT);
+        grid.add(firstName, 1, ++gridVert);
+        clientFirstName = new TextField();
+        clientFirstName.setPrefWidth(fieldWidth);
+        grid.add(clientFirstName, 2, gridVert);
+        
+        //Client title
+        Label title = new Label("Title");
+        theLabels.add(title);
+        grid.add(title, 1, ++gridVert);
+        TextField clientTitle = new TextField();
+        clientTitle.setPrefWidth(fieldWidth);
+        grid.add(clientTitle, 2, gridVert);
+        
+        //DOB
+        Label dob = new Label("dob");
+        theLabels.add(dob);
+        grid.add(dob, 1, ++gridVert);
+        TextField clientDob = new TextField();
+        clientDob.setPrefWidth(fieldWidth);
+        grid.add(clientDob, 2, gridVert);
+        
+        //NatInsure
+        Label natIns = new Label("National Insurance Number");
+        theLabels.add(natIns);
+        grid.add(natIns, 1, ++gridVert);
+        TextField clientNatIns = new TextField();
+        clientNatIns.setPrefWidth(fieldWidth);
+        grid.add(clientNatIns, 2, gridVert);
+        
+        //Client Home Number
+        Label homeNumber = new Label("Home Telephone Number");
+        theLabels.add(homeNumber);
+        grid.add(homeNumber, 1, ++gridVert);
+        TextField clientHomeNumber = new TextField();
+        clientHomeNumber.setPrefWidth(fieldWidth);
+        grid.add(clientHomeNumber, 2, gridVert);
+        
+        //Client Work Number
+        Label workNumber = new Label("Work Telephone Number");
+        theLabels.add(workNumber);
+        grid.add(workNumber, 1, ++gridVert);
+        TextField clientWorkNumber = new TextField();
+        clientWorkNumber.setPrefWidth(fieldWidth);
+        grid.add(clientWorkNumber, 2, gridVert);
+        
+        //Client Mobile
+        Label mobile = new Label("Mobile Number");
+        theLabels.add(mobile);
+        grid.add(mobile, 1, ++gridVert);
+        TextField clientMobile = new TextField();
+        clientMobile.setPrefWidth(fieldWidth);
+        grid.add(clientMobile, 2, gridVert);
+        
+        //Client Address - possible 3 lines of input
+        Label address = new Label("Address");
+        theLabels.add(address);
+        grid.add(address, 1, ++gridVert);
+        //line 2
+        TextField clientAddress1 = new TextField();
+        clientAddress1.setPrefWidth(fieldWidth);
+        grid.add(clientAddress1, 2, gridVert);
+        //line 2
+        TextField clientAddress2 = new TextField();
+        clientAddress2.setPrefWidth(fieldWidth);
+        grid.add(clientAddress2, 2, gridVert);
+        //line3
+        TextField clientAddress3 = new TextField();
+        clientAddress3.setPrefWidth(fieldWidth);
+        grid.add(clientAddress3, 2, gridVert);
+        
+        //Client PostCode
+        Label postcode = new Label("Postcode");
+        theLabels.add(postcode);
+        grid.add(postcode, 1, ++gridVert);
+        TextField clientPostcode = new TextField();
+        clientPostcode.setPrefWidth(fieldWidth);
+        grid.add(clientPostcode, 2, gridVert);
+        
+        //Client email
+        Label email = new Label("E-mail");
+        theLabels.add(email);
+        grid.add(email, 1, ++gridVert);
+        TextField clientEmail = new TextField();
+        clientEmail.setPrefWidth(fieldWidth);
+        grid.add(clientEmail, 2, gridVert);
+		
+	}
+
+
+	/*
     the numbers in the grid.add() method specify the number of rows and columns
     in the the gridpane. These rows and columns are dynamically added with the
     vgap and hgap spacing that separates them.
@@ -67,17 +175,16 @@ public class Page1{
     visible which is useful for debugging purposes
     */
     
-    private void createFormFields(GridPane grid) {
-        double fieldWidth = 120;
+    private void createAutoFillFields(GridPane grid) {
         
         Text sceneTitle = new Text("Client Info");
-        sceneTitle.setFont(Font.font("courier", FontWeight.NORMAL, 20));
+        sceneTitle.setFont(Font.font("courier", FontWeight.NORMAL, 21));
         sceneTitle.setId("sceneTitle");
-        grid.add(sceneTitle, 0, 0, 2, 1);
+        grid.add(sceneTitle, 1, 1, 2, 2);
         
-      //Client Surname
+      //Type of Application
         Label appType = new Label("Application Type");
-        grid.add(appType, 0, ++gridVert);
+        grid.add(appType, 1, ++gridVert);
         ObservableList<String> formTypes =
                 FXCollections.observableArrayList(
                         "Single Client",
@@ -88,36 +195,14 @@ public class Page1{
             ComboBox<String> comboBox = 
             		new ComboBox<String>(formTypes);
             comboBox.setPrefWidth(fieldWidth);
-            grid.add(comboBox, 1, gridVert);
-        
+            grid.add(comboBox, 2, gridVert);
         
         //Client Surname
         Label surname = new Label("Surname");
-        grid.add(surname, 0, ++gridVert);
+        grid.add(surname, 1, ++gridVert);
         clientSurname = new TextField();
         clientSurname.setPrefWidth(fieldWidth);
-        grid.add(clientSurname, 1, gridVert);
-        
-        //Client First Name
-        Label firstName = new Label("First name");
-        grid.add(firstName, 0, ++gridVert);
-        clientFirstName = new TextField();
-        clientFirstName.setPrefWidth(fieldWidth);
-        grid.add(clientFirstName, 1, gridVert);
-        
-        //Client PostCode
-        Label postcode = new Label("Postcode");
-        grid.add(postcode, 0, ++gridVert);
-        TextField clientPostcode = new TextField();
-        clientPostcode.setPrefWidth(fieldWidth);
-        grid.add(clientPostcode, 1, gridVert);
-        
-        //Client Telephone Number
-        Label telNumber = new Label("Telephone Number");
-        grid.add(telNumber, 0, ++gridVert);
-        TextField clientTelNumber = new TextField();
-        clientTelNumber.setPrefWidth(fieldWidth);
-        grid.add(clientTelNumber, 1, gridVert);
+        grid.add(clientSurname, 2, gridVert);
     }
     
     /**
@@ -127,7 +212,7 @@ public class Page1{
      */
     private void autoFillClientInfo(GridPane grid) {
         Button btn = new Button("Fill Personal Info");//Create button with the name sign in
-        HBox hbBtn = new HBox(10);//Layout pane with 10 pixel spacing
+        HBox hbBtn = new HBox(21);//Layout pane with 21 pixel spacing
         hbBtn.setAlignment(Pos.BOTTOM_RIGHT);
         hbBtn.getChildren().add(btn);
         grid.add(hbBtn, 2, 2);
@@ -150,10 +235,10 @@ public class Page1{
 						actionTarget.setFill(null);
                 	}
 				} catch (InstantiationException | IllegalAccessException
-						| ClassNotFoundException | SQLException e1) {
+						| ClassNotFoundException | SQLException e2) {
 					// TODO Auto-generated catch block
 					System.out.println("Error, Could Not Access Database");
-					e1.printStackTrace();
+					e2.printStackTrace();
 					actionTarget.setFill(Color.FIREBRICK);
 					actionTarget.setText("Problem Accessing Database, Please check connection and retry");
 				}
@@ -163,18 +248,16 @@ public class Page1{
 
     protected void accessDatabase() throws InstantiationException,
     IllegalAccessException, ClassNotFoundException, SQLException {
-    	
 		GetDatabase db = MSSQLDatabase.getDatabaseConnector();
-		
 		db.fetchInfoUsingName(clientSurname.getText() + "," + clientFirstName.getText());
 	}
 
 	private void createBackButton(GridPane grid) {
         Button btn = new Button("Back");//Create button with the name sign in
-        HBox hbBtn = new HBox(10);//Layout pane with 10 pixel spacing
+        HBox hbBtn = new HBox(21);//Layout pane with 21 pixel spacing
         hbBtn.setAlignment(Pos.BOTTOM_LEFT);
         hbBtn.getChildren().add(btn);
-        grid.add(hbBtn, 1, 6);
+        grid.add(hbBtn, 1, gridVert);
         
         btn.setOnAction(new EventHandler<ActionEvent>(){
             
