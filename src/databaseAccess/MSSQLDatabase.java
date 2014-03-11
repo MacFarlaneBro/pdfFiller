@@ -69,18 +69,21 @@ public class MSSQLDatabase implements GetDatabase{
 	 */
 	private String[] clientInformation(String surname) throws SQLException {
 			Statement st = conn.createStatement();
-			ResultSet rs = st.executeQuery("Select * From Clients Where Surname = '" + surname + "';");
+			System.out.println(surname);
+			String sample = "Select * From Clients Where Surname = 'Brodie';";
+			String query = "Select * From Clients Where Surname = '";
+			ResultSet rs = st.executeQuery(query + surname + "';");
 			
-			String[] clientData = new String[10];
+			String[] firstNames = new String[50];
+			
+			System.out.println(rs.findColumn("Forenames"));
 			int i = 0;
 			while(rs.next()){
-				System.out.println(rs.getFetchSize());
-				System.out.println(rs.getString("Forenames"));
-				clientData[i] = rs.getString("Forenames");
+				System.out.println(rs.getString(4));
+				firstNames[i] = rs.getString("Forenames");
 				i++;
-				if(i == 10) break;
 			}
-			return clientData;
+			return firstNames;
 	}
 		
 	public void showTables() throws SQLException{

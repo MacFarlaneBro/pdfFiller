@@ -12,6 +12,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -33,10 +34,12 @@ public class Page1{
     private Stage primaryStage;
     private Scene firstScene;
     private TextField clientSurname;
-    private TextField clientFirstName;
+    private Node clientFirstName;
     private int gridVert = 2;
     private double fieldWidth = 221;
     private Set<Label> theLabels;
+    private String[] firstnames;
+    private GridPane grid;
     
     /*
     The start method is the entry point for all javaFX applications, the main
@@ -45,10 +48,9 @@ public class Page1{
     public void start(Stage primaryStage, Scene firstScene) {
         this.firstScene = firstScene;
         primaryStage.setTitle("PDF Filler 1.12");
-        GridPane grid = new GridPane();
+        grid = new GridPane();
         grid.setHgap(25);
         grid.setVgap(25);
-        grid.setGridLinesVisible(true);
         grid.setAlignment(Pos.CENTER_RIGHT);
         
         Scene thisScene = new Scene(grid);
@@ -61,7 +63,7 @@ public class Page1{
         
         createBackButton(grid);
 
-//        grid.setGridLinesVisible(true);
+        grid.setGridLinesVisible(true);
         primaryStage.setScene(thisScene);
     }
 
@@ -76,7 +78,7 @@ public class Page1{
         firstName.setTextAlignment(TextAlignment.RIGHT);
         grid.add(firstName, 1, ++gridVert);
         clientFirstName = new TextField();
-        clientFirstName.setPrefWidth(fieldWidth);
+        clientFirstName.prefWidth(fieldWidth);
         grid.add(clientFirstName, 2, gridVert);
         
         //Client title
@@ -211,7 +213,7 @@ public class Page1{
      * @param grid
      */
     private void autoFillClientInfo(GridPane grid) {
-        Button btn = new Button("Fill Personal Info");//Create button with the name sign in
+        Button btn = new Button("Find Client");//Create button with the name sign in
         HBox hbBtn = new HBox(21);//Layout pane with 21 pixel spacing
         hbBtn.setAlignment(Pos.BOTTOM_RIGHT);
         hbBtn.getChildren().add(btn);
@@ -232,6 +234,7 @@ public class Page1{
                 		actionTarget.setFill(Color.BLUE);
                         actionTarget.setText("Finding Client...");
 						accessDatabase();
+						setFirstNameDropdown();
 						actionTarget.setFill(null);
                 	}
 				} catch (InstantiationException | IllegalAccessException
@@ -243,13 +246,26 @@ public class Page1{
 					actionTarget.setText("Problem Accessing Database, Please check connection and retry");
 				}
             }
+
+
         });
     }
+    
+    /*
+     * This method reinitializes the first name field of the form to a drop down of all the first names correlating to the given
+     * surname used for the detail finder
+     */
+	private void setFirstNameDropdown() {
+		ObservableList<String> firstNames =
+                FXCollections.observableArrayList(firstnames);
+		clientFirstName = new ComboBox<String>(firstNames);
+		grid.add(clientFirstName, 2, 5);
+	}
 
     protected void accessDatabase() throws InstantiationException,
     IllegalAccessException, ClassNotFoundException, SQLException {
 		GetDatabase db = MSSQLDatabase.getDatabaseConnector();
-		db.fetchInfoUsingName(clientSurname.getText() + "," + clientFirstName.getText());
+		firstnames = db.fetchInfoUsingName(clientSurname.getText());
 	}
 
 	private void createBackButton(GridPane grid) {
