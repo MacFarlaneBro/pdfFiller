@@ -3,9 +3,8 @@ package ascentricGui;
 import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Set;
-
-import javax.swing.GroupLayout.Alignment;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -38,9 +37,11 @@ public class Page1{
     private int gridVert = 2;
     private double fieldWidth = 221;
     private Set<Label> theLabels;
+    private Set<TextField> theFields;
     private String[] firstnames;
-    private String[] clientData;
+    private Map<String, String> clientData;
     private GridPane grid;
+
     
     /*
     The start method is the entry point for all javaFX applications, the main
@@ -111,21 +112,26 @@ public class Page1{
 	}
     
 	protected void fillClientInfo() {
-		// TODO Auto-generated method stub
-		
+		Iterator<TextField> fields = theFields.iterator();
+		while(fields.hasNext()){//This confusing little string of methods simply finds the map key corresponding to the current field
+			TextField current = ((TextField)fields.next());
+			//name and fills it with the clients data
+			current.setText(clientData.get("client" + current.toString()));
+		}
 	}
 
 
 	@SuppressWarnings("unchecked")
-	private String[] getClientInfo() throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
+	private Map<String, String> getClientInfo() throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
 		GetDatabase db = MSSQLDatabase.getDatabaseConnector();
-		clientData = db.fetchInfoUsingName(clientSurname.getText() + ((ComboBox<String>)clientFirstName).getValue());
+		clientData = db.getClientPersonalData(clientSurname.getText() + '/' + ((ComboBox<String>)clientFirstName).getValue());
 		return clientData;
 	}
 
 
 	private void createRemainingFields(GridPane grid) {
     	
+    	theFields = new HashSet<TextField>();
     	theLabels = new HashSet<Label>();
         
         //Client First Name
@@ -142,6 +148,7 @@ public class Page1{
         theLabels.add(title);
         grid.add(title, 1, ++gridVert);
         TextField clientTitle = new TextField();
+        theFields.add(clientTitle);
         clientTitle.setPrefWidth(fieldWidth);
         grid.add(clientTitle, 2, gridVert);
         
@@ -149,15 +156,17 @@ public class Page1{
         Label dob = new Label("dob");
         theLabels.add(dob);
         grid.add(dob, 1, ++gridVert);
-        TextField clientDob = new TextField();
-        clientDob.setPrefWidth(fieldWidth);
-        grid.add(clientDob, 2, gridVert);
+        TextField clientDOB = new TextField();
+        theFields.add(clientDOB);
+        clientDOB.setPrefWidth(fieldWidth);
+        grid.add(clientDOB, 2, gridVert);
         
         //NatInsure
         Label natIns = new Label("National Insurance Number");
         theLabels.add(natIns);
         grid.add(natIns, 1, ++gridVert);
         TextField clientNatIns = new TextField();
+        theFields.add(clientNatIns);
         clientNatIns.setPrefWidth(fieldWidth);
         grid.add(clientNatIns, 2, gridVert);
         
@@ -168,23 +177,26 @@ public class Page1{
         Label homeNumber = new Label("Home Telephone Number");
         theLabels.add(homeNumber);
         grid.add(homeNumber, 3, ++gridVert);
-        TextField clientHomeNumber = new TextField();
-        clientHomeNumber.setPrefWidth(fieldWidth);
-        grid.add(clientHomeNumber, 4, gridVert);
+        TextField clientHomeTel = new TextField();
+        theFields.add(clientHomeTel);
+        clientHomeTel.setPrefWidth(fieldWidth);
+        grid.add(clientHomeTel, 4, gridVert);
         
         //Client Work Number
         Label workNumber = new Label("Work Telephone Number");
         theLabels.add(workNumber);
         grid.add(workNumber, 3, ++gridVert);
-        TextField clientWorkNumber = new TextField();
-        clientWorkNumber.setPrefWidth(fieldWidth);
-        grid.add(clientWorkNumber, 4, gridVert);
+        TextField clientWorkTel = new TextField();
+        theFields.add(clientWorkTel);
+        clientWorkTel.setPrefWidth(fieldWidth);
+        grid.add(clientWorkTel, 4, gridVert);
         
         //Client Mobile
         Label mobile = new Label("Mobile Number");
         theLabels.add(mobile);
         grid.add(mobile, 3, ++gridVert);
         TextField clientMobile = new TextField();
+        theFields.add(clientMobile);
         clientMobile.setPrefWidth(fieldWidth);
         grid.add(clientMobile, 4, gridVert);
         
@@ -197,17 +209,20 @@ public class Page1{
         grid.setHgap(4);
         
         //line 1
-        TextField clientAddress1 = new TextField();
-        clientAddress1.setPrefWidth(fieldWidth);
-        grid.add(clientAddress1, 4, gridVert);
+        TextField clientHomeAddress1 = new TextField();
+        theFields.add(clientHomeAddress1);
+        clientHomeAddress1.setPrefWidth(fieldWidth);
+        grid.add(clientHomeAddress1, 4, gridVert);
         //line 2
-        TextField clientAddress2 = new TextField();
-        clientAddress2.setPrefWidth(fieldWidth);
-        grid.add(clientAddress2, 4, ++gridVert);
+        TextField clientHomeAddress2 = new TextField();
+        theFields.add(clientHomeAddress2);
+        clientHomeAddress2.setPrefWidth(fieldWidth);
+        grid.add(clientHomeAddress2, 4, ++gridVert);
         //line3
-        TextField clientAddress3 = new TextField();
-        clientAddress3.setPrefWidth(fieldWidth);
-        grid.add(clientAddress3, 4, ++gridVert);
+        TextField clientHomeAddress3 = new TextField();
+        theFields.add(clientHomeAddress3);
+        clientHomeAddress3.setPrefWidth(fieldWidth);
+        grid.add(clientHomeAddress3, 4, ++gridVert);
         
         //resetting the Hgap to the normal level for the remaining fields
         grid.setHgap(25);
@@ -216,15 +231,17 @@ public class Page1{
         Label postcode = new Label("Postcode");
         theLabels.add(postcode);
         grid.add(postcode, 3, ++gridVert);
-        TextField clientPostcode = new TextField();
-        clientPostcode.setPrefWidth(fieldWidth);
-        grid.add(clientPostcode, 4, gridVert);
+        TextField clientHomePostCode = new TextField();
+        theFields.add(clientHomePostCode);
+        clientHomePostCode.setPrefWidth(fieldWidth);
+        grid.add(clientHomePostCode, 4, gridVert);
         
         //Client email
         Label email = new Label("E-mail");
         theLabels.add(email);
         grid.add(email, 3, ++gridVert);
         TextField clientEmail = new TextField();
+        theFields.add(clientEmail);
         clientEmail.setPrefWidth(fieldWidth);
         grid.add(clientEmail, 4, gridVert);
 		
@@ -325,6 +342,7 @@ public class Page1{
 		ObservableList<String> firstNames =
                 FXCollections.observableArrayList(firstnames);
 		clientFirstName = new ComboBox<String>(firstNames);
+		((ComboBox<?>)clientFirstName).setPrefWidth(fieldWidth);
 		grid.add(clientFirstName, 2, 5);
 	}
 

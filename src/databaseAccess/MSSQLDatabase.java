@@ -6,7 +6,9 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 
@@ -34,34 +36,6 @@ public class MSSQLDatabase implements GetDatabase{
 	
 	//Private constructor enforces singleton pattern to prevent multiple simultaneous database connections
 	private MSSQLDatabase(){};
-	
-	public String[][] getPersonalDetails(String name, boolean partner) throws SQLException{
-		
-      try {
-	      Class.forName(driver).newInstance();
-	      conn = DriverManager.getConnection(url);
-	      System.out.println("Connected to MSSQL Database");
-	      md = conn.getMetaData();
-	      
-	      //Matrix to be returned containing the clients data if available
-	      String[][] clientData = new String[2][10];
-	      
-	      //fill the matrix with the clients data
-	      clientData[0] = clientInformation(name);
-	  
-	      //If the application is for two people then fill the second array in the matrix with the client partner data
-	      if(partner){
-	      }
-	      
-	      if(!conn.equals(null)){
-	    	  conn.close();
-	    	  System.out.println("disconnected from mySQL Database");
-	      }
-      } catch (Exception e) {
-    	  e.printStackTrace();
-      }
-	return null;
-}
 		
 	/**
 	 * Searches the result set produced by searching for the clients name and returns all the available client data
@@ -96,12 +70,6 @@ public class MSSQLDatabase implements GetDatabase{
 	}
 
 	@Override
-	public String[] fetchInfoUsingID(int idNumber) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public String[] fetchInfoUsingName(String name)
 			throws InstantiationException, IllegalAccessException,
 			ClassNotFoundException, SQLException {
@@ -118,5 +86,42 @@ public class MSSQLDatabase implements GetDatabase{
 	    	  System.out.println("disconnected from mySQL Database");
 	      }
 		return result;
+	}
+
+	@Override
+	public Map<String, String> getClientPersonalData(String name) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
+		Class.forName(driver).newInstance();
+	      conn = DriverManager.getConnection(url);
+	      System.out.println("Connected to MSSQL Database");
+	      
+	      Statement st = conn.createStatement();
+	      String[] names = name.split("/");
+	      
+	      String query = "SELECT * FROM Clients WHERE Surname = '";
+	      System.out.println(names[0]);
+	      System.out.println(names[1]);
+	      ResultSet rs = st.executeQuery(query + names[0] + "'"
+	      		+ "AND Forenames ='" + names[1] + "';");
+	      Map<String,String> pData = new HashMap<String, String>();
+	      while(rs.next()){
+		      pData.put("Title", rs.getString("Title"));
+		      pData.put("DOB", rs.getString("DOB"));
+		      pData.put("HomeTel", rs.getString("HomeTel"));
+		      pData.put("WorkTel", rs.getString("BusTel"));
+		      pData.put("Mobile", rs.getString("MobTel"));
+		      pData.put("HomeAddress1", rs.getString("HomeAddress1"));
+		      pData.put("HomeAddress2", rs.getString("HomeAddress2"));
+		      pData.put("HomeAddress3", rs.getString("HomeAddress3"));
+		      pData.put("HomePostCode", rs.getString("HomePostCode"));
+		      pData.put("Email", rs.getString("EmailAddress"));
+	      }
+	      
+	      System.out.println(pData.get("Email"));
+		
+	      if(!conn.equals(null)){
+	    	  conn.close();
+	    	  System.out.println("disconnected from mySQL Database");
+	      }
+		return pData;
 	}
 }

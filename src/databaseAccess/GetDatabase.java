@@ -1,26 +1,32 @@
 package databaseAccess;
 
 import java.sql.SQLException;
+import java.util.Map;
 
 public interface GetDatabase {
 	
 	/**
-	 * fetches an array of strings containing all values matching the relevant ID number
-	 * @param idNumber The ID number of the relevant data
-	 * @return An array containing all relevant data
-	 */
-	public String[] fetchInfoUsingID(int idNumber) throws SQLException;
-
-	/**
-	 * fetches the ID number associated with a specific name
-	 * @param Name the identfiying name of the data required
-	 * @return the ID number associated with the name
+	 * fetches the all the first names which share the surname provided as input
+	 * @param surame the surname of the client required
+	 * @return an array containing all the first names which share the entered surname
 	 * @throws SQLException 
 	 * @throws ClassNotFoundException 
 	 * @throws IllegalAccessException 
 	 * @throws InstantiationException 
 	 */
-	public String[] fetchInfoUsingName(String Name) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException;
+	public String[] fetchInfoUsingName(String surname) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException;
+
+    /**
+     * fetches all the personal information required to fill the form, using the first and surnames of the client
+     * @param name the combined first and surname of the client, separated by '/'
+     * @return map containing all the necessary information to fill out the clients required personal info on the form
+	 * @throws SQLException 
+     * @throws InstantiationException
+     * @throws IllegalAccessException
+     * @throws ClassNotFoundException
+     * @throws SQLException 
+     */
+	public Map<String, String> getClientPersonalData(String name) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException;
 
 
 }
