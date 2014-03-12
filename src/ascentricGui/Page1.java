@@ -14,6 +14,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -290,6 +291,14 @@ public class Page1{
         clientEmail.setPrefWidth(fieldWidth);
         grid.add(clientEmail, 4, gridVert);
         
+        //Does the client have a national insurance number?
+        Label natInsTick = new Label("Tick if client has no national Insurance number");
+        theLabels.add(email);
+        grid.add(natInsTick, 3, ++gridVert);
+        CheckBox natInsTickClient = new CheckBox();
+        natInsTickClient.setId("natInsTickClient");
+        clientEmail.setPrefWidth(fieldWidth);
+        grid.add(natInsTickClient, 4, gridVert);
 	}
 
 
