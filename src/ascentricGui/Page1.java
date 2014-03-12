@@ -32,7 +32,7 @@ import databaseAccess.MSSQLDatabase;
 public class Page1{
     
     private Stage primaryStage;
-    private Scene firstScene;
+    private Scene previousScene;
     private TextField clientSurname;
     private Node clientFirstName;
     private int gridVert = 2;
@@ -41,10 +41,12 @@ public class Page1{
     private Set<TextField> theFields;
     private String[] firstnames;
     private Map<String, String> clientData;
-    private GridPane grid;
+    protected GridPane grid;
     private boolean hasPartner;
     protected Button autoFillClientButton;
 	private Scene thisScene;
+	private String sceneT = "Client Personal Info";
+	private ComboBox<String> comboBox;
 
     
     /*
@@ -52,7 +54,7 @@ public class Page1{
     method is included only to meet requirements 
     */
     public void start(Stage primaryStage, Scene firstScene) {
-        this.firstScene = firstScene;
+        this.previousScene = firstScene;
         this.primaryStage = primaryStage;
         primaryStage.setTitle("Personal Information - Client");
         grid = new GridPane();
@@ -318,7 +320,7 @@ public class Page1{
     
     protected void createAutoFillFields(GridPane grid) {
         
-        Text sceneTitle = new Text("Client Info");
+        Text sceneTitle = new Text(sceneT);
         sceneTitle.setFont(Font.font("courier", FontWeight.NORMAL, 21));
         sceneTitle.setId("sceneTitle");
         grid.add(sceneTitle, 1, 1, 2, 2);
@@ -333,7 +335,7 @@ public class Page1{
                         "Joint Account"
                 );
             
-            ComboBox<String> comboBox = 
+            comboBox = 
             		new ComboBox<String>(formTypes);
             comboBox.setPrefWidth(fieldWidth);
             comboBox.setPromptText("Single Client");
@@ -422,7 +424,7 @@ public class Page1{
             @Override
             public void handle(ActionEvent e){
             	primaryStage.setTitle("PDF Filler 0.01");
-                primaryStage.setScene(firstScene);
+                primaryStage.setScene(previousScene);
             }
         });
         
@@ -438,7 +440,11 @@ public class Page1{
             @Override
             public void handle(ActionEvent e){
             	saveClientInfo();
-            	Page2 secondPage = new Page2(primaryStage, thisScene);
+            	if(comboBox.getValue().equals("Single Client")){
+            		Page2 secondPage = new Page2(primaryStage, thisScene);
+            	} else {
+            		Page3 nextPage = new Page3(primaryStage, thisScene);
+            	}
             	
             }
         });

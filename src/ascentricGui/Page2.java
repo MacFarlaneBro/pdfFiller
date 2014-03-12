@@ -7,13 +7,15 @@ import javafx.stage.Stage;
 
 public class Page2 extends Page1{
 	
-	private Scene firstScene;
-	private GridPane grid;
+	private Scene previousScene;
 	private Scene thisScene;
+	protected String sceneT = "Partner Info";
+	protected Stage primaryStage;
 	
-	public Page2(Stage primaryStage, Scene firstScene) {
+	public Page2(Stage primaryStage, Scene previousScene) {
 		
-	        this.firstScene = firstScene;
+	        this.previousScene = previousScene;
+	        this.primaryStage = primaryStage;
 	        primaryStage.setTitle("Personal Information - Partner");
 	        grid = new GridPane();
 	        grid.setHgap(25);
@@ -33,7 +35,6 @@ public class Page2 extends Page1{
 	       // grid.setGridLinesVisible(true);
 	        primaryStage.setScene(thisScene);
 	        System.out.println("New Scene set");
-
 	}
 
 }
