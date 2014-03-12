@@ -41,9 +41,10 @@ public class Page1{
     private Set<TextField> theFields;
     private String[] firstnames;
     private Map<String, String> clientData;
-    private  GridPane grid;
+    private GridPane grid;
     private boolean hasPartner;
-    private Button autoFillClientButton;
+    protected Button autoFillClientButton;
+	private Scene thisScene;
 
     
     /*
@@ -52,13 +53,14 @@ public class Page1{
     */
     public void start(Stage primaryStage, Scene firstScene) {
         this.firstScene = firstScene;
-        primaryStage.setTitle("Personal Information");
+        this.primaryStage = primaryStage;
+        primaryStage.setTitle("Personal Information - Client");
         grid = new GridPane();
         grid.setHgap(25);
         grid.setVgap(25);
         grid.setAlignment(Pos.CENTER);
         
-        Scene thisScene = new Scene(grid);
+        thisScene = new Scene(grid);
         
         createAutoFillFields(grid);
         
@@ -75,7 +77,7 @@ public class Page1{
     }
 
     
-    private void autoFillClientInfo(GridPane grid2) {
+    protected void autoFillClientInfo(GridPane grid2) {
     	autoFillClientButton = new Button("Fill Personal Information");//Create button with the name sign in
     	autoFillClientButton.setVisible(false);
         HBox hbBtn = new HBox(21);//Layout pane with 21 pixel spacing
@@ -93,8 +95,8 @@ public class Page1{
                 	System.out.println(clientSurname.getText());
                 	if(clientSurname.getText().equals("")){
                 		actionTarget.setFill(Color.FIREBRICK);
-                		actionTarget.setText("More information Required, please enter a Surname and click 'Find Client'"
-                				+ " first, then select the clients first name from the dropdown when it appears");
+                		actionTarget.setText("More information Required, please\n enter a Surname and click 'Find Client\n'"
+                				+ " first, then select the clients first\n name from the dropdown when it appears");
                 	} else {
                 		actionTarget.setFill(Color.BLUE);
                         actionTarget.setText("Finding Client Information");
@@ -163,7 +165,7 @@ public class Page1{
 	 * allow them to be identified by the fillClientInfo method for autofilling purposes
 	 * @param grid
 	 */
-	private void createRemainingFields(GridPane grid) {
+	protected void createRemainingFields(GridPane grid) {
     	
     	theFields = new HashSet<TextField>();
     	theLabels = new HashSet<Label>();
@@ -314,7 +316,7 @@ public class Page1{
     visible which is useful for debugging purposes
     */
     
-    private void createAutoFillFields(GridPane grid) {
+    protected void createAutoFillFields(GridPane grid) {
         
         Text sceneTitle = new Text("Client Info");
         sceneTitle.setFont(Font.font("courier", FontWeight.NORMAL, 21));
@@ -352,7 +354,7 @@ public class Page1{
      * then proceeds to autofill all the fields with the necessary client information
      * @param grid
      */
-    private void findClient(GridPane grid) {
+    protected void findClient(GridPane grid) {
         Button btn = new Button("Find Client");//Create button with the name sign in
         HBox hbBtn = new HBox(21);//Layout pane with 21 pixel spacing
         hbBtn.setAlignment(Pos.BOTTOM_RIGHT);
@@ -369,7 +371,7 @@ public class Page1{
                 	System.out.println(clientSurname.getText());
                 	if(clientSurname.getText().equals("")){
                 		actionTarget.setFill(Color.FIREBRICK);
-                		actionTarget.setText("Please enter a surname to search for the client");
+                		actionTarget.setText("Please enter a surname to search for client");
                 	} else {
                 		actionTarget.setFill(Color.BLUE);
                         actionTarget.setText("Finding Client...");
@@ -407,7 +409,7 @@ public class Page1{
 		firstnames = db.fetchInfoUsingName(clientSurname.getText());
 	}
 
-	private void createMovementButtons(GridPane grid) {
+	protected void createMovementButtons(GridPane grid) {
         Button backBtn = new Button("Back");//Create button with the name sign in
         HBox hbBtn = new HBox(21);//Layout pane with 21 pixel spacing
         hbBtn.setAlignment(Pos.BOTTOM_LEFT);
@@ -419,6 +421,7 @@ public class Page1{
             
             @Override
             public void handle(ActionEvent e){
+            	primaryStage.setTitle("PDF Filler 0.01");
                 primaryStage.setScene(firstScene);
             }
         });
@@ -435,14 +438,15 @@ public class Page1{
             @Override
             public void handle(ActionEvent e){
             	saveClientInfo();
-            	Page2 secondPage = new Page2();
+            	Page2 secondPage = new Page2(primaryStage, thisScene);
+            	
             }
         });
     }
 
 
 	private void saveClientInfo() {
-		// TODO Auto-generated method stub
+		
 		
 	}
 }
