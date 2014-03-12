@@ -40,7 +40,9 @@ public class Page1{
     private Set<TextField> theFields;
     private String[] firstnames;
     private Map<String, String> clientData;
-    private GridPane grid;
+    private  GridPane grid;
+    private boolean hasPartner;
+    private Button autoFillClientButton;
 
     
     /*
@@ -53,7 +55,7 @@ public class Page1{
         grid = new GridPane();
         grid.setHgap(25);
         grid.setVgap(25);
-        grid.setAlignment(Pos.CENTER_RIGHT);
+        grid.setAlignment(Pos.CENTER);
         
         Scene thisScene = new Scene(grid);
         
@@ -65,7 +67,7 @@ public class Page1{
         
         autoFillClientInfo(grid);
         
-        createBackButton(grid);
+        createMovementButtons(grid);
 
        // grid.setGridLinesVisible(true);
         primaryStage.setScene(thisScene);
@@ -73,15 +75,16 @@ public class Page1{
 
     
     private void autoFillClientInfo(GridPane grid2) {
-    	Button btn = new Button("Fill Personal Information");//Create button with the name sign in
+    	autoFillClientButton = new Button("Fill Personal Information");//Create button with the name sign in
+    	autoFillClientButton.setVisible(false);
         HBox hbBtn = new HBox(21);//Layout pane with 21 pixel spacing
         hbBtn.setAlignment(Pos.BOTTOM_RIGHT);
-        hbBtn.getChildren().add(btn);
+        hbBtn.getChildren().add(autoFillClientButton);
         grid.add(hbBtn, 3, 2);
         
         final Text actionTarget = new Text();
         grid.add(actionTarget, 2, ++gridVert);
-        btn.setOnAction(new EventHandler<ActionEvent>(){
+        autoFillClientButton.setOnAction(new EventHandler<ActionEvent>(){
             
             @Override
             public void handle(ActionEvent e){
@@ -100,7 +103,6 @@ public class Page1{
                 	}
 				} catch (InstantiationException | IllegalAccessException
 						| ClassNotFoundException | SQLException e2) {
-					// TODO Auto-generated catch block
 					System.out.println("Error, Could Not Access Database");
 					e2.printStackTrace();
 					actionTarget.setFill(Color.FIREBRICK);
@@ -113,10 +115,36 @@ public class Page1{
     
 	protected void fillClientInfo() {
 		Iterator<TextField> fields = theFields.iterator();
-		while(fields.hasNext()){//This confusing little string of methods simply finds the map key corresponding to the current field
-			TextField current = ((TextField)fields.next());
-			//name and fills it with the clients data
-			current.setText(clientData.get("client" + current.toString()));
+		String holder;
+		int homeAddress = 1;
+		
+		while(fields.hasNext()){
+			TextField current = (TextField)fields.next();
+			System.out.println(current.toString());
+			
+			//Remove the time portion from the date of birth value
+			if(current.getId()
+					.equals("DOB")){
+				holder = clientData.get(current.getId());
+				String dateAndTime[] = holder.split(" ");
+				current.setText(dateAndTime[0]);
+				continue;
+			}
+			
+			//As the address data is not stored in a coherent fashion in the database, this conditional branch sorts it
+			//into the three fields necessary for the form
+			if(current.getId().startsWith("HomeAddress")){
+				for(int i = 0; i < 5; i++){
+					if(clientData.get("HomeAddress" + homeAddress) != null){
+						current.setText(clientData.get("HomeAddress" + homeAddress));
+						homeAddress++;
+						break;
+					} else {
+						homeAddress++;
+					}
+				}
+			}
+			current.setText(clientData.get(current.getId()));
 		}
 	}
 
@@ -128,7 +156,12 @@ public class Page1{
 		return clientData;
 	}
 
-
+	/**
+	 * Taking the basic grid of the display pane as an argument, this method initialises all the remaining
+	 * fields of the first page of the form including the field labels and sets the ID values for each which
+	 * allow them to be identified by the fillClientInfo method for autofilling purposes
+	 * @param grid
+	 */
 	private void createRemainingFields(GridPane grid) {
     	
     	theFields = new HashSet<TextField>();
@@ -140,6 +173,7 @@ public class Page1{
         firstName.setTextAlignment(TextAlignment.RIGHT);
         grid.add(firstName, 1, ++gridVert);
         clientFirstName = new TextField();
+        clientFirstName.setId("FirstName");
         clientFirstName.prefWidth(fieldWidth);
         grid.add(clientFirstName, 2, gridVert);
         
@@ -148,6 +182,7 @@ public class Page1{
         theLabels.add(title);
         grid.add(title, 1, ++gridVert);
         TextField clientTitle = new TextField();
+        clientTitle.setId("Title");
         theFields.add(clientTitle);
         clientTitle.setPrefWidth(fieldWidth);
         grid.add(clientTitle, 2, gridVert);
@@ -157,6 +192,7 @@ public class Page1{
         theLabels.add(dob);
         grid.add(dob, 1, ++gridVert);
         TextField clientDOB = new TextField();
+        clientDOB.setId("DOB");
         theFields.add(clientDOB);
         clientDOB.setPrefWidth(fieldWidth);
         grid.add(clientDOB, 2, gridVert);
@@ -166,6 +202,7 @@ public class Page1{
         theLabels.add(natIns);
         grid.add(natIns, 1, ++gridVert);
         TextField clientNatIns = new TextField();
+        clientNatIns.setId("NatIns");
         theFields.add(clientNatIns);
         clientNatIns.setPrefWidth(fieldWidth);
         grid.add(clientNatIns, 2, gridVert);
@@ -178,6 +215,7 @@ public class Page1{
         theLabels.add(homeNumber);
         grid.add(homeNumber, 3, ++gridVert);
         TextField clientHomeTel = new TextField();
+        clientHomeTel.setId("HomeTel");
         theFields.add(clientHomeTel);
         clientHomeTel.setPrefWidth(fieldWidth);
         grid.add(clientHomeTel, 4, gridVert);
@@ -187,6 +225,7 @@ public class Page1{
         theLabels.add(workNumber);
         grid.add(workNumber, 3, ++gridVert);
         TextField clientWorkTel = new TextField();
+        clientWorkTel.setId("WorkTel");
         theFields.add(clientWorkTel);
         clientWorkTel.setPrefWidth(fieldWidth);
         grid.add(clientWorkTel, 4, gridVert);
@@ -196,6 +235,7 @@ public class Page1{
         theLabels.add(mobile);
         grid.add(mobile, 3, ++gridVert);
         TextField clientMobile = new TextField();
+        clientMobile.setId("Mobile");
         theFields.add(clientMobile);
         clientMobile.setPrefWidth(fieldWidth);
         grid.add(clientMobile, 4, gridVert);
@@ -210,17 +250,20 @@ public class Page1{
         
         //line 1
         TextField clientHomeAddress1 = new TextField();
+        clientHomeAddress1.setId("HomeAddress1");
         theFields.add(clientHomeAddress1);
         clientHomeAddress1.setPrefWidth(fieldWidth);
         grid.add(clientHomeAddress1, 4, gridVert);
         //line 2
         TextField clientHomeAddress2 = new TextField();
         theFields.add(clientHomeAddress2);
+        clientHomeAddress2.setId("HomeAddress2");
         clientHomeAddress2.setPrefWidth(fieldWidth);
         grid.add(clientHomeAddress2, 4, ++gridVert);
         //line3
         TextField clientHomeAddress3 = new TextField();
         theFields.add(clientHomeAddress3);
+        clientHomeAddress3.setId("HomeAddress3");
         clientHomeAddress3.setPrefWidth(fieldWidth);
         grid.add(clientHomeAddress3, 4, ++gridVert);
         
@@ -232,6 +275,7 @@ public class Page1{
         theLabels.add(postcode);
         grid.add(postcode, 3, ++gridVert);
         TextField clientHomePostCode = new TextField();
+        clientHomePostCode.setId("PostCode");
         theFields.add(clientHomePostCode);
         clientHomePostCode.setPrefWidth(fieldWidth);
         grid.add(clientHomePostCode, 4, gridVert);
@@ -241,10 +285,11 @@ public class Page1{
         theLabels.add(email);
         grid.add(email, 3, ++gridVert);
         TextField clientEmail = new TextField();
+        clientEmail.setId("Email");
         theFields.add(clientEmail);
         clientEmail.setPrefWidth(fieldWidth);
         grid.add(clientEmail, 4, gridVert);
-		
+        
 	}
 
 
@@ -280,6 +325,7 @@ public class Page1{
             ComboBox<String> comboBox = 
             		new ComboBox<String>(formTypes);
             comboBox.setPrefWidth(fieldWidth);
+            comboBox.setPromptText("Single Client");
             grid.add(comboBox, 2, gridVert);
         
         //Client Surname
@@ -289,6 +335,8 @@ public class Page1{
         clientSurname.setPrefWidth(fieldWidth);
         grid.add(clientSurname, 2, gridVert);
     }
+    
+
     
     /**
      * Takes an argument in the form of the surname of a client and searches the database for said client
@@ -316,21 +364,19 @@ public class Page1{
                 	} else {
                 		actionTarget.setFill(Color.BLUE);
                         actionTarget.setText("Finding Client...");
+                        autoFillClientButton.setVisible(true);
 						getFirstNames();
 						setFirstNameDropdown();
 						actionTarget.setFill(null);
                 	}
 				} catch (InstantiationException | IllegalAccessException
 						| ClassNotFoundException | SQLException e2) {
-					// TODO Auto-generated catch block
 					System.out.println("Error, Could Not Access Database");
 					e2.printStackTrace();
 					actionTarget.setFill(Color.FIREBRICK);
 					actionTarget.setText("Problem Accessing Database, Please check connection and retry");
 				}
             }
-
-
         });
     }
     
@@ -352,19 +398,42 @@ public class Page1{
 		firstnames = db.fetchInfoUsingName(clientSurname.getText());
 	}
 
-	private void createBackButton(GridPane grid) {
-        Button btn = new Button("Back");//Create button with the name sign in
+	private void createMovementButtons(GridPane grid) {
+        Button backBtn = new Button("Back");//Create button with the name sign in
         HBox hbBtn = new HBox(21);//Layout pane with 21 pixel spacing
         hbBtn.setAlignment(Pos.BOTTOM_LEFT);
-        hbBtn.getChildren().add(btn);
-        grid.add(hbBtn, 1, gridVert);
+        backBtn.setPrefWidth(200);
+        hbBtn.getChildren().add(backBtn);
+        grid.add(hbBtn, 1, --gridVert);
         
-        btn.setOnAction(new EventHandler<ActionEvent>(){
+        backBtn.setOnAction(new EventHandler<ActionEvent>(){
             
             @Override
             public void handle(ActionEvent e){
                 primaryStage.setScene(firstScene);
             }
         });
+        
+        Button nextBtn = new Button("Next");//Create button with the name sign in
+        HBox hNextBtn = new HBox(21);//Layout pane with 21 pixel spacing
+        hNextBtn.setAlignment(Pos.BOTTOM_LEFT);
+        nextBtn.setPrefWidth(200);
+        hNextBtn.getChildren().add(nextBtn);
+        grid.add(hNextBtn, 4, gridVert);
+        
+        nextBtn.setOnAction(new EventHandler<ActionEvent>(){
+            
+            @Override
+            public void handle(ActionEvent e){
+            	saveClientInfo();
+            	Page2 secondPage = new Page2();
+            }
+        });
     }
+
+
+	private void saveClientInfo() {
+		// TODO Auto-generated method stub
+		
+	}
 }
