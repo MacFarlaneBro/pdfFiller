@@ -31,7 +31,7 @@ import javafx.stage.Stage;
 import databaseAccess.GetDatabase;
 import databaseAccess.MSSQLDatabase;
  
-public class Page1{
+public class Page1 implements Page{
     
     private Stage primaryStage;
     private Scene previousScene;
@@ -50,13 +50,13 @@ public class Page1{
 	private String sceneT = "Client Personal Info";
 	private ComboBox<String> comboBox;
 	protected ClientHolder client;
-	private static Page1 instance;
+	private static Page instance;
 	
 	static {
 		instance = new Page1();
 	}
 	
-	public Page1 getInstance(){
+	public static Page getInstance(){
 		return instance;
 	}
 
@@ -142,8 +142,8 @@ public class Page1{
 			if(current.getId()
 					.equals("DOB")){
 				holder = clientData.get(current.getId());
-				String dateAndTime[] = holder.split(" ");
-				current.setText(dateAndTime[0]);
+				String formatted = holder.replace("-", "/");
+				current.setText(formatted);
 				continue;
 			}
 			
@@ -203,7 +203,7 @@ public class Page1{
         grid.add(clientTitle, 2, gridVert);
         
         //DOB
-        Label dob = new Label("dob");
+        Label dob = new Label("DOB (DD/MM/YYYY)");
         theLabels.add(dob);
         grid.add(dob, 1, ++gridVert);
         TextField clientDOB = new TextField();
@@ -449,9 +449,11 @@ public class Page1{
             
             @Override
             public void handle(ActionEvent e){
-            	fillAndSaveClientInfo();
-            	if(comboBox.getValue().equals("Single Client")){
-            		Page2 secondPage = new Page2(primaryStage, thisScene);
+            	fillAndSaveClientInfo(clientData);
+            	System.out.println(comboBox.getValue());
+            	if(comboBox.getValue()
+            			.equals("Single Client")){
+            		Page2.getInstance();
             	} else {
             		Page3 nextPage = new Page3(primaryStage, thisScene);
             	}
@@ -461,7 +463,7 @@ public class Page1{
     }
 
 
-	private void fillAndSaveClientInfo() {
+	private IndividualDetails fillAndSaveClientInfo(Map<String, String> clientData) {
 		client.makeNewFirstClient();
 		if(hasPartner){
 			client.makeNewSecondClient();
@@ -483,5 +485,7 @@ public class Page1{
 				+ clientData.get("HomeAddress3"));
 		id.setPostcode(clientData.get("PostCode"));
 		id.setEmail(clientData.get("Email"));
+	
+		return id;
 	}
 }

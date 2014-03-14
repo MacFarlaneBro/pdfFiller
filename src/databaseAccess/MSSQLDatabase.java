@@ -61,13 +61,6 @@ public class MSSQLDatabase implements GetDatabase{
 			String[] returner = (String[]) firstNames.toArray(new String[0]);
 			return returner;
 	}
-		
-	public void showTables() throws SQLException{
-		ResultSet rs = md.getTables(null, null, "%", null);
-		while (rs.next()) {
-		  System.out.println(rs.getString(3));
-		}
-	}
 
 	@Override
 	public String[] fetchInfoUsingName(String name)
@@ -105,7 +98,9 @@ public class MSSQLDatabase implements GetDatabase{
 	      Map<String,String> pData = new HashMap<String, String>();
 	      while(rs.next()){
 		      pData.put("Title", rs.getString("Title"));
-		      pData.put("DOB", rs.getString("DOB"));
+		      //Removing the time portion of the date object returned by the database before adding it to the map
+		      String dob = rs.getString("DOB").substring(0,10);
+		      pData.put("DOB", dob);
 		      pData.put("HomeTel", rs.getString("HomeTel"));
 		      pData.put("WorkTel", rs.getString("BusTel"));
 		      pData.put("Mobile", rs.getString("MobTel"));
@@ -118,7 +113,7 @@ public class MSSQLDatabase implements GetDatabase{
 		      pData.put("Email", rs.getString("EmailAddress"));
 	      }
 	      
-	      System.out.println(pData.get("Email"));
+	      System.out.println(pData.get("DOB"));
 		
 	      if(!conn.equals(null)){
 	    	  conn.close();

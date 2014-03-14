@@ -7,6 +7,7 @@ public interface GetDatabase {
 	
 	/**
 	 * fetches the all the first names which share the surname provided as input
+	 * 
 	 * @param surame the surname of the client required
 	 * @return an array containing all the first names which share the entered surname
 	 * @throws SQLException 
@@ -18,6 +19,7 @@ public interface GetDatabase {
 
     /**
      * fetches all the personal information required to fill the form, using the first and surnames of the client
+     * 
      * @param name the combined first and surname of the client, separated by '/'
      * @return map containing all the necessary information to fill out the clients required personal info on the form
 	 * @throws SQLException 
