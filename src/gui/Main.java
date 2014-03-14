@@ -94,14 +94,13 @@ public class Main extends Application{
     }   
     
 	public void setUpFormFiller(Button btn){
-        final Text actionTarget = new Text(); 
        btn.setOnAction(new EventHandler<ActionEvent>(){
             
             @Override
             public void handle(ActionEvent e){
             	client = ClientHolder.getInstance();
                 Page1 page1 = new Page1();
-                page1.start(primaryStage, firstScene, client);
+                page1.setUp(primaryStage, firstScene, client);
             }
         });
     }

@@ -44,13 +44,13 @@ public class Page1 implements Page{
     private String[] firstnames;
     private Map<String, String> clientData;
     protected GridPane grid;
-    private boolean hasPartner;
     protected Button autoFillClientButton;
 	private Scene thisScene;
 	private String sceneT = "Client Personal Info";
 	private ComboBox<String> comboBox;
 	protected ClientHolder client;
 	private static Page instance;
+	private Page nextPage;
 	
 	static {
 		instance = new Page1();
@@ -64,7 +64,7 @@ public class Page1 implements Page{
     The start method is the entry point for all javaFX applications, the main
     method is included only to meet requirements 
     */
-    public void start(Stage primaryStage, Scene firstScene, ClientHolder client) {
+    public void setUp(Stage primaryStage, Scene firstScene, ClientHolder client) {
     	this.client = client;
         this.previousScene = firstScene;
         this.primaryStage = primaryStage;
@@ -114,6 +114,7 @@ public class Page1 implements Page{
                 	} else {
                 		actionTarget.setFill(Color.BLUE);
                         actionTarget.setText("Finding Client Information");
+                         
 						getClientInfo();
 						fillClientInfo();
 						actionTarget.setFill(null);
@@ -349,6 +350,7 @@ public class Page1 implements Page{
             		new ComboBox<String>(formTypes);
             comboBox.setPrefWidth(fieldWidth);
             comboBox.setPromptText("Single Client");
+            comboBox.setValue("Single Client");
             grid.add(comboBox, 2, gridVert);
         
         //Client Surname
@@ -446,16 +448,17 @@ public class Page1 implements Page{
         grid.add(hNextBtn, 4, gridVert);
         
         nextBtn.setOnAction(new EventHandler<ActionEvent>(){
-            
+
             @Override
             public void handle(ActionEvent e){
             	fillAndSaveClientInfo(clientData);
             	System.out.println(comboBox.getValue());
             	if(comboBox.getValue()
             			.equals("Single Client")){
-            		Page2.getInstance();
+            		nextPage = Page2.getInstance();
+            		nextPage.setUp(primaryStage, thisScene, client);
             	} else {
-            		Page3 nextPage = new Page3(primaryStage, thisScene);
+            		nextPage = new Page3(primaryStage, thisScene);
             	}
             	
             }
@@ -465,13 +468,7 @@ public class Page1 implements Page{
 
 	private IndividualDetails fillAndSaveClientInfo(Map<String, String> clientData) {
 		client.makeNewFirstClient();
-		if(hasPartner){
-			client.makeNewSecondClient();
-		}
-		
-		client.makeNewFirstClient();
 		IndividualDetails id = client.getFirstClient().getIndividualDetails();
-		
 		id.setSurname(clientData.get("Surname"));
 		id.setForename(clientData.get("Forename"));
 		id.setTitle(clientData.get("Title"));

@@ -17,7 +17,7 @@ public class Page2 extends Page1{
 		instance = new Page2();
 	}
 	
-	public void makeNew(Stage primaryStage, Scene previousScene) {
+	public void start(Stage primaryStage, Scene previousScene) {
         this.previousScene = previousScene;
         this.primaryStage = primaryStage;
         primaryStage.setTitle("Personal Information - Partner");
@@ -25,7 +25,6 @@ public class Page2 extends Page1{
         grid.setHgap(25);
         grid.setVgap(25);
         grid.setAlignment(Pos.CENTER);
-        
         
         System.out.println("New Scene created");
         createAutoFillFields(grid);
@@ -41,5 +40,4 @@ public class Page2 extends Page1{
         System.out.println("New Scene set");
 		
 	}
-
 }
