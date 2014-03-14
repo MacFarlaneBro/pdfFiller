@@ -13,23 +13,23 @@ import com.itextpdf.text.DocumentException;
 public class AscentricPage8Test {
 	
 	AscentricPage8 thePage = new AscentricPage8();
-	ClientHolder theClientHolder = new ClientHolder();
+	ClientHolder theClient = ClientHolder.getInstance();
 	
 	
 	@Before
 	public void setUp(){
-		theClientHolder.makeNewFirstClient();
-		theClientHolder.makeNewSecondClient();
+		theClient.makeNewFirstClient();
+		theClient.makeNewSecondClient();
 		
-		theClientHolder.getFirstClient().getIndividualDetails().setForename("Dave");
-		theClientHolder.getFirstClient().getIndividualDetails().setSurname("Davison");
-		theClientHolder.getSecondClient().getIndividualDetails().setForename("Dave");
-		theClientHolder.getSecondClient().getIndividualDetails().setSurname("Davison");
-		theClientHolder.getFirstClient().getfinancialAdviserDetails().setDate("09294828");
+		theClient.getFirstClient().getIndividualDetails().setForename("Dave");
+		theClient.getFirstClient().getIndividualDetails().setSurname("Davison");
+		theClient.getSecondClient().getIndividualDetails().setForename("Dave");
+		theClient.getSecondClient().getIndividualDetails().setSurname("Davison");
+		theClient.getFirstClient().getfinancialAdviserDetails().setDate("09294828");
 	}
 
 	@Test
 	public void testPage7() throws IOException, DocumentException{
-		thePage.fillPage(theClientHolder);
+		thePage.fillPage(theClient);
 	}
 }

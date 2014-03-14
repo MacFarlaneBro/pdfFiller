@@ -13,7 +13,6 @@ public class Page2 extends Page1{
 	protected Stage primaryStage;
 	
 	public Page2(Stage primaryStage, Scene previousScene) {
-		
 	        this.previousScene = previousScene;
 	        this.primaryStage = primaryStage;
 	        primaryStage.setTitle("Personal Information - Partner");

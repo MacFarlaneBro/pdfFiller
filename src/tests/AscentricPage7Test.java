@@ -15,7 +15,7 @@ import com.itextpdf.text.DocumentException;
 public class AscentricPage7Test {
 	
 	AscentricPage7 thePage = new AscentricPage7();
-	ClientHolder theClientHolder = new ClientHolder();
+	ClientHolder theClientHolder = ClientHolder.getInstance();
 	Client theClient;
 	
 	

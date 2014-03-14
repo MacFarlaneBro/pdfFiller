@@ -6,6 +6,8 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
+import ascentricClientDetails.ClientHolder;
+import ascentricClientDetails.IndividualDetails;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -47,13 +49,23 @@ public class Page1{
 	private Scene thisScene;
 	private String sceneT = "Client Personal Info";
 	private ComboBox<String> comboBox;
+	protected ClientHolder client;
+	private static Page1 instance;
+	
+	static {
+		instance = new Page1();
+	}
+	
+	public Page1 getInstance(){
+		return instance;
+	}
 
-    
-    /*
+	/*
     The start method is the entry point for all javaFX applications, the main
     method is included only to meet requirements 
     */
-    public void start(Stage primaryStage, Scene firstScene) {
+    public void start(Stage primaryStage, Scene firstScene, ClientHolder client) {
+    	this.client = client;
         this.previousScene = firstScene;
         this.primaryStage = primaryStage;
         primaryStage.setTitle("Personal Information - Client");
@@ -115,7 +127,6 @@ public class Page1{
 				}
             }
         });
-		
 	}
     
 	protected void fillClientInfo() {
@@ -152,7 +163,6 @@ public class Page1{
 			current.setText(clientData.get(current.getId()));
 		}
 	}
-
 
 	@SuppressWarnings("unchecked")
 	private Map<String, String> getClientInfo() throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
@@ -439,7 +449,7 @@ public class Page1{
             
             @Override
             public void handle(ActionEvent e){
-            	saveClientInfo();
+            	fillAndSaveClientInfo();
             	if(comboBox.getValue().equals("Single Client")){
             		Page2 secondPage = new Page2(primaryStage, thisScene);
             	} else {
@@ -451,8 +461,27 @@ public class Page1{
     }
 
 
-	private void saveClientInfo() {
+	private void fillAndSaveClientInfo() {
+		client.makeNewFirstClient();
+		if(hasPartner){
+			client.makeNewSecondClient();
+		}
 		
+		client.makeNewFirstClient();
+		IndividualDetails id = client.getFirstClient().getIndividualDetails();
 		
+		id.setSurname(clientData.get("Surname"));
+		id.setForename(clientData.get("Forename"));
+		id.setTitle(clientData.get("Title"));
+		id.setDob(clientData.get("DOB"));
+		id.setNationalInsuranceNumber(clientData.get("NatIns"));
+		id.setHomeNumber(clientData.get("HomeTel"));
+		id.setWorkNumber(clientData.get("WorkTel"));
+		id.setMobileNumber(clientData.get("MobTel"));
+		id.setAddress(clientData.get("HomeAddress1") + " "
+		+ clientData.get("HomeAddress2") + " " 
+				+ clientData.get("HomeAddress3"));
+		id.setPostcode(clientData.get("PostCode"));
+		id.setEmail(clientData.get("Email"));
 	}
 }

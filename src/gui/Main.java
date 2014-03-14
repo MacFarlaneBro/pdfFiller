@@ -22,6 +22,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import ascentricClientDetails.ClientHolder;
 import ascentricGui.Page1;
 
 /**
@@ -32,6 +33,7 @@ public class Main extends Application{
     
     private Stage primaryStage;
     private Scene firstScene;
+    private ClientHolder client;
     
     public static void main(String[] args){
         launch(args);
@@ -92,14 +94,14 @@ public class Main extends Application{
     }   
     
 	public void setUpFormFiller(Button btn){
-        Page1 client = new Page1();
         final Text actionTarget = new Text(); 
        btn.setOnAction(new EventHandler<ActionEvent>(){
             
             @Override
             public void handle(ActionEvent e){
-                Page1 client = new Page1();
-                client.start(primaryStage, firstScene);
+            	client = ClientHolder.getInstance();
+                Page1 page1 = new Page1();
+                page1.start(primaryStage, firstScene, client);
             }
         });
     }

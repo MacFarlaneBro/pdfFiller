@@ -7,11 +7,20 @@ public class ClientHolder {
 	private Client jointAccount;
 	private Client nonSpecifiedInfo;
 	private String clientNumber;
+	private static ClientHolder instance;
 	
 	MakeClients makeClients;
 	
-	public ClientHolder(){
+	private ClientHolder(){
 		 makeClients = new ClientFactory();
+	}
+	
+	public static ClientHolder getInstance(){
+		return instance;
+	}
+	
+	static{
+		instance = new ClientHolder();
 	}
 	
 	public void makeNewFirstClient(){
