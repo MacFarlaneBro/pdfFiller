@@ -99,7 +99,11 @@ public class MSSQLDatabase implements GetDatabase{
 	      while(rs.next()){
 		      pData.put("Title", rs.getString("Title"));
 		      //Removing the time portion of the date object returned by the database before adding it to the map
-		      String dob = rs.getString("DOB").substring(0,10);
+		      
+		      String dob = null;
+		      if(rs.getString("DOB")!= null){
+		    	  dob = rs.getString("DOB").substring(0,10);
+		      }
 		      pData.put("DOB", dob);
 		      pData.put("HomeTel", rs.getString("HomeTel"));
 		      pData.put("WorkTel", rs.getString("BusTel"));
@@ -113,7 +117,7 @@ public class MSSQLDatabase implements GetDatabase{
 		      pData.put("Email", rs.getString("EmailAddress"));
 	      }
 	      
-	      System.out.println(pData.get("DOB"));
+	      System.out.println(pData.get("HomePostCode"));
 		
 	      if(!conn.equals(null)){
 	    	  conn.close();

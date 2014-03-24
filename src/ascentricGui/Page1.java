@@ -291,7 +291,7 @@ public class Page1 implements Page{
         theLabels.add(postcode);
         grid.add(postcode, 3, ++gridVert);
         TextField clientHomePostCode = new TextField();
-        clientHomePostCode.setId("PostCode");
+        clientHomePostCode.setId("HomePostCode");
         theFields.add(clientHomePostCode);
         clientHomePostCode.setPrefWidth(fieldWidth);
         grid.add(clientHomePostCode, 4, gridVert);
@@ -480,7 +480,7 @@ public class Page1 implements Page{
 		id.setAddress(clientData.get("HomeAddress1") + " "
 		+ clientData.get("HomeAddress2") + " " 
 				+ clientData.get("HomeAddress3"));
-		id.setPostcode(clientData.get("PostCode"));
+		id.setPostcode(clientData.get("HomePostCode"));
 		id.setEmail(clientData.get("Email"));
 	
 		return id;
