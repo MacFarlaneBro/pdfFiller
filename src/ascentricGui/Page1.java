@@ -88,6 +88,16 @@ public class Page1 implements Page{
 
        // grid.setGridLinesVisible(true);
         primaryStage.setScene(thisScene);
+        
+        try {
+			getClientInfo();
+		} catch (InstantiationException | IllegalAccessException
+				| ClassNotFoundException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
+        fillClientInfo();
     }
 
     
@@ -348,12 +358,12 @@ public class Page1 implements Page{
             comboBox.setValue("Single Client");
             grid.add(comboBox, 2, gridVert);
         
-        //Client Surname
-        Label surname = new Label("Surname");
-        grid.add(surname, 1, ++gridVert);
-        clientSurname = new TextField();
-        clientSurname.setPrefWidth(fieldWidth);
-        grid.add(clientSurname, 2, gridVert);
+            //Client Surname
+            Label surname = new Label("Surname");
+            grid.add(surname, 1, ++gridVert);
+            clientSurname = new TextField();
+            clientSurname.setPrefWidth(fieldWidth);
+            grid.add(clientSurname, 2, gridVert);
     }
     
 
@@ -450,10 +460,11 @@ public class Page1 implements Page{
             	System.out.println(comboBox.getValue());
             	if(comboBox.getValue()
             			.equals("Single Client")){
+            		nextPage = new Page3(primaryStage, thisScene);
+            	} else {
             		nextPage = (Page) Page2.getInstance();
             		nextPage.setUp(primaryStage, thisScene, client);
-            	} else {
-            		nextPage = new Page3(primaryStage, thisScene);
+            		
             	}
             	
             }

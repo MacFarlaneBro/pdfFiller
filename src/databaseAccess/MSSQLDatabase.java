@@ -116,6 +116,8 @@ public class MSSQLDatabase implements GetDatabase{
 		      pData.put("HomeAddress5", rs.getString("HomeAddress5"));
 		      pData.put("HomePostCode", rs.getString("HomePostCode"));
 		      pData.put("Email", rs.getString("EmailAddress"));
+		      pData.put("PartnerFirstName", rs.getString("PartnerForenames"));
+		      pData.put("PartnerSurname", rs.getString("PartnerSurname"));
 		      cliRef = rs.getInt("clientRef");
 	      }
 	      
