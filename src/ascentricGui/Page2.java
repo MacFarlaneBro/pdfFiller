@@ -21,10 +21,10 @@ public class Page2 extends Page1{
         this.previousScene = previousScene;
         this.primaryStage = primaryStage;
         primaryStage.setTitle("Personal Information - Partner");
-        grid = new GridPane();
-        grid.setHgap(25);
-        grid.setVgap(25);
-        grid.setAlignment(Pos.CENTER);
+//        grid = new GridPane();
+//        grid.setHgap(25);
+//        grid.setVgap(25);
+//        grid.setAlignment(Pos.CENTER);
         
         System.out.println("New Scene created");
         createAutoFillFields(grid);

@@ -117,6 +117,8 @@ public class MSSQLDatabase implements GetDatabase{
 		      pData.put("Email", rs.getString("EmailAddress"));
 	      }
 	      
+	      getNationalInsuranceNumber(pData, rs.getInt("ClientRef"));
+	      
 	      System.out.println(pData.get("HomePostCode"));
 		
 	      if(!conn.equals(null)){
@@ -124,5 +126,20 @@ public class MSSQLDatabase implements GetDatabase{
 	    	  System.out.println("disconnected from mySQL Database");
 	      }
 		return pData;
+	}
+	
+	/**
+	 * Fetching the NINO was moved to a different method because it accesses a different table
+	 * therefore requires a different query execution
+	 * @param pData - The map containing all the autofill data
+	 * @param clientRef - The unique reference number of the client under scrutiny
+	 * @throws SQLException
+	 */
+	private void getNationalInsuranceNumber(Map<String, String> pData, int clientRef) throws SQLException{
+		 Statement st = conn.createStatement();
+		 ResultSet rs = st.executeQuery("SELECT NINO FROM ClientExtraDetails WHERE ClientRef = " + clientRef);
+		 while(rs.next()){
+			 pData.put("NationalInsuranceNumber", rs.getString("NINO"));
+		 }
 	}
 }

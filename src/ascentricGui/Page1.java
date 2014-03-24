@@ -70,8 +70,8 @@ public class Page1 implements Page{
         this.primaryStage = primaryStage;
         primaryStage.setTitle("Personal Information - Client");
         grid = new GridPane();
-        grid.setHgap(25);
-        grid.setVgap(25);
+        grid.setHgap(15);
+        grid.setVgap(15);
         grid.setAlignment(Pos.CENTER);
         
         thisScene = new Scene(grid);
@@ -261,9 +261,6 @@ public class Page1 implements Page{
         theLabels.add(address);
         grid.add(address, 3, ++gridVert);
         
-        //resetting a small horizontal gap between the three lines of address
-        grid.setHgap(4);
-        
         //line 1
         TextField clientHomeAddress1 = new TextField();
         clientHomeAddress1.setId("HomeAddress1");
@@ -282,9 +279,6 @@ public class Page1 implements Page{
         clientHomeAddress3.setId("HomeAddress3");
         clientHomeAddress3.setPrefWidth(fieldWidth);
         grid.add(clientHomeAddress3, 4, ++gridVert);
-        
-        //resetting the Hgap to the normal level for the remaining fields
-        grid.setHgap(25);
         
         //Client PostCode
         Label postcode = new Label("Postcode");
@@ -309,11 +303,11 @@ public class Page1 implements Page{
         //Does the client have a national insurance number?
         Label natInsTick = new Label("Tick if client has no national Insurance number");
         theLabels.add(email);
-        grid.add(natInsTick, 3, ++gridVert);
+        grid.add(natInsTick, 1, 9);
         CheckBox natInsTickClient = new CheckBox();
         natInsTickClient.setId("natInsTickClient");
         clientEmail.setPrefWidth(fieldWidth);
-        grid.add(natInsTickClient, 4, gridVert);
+        grid.add(natInsTickClient, 2, 9);
 	}
 
 
