@@ -43,12 +43,12 @@ public class Page1 implements Page{
     private Set<TextField> theFields;
     private String[] firstnames;
     private Map<String, String> clientData;
-    protected GridPane grid;
-    protected Button autoFillClientButton;
+    private GridPane grid;
+    private Button autoFillClientButton;
 	private Scene thisScene;
 	private String sceneT = "Client Personal Info";
 	private ComboBox<String> comboBox;
-	protected ClientHolder client;
+	private ClientHolder client;
 	private static Page instance;
 	private Page nextPage;
 	
@@ -91,7 +91,7 @@ public class Page1 implements Page{
     }
 
     
-    protected void autoFillClientInfo(GridPane grid) {
+    private void autoFillClientInfo(GridPane grid) {
     	autoFillClientButton = new Button("Fill Personal Information");//Create button with the name sign in
     	autoFillClientButton.setVisible(false);
         HBox hbBtn = new HBox(21);//Layout pane with 21 pixel spacing
@@ -130,7 +130,7 @@ public class Page1 implements Page{
         });
 	}
     
-	protected void fillClientInfo() {
+	private void fillClientInfo() {
 		Iterator<TextField> fields = theFields.iterator();
 		String holder;
 		int homeAddress = 1;
@@ -179,7 +179,7 @@ public class Page1 implements Page{
 	 * allow them to be identified by the fillClientInfo method for autofilling purposes
 	 * @param grid
 	 */
-	protected void createRemainingFields(GridPane grid) {
+	private void createRemainingFields(GridPane grid) {
     	
     	theFields = new HashSet<TextField>();
     	theLabels = new HashSet<Label>();
@@ -324,7 +324,7 @@ public class Page1 implements Page{
     visible which is useful for debugging purposes
     */
     
-    protected void createAutoFillFields(GridPane grid) {
+    private void createAutoFillFields(GridPane grid) {
         
         Text sceneTitle = new Text(sceneT);
         sceneTitle.setFont(Font.font("courier", FontWeight.NORMAL, 21));
@@ -363,7 +363,7 @@ public class Page1 implements Page{
      * then proceeds to autofill all the fields with the necessary client information
      * @param grid
      */
-    protected void findClient(GridPane grid) {
+    private void findClient(GridPane grid) {
         Button btn = new Button("Find Client");//Create button with the name sign in
         HBox hbBtn = new HBox(21);//Layout pane with 21 pixel spacing
         hbBtn.setAlignment(Pos.BOTTOM_RIGHT);
@@ -412,13 +412,13 @@ public class Page1 implements Page{
 		grid.add(clientFirstName, 2, 5);
 	}
 
-    protected void getFirstNames() throws InstantiationException,
+    private void getFirstNames() throws InstantiationException,
     IllegalAccessException, ClassNotFoundException, SQLException {
 		GetDatabase db = MSSQLDatabase.getDatabaseConnector();
 		firstnames = db.fetchInfoUsingName(clientSurname.getText());
 	}
 
-	protected void createMovementButtons(GridPane grid) {
+	private void createMovementButtons(GridPane grid) {
         Button backBtn = new Button("Back");//Create button with the name sign in
         HBox hbBtn = new HBox(21);//Layout pane with 21 pixel spacing
         hbBtn.setAlignment(Pos.BOTTOM_LEFT);
@@ -450,7 +450,7 @@ public class Page1 implements Page{
             	System.out.println(comboBox.getValue());
             	if(comboBox.getValue()
             			.equals("Single Client")){
-            		nextPage = Page2.getInstance();
+            		nextPage = (Page) Page2.getInstance();
             		nextPage.setUp(primaryStage, thisScene, client);
             	} else {
             		nextPage = new Page3(primaryStage, thisScene);
@@ -468,7 +468,7 @@ public class Page1 implements Page{
 		id.setForename(clientData.get("Forename"));
 		id.setTitle(clientData.get("Title"));
 		id.setDob(clientData.get("DOB"));
-		id.setNationalInsuranceNumber(clientData.get("NatIns"));
+		id.setNationalInsuranceNumber(clientData.get("NationalInsuranceNumber"));
 		id.setHomeNumber(clientData.get("HomeTel"));
 		id.setWorkNumber(clientData.get("WorkTel"));
 		id.setMobileNumber(clientData.get("MobTel"));
