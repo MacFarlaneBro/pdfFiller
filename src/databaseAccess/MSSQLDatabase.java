@@ -91,8 +91,9 @@ public class MSSQLDatabase implements GetDatabase{
 	      String[] names = name.split("/");
 	      
 	      String query = "SELECT * FROM Clients WHERE Surname = '";
-	      System.out.println(names[0]);
-	      System.out.println(names[1]);
+	      
+	      int cliRef = 0;
+	      
 	      ResultSet rs = st.executeQuery(query + names[0] + "'"
 	      		+ "AND Forenames ='" + names[1] + "';");
 	      Map<String,String> pData = new HashMap<String, String>();
@@ -115,12 +116,12 @@ public class MSSQLDatabase implements GetDatabase{
 		      pData.put("HomeAddress5", rs.getString("HomeAddress5"));
 		      pData.put("HomePostCode", rs.getString("HomePostCode"));
 		      pData.put("Email", rs.getString("EmailAddress"));
+		      cliRef = rs.getInt("clientRef");
 	      }
 	      
-	      getNationalInsuranceNumber(pData, rs.getInt("ClientRef"));
 	      
-	      System.out.println(pData.get("HomePostCode"));
-		
+	      getNationalInsuranceNumber(pData, cliRef);
+	      		
 	      if(!conn.equals(null)){
 	    	  conn.close();
 	    	  System.out.println("disconnected from mySQL Database");

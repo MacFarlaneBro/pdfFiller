@@ -91,7 +91,7 @@ public class Page1 implements Page{
     }
 
     
-    protected void autoFillClientInfo(GridPane grid2) {
+    protected void autoFillClientInfo(GridPane grid) {
     	autoFillClientButton = new Button("Fill Personal Information");//Create button with the name sign in
     	autoFillClientButton.setVisible(false);
         HBox hbBtn = new HBox(21);//Layout pane with 21 pixel spacing
@@ -161,6 +161,7 @@ public class Page1 implements Page{
 					}
 				}
 			}
+			
 			current.setText(clientData.get(current.getId()));
 		}
 	}
@@ -218,7 +219,7 @@ public class Page1 implements Page{
         theLabels.add(natIns);
         grid.add(natIns, 1, ++gridVert);
         TextField clientNatIns = new TextField();
-        clientNatIns.setId("NatIns");
+        clientNatIns.setId("NationalInsuranceNumber");
         theFields.add(clientNatIns);
         clientNatIns.setPrefWidth(fieldWidth);
         grid.add(clientNatIns, 2, gridVert);
