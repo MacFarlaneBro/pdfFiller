@@ -483,4 +483,10 @@ public class Page2 implements Page{
 		return instance;
 	}
 
+	@Override
+	public void goTo() {
+		primaryStage.setScene(thisScene);
+		
+	}
+
 }

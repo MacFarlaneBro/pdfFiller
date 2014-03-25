@@ -16,4 +16,10 @@ public class Page3 implements Page {
 		
 	}
 
+	@Override
+	public void goTo() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

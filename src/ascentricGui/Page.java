@@ -7,5 +7,7 @@ import ascentricClientDetails.ClientHolder;
 public interface Page {
 	
 	public void setUp(Stage primaryStage, Scene firstScene, ClientHolder client);
+	
+	public void goTo();
 
 }

@@ -464,8 +464,9 @@ public class Page1 implements Page{
             			.equals("Single Client")){
             		nextPage = new Page3(primaryStage, thisScene);
             	} else {
+            		//If this is the first time going to the next page, create a new page
             		nextPage = (Page) Page2.getInstance();
-            		nextPage.setUp(primaryStage, thisScene, client);           		
+            		nextPage.setUp(primaryStage, thisScene, client);
             	}
             }
         });
@@ -494,5 +495,11 @@ public class Page1 implements Page{
 		id.setEmail(clientData.get("Email"));
 	
 		return id;
+	}
+
+	@Override
+	public void goTo() {
+		// TODO Auto-generated method stub
+		
 	}
 }
