@@ -29,6 +29,17 @@ public interface GetDatabase {
      * @throws SQLException 
      */
 	public Map<String, String> getClientPersonalData(String name) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException;
+	
+	/**
+	 * 
+	 * @param name
+	 * @return
+	 * @throws InstantiationException
+	 * @throws IllegalAccessException
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	public Map<String, String> getPartnerPersonalData(String name) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException;
 
 
 }

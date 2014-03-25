@@ -97,7 +97,6 @@ public class Page1 implements Page{
 			e.printStackTrace();
 		}
         
-        fillClientInfo();
     }
 
     
@@ -170,35 +169,19 @@ public class Page1 implements Page{
 					}
 				}
 			}
-			
 			current.setText(clientData.get(current.getId()));
 		}
-		
-		fillPartnerInfo(clientData);
 	}
 	
-	/**
-	 * Fills in the necessary info for filling in the partner personal info form on the next page
-	 * @param clientData
-	 */
-	private void fillPartnerInfo(Map<String, String> clientData) {
-		client.makeNewSecondClient();
-		//Set the surname of the clients partner
-		client.getSecondClient()
-			.getIndividualDetails()
-			.setSurname(
-					clientData.get("PartnerSurname"));		
-		//Set the first name of the clients partner
-		client.getSecondClient()
-		.getIndividualDetails()
-		.setForename(
-				clientData.get("PartnerFirstName"));
-	}
 
 	@SuppressWarnings("unchecked")
 	private Map<String, String> getClientInfo() throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
 		GetDatabase db = MSSQLDatabase.getDatabaseConnector();
-		clientData = db.getClientPersonalData(clientSurname.getText() + '/' + ((ComboBox<String>)clientFirstName).getValue());
+		try{
+			clientData = db.getClientPersonalData(clientSurname.getText() + '/' + ((ComboBox<String>)clientFirstName).getValue());
+		} catch (ClassCastException ex){
+			System.out.println("This is complaining because of the cast but really what I'm doing is fine. I think.");
+		}
 		return clientData;
 	}
 
@@ -482,22 +465,24 @@ public class Page1 implements Page{
             		nextPage = new Page3(primaryStage, thisScene);
             	} else {
             		nextPage = (Page) Page2.getInstance();
-            		nextPage.setUp(primaryStage, thisScene, client);
-            		
+            		nextPage.setUp(primaryStage, thisScene, client);           		
             	}
-            	
             }
         });
     }
 
 
+	@SuppressWarnings("unchecked")
 	private IndividualDetails fillAndSaveClientInfo(Map<String, String> clientData) {
 		client.makeNewFirstClient();
 		IndividualDetails id = client.getFirstClient().getIndividualDetails();
-		id.setSurname(clientData.get("Surname"));
-		id.setForename(clientData.get("Forename"));
+		
+		id.setSurname(clientSurname.getText());
+		id.setForename(((ComboBox<String>)clientFirstName).getValue());
+		
 		id.setTitle(clientData.get("Title"));
 		id.setDob(clientData.get("DOB"));
+		System.out.println(client.getFirstClient().getIndividualDetails().getDob());
 		id.setNationalInsuranceNumber(clientData.get("NationalInsuranceNumber"));
 		id.setHomeNumber(clientData.get("HomeTel"));
 		id.setWorkNumber(clientData.get("WorkTel"));

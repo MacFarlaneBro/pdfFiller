@@ -51,8 +51,7 @@ public class Page2 implements Page{
 	private ClientHolder client;
 	private static Page instance;
 	private Page nextPage;
-	private String partnerSurname;
-	private String partnerFirstName;
+
 
 	static { 
 		instance = new Page2();
@@ -111,7 +110,6 @@ public class Page2 implements Page{
             @Override
             public void handle(ActionEvent e){
                 try {
-                	System.out.println(clientSurname.getText());
                 	if(clientSurname.getText().equals("")){
                 		actionTarget.setFill(Color.FIREBRICK);
                 		actionTarget.setText("More information Required, please\n enter a Surname and click 'Find Client\n'"
@@ -143,9 +141,11 @@ public class Page2 implements Page{
 		while(fields.hasNext()){
 			TextField current = (TextField)fields.next();
 			//Remove the time portion from the date of birth value
+			System.out.print(current.getId() + ": ");
 			if(current.getId()
-					.equals("PartnerDOB")){
+					.equals("PartnerDOB") && current.getId()!= null){
 				holder = clientData.get(current.getId());
+				System.out.println(holder + " - Holder");
 				String formatted = holder.replace("-", "/");
 				current.setText(formatted);
 				continue;
@@ -166,15 +166,22 @@ public class Page2 implements Page{
 			}
 			
 			current.setText(clientData.get(current.getId()));
+			System.out.println(clientData.get(current.getId()));
 		}
 	}
 
 	private Map<String, String> getClientInfo() throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
 		GetDatabase db = MSSQLDatabase.getDatabaseConnector();
-		clientData = db.getClientPersonalData(client.getSecondClient().getIndividualDetails().getSurname() 
+		clientData = db.getPartnerPersonalData(client
+				.getFirstClient()
+				.getIndividualDetails()
+				.getSurname() 
 				+ '/' 
-				+ client.getSecondClient().getIndividualDetails().getForename());
-		System.out.println(clientData.get("Forenames"));
+				+ client
+				.getFirstClient()
+				.getIndividualDetails()
+				.getForename());
+		System.out.println("Returned Client Forename: " + clientData.get("ForeNames"));
 		return clientData;
 	}
 
@@ -202,6 +209,7 @@ public class Page2 implements Page{
         Label surname = new Label("Surname");
         grid.add(surname, 1, ++gridVert);
         clientSurname = new TextField();
+        clientSurname.setId("Surname");
         clientSurname.setPrefWidth(fieldWidth);
         grid.add(clientSurname, 2, gridVert);
         
@@ -313,7 +321,7 @@ public class Page2 implements Page{
 	private IndividualDetails fillAndSaveClientInfo(Map<String, String> clientData) {
 		IndividualDetails id = client.getSecondClient().getIndividualDetails();
 		id.setSurname(clientData.get("Surname"));
-		id.setForename(clientData.get("Forename"));
+		id.setForename(clientData.get("ForeNames"));
 		id.setTitle(clientData.get("Title"));
 		id.setDob(clientData.get("DOB"));
 		id.setNationalInsuranceNumber(clientData.get("NationalInsuranceNumber"));
@@ -340,15 +348,18 @@ public class Page2 implements Page{
     	theFields = new HashSet<TextField>();
     	theLabels = new HashSet<Label>();
         
+        theFields.add(clientSurname);
+    	
         //Client First Name
         Label firstName = new Label("First name");
         theLabels.add(firstName);
         firstName.setTextAlignment(TextAlignment.RIGHT);
         grid.add(firstName, 1, ++gridVert);
         clientFirstName = new TextField();
-        clientFirstName.setId("FirstName");
+        clientFirstName.setId("ForeNames");
         clientFirstName.prefWidth(fieldWidth);
         grid.add(clientFirstName, 2, gridVert);
+        theFields.add((TextField)clientFirstName);
         
         //Client title
         Label title = new Label("Title");

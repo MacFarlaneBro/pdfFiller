@@ -108,28 +108,27 @@ public class MSSQLDatabase implements GetDatabase{
 	      
 	      Map<String,String> pData = new HashMap<String, String>();
 	      while(rs.next()){
-		      pData.put("Title", rs.getString("Title"));
-		      //Removing the time portion of the date object returned by the database before adding it to the map
+		      pData.put("Title", rs.getString("PartnerTitle"));
 		      
+		      //Removing the time portion of the date object returned by the database before adding it to the map
 		      String dob = null;
-		      if(rs.getString("DOB")!= null){
-		    	  dob = rs.getString("DOB").substring(0,10);
+		      if(rs.getString("PartnerDOB")!= null){
+		    	  dob = rs.getString("PartnerDOB").substring(0,10);
 		      }
-		      pData.put("ForeNames", "ForeNames");
-		      pData.put("Surname", "Surname");
+		      
+		      pData.put("ForeNames", rs.getString("PartnerForenames"));
+		      pData.put("Surname", rs.getString("PartnerSurname"));
 		      pData.put("DOB", dob);
-		      pData.put("HomeTel", rs.getString("HomeTel"));
-		      pData.put("WorkTel", rs.getString("BusTel"));
-		      pData.put("Mobile", rs.getString("MobTel"));
-		      pData.put("HomeAddress1", rs.getString("HomeAddress1"));
-		      pData.put("HomeAddress2", rs.getString("HomeAddress2"));
-		      pData.put("HomeAddress3", rs.getString("HomeAddress3"));
-		      pData.put("HomeAddress4", rs.getString("HomeAddress4"));
-		      pData.put("HomeAddress5", rs.getString("HomeAddress5"));
-		      pData.put("HomePostCode", rs.getString("HomePostCode"));
-		      pData.put("Email", rs.getString("EmailAddress"));
-		      pData.put("PartnerFirstName", rs.getString("PartnerForenames"));
-		      pData.put("PartnerSurname", rs.getString("PartnerSurname"));
+		      pData.put("HomeTel", rs.getString("PartnerHomeTel"));
+		      pData.put("WorkTel", rs.getString("PartnerBusTel"));
+		      pData.put("Mobile", rs.getString("PartnerMobTel"));
+		      pData.put("HomeAddress1", rs.getString("PartnerAddress1"));
+		      pData.put("HomeAddress2", rs.getString("PartnerAddress2"));
+		      pData.put("HomeAddress3", rs.getString("PartnerAddress3"));
+		      pData.put("HomeAddress4", rs.getString("PartnerAddress4"));
+		      pData.put("HomeAddress5", rs.getString("PartnerAddress5"));
+		      pData.put("HomePostCode", rs.getString("PartnerPostCode"));
+		      pData.put("Email", rs.getString("PartnerEmailAddress"));
 		      cliRef = rs.getInt("clientRef");
 	      }
 	      
