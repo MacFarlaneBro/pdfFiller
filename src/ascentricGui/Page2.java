@@ -80,7 +80,19 @@ public class Page2 implements Page{
        // grid.setGridLinesVisible(true);
         primaryStage.setScene(thisScene);
         System.out.println("New Scene set");
-		
+        
+        /*
+         * As the details of the partner are often present in the clients file this try/catch block attempts to 
+         * autofill the partner personal information fields as soon as the page is loaded
+         */
+		try {
+			getClientInfo();
+			fillClientInfo();
+		} catch (InstantiationException | IllegalAccessException
+				| ClassNotFoundException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         
 	}
 
@@ -130,11 +142,9 @@ public class Page2 implements Page{
 		
 		while(fields.hasNext()){
 			TextField current = (TextField)fields.next();
-			System.out.println(current.toString());
-			
 			//Remove the time portion from the date of birth value
 			if(current.getId()
-					.equals("DOB")){
+					.equals("PartnerDOB")){
 				holder = clientData.get(current.getId());
 				String formatted = holder.replace("-", "/");
 				current.setText(formatted);
@@ -143,10 +153,10 @@ public class Page2 implements Page{
 			
 			//As the address data is not stored in a coherent fashion in the database, this conditional branch sorts it
 			//into the three fields necessary for the form
-			if(current.getId().startsWith("HomeAddress")){
+			if(current.getId().startsWith("PartnerAddress")){
 				for(int i = 0; i < 5; i++){
-					if(clientData.get("HomeAddress" + homeAddress) != null){
-						current.setText(clientData.get("HomeAddress" + homeAddress));
+					if(clientData.get("PartnerAddress" + homeAddress) != null){
+						current.setText(clientData.get("PartnerAddress" + homeAddress));
 						homeAddress++;
 						break;
 					} else {
@@ -159,12 +169,12 @@ public class Page2 implements Page{
 		}
 	}
 
-	@SuppressWarnings("unchecked")
 	private Map<String, String> getClientInfo() throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
 		GetDatabase db = MSSQLDatabase.getDatabaseConnector();
-		clientData = db.getClientPersonalData(partnerSurname 
+		clientData = db.getClientPersonalData(client.getSecondClient().getIndividualDetails().getSurname() 
 				+ '/' 
-				+ partnerFirstName);
+				+ client.getSecondClient().getIndividualDetails().getForename());
+		System.out.println(clientData.get("Forenames"));
 		return clientData;
 	}
 
@@ -301,8 +311,7 @@ public class Page2 implements Page{
 
 
 	private IndividualDetails fillAndSaveClientInfo(Map<String, String> clientData) {
-		client.makeNewFirstClient();
-		IndividualDetails id = client.getFirstClient().getIndividualDetails();
+		IndividualDetails id = client.getSecondClient().getIndividualDetails();
 		id.setSurname(clientData.get("Surname"));
 		id.setForename(clientData.get("Forename"));
 		id.setTitle(clientData.get("Title"));

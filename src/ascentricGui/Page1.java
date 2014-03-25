@@ -147,7 +147,6 @@ public class Page1 implements Page{
 		
 		while(fields.hasNext()){
 			TextField current = (TextField)fields.next();
-			System.out.println(current.toString());
 			
 			//Remove the time portion from the date of birth value
 			if(current.getId()
@@ -174,6 +173,26 @@ public class Page1 implements Page{
 			
 			current.setText(clientData.get(current.getId()));
 		}
+		
+		fillPartnerInfo(clientData);
+	}
+	
+	/**
+	 * Fills in the necessary info for filling in the partner personal info form on the next page
+	 * @param clientData
+	 */
+	private void fillPartnerInfo(Map<String, String> clientData) {
+		client.makeNewSecondClient();
+		//Set the surname of the clients partner
+		client.getSecondClient()
+			.getIndividualDetails()
+			.setSurname(
+					clientData.get("PartnerSurname"));		
+		//Set the first name of the clients partner
+		client.getSecondClient()
+		.getIndividualDetails()
+		.setForename(
+				clientData.get("PartnerFirstName"));
 	}
 
 	@SuppressWarnings("unchecked")

@@ -80,12 +80,17 @@ public class MSSQLDatabase implements GetDatabase{
 	      }
 		return result;
 	}
-
-	@Override
-	public Map<String, String> getClientPersonalData(String name) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
+	
+	public Map<String, String> getPartnerPersonalData(String name) 
+			throws InstantiationException,
+					IllegalAccessException,
+					ClassNotFoundException,
+					SQLException{
 		Class.forName(driver).newInstance();
 	      conn = DriverManager.getConnection(url);
+	      
 	      System.out.println("Connected to MSSQL Database");
+	      System.out.println(name);
 	      
 	      Statement st = conn.createStatement();
 	      String[] names = name.split("/");
@@ -94,8 +99,13 @@ public class MSSQLDatabase implements GetDatabase{
 	      
 	      int cliRef = 0;
 	      
-	      ResultSet rs = st.executeQuery(query + names[0] + "'"
-	      		+ "AND Forenames ='" + names[1] + "';");
+	      ResultSet rs = st.executeQuery(query 
+	    		+ names[0] 
+	    		+ "'"
+	      		+ "AND Forenames ='" 
+	    		+ names[1] 
+	    		+ "';");
+	      
 	      Map<String,String> pData = new HashMap<String, String>();
 	      while(rs.next()){
 		      pData.put("Title", rs.getString("Title"));
@@ -105,6 +115,67 @@ public class MSSQLDatabase implements GetDatabase{
 		      if(rs.getString("DOB")!= null){
 		    	  dob = rs.getString("DOB").substring(0,10);
 		      }
+		      pData.put("ForeNames", "ForeNames");
+		      pData.put("Surname", "Surname");
+		      pData.put("DOB", dob);
+		      pData.put("HomeTel", rs.getString("HomeTel"));
+		      pData.put("WorkTel", rs.getString("BusTel"));
+		      pData.put("Mobile", rs.getString("MobTel"));
+		      pData.put("HomeAddress1", rs.getString("HomeAddress1"));
+		      pData.put("HomeAddress2", rs.getString("HomeAddress2"));
+		      pData.put("HomeAddress3", rs.getString("HomeAddress3"));
+		      pData.put("HomeAddress4", rs.getString("HomeAddress4"));
+		      pData.put("HomeAddress5", rs.getString("HomeAddress5"));
+		      pData.put("HomePostCode", rs.getString("HomePostCode"));
+		      pData.put("Email", rs.getString("EmailAddress"));
+		      pData.put("PartnerFirstName", rs.getString("PartnerForenames"));
+		      pData.put("PartnerSurname", rs.getString("PartnerSurname"));
+		      cliRef = rs.getInt("clientRef");
+	      }
+	      
+	      
+	      getNationalInsuranceNumber(pData, cliRef);
+	      		
+	      if(!conn.equals(null)){
+	    	  conn.close();
+	    	  System.out.println("disconnected from mySQL Database");
+	      }
+		return pData;
+	}
+
+	@Override
+	public Map<String, String> getClientPersonalData(String name) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
+		Class.forName(driver).newInstance();
+	      conn = DriverManager.getConnection(url);
+	      
+	      System.out.println("Connected to MSSQL Database");
+	      System.out.println(name);
+	      
+	      Statement st = conn.createStatement();
+	      String[] names = name.split("/");
+	      
+	      String query = "SELECT * FROM Clients WHERE Surname = '";
+	      
+	      int cliRef = 0;
+	      
+	      ResultSet rs = st.executeQuery(query 
+	    		+ names[0] 
+	    		+ "'"
+	      		+ "AND Forenames ='" 
+	    		+ names[1] 
+	    		+ "';");
+	      
+	      Map<String,String> pData = new HashMap<String, String>();
+	      while(rs.next()){
+		      pData.put("Title", rs.getString("Title"));
+		      //Removing the time portion of the date object returned by the database before adding it to the map
+		      
+		      String dob = null;
+		      if(rs.getString("DOB")!= null){
+		    	  dob = rs.getString("DOB").substring(0,10);
+		      }
+		      pData.put("ForeNames", "ForeNames");
+		      pData.put("Surname", "Surname");
 		      pData.put("DOB", dob);
 		      pData.put("HomeTel", rs.getString("HomeTel"));
 		      pData.put("WorkTel", rs.getString("BusTel"));
