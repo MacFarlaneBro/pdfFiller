@@ -1,10 +1,10 @@
 package ascentricGui;
 
-import java.util.HashSet;
+import java.util.HashMap;
+import java.util.Map;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -19,6 +19,7 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import ascentricClientDetails.ClientHolder;
+import ascentricClientDetails.IndividualDetails;
 
 public class Page3 extends Page {
 
@@ -27,8 +28,8 @@ public class Page3 extends Page {
 	private Scene previousScene;
 	private Stage primaryStage;
 	private Scene thisScene;
-	private Object clientData;
 	private Page nextPage;
+	private Map<String, CheckBox> checkBoxes;
 	private GridPane grid;
 	private int gridVert;
 
@@ -65,6 +66,7 @@ public class Page3 extends Page {
 
 	private void createFields(GridPane grid) {
 		
+		checkBoxes = new HashMap<String, CheckBox>();
 		Text sceneTitle = new Text("Access Rights");
         sceneTitle.setFont(Font.font("courier", FontWeight.NORMAL, 21));
         sceneTitle.setId("sceneTitle");
@@ -109,18 +111,51 @@ public class Page3 extends Page {
         
         CheckBox famGroup1Check = new CheckBox("More than 1 applicant Linked to a Family Group");
         famGroup1Check.setAlignment(Pos.CENTER);
-		grid.add(famGroup1Check, 2, gridVert, 3, 1);
-		singleApp.setId("famGroup1Check");
-        
+		grid.add(famGroup1Check, 1, gridVert, 3, 1);
+		famGroup1Check.setId("famGroup1Check");
+		checkBoxes.put("famGroup1Check", famGroup1Check);
+
 		CheckBox famGroup2Check = new CheckBox("Link to an existing Ascentric account");
 		famGroup2Check.setAlignment(Pos.CENTER);
-		grid.add(famGroup2Check, 2, ++gridVert, 3 ,1);
+		grid.add(famGroup2Check, 1, ++gridVert, 3, 1);
 		famGroup2Check.setId("famGroup2Check");
+		checkBoxes.put("famGroup2Check", famGroup2Check);
+		
+		
+		Label ifPart2 = new Label("If part 2 of the above applies, please provide appropriate client reference number:");
+		grid.add(ifPart2, 1, ++gridVert, 3, 1);
+		
+		TextField cliRefNum = new TextField();
+		grid.add(cliRefNum, 1, ++gridVert, 2, 1);
 		
 		this.gridVert = gridVert+=2;
 		
 		createMovementButtons(grid);
 		
+	}
+	
+	private void fillAndSaveClientInfo() {
+		
+		IndividualDetails singleApplicant = client.getFirstClient().getIndividualDetails();
+		singleApplicant.setOnlineAccess(!checkBoxes.get("SingleAppNoOnAcc").isSelected());
+		singleApplicant.setEnquiryOnly(checkBoxes.get("SingleAppEnqOnly").isSelected());
+		singleApplicant.setTradingAccess(checkBoxes.get("SingleAppTradingAcc").isSelected());
+		
+		if(client.getSecondClient()!= null){
+			IndividualDetails secondApplicant = client.getSecondClient().getIndividualDetails();
+			secondApplicant.setOnlineAccess(!checkBoxes.get("SecondAppNoOnAcc").isSelected());
+			secondApplicant.setEnquiryOnly(checkBoxes.get("SecondAppEnqOnly").isSelected());
+			secondApplicant.setTradingAccess(checkBoxes.get("SecondAppTradingAcc").isSelected());
+		}
+		
+		if(client.getJointAccount()!= null){
+			IndividualDetails jointAccount = client.getJointAccount().getIndividualDetails();
+			jointAccount.setOnlineAccess(!checkBoxes.get("JointAccNoOnAcc").isSelected());
+			jointAccount.setEnquiryOnly(checkBoxes.get("JointAccEnqOnly").isSelected());
+			jointAccount.setTradingAccess(checkBoxes.get("JointAccTradingAcc").isSelected());
+		}
+		
+		System.out.println("First Client Online Access: " + client.getFirstClient().getIndividualDetails().isOnlineAccess());
 	}
 
 	private void createCheckboxes(int gridVert, String row) {
@@ -129,26 +164,28 @@ public class Page3 extends Page {
 		singleApp.setAlignment(Pos.CENTER);
 		grid.add(singleApp, 2, gridVert);
 		singleApp.setId("SingleApp" + row);
+		System.out.println(row);
+		singleApp.setSelected(false);
+		checkBoxes.put("SingleApp" + row, singleApp);
+
+		CheckBox secondApp = new CheckBox();
+		secondApp.setAlignment(Pos.CENTER);
+		grid.add(secondApp, 3, gridVert);
+		secondApp.setId("SecondApp" + row);
+		singleApp.setSelected(false);
+		checkBoxes.put("SecondApp" + row, secondApp);
 		
-		CheckBox enqOnly = new CheckBox();
-		enqOnly.setAlignment(Pos.CENTER);
-		grid.add(enqOnly, 3, gridVert);
-		enqOnly.setId("EnqOnly" + row);
-		
-		CheckBox tradAcc = new CheckBox();
-		tradAcc.setAlignment(Pos.CENTER);
-		grid.add(tradAcc, 4, gridVert);
-		tradAcc.setId("TradingAcc" + row);
+		CheckBox jointAcc = new CheckBox();
+		jointAcc.setAlignment(Pos.CENTER);
+		grid.add(jointAcc, 4, gridVert);
+		jointAcc.setId("JointAcc" + row);
+		singleApp.setSelected(false);
+		checkBoxes.put("JointAcc" + row, jointAcc);
 		
 	}
 
 	@Override
 	public void goTo() {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	private void fillAndSaveClientInfo(Object clientData) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -182,8 +219,11 @@ public class Page3 extends Page {
 
 			@Override
             public void handle(ActionEvent e){
-            	fillAndSaveClientInfo(clientData);
+            	fillAndSaveClientInfo();
+            	nextPage = Page4.getInstance();
             }
+
+
         });
 		
 	}

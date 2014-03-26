@@ -480,8 +480,8 @@ public class Page1 extends Page{
 		IndividualDetails id = client.getFirstClient().getIndividualDetails();
 		
 		id.setSurname(clientSurname.getText());
-		id.setForename(((ComboBox<String>)clientFirstName).getValue());
-		
+		if(!clientSurname.getText().equals("")){
+			id.setForename(((ComboBox<String>)clientFirstName).getValue());
 		id.setTitle(clientData.get("Title"));
 		id.setDob(clientData.get("DOB"));
 		System.out.println(client.getFirstClient().getIndividualDetails().getDob());
@@ -494,7 +494,7 @@ public class Page1 extends Page{
 				+ clientData.get("HomeAddress3"));
 		id.setPostcode(clientData.get("HomePostCode"));
 		id.setEmail(clientData.get("Email"));
-	
+		}
 		return id;
 	}
 
