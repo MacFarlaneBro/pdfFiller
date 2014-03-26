@@ -155,6 +155,8 @@ public class Page3 extends Page {
 			jointAccount.setTradingAccess(checkBoxes.get("JointAccTradingAcc").isSelected());
 		}
 		
+		singleApplicant.setFamilyGroup(checkBoxes.get(key));
+		
 		System.out.println("First Client Online Access: " + client.getFirstClient().getIndividualDetails().isOnlineAccess());
 	}
 
