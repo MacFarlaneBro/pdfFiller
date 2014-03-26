@@ -31,7 +31,7 @@ import javafx.stage.Stage;
 import databaseAccess.GetDatabase;
 import databaseAccess.MSSQLDatabase;
  
-public class Page1 implements Page{
+public class Page1 extends Page{
     
     private Stage primaryStage;
     private Scene previousScene;

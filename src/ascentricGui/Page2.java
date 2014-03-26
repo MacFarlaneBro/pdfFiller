@@ -31,7 +31,7 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
-public class Page2 implements Page{
+public class Page2 extends Page{
 	
     private Stage primaryStage;
     private Scene previousScene;
@@ -304,9 +304,9 @@ public class Page2 implements Page{
             @Override
             public void handle(ActionEvent e){
             	fillAndSaveClientInfo(clientData);
-            	nextPage = Page3.getInstance();
+            	nextPage = (Page) Page3.getInstance();
+            	System.out.println("Setting up next Page");
             	nextPage.setUp(primaryStage, thisScene, client);
-            	
             }
         });
     }

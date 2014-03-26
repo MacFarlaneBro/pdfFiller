@@ -1,11 +1,10 @@
 package ascentricGui;
 
-import java.sql.SQLException;
 import java.util.HashSet;
 
-import ascentricClientDetails.ClientHolder;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -14,26 +13,28 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
+import ascentricClientDetails.ClientHolder;
 
-public class Page3 implements Page {
+public class Page3 extends Page {
 
 	private static Page instance;
 	private ClientHolder client;
 	private Scene previousScene;
 	private Stage primaryStage;
 	private Scene thisScene;
-	private HashSet<TextField> theFields;
-	private HashSet<Label> theLabels;
-	private int gridVert;
-	private TextField clientFirstName;
 	private Object clientData;
-	private Page3 nextPage;
+	private Page nextPage;
+	private GridPane grid;
+	private int gridVert;
 
 
 	static { 
-		instance = new Page2();
+		instance = new Page3();
 	}
 	
 	public static Page getInstance(){
@@ -45,8 +46,9 @@ public class Page3 implements Page {
     	this.client = client;
         this.previousScene = firstScene;
         this.primaryStage = primaryStage;
-        primaryStage.setTitle("Personal Information - Client");
+        primaryStage.setTitle("Access Rights");
         GridPane grid = new GridPane();
+        this.grid = grid;
         grid.setHgap(15);
         grid.setVgap(15);
         grid.setAlignment(Pos.CENTER);
@@ -57,141 +59,86 @@ public class Page3 implements Page {
 
        // grid.setGridLinesVisible(true);
         primaryStage.setScene(thisScene);
+        System.out.println("New Scene Set");
        
 	}
 
 	private void createFields(GridPane grid) {
-		theFields = new HashSet<TextField>();
-    	theLabels = new HashSet<Label>();
-        
-    	double fieldWidth = 1;
+		
+		Text sceneTitle = new Text("Access Rights");
+        sceneTitle.setFont(Font.font("courier", FontWeight.NORMAL, 21));
+        sceneTitle.setId("sceneTitle");
+        grid.add(sceneTitle, 1, 1, 2, 2);
     	
-        //Client First Name
-        Label firstName = new Label("First name");
-        theLabels.add(firstName);
-        firstName.setTextAlignment(TextAlignment.RIGHT);
-        grid.add(firstName, 1, ++gridVert);
-        clientFirstName = new TextField();
-        clientFirstName.setId("FirstName");
+    	int gridVert = 3;
+    	
+    	Label singleApp  = new Label("Single Applicant");
+    	grid.add(singleApp, 2, gridVert);
+    	Label secondApp  = new Label("Second Applicant");
+    	grid.add(secondApp, 3, gridVert);
+    	Label jointApp  = new Label("Joint Account");
+    	grid.add(jointApp, 4, gridVert);
+    	
+        //Label for first row of checkboxes
+        Label noOnlineAccess = new Label("No Online Access");
+        noOnlineAccess.setTextAlignment(TextAlignment.CENTER);
+        grid.add(noOnlineAccess, 1, ++gridVert);
         
-		clientFirstName.prefWidth(fieldWidth);
-        grid.add(clientFirstName, 2, gridVert);
+        createCheckboxes(gridVert, "NoOnAcc");
         
-        //Client title
-        Label title = new Label("Title");
-        theLabels.add(title);
-        grid.add(title, 1, ++gridVert);
-        TextField clientTitle = new TextField();
-        clientTitle.setId("Title");
-        theFields.add(clientTitle);
-        clientTitle.setPrefWidth(fieldWidth);
-        grid.add(clientTitle, 2, gridVert);
+        //Label for second row of checkboxes
+        Label enquiryOnly = new Label("Enquiry Only");
+        enquiryOnly.setTextAlignment(TextAlignment.RIGHT);
+        grid.add(enquiryOnly, 1, ++gridVert);
         
-        //DOB
-        Label dob = new Label("DOB (DD/MM/YYYY)");
-        theLabels.add(dob);
-        grid.add(dob, 1, ++gridVert);
-        TextField clientDOB = new TextField();
-        clientDOB.setId("DOB");
-        theFields.add(clientDOB);
-        clientDOB.setPrefWidth(fieldWidth);
-        grid.add(clientDOB, 2, gridVert);
+        createCheckboxes(gridVert, "EnqOnly");
         
-        //NatInsure
-        Label natIns = new Label("National Insurance Number");
-        theLabels.add(natIns);
-        grid.add(natIns, 1, ++gridVert);
-        TextField clientNatIns = new TextField();
-        clientNatIns.setId("NationalInsuranceNumber");
-        theFields.add(clientNatIns);
-        clientNatIns.setPrefWidth(fieldWidth);
-        grid.add(clientNatIns, 2, gridVert);
+        //Label for third row of checkboxes
+        Label tradingAccess = new Label("Trading Only");
+        tradingAccess.setTextAlignment(TextAlignment.RIGHT);
+        grid.add(tradingAccess, 1, ++gridVert);
         
-        //At his point the second column is creating, resetting the height of the fields
-        gridVert = 2;
+        createCheckboxes(gridVert, "TradingAcc");
         
-        //Client Home Number
-        Label homeNumber = new Label("Home Telephone Number");
-        theLabels.add(homeNumber);
-        grid.add(homeNumber, 3, ++gridVert);
-        TextField clientHomeTel = new TextField();
-        clientHomeTel.setId("HomeTel");
-        theFields.add(clientHomeTel);
-        clientHomeTel.setPrefWidth(fieldWidth);
-        grid.add(clientHomeTel, 4, gridVert);
+        sceneTitle = new Text("Family Groups");
+        sceneTitle.setFont(Font.font("courier", FontWeight.NORMAL, 21));
+        sceneTitle.setId("sceneTitle");
+        grid.add(sceneTitle, 1, gridVert++, 2, gridVert);
         
-        //Client Work Number
-        Label workNumber = new Label("Work Telephone Number");
-        theLabels.add(workNumber);
-        grid.add(workNumber, 3, ++gridVert);
-        TextField clientWorkTel = new TextField();
-        clientWorkTel.setId("WorkTel");
-        theFields.add(clientWorkTel);
-        clientWorkTel.setPrefWidth(fieldWidth);
-        grid.add(clientWorkTel, 4, gridVert);
+        gridVert+=4;
         
-        //Client Mobile
-        Label mobile = new Label("Mobile Number");
-        theLabels.add(mobile);
-        grid.add(mobile, 3, ++gridVert);
-        TextField clientMobile = new TextField();
-        clientMobile.setId("Mobile");
-        theFields.add(clientMobile);
-        clientMobile.setPrefWidth(fieldWidth);
-        grid.add(clientMobile, 4, gridVert);
+        CheckBox famGroup1Check = new CheckBox("More than 1 applicant Linked to a Family Group");
+        famGroup1Check.setAlignment(Pos.CENTER);
+		grid.add(famGroup1Check, 2, gridVert, 3, 1);
+		singleApp.setId("famGroup1Check");
         
-        //Client Address - possible 3 lines of input
-        Label address = new Label("Address");
-        theLabels.add(address);
-        grid.add(address, 3, ++gridVert);
-        
-        //line 1
-        TextField clientHomeAddress1 = new TextField();
-        clientHomeAddress1.setId("HomeAddress1");
-        theFields.add(clientHomeAddress1);
-        clientHomeAddress1.setPrefWidth(fieldWidth);
-        grid.add(clientHomeAddress1, 4, gridVert);
-        //line 2
-        TextField clientHomeAddress2 = new TextField();
-        theFields.add(clientHomeAddress2);
-        clientHomeAddress2.setId("HomeAddress2");
-        clientHomeAddress2.setPrefWidth(fieldWidth);
-        grid.add(clientHomeAddress2, 4, ++gridVert);
-        //line3
-        TextField clientHomeAddress3 = new TextField();
-        theFields.add(clientHomeAddress3);
-        clientHomeAddress3.setId("HomeAddress3");
-        clientHomeAddress3.setPrefWidth(fieldWidth);
-        grid.add(clientHomeAddress3, 4, ++gridVert);
-        
-        //Client PostCode
-        Label postcode = new Label("Postcode");
-        theLabels.add(postcode);
-        grid.add(postcode, 3, ++gridVert);
-        TextField clientHomePostCode = new TextField();
-        clientHomePostCode.setId("HomePostCode");
-        theFields.add(clientHomePostCode);
-        clientHomePostCode.setPrefWidth(fieldWidth);
-        grid.add(clientHomePostCode, 4, gridVert);
-        
-        //Client email
-        Label email = new Label("E-mail");
-        theLabels.add(email);
-        grid.add(email, 3, ++gridVert);
-        TextField clientEmail = new TextField();
-        clientEmail.setId("Email");
-        theFields.add(clientEmail);
-        clientEmail.setPrefWidth(fieldWidth);
-        grid.add(clientEmail, 4, gridVert);
-        
-        //Does the client have a national insurance number?
-        Label natInsTick = new Label("Tick if client has no national Insurance number");
-        theLabels.add(email);
-        grid.add(natInsTick, 1, 9);
-        CheckBox natInsTickClient = new CheckBox();
-        natInsTickClient.setId("natInsTickClient");
-        clientEmail.setPrefWidth(fieldWidth);
-        grid.add(natInsTickClient, 2, 9);
+		CheckBox famGroup2Check = new CheckBox("Link to an existing Ascentric account");
+		famGroup2Check.setAlignment(Pos.CENTER);
+		grid.add(famGroup2Check, 2, ++gridVert, 3 ,1);
+		famGroup2Check.setId("famGroup2Check");
+		
+		this.gridVert = gridVert+=2;
+		
+		createMovementButtons(grid);
+		
+	}
+
+	private void createCheckboxes(int gridVert, String row) {
+		//Setting leftmost checkbox
+		CheckBox singleApp = new CheckBox();
+		singleApp.setAlignment(Pos.CENTER);
+		grid.add(singleApp, 2, gridVert);
+		singleApp.setId("SingleApp" + row);
+		
+		CheckBox enqOnly = new CheckBox();
+		enqOnly.setAlignment(Pos.CENTER);
+		grid.add(enqOnly, 3, gridVert);
+		enqOnly.setId("EnqOnly" + row);
+		
+		CheckBox tradAcc = new CheckBox();
+		tradAcc.setAlignment(Pos.CENTER);
+		grid.add(tradAcc, 4, gridVert);
+		tradAcc.setId("TradingAcc" + row);
 		
 	}
 

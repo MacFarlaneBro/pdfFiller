@@ -5,12 +5,12 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import ascentricClientDetails.ClientHolder;
 
-public interface Page {
+public abstract class Page {
 	
-	public void setUp(Stage primaryStage, Scene firstScene, ClientHolder client);
+	public abstract void setUp(Stage primaryStage, Scene firstScene, ClientHolder client);
 	
-	public void goTo();
+	public abstract void goTo();
 	
-	public void createMovementButtons(GridPane grid);
+	public abstract void createMovementButtons(GridPane grid);
 
 }
