@@ -275,7 +275,7 @@ public class Page2 implements Page{
 		firstnames = db.fetchInfoUsingName(clientSurname.getText());
 	}
 
-	private void createMovementButtons(GridPane grid) {
+	public void createMovementButtons(GridPane grid) {
         Button backBtn = new Button("Back");//Create button with the name sign in
         HBox hbBtn = new HBox(21);//Layout pane with 21 pixel spacing
         hbBtn.setAlignment(Pos.BOTTOM_LEFT);
@@ -304,14 +304,8 @@ public class Page2 implements Page{
             @Override
             public void handle(ActionEvent e){
             	fillAndSaveClientInfo(clientData);
-            	System.out.println(comboBox.getValue());
-            	if(comboBox.getValue()
-            			.equals("Single Client")){
-            		nextPage = (Page) Page2.getInstance();
-            		nextPage.setUp(primaryStage, thisScene, client);
-            	} else {
-            		nextPage = new Page3(primaryStage, thisScene);
-            	}
+            	nextPage = Page3.getInstance();
+            	nextPage.setUp(primaryStage, thisScene, client);
             	
             }
         });
@@ -319,6 +313,9 @@ public class Page2 implements Page{
 
 
 	private IndividualDetails fillAndSaveClientInfo(Map<String, String> clientData) {
+		
+		client.makeNewSecondClient();
+		
 		IndividualDetails id = client.getSecondClient().getIndividualDetails();
 		id.setSurname(clientData.get("Surname"));
 		id.setForename(clientData.get("ForeNames"));

@@ -430,7 +430,7 @@ public class Page1 implements Page{
 		firstnames = db.fetchInfoUsingName(clientSurname.getText());
 	}
 
-	private void createMovementButtons(GridPane grid) {
+	public void createMovementButtons(GridPane grid) {
         Button backBtn = new Button("Back");//Create button with the name sign in
         HBox hbBtn = new HBox(21);//Layout pane with 21 pixel spacing
         hbBtn.setAlignment(Pos.BOTTOM_LEFT);
@@ -462,7 +462,8 @@ public class Page1 implements Page{
             	System.out.println(comboBox.getValue());
             	if(comboBox.getValue()
             			.equals("Single Client")){
-            		nextPage = new Page3(primaryStage, thisScene);
+            		nextPage = Page3.getInstance();
+            		nextPage.setUp(primaryStage, thisScene, client);
             	} else {
             		//If this is the first time going to the next page, create a new page
             		nextPage = (Page) Page2.getInstance();
