@@ -31,7 +31,7 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
-public class Page2 extends Page{
+public class SecondApplicantIndividualDetails extends Page{
 	
     private Stage primaryStage;
     private Scene previousScene;
@@ -54,7 +54,7 @@ public class Page2 extends Page{
 
 
 	static { 
-		instance = new Page2();
+		instance = new SecondApplicantIndividualDetails();
 	}
 	
 	public void setUp(Stage primaryStage, Scene previousScene, ClientHolder client) {
@@ -304,7 +304,7 @@ public class Page2 extends Page{
             @Override
             public void handle(ActionEvent e){
             	fillAndSaveClientInfo(clientData);
-            	nextPage = (Page) Page3.getInstance();
+            	nextPage = (Page) AccessRightsFamilyGroups.getInstance();
             	System.out.println("Setting up next Page");
             	nextPage.setUp(primaryStage, thisScene, client);
             }

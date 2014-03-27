@@ -23,7 +23,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import ascentricClientDetails.ClientHolder;
-import ascentricGui.Page1;
+import ascentricGui.FirstApplicantIndividualDetails;
 
 /**
  *
@@ -99,7 +99,7 @@ public class Main extends Application{
             @Override
             public void handle(ActionEvent e){
             	client = ClientHolder.getInstance();
-                Page1 page1 = new Page1();
+                FirstApplicantIndividualDetails page1 = new FirstApplicantIndividualDetails();
                 page1.setUp(primaryStage, firstScene, client);
             }
         });

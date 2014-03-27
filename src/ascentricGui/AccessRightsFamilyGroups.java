@@ -21,7 +21,7 @@ import javafx.stage.Stage;
 import ascentricClientDetails.ClientHolder;
 import ascentricClientDetails.IndividualDetails;
 
-public class Page3 extends Page {
+public class AccessRightsFamilyGroups extends Page {
 
 	private static Page instance;
 	private ClientHolder client;
@@ -32,10 +32,11 @@ public class Page3 extends Page {
 	private Map<String, CheckBox> checkBoxes;
 	private GridPane grid;
 	private int gridVert;
+	private TextField cliRefNum;
 
 
 	static { 
-		instance = new Page3();
+		instance = new AccessRightsFamilyGroups();
 	}
 	
 	public static Page getInstance(){
@@ -125,7 +126,7 @@ public class Page3 extends Page {
 		Label ifPart2 = new Label("If part 2 of the above applies, please provide appropriate client reference number:");
 		grid.add(ifPart2, 1, ++gridVert, 3, 1);
 		
-		TextField cliRefNum = new TextField();
+		cliRefNum = new TextField();
 		grid.add(cliRefNum, 1, ++gridVert, 2, 1);
 		
 		this.gridVert = gridVert+=2;
@@ -155,9 +156,14 @@ public class Page3 extends Page {
 			jointAccount.setTradingAccess(checkBoxes.get("JointAccTradingAcc").isSelected());
 		}
 		
-		singleApplicant.setFamilyGroup(checkBoxes.get(key));
+		singleApplicant.setFamilyGroup(checkBoxes.get("famGroup1Check").isSelected());
+		singleApplicant.setExistingAccount(checkBoxes.get("famGroup2Check").isSelected());
+		if(checkBoxes.get("famGroup2Check").isSelected()){
+			singleApplicant.setExisingAcctRefNumber(cliRefNum.getText());
+		}
 		
 		System.out.println("First Client Online Access: " + client.getFirstClient().getIndividualDetails().isOnlineAccess());
+		System.out.println("Ref Number: " + singleApplicant.getExisingAcctRefNumber());
 	}
 
 	private void createCheckboxes(int gridVert, String row) {

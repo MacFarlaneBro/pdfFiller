@@ -31,7 +31,7 @@ import javafx.stage.Stage;
 import databaseAccess.GetDatabase;
 import databaseAccess.MSSQLDatabase;
  
-public class Page1 extends Page{
+public class FirstApplicantIndividualDetails extends Page{
     
     private Stage primaryStage;
     private Scene previousScene;
@@ -53,7 +53,7 @@ public class Page1 extends Page{
 	private Page nextPage;
 	
 	static {
-		instance = new Page1();
+		instance = new FirstApplicantIndividualDetails();
 	}
 	
 	public static Page getInstance(){
@@ -462,11 +462,11 @@ public class Page1 extends Page{
             	System.out.println(comboBox.getValue());
             	if(comboBox.getValue()
             			.equals("Single Client")){
-            		nextPage = Page3.getInstance();
+            		nextPage = AccessRightsFamilyGroups.getInstance();
             		nextPage.setUp(primaryStage, thisScene, client);
             	} else {
             		//If this is the first time going to the next page, create a new page
-            		nextPage = (Page) Page2.getInstance();
+            		nextPage = (Page) SecondApplicantIndividualDetails.getInstance();
             		nextPage.setUp(primaryStage, thisScene, client);
             	}
             }
