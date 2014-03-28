@@ -6,6 +6,9 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 
 public class FirstProductDetails extends ProductDetails {
 	
@@ -41,10 +44,10 @@ public class FirstProductDetails extends ProductDetails {
 			@Override
             public void handle(ActionEvent e){
             	fillAndSaveClientInfo();
-            	if(ProductDetailsFactory.getFirst()==null){
-            		ProductDetailsFactory.makeFirst();
+            	if(ProductDetailsFactory.getSecond()==null){
+            		ProductDetailsFactory.makeSecond();
             	}
-            	nextPage = ProductDetailsFactory.getFirst();
+            	nextPage = ProductDetailsFactory.getSecond();
             	nextPage.setUp(primaryStage, thisScene, client);
             }
         });
@@ -61,10 +64,14 @@ public class FirstProductDetails extends ProductDetails {
 		// TODO Auto-generated method stub
 		
 	}
-
+	
 	@Override
-	public void setTitleAndHeader() {
+	public void setTitleAndHeader(GridPane grid) {
 		primaryStage.setTitle(pageTitle);
+		Text sceneTitle = new Text(pageTitle);
+        sceneTitle.setFont(Font.font("courier", FontWeight.NORMAL, 21));
+        grid.add(sceneTitle, 1, 1, 2, 2);
 		
 	}
+
 }

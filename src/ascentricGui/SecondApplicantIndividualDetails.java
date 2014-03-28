@@ -6,10 +6,6 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
-import databaseAccess.GetDatabase;
-import databaseAccess.MSSQLDatabase;
-import ascentricClientDetails.ClientHolder;
-import ascentricClientDetails.IndividualDetails;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -30,6 +26,10 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
+import ascentricClientDetails.ClientHolder;
+import ascentricClientDetails.IndividualDetails;
+import databaseAccess.GetDatabase;
+import databaseAccess.MSSQLDatabase;
 
 public class SecondApplicantIndividualDetails extends Page{
 	
@@ -47,7 +47,6 @@ public class SecondApplicantIndividualDetails extends Page{
     private Button autoFillClientButton;
 	private Scene thisScene;
 	private String sceneT = "Partner Personal Info";
-	private ComboBox<String> comboBox;
 	private ClientHolder client;
 	private static Page instance;
 	private Page nextPage;

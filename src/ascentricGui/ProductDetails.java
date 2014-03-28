@@ -3,17 +3,13 @@ package ascentricGui;
 import java.util.HashMap;
 import java.util.Map;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import ascentricClientDetails.ClientHolder;
 
@@ -24,7 +20,7 @@ public abstract class ProductDetails extends Page {
 	protected Scene previousScene;
 	protected Scene thisScene;
 	protected static ProductDetails instance;
-	protected int gridVert = 1;
+	protected int gridVert = 3;
 	protected ProductDetails nextPage;
 
 	@Override
@@ -33,13 +29,14 @@ public abstract class ProductDetails extends Page {
 		this.previousScene = previousScene;
 		this.client = client;
 		
-		setTitleAndHeader();
+;
         GridPane grid = new GridPane();
         grid.setHgap(15);
         grid.setVgap(15);
         grid.setAlignment(Pos.CENTER_RIGHT);
 //        grid.setGridLinesVisible(true);
         
+		setTitleAndHeader(grid);
         Map<String, TextField> theMap = setLabels(grid);
         
         generateFields(grid, theMap, "gia");
@@ -160,7 +157,7 @@ public abstract class ProductDetails extends Page {
 		
 	}
 	
-	public abstract void setTitleAndHeader();
+	public abstract void setTitleAndHeader(GridPane grid);
 	
 	public abstract void goTo();
 	
