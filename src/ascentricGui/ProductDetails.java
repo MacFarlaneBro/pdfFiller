@@ -6,7 +6,6 @@ import java.util.Map;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -18,24 +17,15 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import ascentricClientDetails.ClientHolder;
 
-public class ProductDetails extends Page {
+public abstract class ProductDetails extends Page {
 
-	private Stage primaryStage;
-	private ClientHolder client;
-	private Scene previousScene;
-	private Scene thisScene;
-	private static ProductDetails instance;
-	int gridVert = 1;
+	protected Stage primaryStage;
+	protected ClientHolder client;
+	protected Scene previousScene;
+	protected Scene thisScene;
+	protected static ProductDetails instance;
+	protected int gridVert = 1;
 	protected ProductDetails nextPage;
-
-	
-	static {
-		instance = new ProductDetails();
-	}
-	
-	public static ProductDetails getInstance(){
-		return instance;
-	}
 
 	@Override
 	public void setUp(Stage primaryStage, Scene previousScene, ClientHolder client) {
@@ -43,9 +33,7 @@ public class ProductDetails extends Page {
 		this.previousScene = previousScene;
 		this.client = client;
 		
-		primaryStage.setTitle("Personal Information - Client");
-//		primaryStage.setMaxWidth(1000);
-		
+		setTitleAndHeader();
         GridPane grid = new GridPane();
         grid.setHgap(15);
         grid.setVgap(15);
@@ -63,7 +51,8 @@ public class ProductDetails extends Page {
         primaryStage.setScene(thisScene);
 	}
 
-	private Map<String, TextField> setLabels(GridPane grid) {
+
+	protected Map<String, TextField> setLabels(GridPane grid) {
 		
 		int firstColumn = 2;
 		int secondColumn = 3;
@@ -77,16 +66,17 @@ public class ProductDetails extends Page {
 		
 		Map<String, TextField> textFields = new HashMap<String, TextField>();
 		
-		Label top = new Label("If you would like a name other than that of the account holder\n "
+		Label top = new Label("If you would like a name other\nthan that of the account holder\n"
 				+ "for your platform account, please enter here: ");
 		top.setWrapText(true);
-		grid.add(top, firstColumn, gridVert, 4, 1);
+		grid.add(top, firstColumn, gridVert, 2, 2);
 		TextField acctName = new TextField();
 		textFields.put("accountName", acctName);
 		acctName.setPrefWidth(100);
-		grid.add(acctName, fourthColumn, gridVert++, 2, 2);
+		grid.add(acctName, thirdColumn, ++gridVert, 2, 1);
 		
 		Label cashLabel = new Label("Cash - Received with \nApplication");
+		cashLabel.setMaxWidth(Double.MAX_VALUE);
 		cashLabel.setWrapText(true);
 		GridPane.setHalignment(cashLabel, HPos.CENTER);
 		grid.add(cashLabel, thirdColumn, ++gridVert, 1, 2);
@@ -139,20 +129,13 @@ public class ProductDetails extends Page {
 		GridPane.setHalignment(sasCheckBox, HPos.CENTER);
 		grid.add(sasCheckBox, secondColumn, gridVert+2);
 		
-		HBox hBox = new HBox();
-		hBox.setSpacing(10);
-		hBox.setPadding(new Insets(0, 20, 10, 20));
-		hBox.getChildren().addAll(cashLabel,sofLabel,transferRegistration,approxTransCash,
-				assetsRereg,reserveAcct,wrapperType,advisoryWrapper,discretionaryWrapper,
-				generalInvestmentAccount,stocksAndSharesISA);
-		
 		gridVert++;
 
 		return textFields;
 		
 	}
 	
-	private void generateFields(GridPane grid, Map<String, TextField> theMap, String wrap) {
+	protected void generateFields(GridPane grid, Map<String, TextField> theMap, String wrap) {
 		
 		int fieldWidth = 4;
 		
@@ -176,52 +159,15 @@ public class ProductDetails extends Page {
 		gridVert++;
 		
 	}
-
-	@Override
-	public void goTo() {
-		// TODO Auto-generated method stub
-
-	}
 	
-	private void fillAndSaveClientInfo() {
-		// TODO Auto-generated method stub
-		
-	}
+	public abstract void setTitleAndHeader();
+	
+	public abstract void goTo();
+	
+	public abstract void fillAndSaveClientInfo();
 
-	@Override
-	public void createMovementButtons(GridPane grid) {
-		 Button backBtn = new Button("Back");//Create button with the name sign in
-	        HBox hbBtn = new HBox(21);//Layout pane with 21 pixel spacing
-	        hbBtn.setAlignment(Pos.BOTTOM_LEFT);
-	        backBtn.setPrefWidth(100);
-	        hbBtn.getChildren().add(backBtn);
-	        grid.add(hbBtn, 2, --gridVert);
-	        
-	        backBtn.setOnAction(new EventHandler<ActionEvent>(){
-	            
-	            @Override
-	            public void handle(ActionEvent e){
-	            	primaryStage.setTitle("PDF Filler 0.01");
-	                primaryStage.setScene(previousScene);
-	            }
-	        });
-	        
-	        Button nextBtn = new Button("Next");//Create button with the name sign in
-	        HBox hNextBtn = new HBox(21);//Layout pane with 21 pixel spacing
-	        hNextBtn.setAlignment(Pos.BOTTOM_LEFT);
-	        nextBtn.setPrefWidth(100);
-	        hNextBtn.getChildren().add(nextBtn);
-	        grid.add(hNextBtn, 10, gridVert);
-	        
-	        nextBtn.setOnAction(new EventHandler<ActionEvent>(){
+	public abstract void createMovementButtons(GridPane grid);
 
-				@Override
-	            public void handle(ActionEvent e){
-	            	fillAndSaveClientInfo();
-	            	nextPage = ProductDetails.getInstance();
-	            	nextPage.setUp(primaryStage, thisScene, client);
-	            }
-	        });
-	}
+
 
 }

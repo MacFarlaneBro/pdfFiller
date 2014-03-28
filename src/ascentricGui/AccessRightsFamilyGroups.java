@@ -226,13 +226,10 @@ public class AccessRightsFamilyGroups extends Page {
 			@Override
             public void handle(ActionEvent e){
             	fillAndSaveClientInfo();
-            	nextPage = ProductDetails.getInstance();
+            	ProductDetailsFactory.makeFirst();
+            	nextPage = ProductDetailsFactory.getFirst();
             	nextPage.setUp(primaryStage, thisScene, client);
             }
-
-
-        });
-		
+        });	
 	}
-
 }
