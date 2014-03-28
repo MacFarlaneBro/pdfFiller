@@ -58,20 +58,20 @@ public class AscentricPage3Test {
 	private void setProductDetails(ProductDetails fpd){
 		fpd.setPlatformAccountNameChoice("The great noon one");
 		Wrapper gia = new Wrapper();
-		gia.setCash(45243);
+		gia.setCash("Cheque");
 		gia.setSourceOfFunds("Cheque");
-		gia.setCashToBeTransferred(848473);
-		gia.setAssetsToBeReregistered(83937);
+		gia.setCashToBeTransferred("Cheque");
+		gia.setAssetsToBeReregistered("Cheque");
 		gia.setReserverAccount("4849458");
 		gia.setAdvisoryWrapper(true);
 		gia.setDiscretionaryWrapper(true);
 		fpd.setGeneralInvestmentAccount(gia);
 		
 		Wrapper sas = new Wrapper();
-		sas.setCash(436426);
+		sas.setCash("Cheque");
 		sas.setSourceOfFunds("BACS");
-		sas.setCashToBeTransferred(3984384);
-		sas.setAssetsToBeReregistered(839382);
+		sas.setCashToBeTransferred("Cheque");
+		sas.setAssetsToBeReregistered("Cheque");
 		sas.setReserverAccount("Account");
 		sas.setAdvisoryWrapper(true);
 		sas.setDiscretionaryWrapper(true);

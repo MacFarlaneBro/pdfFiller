@@ -2,17 +2,17 @@ package ascentricGui;
 
 public class ProductDetailsFactory {
 	
-	private static ProductDetails firstProdDetInstance;
+	private static ProductDetailsGui firstProdDetInstance;
 	
-	private static ProductDetails secondProdDetInstance;
+	private static ProductDetailsGui secondProdDetInstance;
 	
-	private static ProductDetails jointProdDetInstance;
+	private static ProductDetailsGui jointProdDetInstance;
 	
 	public static void makeFirst(){
 		firstProdDetInstance = new FirstProductDetails();
 	}
 	
-	public static ProductDetails getFirst(){
+	public static ProductDetailsGui getFirst(){
 		return firstProdDetInstance;
 	}
 	
@@ -20,7 +20,7 @@ public class ProductDetailsFactory {
 		secondProdDetInstance = new SecondProductDetails();
 	}
 	
-	public static ProductDetails getSecond(){
+	public static ProductDetailsGui getSecond(){
 		return secondProdDetInstance;
 	}
 	
@@ -28,7 +28,7 @@ public class ProductDetailsFactory {
 		jointProdDetInstance = new JointProductDetails();
 	}
 	
-	public static ProductDetails getThird(){
+	public static ProductDetailsGui getThird(){
 		return jointProdDetInstance;
 	}
 

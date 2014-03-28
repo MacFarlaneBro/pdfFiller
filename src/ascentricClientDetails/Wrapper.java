@@ -2,18 +2,18 @@ package ascentricClientDetails;
 
 public class Wrapper {
 	
-	private int cash;
+	private String cash;
 	private String sourceOfFunds;
-	private int cashToBeTransferred;
-	private int assetsToBeReregistered;
+	private String cashToBeTransferred;
+	private String assetsToBeReregistered;
 	private String reserverAccount;
 	private boolean advisoryWrapper;
 	private boolean discretionaryWrapper;
 	
-	public int getCash() {
+	public String getCash() {
 		return cash;
 	}
-	public void setCash(int cash) {
+	public void setCash(String cash) {
 		this.cash = cash;
 	}
 	public String getSourceOfFunds() {
@@ -22,16 +22,16 @@ public class Wrapper {
 	public void setSourceOfFunds(String sourceOfFunds) {
 		this.sourceOfFunds = sourceOfFunds;
 	}
-	public int getCashToBeTransferred() {
+	public String getCashToBeTransferred() {
 		return cashToBeTransferred;
 	}
-	public void setCashToBeTransferred(int cashToBeTransferred) {
+	public void setCashToBeTransferred(String cashToBeTransferred) {
 		this.cashToBeTransferred = cashToBeTransferred;
 	}
-	public int getAssetsToBeReregistered() {
+	public String getAssetsToBeReregistered() {
 		return assetsToBeReregistered;
 	}
-	public void setAssetsToBeReregistered(int assetsToBeReregistered) {
+	public void setAssetsToBeReregistered(String assetsToBeReregistered) {
 		this.assetsToBeReregistered = assetsToBeReregistered;
 	}
 	public String getReserverAccount() {

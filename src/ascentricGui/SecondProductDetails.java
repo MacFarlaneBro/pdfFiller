@@ -10,20 +10,15 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
-public class SecondProductDetails extends ProductDetails {
+public class SecondProductDetails extends ProductDetailsGui {
 
 	private String pageTitle = "Product Details - Second Applicant";
+	public final String appType = "Second";
 
 
 
 	@Override
 	public void goTo() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void fillAndSaveClientInfo() {
 		// TODO Auto-generated method stub
 		
 	}
@@ -57,7 +52,7 @@ public class SecondProductDetails extends ProductDetails {
 	
 			@Override
 	        public void handle(ActionEvent e){
-	        	fillAndSaveClientInfo();
+	        	fillAndSaveClientInfo(appType);
 	        	if(ProductDetailsFactory.getSecond()==null){
 	        		ProductDetailsFactory.makeSecond();
 	        	}

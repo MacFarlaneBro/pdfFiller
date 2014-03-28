@@ -1,5 +1,7 @@
 package ascentricGui;
 
+import ascentricClientDetails.ProductDetails;
+import ascentricClientDetails.Wrapper;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -10,12 +12,13 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
-public class FirstProductDetails extends ProductDetails {
+public class FirstProductDetails extends ProductDetailsGui {
 	
 	public final String pageTitle = "Product Details - First Client";	
-	
+	public final String appType = "First";
 	@Override
 	public void createMovementButtons(GridPane grid) {
+		
 		Button backBtn = new Button("Back");//Create button with the name sign in
         HBox hbBtn = new HBox(21);//Layout pane with 21 pixel spacing
         hbBtn.setAlignment(Pos.BOTTOM_LEFT);
@@ -43,7 +46,9 @@ public class FirstProductDetails extends ProductDetails {
 
 			@Override
             public void handle(ActionEvent e){
-            	fillAndSaveClientInfo();
+            	fillAndSaveClientInfo(appType);
+            	
+            	System.out.println(client.getFirstClient().getProductDetails().getGeneralInvestmentAccount().getCash());
             	if(ProductDetailsFactory.getSecond()==null){
             		ProductDetailsFactory.makeSecond();
             	}
@@ -58,14 +63,7 @@ public class FirstProductDetails extends ProductDetails {
 		// TODO Auto-generated method stub
 		
 	}
-
-	@Override
-	public void fillAndSaveClientInfo() {
-		// TODO Auto-generated method stub
-		
-	}
 	
-	@Override
 	public void setTitleAndHeader(GridPane grid) {
 		primaryStage.setTitle(pageTitle);
 		Text sceneTitle = new Text(pageTitle);
