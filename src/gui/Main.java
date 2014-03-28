@@ -17,6 +17,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
@@ -47,6 +48,7 @@ public class Main extends Application{
         primaryStage.setTitle("PDF Filler 0.01");
         primaryStage.setMinWidth(500);
         primaryStage.initStyle(StageStyle.DECORATED);
+        primaryStage.getIcons().add(new Image("\\M.png"));
         
         GridPane grid = new GridPane();
         Scene firstScene = new Scene(grid, 300, 300, Color.WHITE);

@@ -1,10 +1,11 @@
 package ascentricGui;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -16,7 +17,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import ascentricClientDetails.ClientHolder;
 import ascentricClientDetails.IndividualDetails;
@@ -58,6 +58,10 @@ public class AccessRightsFamilyGroups extends Page {
         thisScene = new Scene(grid);
         
         createFields(grid);
+        
+        
+        
+		createMovementButtons(grid);
 
        // grid.setGridLinesVisible(true);
         primaryStage.setScene(thisScene);
@@ -67,7 +71,7 @@ public class AccessRightsFamilyGroups extends Page {
 
 	private void createFields(GridPane grid) {
 		
-		checkBoxes = new HashMap<String, CheckBox>();
+		checkBoxes = new TreeMap<String, CheckBox>();
 		Text sceneTitle = new Text("Access Rights");
         sceneTitle.setFont(Font.font("courier", FontWeight.NORMAL, 21));
         sceneTitle.setId("sceneTitle");
@@ -84,21 +88,18 @@ public class AccessRightsFamilyGroups extends Page {
     	
         //Label for first row of checkboxes
         Label noOnlineAccess = new Label("No Online Access");
-        noOnlineAccess.setTextAlignment(TextAlignment.CENTER);
         grid.add(noOnlineAccess, 1, ++gridVert);
         
         createCheckboxes(gridVert, "NoOnAcc");
         
         //Label for second row of checkboxes
         Label enquiryOnly = new Label("Enquiry Only");
-        enquiryOnly.setTextAlignment(TextAlignment.RIGHT);
         grid.add(enquiryOnly, 1, ++gridVert);
         
         createCheckboxes(gridVert, "EnqOnly");
         
         //Label for third row of checkboxes
         Label tradingAccess = new Label("Trading Only");
-        tradingAccess.setTextAlignment(TextAlignment.RIGHT);
         grid.add(tradingAccess, 1, ++gridVert);
         
         createCheckboxes(gridVert, "TradingAcc");
@@ -123,16 +124,14 @@ public class AccessRightsFamilyGroups extends Page {
 		checkBoxes.put("famGroup2Check", famGroup2Check);
 		
 		
-		Label ifPart2 = new Label("If part 2 of the above applies, please provide appropriate client reference number:");
+		Label ifPart2 = new Label("If part 2 of the above applies, please provide\nappropriate client reference number:");
 		grid.add(ifPart2, 1, ++gridVert, 3, 1);
 		
 		cliRefNum = new TextField();
 		grid.add(cliRefNum, 1, ++gridVert, 2, 1);
 		
 		this.gridVert = gridVert+=2;
-		
-		createMovementButtons(grid);
-		
+			
 	}
 	
 	private void fillAndSaveClientInfo() {
@@ -169,22 +168,21 @@ public class AccessRightsFamilyGroups extends Page {
 	private void createCheckboxes(int gridVert, String row) {
 		//Setting leftmost checkbox
 		CheckBox singleApp = new CheckBox();
-		singleApp.setAlignment(Pos.CENTER);
+		GridPane.setHalignment(singleApp, HPos.CENTER);
 		grid.add(singleApp, 2, gridVert);
 		singleApp.setId("SingleApp" + row);
-		System.out.println(row);
 		singleApp.setSelected(false);
 		checkBoxes.put("SingleApp" + row, singleApp);
 
 		CheckBox secondApp = new CheckBox();
-		secondApp.setAlignment(Pos.CENTER);
+		GridPane.setHalignment(secondApp, HPos.CENTER);
 		grid.add(secondApp, 3, gridVert);
 		secondApp.setId("SecondApp" + row);
 		singleApp.setSelected(false);
 		checkBoxes.put("SecondApp" + row, secondApp);
 		
 		CheckBox jointAcc = new CheckBox();
-		jointAcc.setAlignment(Pos.CENTER);
+		GridPane.setHalignment(jointAcc, HPos.CENTER);
 		grid.add(jointAcc, 4, gridVert);
 		jointAcc.setId("JointAcc" + row);
 		singleApp.setSelected(false);
@@ -203,7 +201,7 @@ public class AccessRightsFamilyGroups extends Page {
 	    Button backBtn = new Button("Back");//Create button with the name sign in
         HBox hbBtn = new HBox(21);//Layout pane with 21 pixel spacing
         hbBtn.setAlignment(Pos.BOTTOM_LEFT);
-        backBtn.setPrefWidth(200);
+        backBtn.setPrefWidth(100);
         hbBtn.getChildren().add(backBtn);
         grid.add(hbBtn, 1, --gridVert);
         
@@ -219,16 +217,17 @@ public class AccessRightsFamilyGroups extends Page {
         Button nextBtn = new Button("Next");//Create button with the name sign in
         HBox hNextBtn = new HBox(21);//Layout pane with 21 pixel spacing
         hNextBtn.setAlignment(Pos.BOTTOM_LEFT);
-        nextBtn.setPrefWidth(200);
+        nextBtn.setPrefWidth(100);
         hNextBtn.getChildren().add(nextBtn);
-        grid.add(hNextBtn, 4, gridVert);
+        grid.add(hNextBtn, 5, gridVert);
         
         nextBtn.setOnAction(new EventHandler<ActionEvent>(){
 
 			@Override
             public void handle(ActionEvent e){
             	fillAndSaveClientInfo();
-            	nextPage = Page4.getInstance();
+            	nextPage = ProductDetails.getInstance();
+            	nextPage.setUp(primaryStage, thisScene, client);
             }
 
 
