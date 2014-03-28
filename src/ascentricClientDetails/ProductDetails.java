@@ -3,8 +3,8 @@ package ascentricClientDetails;
 public class ProductDetails{
 	
 	private String platformAccountNameChoice;
-	private Wrapper generalInvestmentAccount;
-	private Wrapper stocksAndSharesISA;
+	private Wrapper generalInvestmentAccount = new Wrapper();
+	private Wrapper stocksAndSharesISA = new Wrapper();;
 	
 	private String thirdPartyProductAccounts;
 	private int amountToBeReceived;
@@ -19,14 +19,12 @@ public class ProductDetails{
 		this.platformAccountNameChoice = platformAccountNameChoice;
 	}
 	public Wrapper getGeneralInvestmentAccount() {
-		generalInvestmentAccount = new Wrapper();
 		return generalInvestmentAccount;
 	}
 	public void setGeneralInvestmentAccount(Wrapper generalInvestmentAccount) {
 		this.generalInvestmentAccount = generalInvestmentAccount;
 	}
 	public Wrapper getStocksAndSharesISA() {
-		stocksAndSharesISA = new Wrapper();
 		return stocksAndSharesISA;
 	}
 	public void setStocksAndSharesISA(Wrapper stocksAndSharesISA) {

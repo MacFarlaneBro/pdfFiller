@@ -60,7 +60,6 @@ public class AscentricPage4Test {
 		fpd.setAdvisoryWrapper(true);
 		fpd.setDiscretionaryWrapper(true);	
 	}
-	
 	@Test
 	public void fillPage() throws IOException, DocumentException{
 		thePage.fillPage(theClient);

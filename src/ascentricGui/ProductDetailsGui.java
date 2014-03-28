@@ -41,10 +41,14 @@ public abstract class ProductDetailsGui extends Page {
 //        grid.setGridLinesVisible(true);
         
 		setTitleAndHeader(grid);
-        setLabels(grid);
+        set1stLayerLabels(grid);
         
-        generateFields(grid, "gia");
-        generateFields(grid, "sas");
+        generate1stLayerFields(grid, "gia");
+        generate1stLayerFields(grid, "sas");
+        
+        generate2ndLayerLabels(grid);
+        generate2ndLayerFields(grid);
+        
         gridVert++;
         createMovementButtons(grid);
         
@@ -53,7 +57,7 @@ public abstract class ProductDetailsGui extends Page {
 	}
 
 
-	protected Map<String, TextField> setLabels(GridPane grid) {
+	protected Map<String, TextField> set1stLayerLabels(GridPane grid) {
 		
 		int firstColumn = 2;
 		int secondColumn = 3;
@@ -139,7 +143,7 @@ public abstract class ProductDetailsGui extends Page {
 		
 	}
 	
-	protected void generateFields(GridPane grid, String wrap) {
+	protected void generate1stLayerFields(GridPane grid, String wrap) {
 		
 		int fieldWidth = 4;
 		
@@ -178,16 +182,20 @@ public abstract class ProductDetailsGui extends Page {
 		
 		if(appType.equals("First")){
 			pd = client.getFirstClient().getProductDetails();
+			System.out.println("First");
 		} else if(appType.equals("Second")){
+			System.out.println("Second");
 			pd = client.getSecondClient().getProductDetails();
 		} else if(appType.equals("Joint")){
+			System.out.println("Joint");
 			pd = client.getJointAccount().getProductDetails();
 		}
 		
 		//If the general investment account is selected then fill the details
 		if(checkBoxes.get("giaCheckBox").isSelected()){
 			Wrapper gia = pd.getGeneralInvestmentAccount();
-			gia.setCash(textFields.get("gia0").getText());
+			pd.getGeneralInvestmentAccount().setCash(textFields.get("gia0").getText());
+			System.out.println("CashTime:" + gia.getCash());
 			gia.setSourceOfFunds(textFields.get("gia1").getText());
 			gia.setCashToBeTransferred(textFields.get("gia2").getText());
 			gia.setAssetsToBeReregistered(textFields.get("gia3").getText());
@@ -206,6 +214,66 @@ public abstract class ProductDetailsGui extends Page {
 			sas.setAdvisoryWrapper(checkBoxes.get("advsas").isSelected());
 			sas.setDiscretionaryWrapper(checkBoxes.get("discsas").isSelected());
 		}
+		System.out.println("More CashTime: "+client.getFirstClient().getProductDetails().getGeneralInvestmentAccount().getCash());
+	}
+	
+	private void generate2ndLayerLabels(GridPane grid) {
+		Label thirdPartyProdAcc = new Label("Third Party Product Accounts \n (insert name of third party)");
+		thirdPartyProdAcc.setMaxWidth(Double.MAX_VALUE);
+		thirdPartyProdAcc.setWrapText(true);
+		GridPane.setHalignment(thirdPartyProdAcc, HPos.CENTER);
+		grid.add(thirdPartyProdAcc, 4, ++gridVert, 1, 1);
+		
+		Label amountToBeReceived = new Label("Amount to be received");
+		GridPane.setHalignment(amountToBeReceived, HPos.CENTER);
+		amountToBeReceived.setWrapText(true);
+		grid.add(amountToBeReceived, 5, gridVert, 1, 1);
+		
+		Label sourceOfFunds = new Label ("Source of Funds \n (Cheque, BACS, Transfer)");
+		sourceOfFunds.setWrapText(true);
+		GridPane.setHalignment(sourceOfFunds, HPos.CENTER);
+		grid.add(sourceOfFunds, 6, gridVert, 1, 1);
+		
+		Label approxTransCash = new Label ("Wrapper Type");
+		GridPane.setHalignment(approxTransCash, HPos.CENTER);
+		approxTransCash.setWrapText(true);
+		grid.add(approxTransCash, 7, gridVert, 2, 1);
+
+		Label thirdAdvWrap = new Label ("Advisory/nWrapper");
+		GridPane.setHalignment(thirdAdvWrap, HPos.CENTER);
+		grid.add(thirdAdvWrap, 7, gridVert+1);
+		
+		Label thirdDiscWrap = new Label ("Discretionary/nWrapper");
+		GridPane.setHalignment(thirdDiscWrap, HPos.CENTER);
+		grid.add(thirdDiscWrap, 8, gridVert+1);
+		
+		gridVert+=2;
+
+	}
+	
+	private void generate2ndLayerFields(GridPane grid) {
+		int fieldWidth = 4;
+		
+		//generating all the textfields for the wrapper info
+		for(int i = 0; i < 3; i++){
+			TextField newField = new TextField();
+			newField.setId("Third" + i);
+			System.out.println("Third" + i);
+			newField.setMaxWidth(70);
+			textFields.put("Third"+i, newField);
+			grid.add(newField, fieldWidth+i, gridVert);
+		}
+		
+		CheckBox advWrap = new CheckBox();
+		checkBoxes.put("ThirdAdv", advWrap);
+		GridPane.setHalignment(advWrap, HPos.CENTER);
+		grid.add(advWrap, fieldWidth+3, gridVert);
+		
+		CheckBox discWrap = new CheckBox();
+		checkBoxes.put("ThirdDisc", discWrap);
+		GridPane.setHalignment(discWrap, HPos.CENTER);
+		grid.add(discWrap, fieldWidth+4, gridVert);
+		gridVert+=3;
 	}
 
 	public abstract void createMovementButtons(GridPane grid);

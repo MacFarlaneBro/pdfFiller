@@ -1,7 +1,5 @@
 package ascentricGui;
 
-import ascentricClientDetails.ProductDetails;
-import ascentricClientDetails.Wrapper;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
