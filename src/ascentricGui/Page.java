@@ -8,7 +8,7 @@ import ascentricClientDetails.ClientHolder;
 public abstract class Page {
 	
 	private static Page instance;
-
+	
 	public abstract void setUp(Stage primaryStage, Scene firstScene, ClientHolder client);
 	
 	public abstract void goTo();

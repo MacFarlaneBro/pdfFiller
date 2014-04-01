@@ -23,7 +23,7 @@ public abstract class ProductDetailsGui extends Page {
 	protected Scene thisScene;
 	protected static ProductDetailsGui instance;
 	protected int gridVert = 3;
-	protected ProductDetailsGui nextPage;
+	protected Page nextPage;
 	protected Map<String, TextField> textFields;
 	protected Map<String, CheckBox>	checkBoxes;
 
