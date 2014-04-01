@@ -190,12 +190,6 @@ public class AccessRightsFamilyGroups extends Page {
 	}
 
 	@Override
-	public void goTo() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public void createMovementButtons(GridPane grid) {
 	    Button backBtn = new Button("Back");//Create button with the name sign in
         HBox hbBtn = new HBox(21);//Layout pane with 21 pixel spacing

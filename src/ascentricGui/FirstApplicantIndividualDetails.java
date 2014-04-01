@@ -499,9 +499,4 @@ public class FirstApplicantIndividualDetails extends Page{
 		return id;
 	}
 
-	@Override
-	public void goTo() {
-		// TODO Auto-generated method stub
-		
-	}
 }

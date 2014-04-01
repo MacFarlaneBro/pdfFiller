@@ -53,11 +53,8 @@ public class SecondProductDetails extends ProductDetailsGui {
 			@Override
 	        public void handle(ActionEvent e){
 	        	fillAndSaveClientInfo(appType);
-	        	if(ProductDetailsFactory.getSecond()==null){
-	        		ProductDetailsFactory.makeSecond();
-	        	}
-	        	nextPage = ProductDetailsFactory.getSecond();
-	        	nextPage.setUp(primaryStage, thisScene, client);
+        		nextPage = new BankDetails("first");
+        		nextPage.setUp(primaryStage, thisScene, client);
 	        }
 	    });
 	}

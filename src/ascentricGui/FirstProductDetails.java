@@ -50,7 +50,7 @@ public class FirstProductDetails extends ProductDetailsGui {
 	            	nextPage = ProductDetailsFactory.getSecond();
 	            	nextPage.setUp(primaryStage, thisScene, client);
             	} else {
-            		nextPage = new FirstApplicantBankAccountDetails("first");
+            		nextPage = new BankDetails("first");
             		nextPage.setUp(primaryStage, thisScene, client);
             	}
             }

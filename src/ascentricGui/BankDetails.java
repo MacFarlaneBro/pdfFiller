@@ -15,9 +15,10 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import ascentricClientDetails.BankAccountDetails;
 import ascentricClientDetails.ClientHolder;
 
-public class FirstApplicantBankAccountDetails extends Page{
+public class BankDetails extends Page{
 
 	private ClientHolder client;
 	private Scene previousScene;
@@ -28,13 +29,15 @@ public class FirstApplicantBankAccountDetails extends Page{
 	private String type;
 	protected Page nextPage;
 	
-	public FirstApplicantBankAccountDetails(String type){
+	public BankDetails(String type){
+		
 		this.type = type;
 	}
 
 	@Override
 	public void setUp(Stage primaryStage, Scene firstScene, ClientHolder client) {
 		
+		System.out.println(type);
 		this.client = client;
         this.previousScene = firstScene;
         this.primaryStage = primaryStage;
@@ -48,6 +51,11 @@ public class FirstApplicantBankAccountDetails extends Page{
 		if(type == "first"){
 			primaryStage.setTitle("First Applicant Bank Account Details");
 			Text sceneTitle = new Text("First Applicant Bank Account Details");
+	        sceneTitle.setFont(Font.font("courier", FontWeight.NORMAL, 21));
+	        grid.add(sceneTitle, 1, 1, 2, 2);
+		} else {
+			primaryStage.setTitle("Second Applicant Bank Account Details");
+			Text sceneTitle = new Text("Second Applicant Bank Account Details");
 	        sceneTitle.setFont(Font.font("courier", FontWeight.NORMAL, 21));
 	        grid.add(sceneTitle, 1, 1, 2, 2);
 		}
@@ -131,10 +139,29 @@ public class FirstApplicantBankAccountDetails extends Page{
 		grid.add(bankPostCodeField, 5, 10);
 		
 	}
-
-	@Override
-	public void goTo() {
+	
+	protected void fillAndSaveClientInfo() {
 		
+		BankAccountDetails bd = null;
+		
+		if(type.equals("first")){
+			bd = client.getFirstClient().getBankAccountDetails();
+			System.out.println("first");
+		} else if(type.equals("second")){
+			System.out.println("second");
+			bd = client.getSecondClient().getBankAccountDetails();
+		}
+		
+		bd.setAccountHolderNames(textFields.get("names1").getText() + textFields.get("names2").getText());
+		bd.setBankAccountNumber(textFields.get("accountNumber").getText());
+		bd.setBranchSortCode(textFields.get("sortCode").getText());
+		bd.setBankName(textFields.get("bankName").getText());
+		bd.setBankAddress(textFields.get("bankAddress1").getText()
+				+ textFields.get("bankAddress2").getText()
+				+ textFields.get("bankAddress3").getText());
+		bd.setBankPostCode(textFields.get("postcode").getText());
+		
+		System.out.println("More CashTime: "+client.getFirstClient().getProductDetails().getGeneralInvestmentAccount().getCash());
 	}
 
 	@Override
@@ -168,21 +195,15 @@ public class FirstApplicantBankAccountDetails extends Page{
 			@Override
             public void handle(ActionEvent e){
             	fillAndSaveClientInfo();
-	            if(client.getSecondClient()!= null){
-	            	ProductDetailsFactory.makeSecond();
-	            	nextPage = ProductDetailsFactory.getSecond();
+            	System.out.println("Info Saved");
+	            if(type.equals("first") && client.getSecondClient()!= null){
+	            	nextPage = new BankDetails("second");
 	            	nextPage.setUp(primaryStage, thisScene, client);
             	} else {
-            		nextPage = new FirstApplicantBankAccountDetails("first");
+            		nextPage = new IncomePayment();
             		nextPage.setUp(primaryStage, thisScene, client);
             	}
             }
         });
 	}
-
-	protected void fillAndSaveClientInfo() {
-		// TODO Auto-generated method stub
-		
-	}
-
 }

@@ -11,8 +11,6 @@ public abstract class Page {
 	
 	public abstract void setUp(Stage primaryStage, Scene firstScene, ClientHolder client);
 	
-	public abstract void goTo();
-	
 	public abstract void createMovementButtons(GridPane grid);
 	
 	public static Page getInstance(){

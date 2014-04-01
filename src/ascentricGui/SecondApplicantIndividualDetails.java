@@ -478,11 +478,4 @@ public class SecondApplicantIndividualDetails extends Page{
 	public static Page getInstance() {
 		return instance;
 	}
-
-	@Override
-	public void goTo() {
-		primaryStage.setScene(thisScene);
-		
-	}
-
 }
