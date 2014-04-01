@@ -34,7 +34,6 @@ public class AccessRightsFamilyGroups extends Page {
 	private int gridVert;
 	private TextField cliRefNum;
 
-
 	static { 
 		instance = new AccessRightsFamilyGroups();
 	}
@@ -51,8 +50,8 @@ public class AccessRightsFamilyGroups extends Page {
         primaryStage.setTitle("Access Rights");
         GridPane grid = new GridPane();
         this.grid = grid;
-        grid.setHgap(15);
-        grid.setVgap(15);
+        grid.setHgap(10);
+        grid.setVgap(10);
         grid.setAlignment(Pos.CENTER);
         
         thisScene = new Scene(grid);
@@ -209,7 +208,6 @@ public class AccessRightsFamilyGroups extends Page {
             
             @Override
             public void handle(ActionEvent e){
-            	primaryStage.setTitle("PDF Filler 0.01");
                 primaryStage.setScene(previousScene);
             }
         });
@@ -226,9 +224,14 @@ public class AccessRightsFamilyGroups extends Page {
 			@Override
             public void handle(ActionEvent e){
             	fillAndSaveClientInfo();
-            	ProductDetailsFactory.makeFirst();
-            	nextPage = ProductDetailsFactory.getFirst();
-            	nextPage.setUp(primaryStage, thisScene, client);
+            	if(client.getJointAccount()!= null){
+            		ProductDetailsFactory.makeJoint();
+            		nextPage = ProductDetailsFactory.getThird();
+            	} else {
+	            	ProductDetailsFactory.makeFirst();
+	            	nextPage = ProductDetailsFactory.getFirst();
+	            	nextPage.setUp(primaryStage, thisScene, client);
+            	}
             }
         });	
 	}

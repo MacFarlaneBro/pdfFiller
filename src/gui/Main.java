@@ -19,7 +19,6 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -51,7 +50,7 @@ public class Main extends Application{
         primaryStage.getIcons().add(new Image("\\M.png"));
         
         GridPane grid = new GridPane();
-        Scene firstScene = new Scene(grid, 300, 300, Color.WHITE);
+        Scene firstScene = new Scene(grid, 300, 300);
         
         grid.setAlignment(Pos.CENTER);
         //sets the horizontal and vertical gaps around the border of the application

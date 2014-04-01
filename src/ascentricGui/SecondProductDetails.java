@@ -46,7 +46,7 @@ public class SecondProductDetails extends ProductDetailsGui {
 	    hNextBtn.setAlignment(Pos.BOTTOM_LEFT);
 	    nextBtn.setPrefWidth(100);
 	    hNextBtn.getChildren().add(nextBtn);
-	    grid.add(hNextBtn, 10, gridVert);
+	    grid.add(hNextBtn, 9, gridVert, 2, 1);
 	    
 	    nextBtn.setOnAction(new EventHandler<ActionEvent>(){
 	
@@ -68,7 +68,8 @@ public class SecondProductDetails extends ProductDetailsGui {
 		primaryStage.setTitle(pageTitle );
 		Text sceneTitle = new Text(pageTitle);
         sceneTitle.setFont(Font.font("courier", FontWeight.NORMAL, 21));
-        grid.add(sceneTitle, 1, 1, 2, 2);
+        sceneTitle.setLayoutX(20);
+        grid.add(sceneTitle, 1, 1, 11, 2);
 		
 	}
 

@@ -24,7 +24,7 @@ public class ProductDetailsFactory {
 		return secondProdDetInstance;
 	}
 	
-	public static void makeThird(){
+	public static void makeJoint(){
 		jointProdDetInstance = new JointProductDetails();
 	}
 	

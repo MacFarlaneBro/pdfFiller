@@ -14,6 +14,7 @@ public class FirstProductDetails extends ProductDetailsGui {
 	
 	public final String pageTitle = "Product Details - First Client";	
 	public final String appType = "First";
+	
 	@Override
 	public void createMovementButtons(GridPane grid) {
 		
@@ -28,7 +29,6 @@ public class FirstProductDetails extends ProductDetailsGui {
             
             @Override
             public void handle(ActionEvent e){
-            	primaryStage.setTitle("PDF Filler 0.01");
                 primaryStage.setScene(previousScene);
             }
         });
@@ -38,7 +38,7 @@ public class FirstProductDetails extends ProductDetailsGui {
         hNextBtn.setAlignment(Pos.BOTTOM_LEFT);
         nextBtn.setPrefWidth(100);
         hNextBtn.getChildren().add(nextBtn);
-        grid.add(hNextBtn, 10, gridVert);
+        grid.add(hNextBtn, 9, gridVert, 2, 1);
         
         nextBtn.setOnAction(new EventHandler<ActionEvent>(){
 
@@ -46,7 +46,6 @@ public class FirstProductDetails extends ProductDetailsGui {
             public void handle(ActionEvent e){
             	fillAndSaveClientInfo(appType);
             	
-            	System.out.println(client.getFirstClient().getProductDetails().getGeneralInvestmentAccount().getCash());
             	if(ProductDetailsFactory.getSecond()==null){
             		ProductDetailsFactory.makeSecond();
             	}
