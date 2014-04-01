@@ -30,7 +30,6 @@ public class BankDetails extends Page{
 	protected Page nextPage;
 	
 	public BankDetails(String type){
-		
 		this.type = type;
 	}
 

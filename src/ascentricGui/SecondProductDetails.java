@@ -15,14 +15,6 @@ public class SecondProductDetails extends ProductDetailsGui {
 	private String pageTitle = "Product Details - Second Applicant";
 	public final String appType = "Second";
 
-
-
-	@Override
-	public void goTo() {
-		// TODO Auto-generated method stub
-		
-	}
-
 	@Override
 	public void createMovementButtons(GridPane grid) {
 		Button backBtn = new Button("Back");//Create button with the name sign in

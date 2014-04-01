@@ -132,7 +132,7 @@ public abstract class ProductDetailsGui extends Page {
 		checkBoxes.put("giaCheckBox", giaCheckBox);
 		GridPane.setHalignment(giaCheckBox, HPos.CENTER);
 		grid.add(giaCheckBox, secondColumn, gridVert+2);
-				
+		
 		Label stocksAndSharesISA = new Label("Stocks & Shares ISA");
 		GridPane.setHalignment(stocksAndSharesISA, HPos.CENTER);
 		stocksAndSharesISA.setWrapText(true);
@@ -178,8 +178,6 @@ public abstract class ProductDetailsGui extends Page {
 	}
 	
 	public abstract void setTitleAndHeader(GridPane grid);
-	
-	public abstract void goTo();
 	
 	public void fillAndSaveClientInfo(String appType) {
 		

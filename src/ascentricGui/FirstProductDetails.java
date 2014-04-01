@@ -56,12 +56,6 @@ public class FirstProductDetails extends ProductDetailsGui {
             }
         });
 	}
-
-	@Override
-	public void goTo() {
-		// TODO Auto-generated method stub
-		
-	}
 	
 	public void setTitleAndHeader(GridPane grid) {
 		primaryStage.setTitle(pageTitle);

@@ -26,11 +26,6 @@ public class JointProductDetails extends ProductDetailsGui {
 		
 	}
 
-	@Override
-	public void goTo() {
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
 	public void createMovementButtons(GridPane grid) {
