@@ -2,16 +2,16 @@ package ascentricClientDetails;
 
 public class InitialAdviserCharge extends Charge{
 	
-	private int fixedAmount;
+	private String fixedAmount;
 	private boolean appCashLump;
 	private boolean appCashTransfer;
 	private boolean appStockTransfers;
 	
-	public int getFixedAmount() {
+	public String getFixedAmount() {
 		return fixedAmount;
 	}
-	public void setFixedAmount(int fixedAmount) {
-		this.fixedAmount = fixedAmount;
+	public void setFixedAmount(String string) {
+		this.fixedAmount = string;
 	}
 	public boolean isAppCashLump() {
 		return appCashLump;

@@ -38,18 +38,18 @@ public class AscentricPage6Test {
 		init.setAppCashLump(true);
 		init.setAppCashTransfer(true);
 		init.setAppStockTransfers(true);
-		init.setFixedAmount(893945);
-		init.setOfInvestment(38493);
+		init.setFixedAmount("fsf2");
+		init.setOfInvestment("fsf2");
 		init.setVatApplied(true);
 		fad.setInitAdviser(init);
 		
 		Charge reg = new Charge();
-		reg.setOfInvestment(3847);
+		reg.setOfInvestment("fsf2");
 		reg.setVatApplied(true);
 		fad.setRegContributions(reg);
 		
 		TradingCharge trad = new TradingCharge();
-		trad.setOfInvestment(389);
+		trad.setOfInvestment("fsf2");
 		trad.setSingleFundBuyTrades(true);
 		trad.setSwitchFundBuyTrades(true);
 		trad.setVatApplied(true);
@@ -61,7 +61,7 @@ public class AscentricPage6Test {
 		ong.setCash(true);
 		ong.setCollectives(true);
 		ong.setNonCustodyAssets(true);
-		ong.setOfInvestment(34232);
+		ong.setOfInvestment("fsf2");
 		ong.setStocksAndShares(true);
 		fad.setOngoingAdviser(ong);
 	}

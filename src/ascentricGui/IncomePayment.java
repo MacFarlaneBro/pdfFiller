@@ -169,8 +169,7 @@ public class IncomePayment extends Page {
 			@Override
             public void handle(ActionEvent e){
             	fillAndSaveClientInfo();
-            	ProductDetailsFactory.makeSecond();
-            	nextPage = FinancialAdviserDetails.getInstance();
+            	nextPage = FinancialAdviserDetailsGui.getInstance();
             	nextPage.setUp(primaryStage, thisScene, client);
             }
         });

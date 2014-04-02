@@ -3,7 +3,7 @@ package ascentricClientDetails;
 public class Charge {
 	
 	protected boolean vatApplied;
-	protected int ofInvestment;
+	protected String ofInvestment;
 	
 	public boolean isVatApplied() {
 		return vatApplied;
@@ -11,11 +11,11 @@ public class Charge {
 	public void setVatApplied(boolean vatApplied) {
 		this.vatApplied = vatApplied;
 	}
-	public int getOfInvestment() {
+	public String getOfInvestment() {
 		return ofInvestment;
 	}
-	public void setOfInvestment(int ofInvestment) {
-		this.ofInvestment = ofInvestment;
+	public void setOfInvestment(String string) {
+		this.ofInvestment = string;
 	}
 	
 	
