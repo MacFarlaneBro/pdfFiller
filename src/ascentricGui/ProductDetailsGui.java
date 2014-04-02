@@ -37,7 +37,7 @@ public abstract class ProductDetailsGui extends Page {
         grid.setHgap(5);
         grid.setVgap(10);
         grid.setAlignment(Pos.CENTER_RIGHT);
-        grid.setGridLinesVisible(true);
+//      grid.setGridLinesVisible(true);
         
 		setTitleAndHeader(grid);
         set1stLayerLabels(grid);

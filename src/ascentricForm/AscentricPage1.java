@@ -42,7 +42,7 @@ public class AscentricPage1 extends AscentricPage{
 		shutDown();
 	}
 	
-	public void tickBox(MakeClients theClient){
+	public void tickBox(MakeClients theClient) throws IOException, DocumentException{
 		if(theClient.getJointAccount()!=null){//If a joint account is present
 			stamp(354, tickDepth, "X");
 		} else if(theClient.getSecondClient()!=null){//If a second client is present
@@ -67,14 +67,18 @@ public class AscentricPage1 extends AscentricPage{
 		stamp(firstRow, detailDepth-40, id.getSurname());
 		
 		//Date of Birth stamping loop
-		stamp(firstRow, dobDepth, "" + dob.charAt(0));
-		for(int i = 1; i < dob.length(); i++){
-			if(i == 2 || i == 4){
-				extraDistance+=35;
-			} else {
-				extraDistance+=20;
+		if(dob!= null){
+			stamp(firstRow,
+					dobDepth,
+					"" + dob.charAt(0));
+			for(int i = 1; i < dob.length(); i++){
+				if(i == 2 || i == 4){
+					extraDistance+=35;
+				} else {
+					extraDistance+=20;
+				}
+				stamp(firstRow + extraDistance, dobDepth, "" + dob.charAt(i));
 			}
-			stamp(firstRow + extraDistance, dobDepth, "" + dob.charAt(i));
 		}
 	}
 	
@@ -99,13 +103,15 @@ public class AscentricPage1 extends AscentricPage{
 		stamp(contactWidth, contactDepth - 40, id.getMobileNumber());
 		
 		//Splitting the address string
-		String[] addressParts = id.getAddress().split(":");
-		
-		int addPart = 60;
-		//Address
-		for(String part: addressParts){
-			stamp(contactWidth, contactDepth - addPart, part);
-			addPart+=20;
+		if(id.getAddress()!=null){
+			String[] addressParts = id.getAddress().split(":");
+			
+			int addPart = 60;
+			//Address
+			for(String part: addressParts){
+				stamp(contactWidth, contactDepth - addPart, part);
+				addPart+=20;
+			}
 		}
 		//Postcode
 		stamp(contactWidth, contactDepth - 120, id.getPostcode());
@@ -121,7 +127,7 @@ public class AscentricPage1 extends AscentricPage{
 	
 	protected void additionalInfo(IndividualDetails id) {
 		
-		if(!id.getClientRef().equals(null)){
+		if(id.getClientRef()!=null){
 			//ClientReference
 			stamp(addInfoRow, cliRef, id.getClientRef());
 		}
@@ -134,7 +140,7 @@ public class AscentricPage1 extends AscentricPage{
 		//Passport Country
 		stamp(150, passInfo, id.getCountry());		
 		//TaxInfoNumber input with loop in separate method
-		if(!id.getTin().equals(null)){// if tin isnt null then call the tin creation method
+		if(id.getTin()!=null){// if tin isnt null then call the tin creation method
 			tinNumber(id.getTin());
 		}
 	}

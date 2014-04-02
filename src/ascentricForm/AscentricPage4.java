@@ -17,7 +17,7 @@ import com.itextpdf.text.DocumentException;
  */
 public class AscentricPage4 extends AscentricPage3{
 	
-	private int pageNumber = 4;
+	private static final int PAGENUMBER = 4;
 	private int nameS = 690;
 	private int giaS = nameS-120;
 	private int sasS = nameS-143;
@@ -31,7 +31,6 @@ public class AscentricPage4 extends AscentricPage3{
 	
 	@Override
 	public void fillPage(Client theClient) throws IOException, DocumentException{
-		
 		//Setting the secondClients product details
 		ProductDetails pd = theClient.getProductDetails();
 		//These three methods fill in the second Applicant product section
@@ -59,8 +58,7 @@ public class AscentricPage4 extends AscentricPage3{
 	 * @throws DocumentException
 	 */
 	public void fillPage(ClientHolder theClient) throws IOException, DocumentException {
-		setUp(pageNumber);
-		
+		setUp(PAGENUMBER);
 		fillPage(theClient.getSecondClient());
 		fillPage(theClient.getJointAccount());
 		shutDown();

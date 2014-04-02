@@ -12,6 +12,7 @@ import com.itextpdf.text.DocumentException;
 
 public class AscentricPage3 extends AscentricPage{
 	
+	private static final int PAGENUMBER = 3;
 	private int jointAccWidth = 527;
 	private int secondAppWidth = jointAccWidth - 63; 
 	private int singleAppWidth = jointAccWidth - 126;
@@ -37,7 +38,8 @@ public class AscentricPage3 extends AscentricPage{
 	public void fillPage(Client theClient) throws IOException, DocumentException {
 		this.theClient = theClient;
 		IndividualDetails id = theClient.getIndividualDetails();
-		ProductDetails pd = theClient.getProductDetails();		
+		ProductDetails pd = theClient.getProductDetails();
+		setUp(PAGENUMBER);
 		accessRights(id);
 		familyGroups(id.isFamilyGroup(),
 				id.isExistingAccount());
@@ -46,6 +48,7 @@ public class AscentricPage3 extends AscentricPage{
 			applicantWrapperInfo(pd);
 			thirdParty(pd);
 		}		
+		shutDown();
 	}
 
 	private void familyGroups(boolean moreThan1, boolean ascLink) {

@@ -42,7 +42,6 @@ public class AscentricPage2 extends AscentricPage1{
 		usPerson(id.isUsPerson());
 		additionalInfo(id);
 		shutDown();
-		
 	}
 
 	private void sameDetails(boolean b) {

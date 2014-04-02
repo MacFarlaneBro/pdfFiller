@@ -1,6 +1,9 @@
 package ascentricGui;
 
+import java.io.IOException;
 import java.util.HashMap;
+
+import com.itextpdf.text.DocumentException;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -20,6 +23,7 @@ import ascentricClientDetails.FinancialAdviserDetails;
 import ascentricClientDetails.InitialAdviserCharge;
 import ascentricClientDetails.OngoingAdviserCharge;
 import ascentricClientDetails.TradingCharge;
+import ascentricForm.AscentricForm;
 
 public class FinancialAdviserDetailsGui extends Page {
 	
@@ -54,7 +58,7 @@ public class FinancialAdviserDetailsGui extends Page {
         grid.setHgap(10);
         grid.setVgap(10);
         grid.setAlignment(Pos.CENTER);
-        grid.setGridLinesVisible(true);
+//        grid.setGridLinesVisible(true);
         
         thisScene = new Scene(grid, pageWidth, pageHeight);
         
@@ -96,7 +100,7 @@ public class FinancialAdviserDetailsGui extends Page {
 		grid.add(initAdvCharge, firstColumn, row, 2, 1);
 		
 		CheckBox initVAT = new CheckBox("VAT to be applied?");
-		checkBoxes.put("initVat", initVAT);
+		checkBoxes.put("initVAT", initVAT);
 		grid.add(initVAT, firstColumn + 3, row);
 		
 		grid.add(new Label("Applies to:"), firstColumn+4, row);
@@ -156,12 +160,12 @@ public class FinancialAdviserDetailsGui extends Page {
 		grid.add(regPercent, firstColumn+1, row);
 		
 		//Eighth row of items
-		CheckBox tradingCharge = new CheckBox("3. Trading Charge");
-		checkBoxes.put("tradingCharge", tradingCharge);
-		grid.add(tradingCharge, firstColumn, row, 2, 1);
+		CheckBox tradCharge = new CheckBox("3. Trading Charge");
+		checkBoxes.put("tradCharge", tradCharge);
+		grid.add(tradCharge, firstColumn, row, 2, 1);
 		
 		CheckBox tradVAT = new CheckBox("VAT to be applied?");
-		checkBoxes.put("trad", tradVAT);
+		checkBoxes.put("tradVAT", tradVAT);
 		grid.add(tradVAT, firstColumn + 3, row);
 		
 		grid.add(new Label("Applies to:"), firstColumn+4, row);
@@ -207,7 +211,7 @@ public class FinancialAdviserDetailsGui extends Page {
 		
 		//Thirteenth row of items
 		TextField ongAdvPercent = new TextField();
-		textFields.put("ongAdvvPercent", ongAdvPercent);
+		textFields.put("ongAdvPercent", ongAdvPercent);
 		grid.add(ongAdvPercent, firstColumn+1, row);
 		
 		grid.add(new Label("&/or"), firstColumn+2, row);
@@ -263,10 +267,10 @@ public class FinancialAdviserDetailsGui extends Page {
 			tradCharge.setSwitchFundBuyTrades(checkBoxes.get("switchFund").isSelected());
 			fad.setTradingCharge(tradCharge);
 		}
-		if(checkBoxes.get("ongCharge").isSelected()){
+		if(checkBoxes.get("ongAdvCharge").isSelected()){
 			OngoingAdviserCharge ongAdv = new OngoingAdviserCharge();
-			ongAdv.setVatApplied(checkBoxes.get("initVAT").isSelected());
-			ongAdv.setOfInvestment(textFields.get("initAdvPercent").getText());
+			ongAdv.setVatApplied(checkBoxes.get("ongVAT").isSelected());
+			ongAdv.setOfInvestment(textFields.get("ongAdvPercent").getText());
 			ongAdv.setCollectives(checkBoxes.get("collectives").isSelected());
 			ongAdv.setCash(checkBoxes.get("cash").isSelected());
 			ongAdv.setStocksAndShares(checkBoxes.get("sas").isSelected());
@@ -305,8 +309,18 @@ public class FinancialAdviserDetailsGui extends Page {
 			@Override
             public void handle(ActionEvent e){
             	fillAndSaveClientInfo();
-            	nextPage.setUp(primaryStage, thisScene, client);
+            	printDocument();
             }
         });
+	}
+
+	protected void printDocument() {
+		AscentricForm af = new AscentricForm();
+		try {
+			af.fillIt(client);
+		} catch (IOException | DocumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

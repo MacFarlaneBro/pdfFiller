@@ -1,6 +1,6 @@
 package ascentricClientDetails;
 
-public class ClientHolder {
+public class ClientHolder implements MakeClients{
 	
 	private Client firstClient;
 	private Client secondClient;
