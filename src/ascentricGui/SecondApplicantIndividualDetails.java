@@ -73,7 +73,7 @@ public class SecondApplicantIndividualDetails extends Page{
         autoFillClientInfo(grid);
         createMovementButtons(grid);
         System.out.println("New Scene Filled");
-        thisScene = new Scene(grid);
+        thisScene = new Scene(grid, pageWidth, pageHeight);
 
        // grid.setGridLinesVisible(true);
         primaryStage.setScene(thisScene);

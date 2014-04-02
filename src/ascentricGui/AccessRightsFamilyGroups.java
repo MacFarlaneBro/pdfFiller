@@ -54,7 +54,7 @@ public class AccessRightsFamilyGroups extends Page {
         grid.setVgap(10);
         grid.setAlignment(Pos.CENTER);
         
-        thisScene = new Scene(grid);
+        thisScene = new Scene(grid, pageWidth, pageHeight);
         
         createFields(grid);
         

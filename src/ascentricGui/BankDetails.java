@@ -7,6 +7,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
@@ -59,7 +60,7 @@ public class BankDetails extends Page{
 	        grid.add(sceneTitle, 1, 1, 2, 2);
 		}
         
-        thisScene = new Scene(grid);       
+        thisScene = new Scene(grid, pageWidth, pageHeight);       
         
         createFields(grid);
         
@@ -74,10 +75,15 @@ public class BankDetails extends Page{
 		
 		textFields = new HashMap<String, TextField>();
 		
-		Label warning = new Label("Failure to provide bank details at the time of application\n "
-				+ "may result in delays when making future payments");
-		warning.setFont(Font.font(null, FontWeight.BOLD, 12));
-		grid.add(warning, 2, 3, 2, 2);
+		if(type.equals("first")){
+			Label warning = new Label("Failure to provide bank details at the time of application\n "
+					+ "may result in delays when making future payments");
+			warning.setFont(Font.font(null, FontWeight.BOLD, 12));
+			grid.add(warning, 2, 3, 2, 2);
+		} else {
+			CheckBox same = new CheckBox("Tick if bank account details are same as those of first client");
+			grid.add(same, 2, 3);
+		}
 		
 		Label accountHolderName = new Label("Names of account holder(s)");
 		grid.add(accountHolderName, 2, 5);

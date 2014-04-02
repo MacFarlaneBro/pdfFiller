@@ -69,13 +69,13 @@ public class FirstApplicantIndividualDetails extends Page{
         this.previousScene = firstScene;
         this.primaryStage = primaryStage;
         primaryStage.setTitle("Personal Information - Client");
-        
+
         grid = new GridPane();
         grid.setHgap(15);
         grid.setVgap(15);
         grid.setAlignment(Pos.CENTER);
         
-        thisScene = new Scene(grid);
+        thisScene = new Scene(grid, pageWidth, pageHeight);
         
         createAutoFillFields(grid);
         
