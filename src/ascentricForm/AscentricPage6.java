@@ -7,6 +7,7 @@ import ascentricClientDetails.Client;
 import ascentricClientDetails.ClientHolder;
 import ascentricClientDetails.FinancialAdviserDetails;
 import ascentricClientDetails.InitialAdviserCharge;
+import ascentricClientDetails.MakeClients;
 import ascentricClientDetails.OngoingAdviserCharge;
 import ascentricClientDetails.TradingCharge;
 
@@ -21,7 +22,7 @@ public class AscentricPage6 extends AscentricPage {
 	private int thirdColumnWidth = 220;
 	private int fourthColumnWidth = 412;
 	
-	public void fillPage(ClientHolder theClient) throws IOException, DocumentException {
+	public void fillPage(MakeClients theClient) throws IOException, DocumentException {
 		setUp(PAGENUMBER);
 		FinancialAdviserDetails fad = theClient.getFirstClient().getfinancialAdviserDetails();
 		if(fad.getInitAdviser()!= null){

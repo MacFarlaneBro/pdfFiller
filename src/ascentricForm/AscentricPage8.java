@@ -6,6 +6,7 @@ import java.util.Date;
 
 import ascentricClientDetails.Client;
 import ascentricClientDetails.ClientHolder;
+import ascentricClientDetails.MakeClients;
 
 import com.itextpdf.text.DocumentException;
 
@@ -17,7 +18,7 @@ public class AscentricPage8 extends AscentricPage {
 	private Date date;
 	private SimpleDateFormat sdf;
 
-	public void fillPage(ClientHolder theClient) throws IOException, DocumentException {
+	public void fillPage(MakeClients theClient) throws IOException, DocumentException {
 		setUp(PAGENUMBER);
 		date = new Date();
 		sdf = new SimpleDateFormat("dd/mm/yyyy");

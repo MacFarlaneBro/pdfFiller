@@ -125,5 +125,9 @@ public class BankAccountDetails{
 	public void setRegWithdrawalAmount(String regw){
 		this.regWithdrawalAmount = regw;
 	}
+	public void setPaymentTiming(String paymentTiming) {
+		this.payTiming = paymentTiming;
+		
+	}
 
 }

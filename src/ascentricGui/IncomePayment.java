@@ -7,7 +7,6 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -140,12 +139,12 @@ public class IncomePayment extends Page {
 
 	protected void fillAndSaveClientInfo() {
 		BankAccountDetails bad = client.getFirstClient().getBankAccountDetails();
-		bad.setNoIncomeWithdrawl(checkBoxes.get("noIncomeWithDrawl").isSelected());
+		bad.setNoIncomeWithdrawl(checkBoxes.get("noIncomeWithdrawl").isSelected());
 		bad.setLeaveInIncomeAccount(checkBoxes.get("leaveIncomeAccount").isSelected());
 		bad.setWithdrawNaturalIncome(checkBoxes.get("withdrawNaturalIncome").isSelected());
 		bad.setNatIncomeWrappers(textFields.get("natWrapper").getText());
-		bad.setNatIncomeWrappers(timing.getValue());
-		bad.setPaymentFromDeposit(textFields.get("paymentFromDeposit").getText());
+		bad.setPaymentTiming(timing.getValue());
+		bad.setPaymentFromDeposit(textFields.get("amount").getText());
 		bad.setRegWithdrawalPayTiming(natTiming.getValue());
 		bad.setRegWithdrawlWrappers(textFields.get("regularWrapper").getText());
 		bad.setStartDate(textFields.get("startDate").getText());

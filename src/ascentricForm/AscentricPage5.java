@@ -4,7 +4,6 @@ import java.io.IOException;
 
 import ascentricClientDetails.BankAccountDetails;
 import ascentricClientDetails.Client;
-import ascentricClientDetails.ClientHolder;
 import ascentricClientDetails.MakeClients;
 
 import com.itextpdf.text.DocumentException;
@@ -103,12 +102,15 @@ public class AscentricPage5 extends AscentricPage {
 		
 		secondRowWidth = 350;
 		//StartDate
+		if(bad.getStartDate()!= null && bad.getStartDate().length() >= 4){
 		String startDate = bad.getStartDate();
-		for(int i = 0; i < 8; i++){
-			if(i == 2 ||i == 4){
-				stamp(secondRowWidth+=35, 188,""+startDate.charAt(i));
-			} else {
-				stamp(secondRowWidth+=20, 188,""+startDate.charAt(i));
+		System.out.println(startDate);
+			for(int i = 0; i < 8; i++){
+				if(i == 2 ||i == 4){
+					stamp(secondRowWidth+=35, 188,""+startDate.charAt(i));
+				} else {
+					stamp(secondRowWidth+=20, 188,""+startDate.charAt(i));
+				}
 			}
 		}
 	}

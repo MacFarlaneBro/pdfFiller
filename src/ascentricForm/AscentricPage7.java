@@ -40,19 +40,23 @@ public class AscentricPage7 extends AscentricPage {
 		
 		//FCA Individual Reference Number
 		temp = formWidth;
-		stamp(temp, formHeight-126, fad.getFcaIndividualReferenceNumber().charAt(0) + "");
-		for(int i = 1; i < 8; i++){
-			stamp(temp+=20, formHeight-126, fad.getFcaIndividualReferenceNumber().charAt(i) + "");
+		if(fad.getFcaIndividualReferenceNumber()!= null){
+			stamp(temp, formHeight-126, fad.getFcaIndividualReferenceNumber().charAt(0) + "");
+			for(int i = 1; i < 8; i++){
+				stamp(temp+=20, formHeight-126, fad.getFcaIndividualReferenceNumber().charAt(i) + "");
+			}
 		}
 		
 		//Date
 		temp = formWidth+52;
-		stamp(temp, formHeight-206, fad.getDate().charAt(0) + "");
-		for(int i = 1; i < fad.getDate().length(); i++){
-			if(i %2 == 0 && i < 5){
-				//stamp(temp+=35, formHeight-206, fad.getDate().charAt(i) + "");
-			} else {
-				stamp(temp+=20, formHeight-206, fad.getDate().charAt(i) + "");
+		if(fad.getDate()!= null){
+			stamp(temp, formHeight-206, fad.getDate().charAt(0) + "");
+			for(int i = 1; i < fad.getDate().length(); i++){
+				if(i %2 == 0 && i < 5){
+					//stamp(temp+=35, formHeight-206, fad.getDate().charAt(i) + "");
+				} else {
+					stamp(temp+=20, formHeight-206, fad.getDate().charAt(i) + "");
+				}
 			}
 		}
 	}

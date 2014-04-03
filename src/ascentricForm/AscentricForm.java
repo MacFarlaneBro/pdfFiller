@@ -53,10 +53,10 @@ public class AscentricForm{
 		
 		page = new AscentricPage6();
 		page.fillPage(theClient);
-//		page = new AscentricPage7();
-//		page.fillPage(theClient);
-//		page = new AscentricPage8();
-//		page.fillPage(theClient);
+		page = new AscentricPage7();
+		page.fillPage(theClient.getFirstClient());
+		page = new AscentricPage8();
+		page.fillPage(theClient);
 		
 		System.out.println("finished printing");
 	}
