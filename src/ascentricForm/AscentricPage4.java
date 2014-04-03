@@ -3,7 +3,7 @@ package ascentricForm;
 import java.io.IOException;
 
 import ascentricClientDetails.Client;
-import ascentricClientDetails.ClientHolder;
+import ascentricClientDetails.MakeClients;
 import ascentricClientDetails.ProductDetails;
 
 import com.itextpdf.text.DocumentException;
@@ -57,10 +57,15 @@ public class AscentricPage4 extends AscentricPage3{
 	 * @throws IOException
 	 * @throws DocumentException
 	 */
-	public void fillPage(ClientHolder theClient) throws IOException, DocumentException {
+	@Override
+	public void fillPage(MakeClients theClient) throws IOException, DocumentException {
 		setUp(PAGENUMBER);
-		fillPage(theClient.getSecondClient());
-		fillPage(theClient.getJointAccount());
+		if(theClient.getSecondClient()!= null){
+			fillPage(theClient.getSecondClient());
+		}
+		if(theClient.getJointAccount()!= null){
+			fillPage(theClient.getJointAccount());
+		}
 		shutDown();
 	}
 

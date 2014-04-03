@@ -2,6 +2,7 @@ package ascentricForm;
 
 import java.io.IOException;
 
+import ascentricClientDetails.Client;
 import ascentricClientDetails.MakeClients;
 
 import com.itextpdf.text.DocumentException;
@@ -23,14 +24,15 @@ public class AscentricForm{
 		page = new AscentricPage1();
 		//This is an absurdly shitty lazy workaround, I'm going to have to change this some time soon
 		//Like, literally unusably bad, a total joke I'll change it on monday morning when, god-willing, I have some more energy
-		AscentricPage1 d = new AscentricPage1();
-//		d.tickBox(theClient);
 		page.fillPage(theClient.getFirstClient());
 		
 		//If a second Client exists then the relevant information is filled in.
 		if(theClient.getSecondClient()!=null){
 			page = new AscentricPage2();
 			page.fillPage(theClient.getSecondClient());
+		} else {
+			page = new AscentricPage2();
+			page.fillPage(new Client("second"));
 		}
 		
 		page = new AscentricPage3();
@@ -43,12 +45,7 @@ public class AscentricForm{
 		}
 		
 		page = new AscentricPage4();
-		if(theClient.getSecondClient()!= null){//fills the product information on page 4 for the second applicant
-			page.fillPage(theClient.getSecondClient());//if they exist
-		}
-		if(theClient.getJointAccount()!= null){//fills the product infromation on page 4 for the joint application
-			page.fillPage(theClient.getJointAccount());// if it exists
-		}
+		page.fillPage(theClient);
 		
 		page = new AscentricPage5();
 		if(theClient.getJointAccount()!= null){
@@ -66,6 +63,8 @@ public class AscentricForm{
 //		page.fillPage(theClient);
 //		page = new AscentricPage8();
 //		page.fillPage(theClient);
+		
+		System.out.println("finished printing");
 	}
 
 }

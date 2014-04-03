@@ -47,7 +47,7 @@ public class Main extends Application{
         primaryStage.setTitle("PDF Filler 0.01");
         primaryStage.setMinWidth(500);
         primaryStage.initStyle(StageStyle.DECORATED);
-        primaryStage.getIcons().add(new Image("\\M.png"));
+//        primaryStage.getIcons().add(new Image("\\M.png"));
         
         GridPane grid = new GridPane();
         Scene firstScene = new Scene(grid, 300, 300);

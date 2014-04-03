@@ -4,6 +4,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 import ascentricClientDetails.Client;
+import ascentricClientDetails.MakeClients;
 
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
@@ -52,17 +53,16 @@ public abstract class AscentricPage {
 		}
 		System.out.println("pageNumber: "+pageNumber);
 		 stamper = new PdfStamper(reader, new FileOutputStream(pageNumber + FORM));
-		 System.out.println("stamper: " + stamper);
 		 canvas = stamper.getOverContent(pageNumber);
-		 System.out.println("canvas: " + canvas);
 
 	}
 	
 	public abstract void fillPage(Client theClient) throws IOException, DocumentException;
 	
+	public void fillPage(MakeClients theClient) throws IOException, DocumentException{}
+	
 	protected void shutDown() throws DocumentException, IOException {
 		
-		System.out.println("beforeStamp");
 		stamper.close();
 		System.out.println("afterStamp");
 
