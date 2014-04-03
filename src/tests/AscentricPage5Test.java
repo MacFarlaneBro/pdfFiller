@@ -43,7 +43,7 @@ public class AscentricPage5Test {
 		bd.setLeaveInIncomeAccount(true);
 		bd.setNatIncomeWrappers("Turnabout");
 		bd.setNoIncomeWithdrawl(false);
-		bd.setPaymentFromDeposit(999);
+		bd.setPaymentFromDeposit("Turnabout");
 		bd.setNatIncomePayTiming("38439");
 		bd.setRegWithdrawlWrappers("These are wrappers");
 		bd.setStartDate("30092014");

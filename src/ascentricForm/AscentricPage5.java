@@ -5,6 +5,7 @@ import java.io.IOException;
 import ascentricClientDetails.BankAccountDetails;
 import ascentricClientDetails.Client;
 import ascentricClientDetails.ClientHolder;
+import ascentricClientDetails.MakeClients;
 
 import com.itextpdf.text.DocumentException;
 
@@ -18,11 +19,11 @@ public class AscentricPage5 extends AscentricPage {
 	private int bankDetailsWidth = 370;
 
 	
-	public void fillPage(ClientHolder theClient) throws IOException, DocumentException {
+	public void fillPage(MakeClients theClient) throws IOException, DocumentException {
 		
 		setUp(PAGENUMBER);
 		
-		if(theClient.getFirstClient() != null){//If the account is not joint use the first client information
+		if(theClient.getJointAccount() == null){//If the account is not joint use the first client information
 			accDetails(theClient.getFirstClient().getBankAccountDetails(), "first");
 		} else {
 			accDetails(theClient.getJointAccount().getBankAccountDetails(), "joint");
@@ -123,9 +124,14 @@ public class AscentricPage5 extends AscentricPage {
 		//Names of account holders
 		String[] names = bad.getAccountHolderNames().split(" ");
 		stamp(accDetailsWidth, depth+20, names[0]);
-		stamp(accDetailsWidth, depth, names[1]);
+		if(names.length>1){
+			stamp(accDetailsWidth, depth, names[1]);
+		}
 		accountNumber(bad.getBankAccountNumber(), depth-37);
-		sortCode(bad.getBranchSortCode(), depth-70);
+		if(bad.getBranchSortCode()!= null && bad.getBranchSortCode().length()> 2){
+			System.out.println(bad.getBranchSortCode());
+			sortCode(bad.getBranchSortCode(), depth-70);
+		}
 		bankDetails(bad, depth+19);
 	}
 

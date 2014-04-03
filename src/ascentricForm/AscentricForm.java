@@ -48,17 +48,11 @@ public class AscentricForm{
 		page.fillPage(theClient);
 		
 		page = new AscentricPage5();
-		if(theClient.getJointAccount()!= null){
-			page.fillPage(theClient.getJointAccount());
-		} else {
-			page.fillPage(theClient.getFirstClient());
-			if(theClient.getSecondClient()!= null){
-				page.fillPage(theClient.getSecondClient());
-			}
-		}
-//		
-//		page = new AscentricPage6();
-//		page.fillPage(theClient);
+		page.fillPage(theClient);
+
+		
+		page = new AscentricPage6();
+		page.fillPage(theClient);
 //		page = new AscentricPage7();
 //		page.fillPage(theClient);
 //		page = new AscentricPage8();

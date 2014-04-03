@@ -15,7 +15,7 @@ public class BankAccountDetails{
 	private String natIncomeWrappers;
 	private String payTiming;
 	
-	private int paymentFromDeposit;
+	private String paymentFromDeposit;
 	private String depositPayTiming;
 	private String regWithdrawlWrappers;
 	private String startDate;
@@ -88,11 +88,11 @@ public class BankAccountDetails{
 	public void setNatIncomePayTiming(String payTiming) {
 		this.payTiming = payTiming;
 	}
-	public int getPaymentFromDeposit() {
+	public String getPaymentFromDeposit() {
 		return paymentFromDeposit;
 	}
-	public void setPaymentFromDeposit(int paymentFromDeposit) {
-		this.paymentFromDeposit = paymentFromDeposit;
+	public void setPaymentFromDeposit(String string) {
+		this.paymentFromDeposit = string;
 	}
 	public String getDepositPayTiming() {
 		return depositPayTiming;

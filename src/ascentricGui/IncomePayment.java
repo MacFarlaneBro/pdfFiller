@@ -7,6 +7,7 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -19,6 +20,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import ascentricClientDetails.BankAccountDetails;
 import ascentricClientDetails.ClientHolder;
 
 public class IncomePayment extends Page {
@@ -32,6 +34,7 @@ public class IncomePayment extends Page {
 	private Map<String, CheckBox> checkBoxes;
 	private ComboBox<String> timing;
 	protected Page nextPage;
+	private ComboBox<String> natTiming;
 
 	@Override
 	public void setUp(Stage primaryStage, Scene firstScene, ClientHolder client) {
@@ -91,7 +94,7 @@ public class IncomePayment extends Page {
 		Label wrapper = new Label("Wrapper(s)");
 		grid.add(wrapper, 2, 8);
 		TextField wrap = new TextField();
-		textFields.put("wrapper", wrap);
+		textFields.put("natWrapper", wrap);
 		grid.add(wrap, 3, 8);
 		
 		Label regularity = new Label("Regularity:");
@@ -102,6 +105,7 @@ public class IncomePayment extends Page {
                 "Half Yearly",
                 "Annually"
         ));
+		timing.setValue("Monthly");
 		grid.add(timing, 3, 9);
 		
 		grid.add(new Label("Regular Withdrawal Instructions"), 4, 4);
@@ -114,17 +118,17 @@ public class IncomePayment extends Page {
 		grid.add(amount, 5, 5);
 		
 		grid.add(new Label("Regularity:"), 4, 6);
-		timing = new ComboBox<String>(FXCollections.observableArrayList(
+		natTiming = new ComboBox<String>(FXCollections.observableArrayList(
                 "Monthly",
                 "Quarterly",
                 "Half Yearly",
                 "Annually"
         ));
-		grid.add(timing, 5, 6);
-		
+		grid.add(natTiming, 5, 6);
+		natTiming.setValue("Monthly");
 		grid.add(new Label("Wrapper(s)"), 4, 7);
 		TextField regWrap = new TextField();
-		textFields.put("wrapper", regWrap);
+		textFields.put("regularWrapper", regWrap);
 		grid.add(regWrap, 5, 7);
 		
 		grid.add(new Label("Start Date (DDMMYYYY)"), 4, 8);
@@ -135,8 +139,16 @@ public class IncomePayment extends Page {
 	
 
 	protected void fillAndSaveClientInfo() {
-		// TODO Auto-generated method stub
-		
+		BankAccountDetails bad = client.getFirstClient().getBankAccountDetails();
+		bad.setNoIncomeWithdrawl(checkBoxes.get("noIncomeWithDrawl").isSelected());
+		bad.setLeaveInIncomeAccount(checkBoxes.get("leaveIncomeAccount").isSelected());
+		bad.setWithdrawNaturalIncome(checkBoxes.get("withdrawNaturalIncome").isSelected());
+		bad.setNatIncomeWrappers(textFields.get("natWrapper").getText());
+		bad.setNatIncomeWrappers(timing.getValue());
+		bad.setPaymentFromDeposit(textFields.get("paymentFromDeposit").getText());
+		bad.setRegWithdrawalPayTiming(natTiming.getValue());
+		bad.setRegWithdrawlWrappers(textFields.get("regularWrapper").getText());
+		bad.setStartDate(textFields.get("startDate").getText());
 	}
 
 	@Override

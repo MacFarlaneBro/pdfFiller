@@ -158,6 +158,7 @@ public class FinancialAdviserDetailsGui extends Page {
 		TextField regPercent = new TextField();
 		textFields.put("regPercent", regPercent);
 		grid.add(regPercent, firstColumn+1, row);
+		row++;
 		
 		//Eighth row of items
 		CheckBox tradCharge = new CheckBox("3. Trading Charge");
