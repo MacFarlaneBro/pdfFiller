@@ -42,7 +42,7 @@ public class FinancialAdviserDetailsGui extends Page {
         this.primaryStage = primaryStage;
         primaryStage.setTitle("Personal Information - Client");
 
-        GridPane grid = new GridPane();
+        grid = new GridPane();
         grid.setHgap(10);
         grid.setVgap(10);
         grid.setAlignment(Pos.CENTER);
@@ -54,7 +54,7 @@ public class FinancialAdviserDetailsGui extends Page {
                 
         createLeftFields(grid);
         
-        createMovementButtons();
+        createMovementButtons(12, 7);
 
        // grid.setGridLinesVisible(true);
         primaryStage.setScene(thisScene);

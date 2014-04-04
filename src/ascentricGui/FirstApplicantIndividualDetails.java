@@ -6,6 +6,8 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -62,7 +64,6 @@ public class FirstApplicantIndividualDetails extends Page{
         this.previousScene = firstScene;
         this.primaryStage = primaryStage;
         primaryStage.setTitle("Personal Information - Client");
-
         grid = new GridPane();
         grid.setHgap(15);
         grid.setVgap(15);
@@ -80,7 +81,7 @@ public class FirstApplicantIndividualDetails extends Page{
         
         autoFillClientInfo(grid);
         
-        createMovementButtons();
+        createMovementButtons(12, 7);
 
 //        grid.setGridLinesVisible(true);
         primaryStage.setScene(thisScene);
@@ -141,7 +142,7 @@ public class FirstApplicantIndividualDetails extends Page{
 		int homeAddress = 1;
 		
 		while(fields.hasNext()){
-			TextField current = (TextField)fields.next();
+			TextField current = fields.next();
 			
 			//Remove the time portion from the date of birth value
 			if(current.getId()
@@ -350,7 +351,7 @@ public class FirstApplicantIndividualDetails extends Page{
                 );
             
             comboBox = new ComboBox<String>(formTypes);
-            
+            setNextPage(comboBox);
             comboBox.setPrefWidth(fieldWidth);
             comboBox.setPromptText("Single Client");
             comboBox.setValue("Single Client");
@@ -363,6 +364,19 @@ public class FirstApplicantIndividualDetails extends Page{
             clientSurname.setPrefWidth(fieldWidth);
             grid.add(clientSurname, 2, gridVert);
     }
+
+	private void setNextPage(ComboBox<String> comboBox) {
+		 comboBox.valueProperty().addListener(new ChangeListener<String>() {
+	            @Override public void changed(ObservableValue ov, String t, String t1) {                
+	               if(t1.equals("Single Client")){
+	            	   nextPage = AccessRightsFamilyGroups.getInstance();
+	               } else {
+	            	   nextPage = SecondApplicantIndividualDetails.getInstance();
+	               }
+	            }    
+	        });
+		
+	}
 
 	/**
      * Takes an argument in the form of the surname of a client and searches the database for said client

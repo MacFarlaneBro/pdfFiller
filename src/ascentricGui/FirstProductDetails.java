@@ -8,8 +8,10 @@ import javafx.scene.text.Text;
 public class FirstProductDetails extends ProductDetailsGui {
 	
 	public final String pageTitle = "Product Details - First Client";	
-	public final String appType = "First";
 	
+	public FirstProductDetails(){
+		appType = "First";
+	}
 	
 	public void setTitleAndHeader(GridPane grid) {
 		primaryStage.setTitle(pageTitle);

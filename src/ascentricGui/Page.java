@@ -30,17 +30,19 @@ public abstract class Page {
 	protected Map<String, TextField> textFields;
 	protected static Page instance;
 	
-	public abstract void setUp(Stage primaryStage, Scene firstScene, ClientHolder client);
+	public abstract void setUp(Stage primaryStage, Scene previousScene, ClientHolder client);
+	
 	protected abstract void fillAndSaveClientInfo();
 	
-	public void createMovementButtons() {
+	
+	public void createMovementButtons(int depth,int nextWidth) {
 	    
 		Button backBtn = new Button("Back");//Create button with the name sign in
         HBox hbBtn = new HBox(21);//Layout pane with 21 pixel spacing
         hbBtn.setAlignment(Pos.BOTTOM_LEFT);
         backBtn.setPrefWidth(100);
         hbBtn.getChildren().add(backBtn);
-        grid.add(hbBtn, 1, 11);
+        grid.add(hbBtn, 1, depth);
         
         backBtn.setOnAction(new EventHandler<ActionEvent>(){
             
@@ -55,21 +57,14 @@ public abstract class Page {
         hNextBtn.setAlignment(Pos.BOTTOM_LEFT);
         nextBtn.setPrefWidth(100);
         hNextBtn.getChildren().add(nextBtn);
-        grid.add(hNextBtn, 5, 11);
+        grid.add(hNextBtn, 5, depth);
         
         nextBtn.setOnAction(new EventHandler<ActionEvent>(){
 
 			@Override
             public void handle(ActionEvent e){
             	fillAndSaveClientInfo();
-            	if(client.getJointAccount()!= null){
-            		ProductDetailsFactory.makeJoint();
-            		nextPage = ProductDetailsFactory.getThird();
-            	} else {
-	            	ProductDetailsFactory.makeFirst();
-	            	nextPage = ProductDetailsFactory.getFirst();
-	            	nextPage.setUp(primaryStage, thisScene, client);
-            	}
+            	nextPage.setUp(primaryStage, thisScene, client);
             }
         });	
 	}

@@ -45,11 +45,13 @@ public class AccessRightsFamilyGroups extends Page {
         
         thisScene = new Scene(grid, pageWidth, pageHeight);
         
+        nextPage = new FirstProductDetails();
+        
         createFields(grid);
         
-		createMovementButtons();
+		createMovementButtons(12, 7);
 
-        grid.setGridLinesVisible(true);
+//        grid.setGridLinesVisible(true);
         primaryStage.setScene(thisScene);       
 	}
 

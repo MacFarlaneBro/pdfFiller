@@ -29,7 +29,7 @@ public abstract class ProductDetailsGui extends Page {
 		this.previousScene = previousScene;
 		this.client = client;
 		
-        GridPane grid = new GridPane();
+        grid = new GridPane();
         grid.setHgap(5);
         grid.setVgap(10);
         grid.setAlignment(Pos.CENTER_RIGHT);
@@ -54,7 +54,14 @@ public abstract class ProductDetailsGui extends Page {
         }
         
         gridVert++;
-        createMovementButtons();
+        
+        if(appType.equals("First") && client.getSecondClient()!= null){
+        	nextPage = new SecondProductDetails();
+        } else {
+        	nextPage = new BankDetails("first");
+        }
+        
+        createMovementButtons(12, 7);
         
         thisScene = new Scene(grid, pageWidth, pageHeight);
         primaryStage.setScene(thisScene);

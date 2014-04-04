@@ -53,7 +53,13 @@ public class BankDetails extends Page{
         
         createFields(grid);
         
-        createMovementButtons();
+        if(type.equals("first") && client.getSecondClient()!= null){
+        	nextPage = new BankDetails("second");
+        } else {
+        	nextPage = new IncomePayment();
+        }
+        
+        createMovementButtons(12, 7);
 
 //        grid.setGridLinesVisible(true);
         primaryStage.setScene(thisScene);

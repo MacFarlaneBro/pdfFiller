@@ -43,7 +43,9 @@ public class IncomePayment extends Page {
         
         createFields(grid);
         
-        createMovementButtons();
+        nextPage = FinancialAdviserDetailsGui.getInstance();
+        
+        createMovementButtons(12, 7);
 
 //        grid.setGridLinesVisible(true);
         primaryStage.setScene(thisScene);
