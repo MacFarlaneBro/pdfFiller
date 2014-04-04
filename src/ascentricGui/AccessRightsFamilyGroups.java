@@ -40,7 +40,7 @@ public class AccessRightsFamilyGroups extends Page {
         grid.setVgap(10);
         grid.setAlignment(Pos.CENTER);
         
-        setColumnSizes(grid, 10, 140, 140, 140, 100, 200);
+        setColumnSizes(grid, 10, 140, 140, 140);
         setRowSizes(grid, 20,20,20,20,20,20,20,20,20);
         
         thisScene = new Scene(grid, pageWidth, pageHeight);
@@ -49,7 +49,7 @@ public class AccessRightsFamilyGroups extends Page {
         
         createFields(grid);
         
-		createMovementButtons(12, 7);
+		createMovementButtons(15, 7);
 
 //        grid.setGridLinesVisible(true);
         primaryStage.setScene(thisScene);       

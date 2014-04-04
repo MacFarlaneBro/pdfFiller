@@ -32,8 +32,7 @@ import databaseAccess.GetDatabase;
 import databaseAccess.MSSQLDatabase;
 
 public class SecondApplicantIndividualDetails extends Page{
-	
-    
+
     private TextField clientSurname;
     private Node clientFirstName;
     private int gridVert = 2;
@@ -44,8 +43,6 @@ public class SecondApplicantIndividualDetails extends Page{
     private Map<String, String> clientData;
     private Button autoFillClientButton;
 	private String sceneT = "Partner Personal Info";
-
-
 
 	static { 
 		instance = new SecondApplicantIndividualDetails();
