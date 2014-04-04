@@ -3,6 +3,8 @@ package ascentricGui;
 import java.util.HashMap;
 import java.util.Map;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -17,15 +19,9 @@ import ascentricClientDetails.Wrapper;
 
 public abstract class ProductDetailsGui extends Page {
 
-	protected Stage primaryStage;
-	protected ClientHolder client;
-	protected Scene previousScene;
-	protected Scene thisScene;
 	protected static ProductDetailsGui instance;
 	protected int gridVert = 3;
-	protected Page nextPage;
-	protected Map<String, TextField> textFields;
-	protected Map<String, CheckBox>	checkBoxes;
+	protected String appType;
 
 	@Override
 	public void setUp(Stage primaryStage, Scene previousScene, ClientHolder client) {
@@ -48,15 +44,17 @@ public abstract class ProductDetailsGui extends Page {
         generate2ndLayerLabels(grid);
         generate2ndLayerFields(grid);
         
-        //Centering all the textfields within their columns
+        //Make all text fields except acctName immutable by default 
         TextField[] theFields = textFields.values().toArray(new TextField[0]);
         for(TextField tf: theFields){
         	GridPane.setHalignment(tf, HPos.CENTER);
-        	tf.setDisable(true);
+        	if(tf.getId().startsWith("gia") || tf.getId().startsWith("sas")){
+        		tf.setDisable(true);
+        	}
         }
         
         gridVert++;
-        createMovementButtons(grid);
+        createMovementButtons();
         
         thisScene = new Scene(grid, pageWidth, pageHeight);
         primaryStage.setScene(thisScene);
@@ -83,10 +81,12 @@ public abstract class ProductDetailsGui extends Page {
 		top.setWrapText(true);
 		grid.add(top, firstColumn, gridVert, 4, 2);
 		TextField acctName = new TextField();
+		acctName.setId("acctName");
 		textFields.put("accountName", acctName);
 		acctName.setPrefWidth(100);
 		grid.add(acctName, fifthColumn, ++gridVert, 2, 1);
 		gridVert++;
+		
 		Label cashLabel = new Label("Cash - Received with \nApplication");
 		GridPane.setHalignment(cashLabel, HPos.CENTER);
 		grid.add(cashLabel, thirdColumn, ++gridVert, 1, 1);
@@ -129,6 +129,9 @@ public abstract class ProductDetailsGui extends Page {
 		GridPane.setHalignment(generalInvestmentAccount, HPos.CENTER);
 		grid.add(generalInvestmentAccount, 2, ++gridVert+2);
 		CheckBox giaCheckBox = new CheckBox();
+		giaCheckBox.setId("gia");
+		enableDisableTextFields(giaCheckBox);
+		
 		checkBoxes.put("giaCheckBox", giaCheckBox);
 		GridPane.setHalignment(giaCheckBox, HPos.CENTER);
 		grid.add(giaCheckBox, secondColumn, gridVert+2);
@@ -138,6 +141,9 @@ public abstract class ProductDetailsGui extends Page {
 		stocksAndSharesISA.setWrapText(true);
 		grid.add(stocksAndSharesISA, 2, ++gridVert+2);
 		CheckBox sasCheckBox = new CheckBox();
+		sasCheckBox.setId("sas");
+		enableDisableTextFields(sasCheckBox);
+		
 		checkBoxes.put("sasCheckBox", sasCheckBox);
 		GridPane.setHalignment(sasCheckBox, HPos.CENTER);
 		grid.add(sasCheckBox, secondColumn, gridVert+2);
@@ -179,7 +185,7 @@ public abstract class ProductDetailsGui extends Page {
 	
 	public abstract void setTitleAndHeader(GridPane grid);
 	
-	public void fillAndSaveClientInfo(String appType) {
+	public void fillAndSaveClientInfo() {
 		
 		ProductDetails pd = null;
 		
@@ -277,7 +283,28 @@ public abstract class ProductDetailsGui extends Page {
 		grid.add(discWrap, fieldWidth+4, gridVert);
 		gridVert+=3;
 	}
-
-	public abstract void createMovementButtons(GridPane grid);
-
+	
+	/**
+	 * Controls whether the wrapper specfic text fields are enabled or disabled, dependent on whether
+	 * the relevant check box has been selected
+	 * @param cBox The check box referring to the wrapper to be enabled or disabled
+	 */
+	private void enableDisableTextFields(final CheckBox cBox){
+		cBox.selectedProperty().addListener(new ChangeListener<Boolean>(){
+			public void changed(ObservableValue<? extends Boolean> ov, 
+					Boolean oldVal, Boolean newVal){
+				TextField[] theFields = textFields.values().toArray(new TextField[0]);
+				if(newVal){
+			        for(TextField tf: theFields){
+			        	if(tf.getId().startsWith(cBox.getId().substring(0,3)))tf.setDisable(false);
+			        }
+				}
+				if(oldVal){
+					for(TextField tf: theFields){
+			        	if(tf.getId().startsWith(cBox.getId()))tf.setDisable(true);
+			        }
+				}
+			}
+		});
+	}
 }

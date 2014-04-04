@@ -2,16 +2,12 @@ package ascentricGui;
 
 import java.util.HashMap;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -21,14 +17,7 @@ import ascentricClientDetails.ClientHolder;
 
 public class BankDetails extends Page{
 
-	private ClientHolder client;
-	private Scene previousScene;
-	private Stage primaryStage;
-	private GridPane grid;
-	private Scene thisScene;
-	private HashMap<String, TextField> textFields;
 	private String type;
-	protected Page nextPage;
 	
 	public BankDetails(String type){
 		this.type = type;
@@ -64,7 +53,7 @@ public class BankDetails extends Page{
         
         createFields(grid);
         
-        createMovementButtons(grid);
+        createMovementButtons();
 
 //        grid.setGridLinesVisible(true);
         primaryStage.setScene(thisScene);
@@ -169,46 +158,5 @@ public class BankDetails extends Page{
 		System.out.println("More CashTime: "+client.getFirstClient().getProductDetails().getGeneralInvestmentAccount().getCash());
 	}
 
-	@Override
-	public void createMovementButtons(GridPane grid) {
-		Button backBtn = new Button("Back");//Create button with the name sign in
-        HBox hbBtn = new HBox(21);//Layout pane with 21 pixel spacing
-        hbBtn.setAlignment(Pos.BOTTOM_LEFT);
-        backBtn.setPrefWidth(100);
-        hbBtn.getChildren().add(backBtn);
-        grid.add(hbBtn, 2, 12);
-        
-        backBtn.setOnAction(new EventHandler<ActionEvent>(){
-            
-            @Override
-            public void handle(ActionEvent e){
-                primaryStage.setScene(previousScene);
-            }
-        });
-        
-        Button nextBtn = new Button("Next");//Create button with the name sign in
-        HBox hNextBtn = new HBox(21);//Layout pane with 21 pixel spacing
-        hNextBtn.setAlignment(Pos.BOTTOM_LEFT);
-        nextBtn.setPrefWidth(100);
-        hNextBtn.getChildren().add(nextBtn);
-        hNextBtn.setAlignment(Pos.CENTER_RIGHT);
-        grid.add(hNextBtn, 5, 12);
-        
-        nextBtn.setOnAction(new EventHandler<ActionEvent>(){
-
-
-			@Override
-            public void handle(ActionEvent e){
-            	fillAndSaveClientInfo();
-            	System.out.println("Info Saved");
-	            if(type.equals("first") && client.getSecondClient()!= null){
-	            	nextPage = new BankDetails("second");
-	            	nextPage.setUp(primaryStage, thisScene, client);
-            	} else {
-            		nextPage = new IncomePayment();
-            		nextPage.setUp(primaryStage, thisScene, client);
-            	}
-            }
-        });
-	}
+	
 }

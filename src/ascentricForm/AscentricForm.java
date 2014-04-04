@@ -49,12 +49,13 @@ public class AscentricForm{
 		
 		page = new AscentricPage5();
 		page.fillPage(theClient);
-
 		
 		page = new AscentricPage6();
 		page.fillPage(theClient);
+		
 		page = new AscentricPage7();
 		page.fillPage(theClient.getFirstClient());
+		
 		page = new AscentricPage8();
 		page.fillPage(theClient);
 		

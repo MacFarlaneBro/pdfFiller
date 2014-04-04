@@ -3,19 +3,13 @@ package ascentricGui;
 import java.io.IOException;
 import java.util.HashMap;
 
-import com.itextpdf.text.DocumentException;
-
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import ascentricClientDetails.Charge;
 import ascentricClientDetails.ClientHolder;
@@ -24,6 +18,8 @@ import ascentricClientDetails.InitialAdviserCharge;
 import ascentricClientDetails.OngoingAdviserCharge;
 import ascentricClientDetails.TradingCharge;
 import ascentricForm.AscentricForm;
+
+import com.itextpdf.text.DocumentException;
 
 public class FinancialAdviserDetailsGui extends Page {
 	
@@ -36,14 +32,6 @@ public class FinancialAdviserDetailsGui extends Page {
 	public static Page getInstance(){
 		return instance;
 	}
-
-	private ClientHolder client;
-	private Scene previousScene;
-	private Stage primaryStage;
-	private Scene thisScene;
-	private HashMap<String, CheckBox> checkBoxes;
-	private HashMap<String, TextField> textFields;
-	private Page nextPage;
 	
 	private FinancialAdviserDetailsGui(){}
 
@@ -66,7 +54,7 @@ public class FinancialAdviserDetailsGui extends Page {
                 
         createLeftFields(grid);
         
-        createMovementButtons(grid);
+        createMovementButtons();
 
        // grid.setGridLinesVisible(true);
         primaryStage.setScene(thisScene);
@@ -75,7 +63,7 @@ public class FinancialAdviserDetailsGui extends Page {
 
 	}
 
-	private void setColumnSizes(GridPane grid) {
+	public void setColumnSizes(GridPane grid) {
 		grid.getColumnConstraints().addAll(
 				new ColumnConstraints(10),
 				new ColumnConstraints(150),
@@ -241,7 +229,7 @@ public class FinancialAdviserDetailsGui extends Page {
 	}
 	
 
-	private void fillAndSaveClientInfo() {
+	protected void fillAndSaveClientInfo() {
 		FinancialAdviserDetails fad = client.getFirstClient().getfinancialAdviserDetails();
 		
 		if(checkBoxes.get("initAdvCharge").isSelected()){
@@ -278,41 +266,6 @@ public class FinancialAdviserDetailsGui extends Page {
 			ongAdv.setNonCustodyAssets(checkBoxes.get("nonCustAss").isSelected());
 			fad.setOngoingAdviser(ongAdv);
 		}
-	}
-
-	@Override
-	public void createMovementButtons(GridPane grid) {
-		
-		Button backBtn = new Button("Back");//Create button with the name sign in
-        HBox hbBtn = new HBox(21);//Layout pane with 21 pixel spacing
-        hbBtn.setAlignment(Pos.BOTTOM_LEFT);
-        backBtn.setPrefWidth(100);
-        hbBtn.getChildren().add(backBtn);
-        grid.add(hbBtn, 2, 11);
-        
-        backBtn.setOnAction(new EventHandler<ActionEvent>(){
-            
-            @Override
-            public void handle(ActionEvent e){
-                primaryStage.setScene(previousScene);
-            }
-        });
-        
-        Button nextBtn = new Button("Next");//Create button with the name sign in
-        HBox hNextBtn = new HBox(21);//Layout pane with 21 pixel spacing
-        hNextBtn.setAlignment(Pos.BOTTOM_LEFT);
-        nextBtn.setPrefWidth(100);
-        hNextBtn.getChildren().add(nextBtn);
-        grid.add(hNextBtn, 5, 11);
-        
-        nextBtn.setOnAction(new EventHandler<ActionEvent>(){
-
-			@Override
-            public void handle(ActionEvent e){
-            	fillAndSaveClientInfo();
-            	printDocument();
-            }
-        });
 	}
 
 	protected void printDocument() {

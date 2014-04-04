@@ -33,8 +33,7 @@ import databaseAccess.MSSQLDatabase;
 
 public class SecondApplicantIndividualDetails extends Page{
 	
-    private Stage primaryStage;
-    private Scene previousScene;
+    
     private TextField clientSurname;
     private Node clientFirstName;
     private int gridVert = 2;
@@ -43,13 +42,9 @@ public class SecondApplicantIndividualDetails extends Page{
     private Set<TextField> theFields;
     private String[] firstnames;
     private Map<String, String> clientData;
-    private GridPane grid;
     private Button autoFillClientButton;
-	private Scene thisScene;
 	private String sceneT = "Partner Personal Info";
-	private ClientHolder client;
-	private static Page instance;
-	private Page nextPage;
+
 
 
 	static { 
@@ -61,23 +56,25 @@ public class SecondApplicantIndividualDetails extends Page{
         this.previousScene = previousScene;
         this.primaryStage = primaryStage;
         primaryStage.setTitle("Personal Information - Partner");
+        
         grid = new GridPane();
         grid.setHgap(15);
         grid.setVgap(15);
         grid.setAlignment(Pos.CENTER);
         
-        System.out.println("New Scene created");
-        createAutoFillFields(grid);
-        createRemainingFields(grid);
-        findClient(grid);
-        autoFillClientInfo(grid);
-        createMovementButtons(grid);
-        System.out.println("New Scene Filled");
         thisScene = new Scene(grid, pageWidth, pageHeight);
+        
+        createAutoFillFields(grid);
+        
+        createRemainingFields(grid);
+        
+        findClient(grid);
+        
+        autoFillClientInfo(grid);
+        
+        createMovementButtons();
 
-       // grid.setGridLinesVisible(true);
         primaryStage.setScene(thisScene);
-        System.out.println("New Scene set");
         
         /*
          * As the details of the partner are often present in the clients file this try/catch block attempts to 
@@ -204,6 +201,7 @@ public class SecondApplicantIndividualDetails extends Page{
         sceneTitle.setId("sceneTitle");
         grid.add(sceneTitle, 1, 1, 2, 2);
         
+        gridVert = 2;
         //Client Surname
         Label surname = new Label("Surname");
         grid.add(surname, 1, ++gridVert);
@@ -274,44 +272,9 @@ public class SecondApplicantIndividualDetails extends Page{
 		firstnames = db.fetchInfoUsingName(clientSurname.getText());
 	}
 
-	public void createMovementButtons(GridPane grid) {
-        Button backBtn = new Button("Back");//Create button with the name sign in
-        HBox hbBtn = new HBox(21);//Layout pane with 21 pixel spacing
-        hbBtn.setAlignment(Pos.BOTTOM_LEFT);
-        backBtn.setPrefWidth(200);
-        hbBtn.getChildren().add(backBtn);
-        grid.add(hbBtn, 1, --gridVert);
-        
-        backBtn.setOnAction(new EventHandler<ActionEvent>(){
-            
-            @Override
-            public void handle(ActionEvent e){
-            	primaryStage.setTitle("PDF Filler 0.01");
-                primaryStage.setScene(previousScene);
-            }
-        });
-        
-        Button nextBtn = new Button("Next");//Create button with the name sign in
-        HBox hNextBtn = new HBox(21);//Layout pane with 21 pixel spacing
-        hNextBtn.setAlignment(Pos.BOTTOM_LEFT);
-        nextBtn.setPrefWidth(200);
-        hNextBtn.getChildren().add(nextBtn);
-        grid.add(hNextBtn, 4, gridVert);
-        
-        nextBtn.setOnAction(new EventHandler<ActionEvent>(){
-
-            @Override
-            public void handle(ActionEvent e){
-            	fillAndSaveClientInfo(clientData);
-            	nextPage = (Page) AccessRightsFamilyGroups.getInstance();
-            	System.out.println("Setting up next Page");
-            	nextPage.setUp(primaryStage, thisScene, client);
-            }
-        });
-    }
 
 
-	private IndividualDetails fillAndSaveClientInfo(Map<String, String> clientData) {
+	protected void fillAndSaveClientInfo() {
 		
 		client.makeNewSecondClient();
 		
@@ -329,8 +292,7 @@ public class SecondApplicantIndividualDetails extends Page{
 				+ clientData.get("HomeAddress3"));
 		id.setPostcode(clientData.get("HomePostCode"));
 		id.setEmail(clientData.get("Email"));
-	
-		return id;
+
 	}
 
 	/**
@@ -344,8 +306,11 @@ public class SecondApplicantIndividualDetails extends Page{
     	theFields = new HashSet<TextField>();
     	theLabels = new HashSet<Label>();
         
+        //Resetting gridVert to 2 here should stop backwards and forwards navigation from moving the fields up and down
+        gridVert = 3;
+        
         theFields.add(clientSurname);
-    	
+ 	
         //Client First Name
         Label firstName = new Label("First name");
         theLabels.add(firstName);

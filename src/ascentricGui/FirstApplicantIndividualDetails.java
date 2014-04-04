@@ -6,8 +6,6 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
-import ascentricClientDetails.ClientHolder;
-import ascentricClientDetails.IndividualDetails;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -28,13 +26,13 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
+import ascentricClientDetails.ClientHolder;
+import ascentricClientDetails.IndividualDetails;
 import databaseAccess.GetDatabase;
 import databaseAccess.MSSQLDatabase;
  
 public class FirstApplicantIndividualDetails extends Page{
     
-    private Stage primaryStage;
-    private Scene previousScene;
     private TextField clientSurname;
     private Node clientFirstName;
     private int gridVert = 2;
@@ -43,14 +41,9 @@ public class FirstApplicantIndividualDetails extends Page{
     private Set<TextField> theFields;
     private String[] firstnames;
     private Map<String, String> clientData;
-    private GridPane grid;
     private Button autoFillClientButton;
-	private Scene thisScene;
 	private String sceneT = "Client Personal Info";
 	private ComboBox<String> comboBox;
-	private ClientHolder client;
-	private static Page instance;
-	private Page nextPage;
 	
 	static {
 		instance = new FirstApplicantIndividualDetails();
@@ -77,17 +70,19 @@ public class FirstApplicantIndividualDetails extends Page{
         
         thisScene = new Scene(grid, pageWidth, pageHeight);
         
-        createAutoFillFields(grid);
+//        setColumnSizes(grid, 0, 250, 150, 150, 150);
         
+        createAutoFillFields(grid);
+   
         createRemainingFields(grid);
         
         findClient(grid);
         
         autoFillClientInfo(grid);
         
-        createMovementButtons(grid);
+        createMovementButtons();
 
-       // grid.setGridLinesVisible(true);
+//        grid.setGridLinesVisible(true);
         primaryStage.setScene(thisScene);
         
         try {
@@ -354,8 +349,8 @@ public class FirstApplicantIndividualDetails extends Page{
                         "Joint Account"
                 );
             
-            comboBox = 
-            		new ComboBox<String>(formTypes);
+            comboBox = new ComboBox<String>(formTypes);
+            
             comboBox.setPrefWidth(fieldWidth);
             comboBox.setPromptText("Single Client");
             comboBox.setValue("Single Client");
@@ -368,10 +363,8 @@ public class FirstApplicantIndividualDetails extends Page{
             clientSurname.setPrefWidth(fieldWidth);
             grid.add(clientSurname, 2, gridVert);
     }
-    
 
-    
-    /**
+	/**
      * Takes an argument in the form of the surname of a client and searches the database for said client
      * then proceeds to autofill all the fields with the necessary client information
      * @param grid
@@ -431,52 +424,9 @@ public class FirstApplicantIndividualDetails extends Page{
 		firstnames = db.fetchInfoUsingName(clientSurname.getText());
 	}
 
-	public void createMovementButtons(GridPane grid) {
-        Button backBtn = new Button("Back");//Create button with the name sign in
-        HBox hbBtn = new HBox(21);//Layout pane with 21 pixel spacing
-        hbBtn.setAlignment(Pos.BOTTOM_LEFT);
-        backBtn.setPrefWidth(200);
-        hbBtn.getChildren().add(backBtn);
-        grid.add(hbBtn, 1, --gridVert);
-        
-        backBtn.setOnAction(new EventHandler<ActionEvent>(){
-            
-            @Override
-            public void handle(ActionEvent e){
-            	primaryStage.setTitle("PDF Filler 0.01");
-                primaryStage.setScene(previousScene);
-            }
-        });
-        
-        Button nextBtn = new Button("Next");//Create button with the name sign in
-        HBox hNextBtn = new HBox(21);//Layout pane with 21 pixel spacing
-        hNextBtn.setAlignment(Pos.BOTTOM_LEFT);
-        nextBtn.setPrefWidth(200);
-        hNextBtn.getChildren().add(nextBtn);
-        grid.add(hNextBtn, 4, gridVert);
-        
-        nextBtn.setOnAction(new EventHandler<ActionEvent>(){
-
-            @Override
-            public void handle(ActionEvent e){
-            	fillAndSaveClientInfo(clientData);
-            	System.out.println(comboBox.getValue());
-            	if(comboBox.getValue()
-            			.equals("Single Client")){
-            		nextPage = AccessRightsFamilyGroups.getInstance();
-            		nextPage.setUp(primaryStage, thisScene, client);
-            	} else {
-            		//If this is the first time going to the next page, create a new page
-            		nextPage = (Page) SecondApplicantIndividualDetails.getInstance();
-            		nextPage.setUp(primaryStage, thisScene, client);
-            	}
-            }
-        });
-    }
-
 
 	@SuppressWarnings("unchecked")
-	private IndividualDetails fillAndSaveClientInfo(Map<String, String> clientData) {
+	protected void fillAndSaveClientInfo() {
 		client.makeNewFirstClient();
 		IndividualDetails id = client.getFirstClient().getIndividualDetails();
 		
@@ -496,7 +446,8 @@ public class FirstApplicantIndividualDetails extends Page{
 		id.setPostcode(clientData.get("HomePostCode"));
 		id.setEmail(clientData.get("Email"));
 		}
-		return id;
 	}
+
+
 
 }

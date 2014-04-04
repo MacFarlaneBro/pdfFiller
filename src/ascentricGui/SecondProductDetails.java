@@ -16,43 +16,6 @@ public class SecondProductDetails extends ProductDetailsGui {
 	public final String appType = "Second";
 
 	@Override
-	public void createMovementButtons(GridPane grid) {
-		Button backBtn = new Button("Back");//Create button with the name sign in
-	    HBox hbBtn = new HBox(21);//Layout pane with 21 pixel spacing
-	    hbBtn.setAlignment(Pos.BOTTOM_LEFT);
-	    backBtn.setPrefWidth(100);
-	    hbBtn.getChildren().add(backBtn);
-	    grid.add(hbBtn, 2, --gridVert);
-	    
-	    backBtn.setOnAction(new EventHandler<ActionEvent>(){
-	        
-	        @Override
-	        public void handle(ActionEvent e){
-	        	primaryStage.setTitle("PDF Filler 0.01");
-	            primaryStage.setScene(previousScene);
-	        }
-	    });
-	    
-	    Button nextBtn = new Button("Next");//Create button with the name sign in
-	    HBox hNextBtn = new HBox(21);//Layout pane with 21 pixel spacing
-	    hNextBtn.setAlignment(Pos.BOTTOM_LEFT);
-	    nextBtn.setPrefWidth(100);
-	    hNextBtn.getChildren().add(nextBtn);
-	    grid.add(hNextBtn, 9, gridVert, 2, 1);
-	    
-	    nextBtn.setOnAction(new EventHandler<ActionEvent>(){
-	
-			@Override
-	        public void handle(ActionEvent e){
-	        	fillAndSaveClientInfo(appType);
-        		nextPage = new BankDetails("first");
-        		nextPage.setUp(primaryStage, thisScene, client);
-	        }
-	    });
-	}
-	
-
-	@Override
 	public void setTitleAndHeader(GridPane grid) {
 		primaryStage.setTitle(pageTitle );
 		Text sceneTitle = new Text(pageTitle);

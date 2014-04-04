@@ -1,19 +1,14 @@
 package ascentricGui;
 
-import java.util.Map;
 import java.util.TreeMap;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -23,15 +18,6 @@ import ascentricClientDetails.IndividualDetails;
 
 public class AccessRightsFamilyGroups extends Page {
 
-	private static Page instance;
-	private ClientHolder client;
-	private Scene previousScene;
-	private Stage primaryStage;
-	private Scene thisScene;
-	private Page nextPage;
-	private Map<String, CheckBox> checkBoxes;
-	private GridPane grid;
-	private int gridVert;
 	private TextField cliRefNum;
 
 	static { 
@@ -54,18 +40,17 @@ public class AccessRightsFamilyGroups extends Page {
         grid.setVgap(10);
         grid.setAlignment(Pos.CENTER);
         
+        setColumnSizes(grid, 10, 140, 140, 140, 100, 200);
+        setRowSizes(grid, 20,20,20,20,20,20,20,20,20);
+        
         thisScene = new Scene(grid, pageWidth, pageHeight);
         
         createFields(grid);
         
-        
-        
-		createMovementButtons(grid);
+		createMovementButtons();
 
-       // grid.setGridLinesVisible(true);
-        primaryStage.setScene(thisScene);
-        System.out.println("New Scene Set");
-       
+        grid.setGridLinesVisible(true);
+        primaryStage.setScene(thisScene);       
 	}
 
 	private void createFields(GridPane grid) {
@@ -127,13 +112,11 @@ public class AccessRightsFamilyGroups extends Page {
 		grid.add(ifPart2, 1, ++gridVert, 3, 1);
 		
 		cliRefNum = new TextField();
-		grid.add(cliRefNum, 1, ++gridVert, 2, 1);
-		
-		this.gridVert = gridVert+=2;
-			
+		grid.add(cliRefNum, 3, gridVert, 2, 1);
+					
 	}
 	
-	private void fillAndSaveClientInfo() {
+	protected void fillAndSaveClientInfo() {
 		
 		IndividualDetails singleApplicant = client.getFirstClient().getIndividualDetails();
 		singleApplicant.setOnlineAccess(!checkBoxes.get("SingleAppNoOnAcc").isSelected());
@@ -189,44 +172,4 @@ public class AccessRightsFamilyGroups extends Page {
 		
 	}
 
-	@Override
-	public void createMovementButtons(GridPane grid) {
-	    Button backBtn = new Button("Back");//Create button with the name sign in
-        HBox hbBtn = new HBox(21);//Layout pane with 21 pixel spacing
-        hbBtn.setAlignment(Pos.BOTTOM_LEFT);
-        backBtn.setPrefWidth(100);
-        hbBtn.getChildren().add(backBtn);
-        grid.add(hbBtn, 1, --gridVert);
-        
-        backBtn.setOnAction(new EventHandler<ActionEvent>(){
-            
-            @Override
-            public void handle(ActionEvent e){
-                primaryStage.setScene(previousScene);
-            }
-        });
-        
-        Button nextBtn = new Button("Next");//Create button with the name sign in
-        HBox hNextBtn = new HBox(21);//Layout pane with 21 pixel spacing
-        hNextBtn.setAlignment(Pos.BOTTOM_LEFT);
-        nextBtn.setPrefWidth(100);
-        hNextBtn.getChildren().add(nextBtn);
-        grid.add(hNextBtn, 5, gridVert);
-        
-        nextBtn.setOnAction(new EventHandler<ActionEvent>(){
-
-			@Override
-            public void handle(ActionEvent e){
-            	fillAndSaveClientInfo();
-            	if(client.getJointAccount()!= null){
-            		ProductDetailsFactory.makeJoint();
-            		nextPage = ProductDetailsFactory.getThird();
-            	} else {
-	            	ProductDetailsFactory.makeFirst();
-	            	nextPage = ProductDetailsFactory.getFirst();
-	            	nextPage.setUp(primaryStage, thisScene, client);
-            	}
-            }
-        });	
-	}
 }

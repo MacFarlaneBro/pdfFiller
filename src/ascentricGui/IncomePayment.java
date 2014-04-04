@@ -1,20 +1,15 @@
 package ascentricGui;
 
 import java.util.HashMap;
-import java.util.Map;
 
 import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -24,15 +19,7 @@ import ascentricClientDetails.ClientHolder;
 
 public class IncomePayment extends Page {
 
-	private ClientHolder client;
-	private Stage primaryStage;
-	private Scene previousScene;
-	private GridPane grid;
-	private Scene thisScene;
-	private Map<String, TextField> textFields;
-	private Map<String, CheckBox> checkBoxes;
 	private ComboBox<String> timing;
-	protected Page nextPage;
 	private ComboBox<String> natTiming;
 
 	@Override
@@ -56,7 +43,7 @@ public class IncomePayment extends Page {
         
         createFields(grid);
         
-        createMovementButtons(grid);
+        createMovementButtons();
 
 //        grid.setGridLinesVisible(true);
         primaryStage.setScene(thisScene);
@@ -148,42 +135,5 @@ public class IncomePayment extends Page {
 		bad.setRegWithdrawalPayTiming(natTiming.getValue());
 		bad.setRegWithdrawlWrappers(textFields.get("regularWrapper").getText());
 		bad.setStartDate(textFields.get("startDate").getText());
-	}
-
-	@Override
-	public void createMovementButtons(GridPane grid) {
-		
-		Button backBtn = new Button("Back");//Create button with the name sign in
-        HBox hbBtn = new HBox(21);//Layout pane with 21 pixel spacing
-        hbBtn.setAlignment(Pos.BOTTOM_LEFT);
-        backBtn.setPrefWidth(100);
-        hbBtn.getChildren().add(backBtn);
-        grid.add(hbBtn, 2, 11);
-        
-        backBtn.setOnAction(new EventHandler<ActionEvent>(){
-            
-            @Override
-            public void handle(ActionEvent e){
-                primaryStage.setScene(previousScene);
-            }
-        });
-        
-        Button nextBtn = new Button("Next");//Create button with the name sign in
-        HBox hNextBtn = new HBox(21);//Layout pane with 21 pixel spacing
-        hNextBtn.setAlignment(Pos.BOTTOM_LEFT);
-        nextBtn.setPrefWidth(100);
-        hNextBtn.getChildren().add(nextBtn);
-        grid.add(hNextBtn, 5, 11);
-        
-        nextBtn.setOnAction(new EventHandler<ActionEvent>(){
-
-			@Override
-            public void handle(ActionEvent e){
-            	fillAndSaveClientInfo();
-            	nextPage = FinancialAdviserDetailsGui.getInstance();
-            	nextPage.setUp(primaryStage, thisScene, client);
-            }
-        });
-
 	}
 }
