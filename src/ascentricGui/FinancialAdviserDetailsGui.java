@@ -46,32 +46,19 @@ public class FinancialAdviserDetailsGui extends Page {
         grid.setHgap(10);
         grid.setVgap(10);
         grid.setAlignment(Pos.CENTER);
-//        grid.setGridLinesVisible(true);
+        setColumnSizes(grid);
+        setRowSizes(grid);
         
         thisScene = new Scene(grid, pageWidth, pageHeight);
-        
-        setColumnSizes(grid);
-                
+                        
         createLeftFields(grid);
         
-        createMovementButtons(12, 7);
+        createMovementButtons(18, 5);
 
-       // grid.setGridLinesVisible(true);
         primaryStage.setScene(thisScene);
         
     	nextPage = FinancialAdviserDetailsGui.getInstance();
 
-	}
-
-	public void setColumnSizes(GridPane grid) {
-		grid.getColumnConstraints().addAll(
-				new ColumnConstraints(10),
-				new ColumnConstraints(150),
-				new ColumnConstraints(100),
-				new ColumnConstraints(150),
-				new ColumnConstraints(200),
-				new ColumnConstraints(100)
-				);
 	}
 
 	private void createLeftFields(GridPane grid) {

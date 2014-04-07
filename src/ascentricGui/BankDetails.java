@@ -37,6 +37,9 @@ public class BankDetails extends Page{
         grid.setVgap(10);
         grid.setAlignment(Pos.CENTER);
         
+        setColumnSizes(grid);
+        setRowSizes(grid);
+        
 		if(type == "first"){
 			primaryStage.setTitle("First Applicant Bank Account Details");
 			Text sceneTitle = new Text("First Applicant Bank Account Details");
@@ -61,7 +64,6 @@ public class BankDetails extends Page{
         
         createMovementButtons(12, 7);
 
-//        grid.setGridLinesVisible(true);
         primaryStage.setScene(thisScene);
 		
 	}

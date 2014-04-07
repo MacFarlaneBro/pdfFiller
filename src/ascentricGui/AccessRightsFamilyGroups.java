@@ -38,7 +38,6 @@ public class AccessRightsFamilyGroups extends Page {
         this.grid = grid;
         grid.setHgap(10);
         grid.setVgap(10);
-        grid.setAlignment(Pos.CENTER);
         
         setColumnSizes(grid, 10, 140, 140, 140);
         setRowSizes(grid, 20,20,20,20,20,20,20,20,20);
@@ -49,9 +48,8 @@ public class AccessRightsFamilyGroups extends Page {
         
         createFields(grid);
         
-		createMovementButtons(15, 7);
+		createMovementButtons(15, 5);
 
-//        grid.setGridLinesVisible(true);
         primaryStage.setScene(thisScene);       
 	}
 
@@ -67,6 +65,7 @@ public class AccessRightsFamilyGroups extends Page {
     	
     	Label singleApp  = new Label("Single Applicant");
     	grid.add(singleApp, 2, gridVert);
+    	GridPane.setHalignment(singleApp, HPos.CENTER);
     	Label secondApp  = new Label("Second Applicant");
     	grid.add(secondApp, 3, gridVert);
     	Label jointApp  = new Label("Joint Account");

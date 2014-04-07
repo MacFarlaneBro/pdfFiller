@@ -67,11 +67,11 @@ public class FirstApplicantIndividualDetails extends Page{
         grid = new GridPane();
         grid.setHgap(15);
         grid.setVgap(15);
-        grid.setAlignment(Pos.CENTER);
         
         thisScene = new Scene(grid, pageWidth, pageHeight);
         
-//        setColumnSizes(grid, 0, 250, 150, 150, 150);
+        setColumnSizes(grid);
+        setRowSizes(grid);
         
         createAutoFillFields(grid);
    
@@ -81,9 +81,8 @@ public class FirstApplicantIndividualDetails extends Page{
         
         autoFillClientInfo(grid);
         
-        createMovementButtons(12, 7);
+        createMovementButtons(12, 5);
 
-//        grid.setGridLinesVisible(true);
         primaryStage.setScene(thisScene);
         
         try {

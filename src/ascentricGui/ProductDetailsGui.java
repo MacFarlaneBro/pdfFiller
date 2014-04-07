@@ -1,12 +1,15 @@
 package ascentricGui;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
+import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
@@ -20,8 +23,9 @@ import ascentricClientDetails.Wrapper;
 public abstract class ProductDetailsGui extends Page {
 
 	protected static ProductDetailsGui instance;
-	protected int gridVert = 3;
+	protected int gridVert = 2;
 	protected String appType;
+	protected Set<Label> theLabels;
 
 	@Override
 	public void setUp(Stage primaryStage, Scene previousScene, ClientHolder client) {
@@ -32,11 +36,11 @@ public abstract class ProductDetailsGui extends Page {
         grid = new GridPane();
         grid.setHgap(5);
         grid.setVgap(10);
-        grid.setAlignment(Pos.CENTER_RIGHT);
-        grid.setGridLinesVisible(true);
+        grid.setAlignment(Pos.CENTER);
+//        grid.setGridLinesVisible(true);
         
-        setColumnSizes(grid, 10, 50, 10, 50, 50 , 50, 50, 50);
-        setRowSizes(grid, 50, 30, 10, 10, 10, 10, 10, 10, 10, 10);
+        setColumnSizes(grid, 0, 90, 80, 120 ,130 ,80 ,80 ,100 , 80, 80);
+        setRowSizes(grid, 10, 20, 20, 20);
         
 		setTitleAndHeader(grid);
         set1stLayerLabels(grid);
@@ -56,6 +60,10 @@ public abstract class ProductDetailsGui extends Page {
         	}
         }
         
+        for(Label label: theLabels){
+        	GridPane.setHalignment(label, HPos.CENTER);
+        }
+        
         gridVert++;
         
         if(appType.equals("First") && client.getSecondClient()!= null){
@@ -64,7 +72,7 @@ public abstract class ProductDetailsGui extends Page {
         	nextPage = new BankDetails("first");
         }
         
-        createMovementButtons(12, 7);
+        createMovementButtons(12, 9);
         
         thisScene = new Scene(grid, pageWidth, pageHeight);
         primaryStage.setScene(thisScene);
@@ -73,18 +81,19 @@ public abstract class ProductDetailsGui extends Page {
 
 	protected Map<String, TextField> set1stLayerLabels(GridPane grid) {
 		
-		int firstColumn = 2;
-		int secondColumn = 3;
-		int thirdColumn = 4;
-		int fourthColumn = 5;
-		int fifthColumn = 6;
-		int sixthColumn = 7;
-		int seventhColumn = 8;
-		int eighthColumn = 9;
-		int ninthColumn = 10;
+		int firstColumn = 1;
+		int secondColumn = 2;
+		int thirdColumn = 3;
+		int fourthColumn = 4;
+		int fifthColumn = 5;
+		int sixthColumn = 6;
+		int seventhColumn = 7;
+		int eighthColumn = 8;
+		int ninthColumn = 9;
 		
 		textFields = new HashMap<String, TextField>();
 		checkBoxes = new HashMap<String, CheckBox>();
+		theLabels = new HashSet<Label>();
 		
 		Label top = new Label("If you would like a name other than that of the account holder"
 				+ " for your platform account, please enter here: ");
@@ -94,79 +103,83 @@ public abstract class ProductDetailsGui extends Page {
 		acctName.setId("acctName");
 		textFields.put("accountName", acctName);
 		acctName.setPrefWidth(100);
-		grid.add(acctName, fifthColumn, ++gridVert, 2, 1);
+		grid.add(acctName, fifthColumn, gridVert++, 2, 2);
+		GridPane.setValignment(acctName, VPos.CENTER);
 		gridVert++;
 		
 		Label cashLabel = new Label("Cash - Received with \nApplication");
+		theLabels.add(cashLabel);
 		GridPane.setHalignment(cashLabel, HPos.CENTER);
 		grid.add(cashLabel, thirdColumn, ++gridVert, 1, 1);
 		
 		Label sofLabel = new Label("Source of funds \n(Cheque, BACS, Transfer)");
+		theLabels.add(sofLabel);
 		sofLabel.setWrapText(true);
 		grid.add(sofLabel, fourthColumn, gridVert, 1, 1);
 		
 		Label transferRegistration = new Label ("Transfer/Re-registration");
+		theLabels.add(transferRegistration);
 		transferRegistration.setWrapText(true);
 		GridPane.setHalignment(transferRegistration, HPos.CENTER);
 		grid.add(transferRegistration, fifthColumn, gridVert-1, 2, 1);
 		
 		Label approxTransCash = new Label ("Approximate cash\n to be transferred");
+		theLabels.add(approxTransCash);
 		approxTransCash.setWrapText(true);
 		grid.add(approxTransCash, fifthColumn, gridVert, 1, 1);
 		
 		Label assetsRereg = new Label ("Assets to be\nre-registered");
+		theLabels.add(assetsRereg);
 		assetsRereg.setWrapText(true);
 		grid.add(assetsRereg, sixthColumn, gridVert, 1, 1);
 		
 		Label reserveAcct = new Label("Reserve\nAccount");
+		theLabels.add(reserveAcct);
 		reserveAcct.setWrapText(true);
 		grid.add(reserveAcct, seventhColumn, gridVert, 1, 1);
 		
 		Label wrapperType = new Label("Wrapper Type");
+		theLabels.add(wrapperType);
 		wrapperType.setWrapText(true);
 		GridPane.setHalignment(wrapperType, HPos.CENTER);
 		grid.add(wrapperType, eighthColumn, gridVert-1, 2, 1);
 		
 		Label advisoryWrapper = new Label("Advisory\nWrapper");
+		theLabels.add(advisoryWrapper);
 		advisoryWrapper.setWrapText(true);
 		grid.add(advisoryWrapper, eighthColumn, gridVert, 1, 1);
 		
 		Label discretionaryWrapper = new Label ("Discretionary\nWrapper");
+		theLabels.add(discretionaryWrapper);
 		discretionaryWrapper.setWrapText(true);
 		grid.add(discretionaryWrapper, ninthColumn, gridVert, 1, 1);
 		
-		Label generalInvestmentAccount = new Label("General Investment Account");
-		GridPane.setHalignment(generalInvestmentAccount, HPos.CENTER);
-		grid.add(generalInvestmentAccount, 2, ++gridVert+2);
-		CheckBox giaCheckBox = new CheckBox();
-		giaCheckBox.setId("gia");
-		enableDisableTextFields(giaCheckBox);
+		CheckBox generalInvestmentAccount = new CheckBox("General Investment Account");
+		checkBoxes.put("giaCheckBox", generalInvestmentAccount);
+		generalInvestmentAccount.setId("giaCheckBox");
+		enableDisableTextFields(generalInvestmentAccount);
+		GridPane.setHalignment(generalInvestmentAccount, HPos.LEFT);
+		grid.add(generalInvestmentAccount, 1, ++gridVert, 2, 1);
+		enableDisableTextFields(generalInvestmentAccount);
 		
-		checkBoxes.put("giaCheckBox", giaCheckBox);
-		GridPane.setHalignment(giaCheckBox, HPos.CENTER);
-		grid.add(giaCheckBox, secondColumn, gridVert+2);
-		
-		Label stocksAndSharesISA = new Label("Stocks & Shares ISA");
-		GridPane.setHalignment(stocksAndSharesISA, HPos.CENTER);
+		CheckBox stocksAndSharesISA = new CheckBox("Stocks & Shares ISA");
+		checkBoxes.put("sasCheckBox", stocksAndSharesISA);
+		stocksAndSharesISA.setId("sasCheckBox");
+		enableDisableTextFields(stocksAndSharesISA);
+		GridPane.setHalignment(stocksAndSharesISA, HPos.LEFT);
 		stocksAndSharesISA.setWrapText(true);
-		grid.add(stocksAndSharesISA, 2, ++gridVert+2);
-		CheckBox sasCheckBox = new CheckBox();
-		sasCheckBox.setId("sas");
-		enableDisableTextFields(sasCheckBox);
+		grid.add(stocksAndSharesISA, 1, ++gridVert, 2, 1);
+		enableDisableTextFields(stocksAndSharesISA);
 		
-		checkBoxes.put("sasCheckBox", sasCheckBox);
-		GridPane.setHalignment(sasCheckBox, HPos.CENTER);
-		grid.add(sasCheckBox, secondColumn, gridVert+2);
+		gridVert--;
 		
-		gridVert++;
-
 		return textFields;
 		
 	}
 	
 	protected void generate1stLayerFields(GridPane grid, String wrap) {
 		
-		int fieldWidth = 4;
+		int fieldWidth = 3;
 		
 		//generating all the textfields for the wrapper info
 		for(int i = 0; i < 5; i++){
@@ -240,17 +253,20 @@ public abstract class ProductDetailsGui extends Page {
 		Label thirdPartyProdAcc = new Label("Third Party Product Accounts \n (insert name of third party)");
 		thirdPartyProdAcc.setWrapText(true);
 		GridPane.setHalignment(thirdPartyProdAcc, HPos.CENTER);
-		grid.add(thirdPartyProdAcc, 4, ++gridVert, 1, 1);
+		GridPane.setValignment(thirdPartyProdAcc, VPos.CENTER);
+		grid.add(thirdPartyProdAcc, 3, ++gridVert, 2, 2);
 		
 		Label amountToBeReceived = new Label("Amount to be received");
 		GridPane.setHalignment(amountToBeReceived, HPos.CENTER);
+		GridPane.setValignment(amountToBeReceived, VPos.CENTER);
 		amountToBeReceived.setWrapText(true);
-		grid.add(amountToBeReceived, 5, gridVert, 1, 1);
+		grid.add(amountToBeReceived, 5, gridVert, 1, 2);
 		
 		Label sourceOfFunds = new Label ("Source of Funds \n (Cheque, BACS, Transfer)");
 		sourceOfFunds.setWrapText(true);
 		GridPane.setHalignment(sourceOfFunds, HPos.CENTER);
-		grid.add(sourceOfFunds, 6, gridVert, 1, 1);
+		GridPane.setValignment(sourceOfFunds, VPos.CENTER);
+		grid.add(sourceOfFunds, 6, gridVert, 1, 2);
 		
 		Label approxTransCash = new Label ("Wrapper Type");
 		GridPane.setHalignment(approxTransCash, HPos.CENTER);
@@ -270,7 +286,7 @@ public abstract class ProductDetailsGui extends Page {
 	}
 	
 	private void generate2ndLayerFields(GridPane grid) {
-		int fieldWidth = 4;
+		int fieldWidth = 3;
 		
 		//generating all the textfields for the wrapper info
 		for(int i = 0; i < 3; i++){
@@ -279,6 +295,12 @@ public abstract class ProductDetailsGui extends Page {
 			System.out.println("Third" + i);
 			newField.setMaxWidth(70);
 			textFields.put("Third"+i, newField);
+			if(i == 0){
+				newField.setPrefWidth(70);
+				grid.add(newField,  fieldWidth+i, gridVert, 2, 1);
+				fieldWidth++;
+				continue;
+			}
 			grid.add(newField, fieldWidth+i, gridVert);
 		}
 		
@@ -311,7 +333,7 @@ public abstract class ProductDetailsGui extends Page {
 				}
 				if(oldVal){
 					for(TextField tf: theFields){
-			        	if(tf.getId().startsWith(cBox.getId()))tf.setDisable(true);
+			        	if(tf.getId().startsWith(cBox.getId().substring(0,3)))tf.setDisable(true);
 			        }
 				}
 			}

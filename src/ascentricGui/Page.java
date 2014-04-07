@@ -12,6 +12,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
 import javafx.stage.Stage;
 import ascentricClientDetails.ClientHolder;
@@ -36,6 +37,8 @@ public abstract class Page {
 	
 	
 	public void createMovementButtons(int depth,int nextWidth) {
+		
+		grid.setGridLinesVisible(true);
 	    
 		Button backBtn = new Button("Back");//Create button with the name sign in
         HBox hbBtn = new HBox(21);//Layout pane with 21 pixel spacing
@@ -57,7 +60,7 @@ public abstract class Page {
         hNextBtn.setAlignment(Pos.BOTTOM_LEFT);
         nextBtn.setPrefWidth(100);
         hNextBtn.getChildren().add(nextBtn);
-        grid.add(hNextBtn, 5, depth);
+        grid.add(hNextBtn, nextWidth, depth);
         
         nextBtn.setOnAction(new EventHandler<ActionEvent>(){
 
@@ -77,12 +80,20 @@ public abstract class Page {
     	for(int size: sizes){
     		grid.getColumnConstraints().add(new ColumnConstraints(size));
     	}
+    	ColumnConstraints c = new ColumnConstraints();
+    	c.setFillWidth(true);
+    	c.setHgrow(Priority.ALWAYS);
+    	grid.getColumnConstraints().add(c);
     }
     
     public void setRowSizes(GridPane grid, int... sizes){
     	for(int size: sizes){
     		grid.getRowConstraints().add(new RowConstraints(size));
     	}
+    	RowConstraints r = new RowConstraints();
+    	r.setFillHeight(true);
+    	r.setVgrow(Priority.ALWAYS);
+    	grid.getRowConstraints().add(r);
     }
 
 }

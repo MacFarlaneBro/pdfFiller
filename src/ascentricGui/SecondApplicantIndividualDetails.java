@@ -61,6 +61,8 @@ public class SecondApplicantIndividualDetails extends Page{
         
         thisScene = new Scene(grid, pageWidth, pageHeight);
         
+        nextPage = AccessRightsFamilyGroups.getInstance();
+        		
         createAutoFillFields(grid);
         
         createRemainingFields(grid);
@@ -69,7 +71,7 @@ public class SecondApplicantIndividualDetails extends Page{
         
         autoFillClientInfo(grid);
         
-        createMovementButtons(12, 7);
+        createMovementButtons(12, 5);
 
         primaryStage.setScene(thisScene);
         

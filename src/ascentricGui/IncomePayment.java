@@ -35,6 +35,9 @@ public class IncomePayment extends Page {
         grid.setVgap(10);
         grid.setAlignment(Pos.CENTER);
         
+        setColumnSizes(grid);
+        setRowSizes(grid);
+        
 		Text sceneTitle = new Text("Income Payment Instructions");
         sceneTitle.setFont(Font.font("courier", FontWeight.NORMAL, 21));
         grid.add(sceneTitle, 1, 1, 2, 2);
