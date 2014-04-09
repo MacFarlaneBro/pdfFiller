@@ -45,7 +45,7 @@ public abstract class Page {
         hbBtn.setAlignment(Pos.BOTTOM_LEFT);
         backBtn.setPrefWidth(100);
         hbBtn.getChildren().add(backBtn);
-        grid.add(hbBtn, 1, depth);
+        grid.add(hbBtn, 0, depth);
         
         backBtn.setOnAction(new EventHandler<ActionEvent>(){
             
@@ -57,7 +57,7 @@ public abstract class Page {
         
         Button nextBtn = new Button("Next");//Create button with the name sign in
         HBox hNextBtn = new HBox(21);//Layout pane with 21 pixel spacing
-        hNextBtn.setAlignment(Pos.BOTTOM_LEFT);
+        hNextBtn.setAlignment(Pos.BOTTOM_RIGHT);
         nextBtn.setPrefWidth(100);
         hNextBtn.getChildren().add(nextBtn);
         grid.add(hNextBtn, nextWidth, depth);

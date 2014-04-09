@@ -2,7 +2,7 @@ package ascentricGui;
 
 import java.util.HashMap;
 
-import javafx.geometry.Pos;
+import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
@@ -35,10 +35,9 @@ public class BankDetails extends Page{
         grid = new GridPane();
         grid.setHgap(10);
         grid.setVgap(10);
-        grid.setAlignment(Pos.CENTER);
         
         setColumnSizes(grid);
-        setRowSizes(grid);
+        setRowSizes(grid, 40, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20);
         
 		if(type == "first"){
 			primaryStage.setTitle("First Applicant Bank Account Details");

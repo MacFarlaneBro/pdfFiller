@@ -89,7 +89,6 @@ public class FirstApplicantIndividualDetails extends Page{
 			getClientInfo();
 		} catch (InstantiationException | IllegalAccessException
 				| ClassNotFoundException | SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
         

@@ -39,7 +39,7 @@ public class AccessRightsFamilyGroups extends Page {
         grid.setHgap(10);
         grid.setVgap(10);
         
-        setColumnSizes(grid, 10, 140, 140, 140);
+        setColumnSizes(grid, 100, 140, 140, 140, 140);
         setRowSizes(grid, 20,20,20,20,20,20,20,20,20);
         
         thisScene = new Scene(grid, pageWidth, pageHeight);
@@ -68,8 +68,10 @@ public class AccessRightsFamilyGroups extends Page {
     	GridPane.setHalignment(singleApp, HPos.CENTER);
     	Label secondApp  = new Label("Second Applicant");
     	grid.add(secondApp, 3, gridVert);
+    	GridPane.setHalignment(secondApp, HPos.CENTER);
     	Label jointApp  = new Label("Joint Account");
     	grid.add(jointApp, 4, gridVert);
+    	GridPane.setHalignment(jointApp, HPos.CENTER);
     	
         //Label for first row of checkboxes
         Label noOnlineAccess = new Label("No Online Access");

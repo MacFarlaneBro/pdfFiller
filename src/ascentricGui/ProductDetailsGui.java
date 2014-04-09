@@ -37,10 +37,9 @@ public abstract class ProductDetailsGui extends Page {
         grid.setHgap(5);
         grid.setVgap(10);
         grid.setAlignment(Pos.CENTER);
-//        grid.setGridLinesVisible(true);
         
-        setColumnSizes(grid, 0, 90, 80, 120 ,130 ,80 ,80 ,100 , 80, 80);
-        setRowSizes(grid, 10, 20, 20, 20);
+        setColumnSizes(grid, 90, 80, 120 ,110 ,80 ,80 ,100 , 80);
+        setRowSizes(grid, 10, 20, 20, 20, 20, 50, 20, 20, 20, 30, 20, 20);
         
 		setTitleAndHeader(grid);
         set1stLayerLabels(grid);
@@ -72,7 +71,7 @@ public abstract class ProductDetailsGui extends Page {
         	nextPage = new BankDetails("first");
         }
         
-        createMovementButtons(12, 9);
+        createMovementButtons(12, 8);
         
         thisScene = new Scene(grid, pageWidth, pageHeight);
         primaryStage.setScene(thisScene);
@@ -81,15 +80,16 @@ public abstract class ProductDetailsGui extends Page {
 
 	protected Map<String, TextField> set1stLayerLabels(GridPane grid) {
 		
-		int firstColumn = 1;
-		int secondColumn = 2;
-		int thirdColumn = 3;
-		int fourthColumn = 4;
-		int fifthColumn = 5;
-		int sixthColumn = 6;
-		int seventhColumn = 7;
-		int eighthColumn = 8;
-		int ninthColumn = 9;
+		gridVert = 2;
+		int firstColumn = 0;
+		int secondColumn = 1;
+		int thirdColumn = 2;
+		int fourthColumn = 3;
+		int fifthColumn = 4;
+		int sixthColumn = 5;
+		int seventhColumn = 6;
+		int eighthColumn = 7;
+		int ninthColumn = 8;
 		
 		textFields = new HashMap<String, TextField>();
 		checkBoxes = new HashMap<String, CheckBox>();
@@ -123,7 +123,7 @@ public abstract class ProductDetailsGui extends Page {
 		GridPane.setHalignment(transferRegistration, HPos.CENTER);
 		grid.add(transferRegistration, fifthColumn, gridVert-1, 2, 1);
 		
-		Label approxTransCash = new Label ("Approximate cash\n to be transferred");
+		Label approxTransCash = new Label ("Approximate cash to be\ntransferred");
 		theLabels.add(approxTransCash);
 		approxTransCash.setWrapText(true);
 		grid.add(approxTransCash, fifthColumn, gridVert, 1, 1);
@@ -159,7 +159,7 @@ public abstract class ProductDetailsGui extends Page {
 		generalInvestmentAccount.setId("giaCheckBox");
 		enableDisableTextFields(generalInvestmentAccount);
 		GridPane.setHalignment(generalInvestmentAccount, HPos.LEFT);
-		grid.add(generalInvestmentAccount, 1, ++gridVert, 2, 1);
+		grid.add(generalInvestmentAccount, 0, ++gridVert, 2, 1);
 		enableDisableTextFields(generalInvestmentAccount);
 		
 		CheckBox stocksAndSharesISA = new CheckBox("Stocks & Shares ISA");
@@ -168,7 +168,7 @@ public abstract class ProductDetailsGui extends Page {
 		enableDisableTextFields(stocksAndSharesISA);
 		GridPane.setHalignment(stocksAndSharesISA, HPos.LEFT);
 		stocksAndSharesISA.setWrapText(true);
-		grid.add(stocksAndSharesISA, 1, ++gridVert, 2, 1);
+		grid.add(stocksAndSharesISA, 0, ++gridVert, 2, 1);
 		enableDisableTextFields(stocksAndSharesISA);
 		
 		gridVert--;
@@ -179,7 +179,7 @@ public abstract class ProductDetailsGui extends Page {
 	
 	protected void generate1stLayerFields(GridPane grid, String wrap) {
 		
-		int fieldWidth = 3;
+		int fieldWidth = 2;
 		
 		//generating all the textfields for the wrapper info
 		for(int i = 0; i < 5; i++){

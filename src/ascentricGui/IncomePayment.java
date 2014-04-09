@@ -36,7 +36,7 @@ public class IncomePayment extends Page {
         grid.setAlignment(Pos.CENTER);
         
         setColumnSizes(grid);
-        setRowSizes(grid);
+        setRowSizes(grid, 40, 20, 20, 20, 20, 50, 20, 20, 20, 20, 20, 20);        
         
 		Text sceneTitle = new Text("Income Payment Instructions");
         sceneTitle.setFont(Font.font("courier", FontWeight.NORMAL, 21));
@@ -48,7 +48,7 @@ public class IncomePayment extends Page {
         
         nextPage = FinancialAdviserDetailsGui.getInstance();
         
-        createMovementButtons(12, 7);
+        createMovementButtons(12, 6);
 
 //        grid.setGridLinesVisible(true);
         primaryStage.setScene(thisScene);

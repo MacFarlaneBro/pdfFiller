@@ -8,8 +8,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import ascentricClientDetails.Charge;
 import ascentricClientDetails.ClientHolder;
@@ -40,7 +42,7 @@ public class FinancialAdviserDetailsGui extends Page {
     	this.client = client;
         this.previousScene = firstScene;
         this.primaryStage = primaryStage;
-        primaryStage.setTitle("Personal Information - Client");
+        primaryStage.setTitle("Financial Adviser Details");
 
         grid = new GridPane();
         grid.setHgap(10);
@@ -53,7 +55,7 @@ public class FinancialAdviserDetailsGui extends Page {
                         
         createLeftFields(grid);
         
-        createMovementButtons(18, 5);
+        createMovementButtons(18, 6);
 
         primaryStage.setScene(thisScene);
         
@@ -63,8 +65,13 @@ public class FinancialAdviserDetailsGui extends Page {
 
 	private void createLeftFields(GridPane grid) {
 		
+		Text sceneTitle = new Text("Financial Adviser Details");
+        sceneTitle.setFont(Font.font("courier", FontWeight.NORMAL, 21));
+        sceneTitle.setId("sceneTitle");
+        grid.add(sceneTitle, 1, 1, 2, 2);
+		
 		int firstColumn = 0;
-		int row = 3;
+		int row = 5;
 		
 		checkBoxes = new HashMap<String, CheckBox>();
 		textFields = new HashMap<String, TextField>();
