@@ -2,7 +2,6 @@ package ascentricGui;
 
 import java.util.HashMap;
 
-import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;

@@ -1,14 +1,17 @@
 package ascentricGui;
 
-import java.io.IOException;
 import java.util.HashMap;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -19,13 +22,11 @@ import ascentricClientDetails.FinancialAdviserDetails;
 import ascentricClientDetails.InitialAdviserCharge;
 import ascentricClientDetails.OngoingAdviserCharge;
 import ascentricClientDetails.TradingCharge;
-import ascentricForm.AscentricForm;
-
-import com.itextpdf.text.DocumentException;
 
 public class FinancialAdviserDetailsGui extends Page {
 	
 	private static Page instance;
+	private Print nextPage;
 	
 	static{
 		instance = new FinancialAdviserDetailsGui();
@@ -55,11 +56,11 @@ public class FinancialAdviserDetailsGui extends Page {
                         
         createLeftFields(grid);
         
-        createMovementButtons(18, 6);
+        createMovementButtons(20, 6);
 
         primaryStage.setScene(thisScene);
         
-    	nextPage = FinancialAdviserDetailsGui.getInstance();
+    	this.nextPage = new Print(client, primaryStage);
 
 	}
 
@@ -261,14 +262,40 @@ public class FinancialAdviserDetailsGui extends Page {
 			fad.setOngoingAdviser(ongAdv);
 		}
 	}
+	
+	@Override
+	public void createMovementButtons(int depth,int nextWidth) {
+		grid.setGridLinesVisible(true);
+	    
+		Button backBtn = new Button("Back");//Create button with the name sign in
+        HBox hbBtn = new HBox(21);//Layout pane with 21 pixel spacing
+        hbBtn.setAlignment(Pos.BOTTOM_LEFT);
+        backBtn.setPrefWidth(100);
+        hbBtn.getChildren().add(backBtn);
+        grid.add(hbBtn, 0, depth);
+        
+        backBtn.setOnAction(new EventHandler<ActionEvent>(){
+            
+            @Override
+            public void handle(ActionEvent e){
+                primaryStage.setScene(previousScene);
+            }
+        });
+        
+        Button nextBtn = new Button("Next");//Create button with the name sign in
+        HBox hNextBtn = new HBox(21);//Layout pane with 21 pixel spacing
+        hNextBtn.setAlignment(Pos.BOTTOM_RIGHT);
+        nextBtn.setPrefWidth(100);
+        hNextBtn.getChildren().add(nextBtn);
+        grid.add(hNextBtn, nextWidth, depth);
+        
+        nextBtn.setOnAction(new EventHandler<ActionEvent>(){
 
-	protected void printDocument() {
-		AscentricForm af = new AscentricForm();
-		try {
-			af.fillIt(client);
-		} catch (IOException | DocumentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+			@Override
+            public void handle(ActionEvent e){
+            	fillAndSaveClientInfo();
+            	nextPage = new Print(client, primaryStage);
+            }
+        });	
 	}
 }

@@ -71,7 +71,7 @@ public class SecondApplicantIndividualDetails extends Page{
         
         autoFillClientInfo(grid);
         
-        createMovementButtons(12, 5);
+        createMovementButtons(14, 5);
 
         primaryStage.setScene(thisScene);
         
