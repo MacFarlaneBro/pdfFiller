@@ -33,8 +33,14 @@ public abstract class AscentricPage {
 	protected Client theClient;
 	protected int pageNumber;
 	
+	/**
+	 * Prints text onto the pdf document specified by the FORM field and the page specified by the pagenumber field
+	 * @param x - The distance in pixels from the left margin of the page
+	 * @param y - The distance in pixels from the bottom of the page
+	 * @param text - The text to be printed at the specified x and y location
+	 */
 	protected void stamp(int x, int y, String text){
-		if(text == null) text = "";
+		if(text != null){ // if null print nothing
 		ColumnText
 		.showTextAligned(
 				canvas, 
@@ -43,6 +49,7 @@ public abstract class AscentricPage {
 				x, 
 				y,
 				0);
+		}
 	}
 	
 	protected void setUp(int pageNumber) throws IOException, DocumentException {
