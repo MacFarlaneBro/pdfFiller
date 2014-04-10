@@ -71,7 +71,9 @@ public class AscentricForm{
 
 	private void cleanUp(File file, String finishedFile) {
 		try {
+			@SuppressWarnings("resource")
 			FileChannel src = new FileInputStream(finishedFile).getChannel();
+			@SuppressWarnings("resource")
 			FileChannel dest = new FileOutputStream(file).getChannel();
 			dest.transferFrom(src, 0, src.size());
 		} catch (FileNotFoundException e) {

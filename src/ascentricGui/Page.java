@@ -29,20 +29,32 @@ public abstract class Page {
 	protected ClientHolder client;
 	protected Map<String, CheckBox> checkBoxes;
 	protected Map<String, TextField> textFields;
+	private Boolean movementButtonWidth = false;
 	protected static Page instance;
 	
 	public abstract void setUp(Stage primaryStage, Scene previousScene, ClientHolder client);
 	
 	protected abstract void fillAndSaveClientInfo();
 	
+	protected void movementButtons2Columns(Boolean tf){
+		movementButtonWidth = tf;
+	}
+	
 	public void createMovementButtons(int depth,int nextWidth) {
+		
+		grid.setGridLinesVisible(true);
 			    
 		Button backBtn = new Button("Back");//Create button with the name sign in
         HBox hbBtn = new HBox(21);//Layout pane with 21 pixel spacing
         hbBtn.setAlignment(Pos.BOTTOM_LEFT);
         backBtn.setPrefWidth(100);
         hbBtn.getChildren().add(backBtn);
-        grid.add(hbBtn, 0, depth);
+        if(movementButtonWidth){
+        	System.out.println("2 Column Back Button");
+        	grid.add(hbBtn, 0, depth, 2, 1);
+        } else { 
+        	grid.add(hbBtn, 0, depth);
+        }
         
         backBtn.setOnAction(new EventHandler<ActionEvent>(){
             
@@ -57,7 +69,12 @@ public abstract class Page {
         hNextBtn.setAlignment(Pos.BOTTOM_RIGHT);
         nextBtn.setPrefWidth(100);
         hNextBtn.getChildren().add(nextBtn);
-        grid.add(hNextBtn, nextWidth, depth);
+        if(movementButtonWidth){
+        	 grid.add(hNextBtn, nextWidth-1, depth, 2, 1);
+        } else { 
+        	 grid.add(hNextBtn, nextWidth, depth);
+        }
+       
         
         nextBtn.setOnAction(new EventHandler<ActionEvent>(){
 

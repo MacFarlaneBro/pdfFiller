@@ -1,12 +1,9 @@
 package ascentricForm;
 
-import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
 import ascentricClientDetails.Client;
-import ascentricClientDetails.ClientHolder;
 import ascentricClientDetails.MakeClients;
 
 import com.itextpdf.text.DocumentException;

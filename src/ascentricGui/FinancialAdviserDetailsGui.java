@@ -61,8 +61,6 @@ public class FinancialAdviserDetailsGui extends Page {
         createMovementButtons(20, 6);
 
         primaryStage.setScene(thisScene);
-        
-    	this.nextPage = new Print(client, primaryStage);
 
 	}
 
@@ -296,7 +294,7 @@ public class FinancialAdviserDetailsGui extends Page {
 			@Override
             public void handle(ActionEvent e){
             	fillAndSaveClientInfo();
-            	nextPage = new Print(client, primaryStage);
+            	nextPage = new Print(client, primaryStage, thisScene);
             }
         });	
 	}

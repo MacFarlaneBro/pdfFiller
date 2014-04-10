@@ -446,9 +446,9 @@ public class FirstApplicantIndividualDetails extends Page{
 		if(!clientSurname.getText().equals("")){
 			id.setForename(((ComboBox<String>)clientFirstName).getValue());
 		id.setTitle(clientData.get("Title"));
-		id.setDob(clientData.get("DOB"));
+		id.setDob(clientData.get("DOB").replace("/", ""));
 		System.out.println(client.getFirstClient().getIndividualDetails().getDob());
-		id.setNationalInsuranceNumber(clientData.get("NationalInsuranceNumber"));
+		id.setNationalInsuranceNumber(clientData.get("NationalInsuranceNumber").replace("-", ""));
 		id.setHomeNumber(clientData.get("HomeTel"));
 		id.setWorkNumber(clientData.get("WorkTel"));
 		id.setMobileNumber(clientData.get("MobTel"));

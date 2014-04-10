@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import ascentricClientDetails.ClientHolder;
@@ -23,10 +24,14 @@ public class Print {
 	private GridPane grid;
 	private Button save;
 	private Scene thisScene;
+	private Stage primaryStage;
+	private Scene previousScene;
 
-	public Print(ClientHolder client, final Stage primaryStage){
+	public Print(ClientHolder client, final Stage primaryStage, Scene previousScene){
 		
 		this.client = client;
+		this.primaryStage = primaryStage;
+		this.previousScene = previousScene;
 		save = new Button("Save Document");
 		
 		primaryStage.setTitle("Income Payment Instructions");
@@ -57,6 +62,7 @@ public class Print {
             }
         });
         
+        createMovementButtons(3,5);
         thisScene = new Scene(grid, 900, 500);  
         primaryStage.setScene(thisScene);
 	}
@@ -68,6 +74,24 @@ public class Print {
 		} catch (IOException | DocumentException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void createMovementButtons(int depth,int nextWidth) {
+					    
+		Button backBtn = new Button("Back");//Create button with the name sign in
+        HBox hbBtn = new HBox(21);//Layout pane with 21 pixel spacing
+        hbBtn.setAlignment(Pos.BOTTOM_LEFT);
+        backBtn.setPrefWidth(100);
+        hbBtn.getChildren().add(backBtn);
+       	grid.add(hbBtn, 0, depth);
+        
+        backBtn.setOnAction(new EventHandler<ActionEvent>(){
+            
+            @Override
+            public void handle(ActionEvent e){
+                primaryStage.setScene(previousScene);
+            }
+        });
 	}
 	
 }

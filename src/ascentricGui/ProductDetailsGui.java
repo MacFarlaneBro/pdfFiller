@@ -38,7 +38,7 @@ public abstract class ProductDetailsGui extends Page {
         grid.setVgap(10);
         grid.setAlignment(Pos.CENTER);
         
-        setColumnSizes(grid, 90, 80, 120 ,110 ,80 ,80 ,100 , 80);
+        setColumnSizes(grid, 5, 90, 80, 120 ,110 ,80 ,80 ,100 , 80);
         setRowSizes(grid, 10, 20, 20, 20, 20, 50, 20, 20, 20, 30, 20, 20);
         
 		setTitleAndHeader(grid);
@@ -71,7 +71,8 @@ public abstract class ProductDetailsGui extends Page {
         	nextPage = new BankDetails("first");
         }
         
-        createMovementButtons(12, 8);
+        movementButtons2Columns(true);
+        createMovementButtons(12, 9);
         
         thisScene = new Scene(grid, pageWidth, pageHeight);
         primaryStage.setScene(thisScene);
@@ -81,15 +82,15 @@ public abstract class ProductDetailsGui extends Page {
 	protected Map<String, TextField> set1stLayerLabels(GridPane grid) {
 		
 		gridVert = 2;
-		int firstColumn = 0;
-		int secondColumn = 1;
-		int thirdColumn = 2;
-		int fourthColumn = 3;
-		int fifthColumn = 4;
-		int sixthColumn = 5;
-		int seventhColumn = 6;
-		int eighthColumn = 7;
-		int ninthColumn = 8;
+		int firstColumn = 1;
+		int secondColumn = 2;
+		int thirdColumn = 3;
+		int fourthColumn = 4;
+		int fifthColumn = 5;
+		int sixthColumn = 6;
+		int seventhColumn = 7;
+		int eighthColumn = 8;
+		int ninthColumn = 9;
 		
 		textFields = new HashMap<String, TextField>();
 		checkBoxes = new HashMap<String, CheckBox>();
@@ -159,7 +160,7 @@ public abstract class ProductDetailsGui extends Page {
 		generalInvestmentAccount.setId("giaCheckBox");
 		enableDisableTextFields(generalInvestmentAccount);
 		GridPane.setHalignment(generalInvestmentAccount, HPos.LEFT);
-		grid.add(generalInvestmentAccount, 0, ++gridVert, 2, 1);
+		grid.add(generalInvestmentAccount, 1, ++gridVert, 2, 1);
 		enableDisableTextFields(generalInvestmentAccount);
 		
 		CheckBox stocksAndSharesISA = new CheckBox("Stocks & Shares ISA");
@@ -168,7 +169,7 @@ public abstract class ProductDetailsGui extends Page {
 		enableDisableTextFields(stocksAndSharesISA);
 		GridPane.setHalignment(stocksAndSharesISA, HPos.LEFT);
 		stocksAndSharesISA.setWrapText(true);
-		grid.add(stocksAndSharesISA, 0, ++gridVert, 2, 1);
+		grid.add(stocksAndSharesISA, 1, ++gridVert, 2, 1);
 		enableDisableTextFields(stocksAndSharesISA);
 		
 		gridVert--;
@@ -179,7 +180,7 @@ public abstract class ProductDetailsGui extends Page {
 	
 	protected void generate1stLayerFields(GridPane grid, String wrap) {
 		
-		int fieldWidth = 2;
+		int fieldWidth = 3;
 		
 		//generating all the textfields for the wrapper info
 		for(int i = 0; i < 5; i++){
