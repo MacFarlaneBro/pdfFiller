@@ -470,8 +470,9 @@ public class FirstApplicantIndividualDetails extends Page{
 		id.setHomeNumber(clientData.get("HomeTel"));
 		id.setWorkNumber(clientData.get("WorkTel"));
 		id.setMobileNumber(clientData.get("MobTel"));
-		id.setAddress(clientData.get("HomeAddress1") + " "
-		+ clientData.get("HomeAddress2") + " " 
+		//address lines separated by : to provide a string split character at stamp time
+		id.setAddress(clientData.get("HomeAddress1") + ":"
+		+ clientData.get("HomeAddress2") + ":" 
 				+ clientData.get("HomeAddress3"));
 		id.setPostcode(clientData.get("HomePostCode"));
 		id.setEmail(clientData.get("Email"));
