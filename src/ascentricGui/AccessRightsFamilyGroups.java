@@ -25,6 +25,7 @@ public class AccessRightsFamilyGroups extends Page {
 	}
 	
 	public static Page getInstance(){
+		instance = new AccessRightsFamilyGroups();
 		return instance;
 	}
 

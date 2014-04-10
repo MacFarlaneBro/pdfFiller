@@ -71,7 +71,11 @@ public class SecondApplicantIndividualDetails extends Page{
         
         autoFillClientInfo(grid);
         
-        createMovementButtons(14, 5);
+        setColumnSizes(grid);
+        setRowSizes(grid);
+        
+        movementButtons2Columns(true);
+        createMovementButtons(13, 5);
 
         primaryStage.setScene(thisScene);
         
@@ -91,12 +95,7 @@ public class SecondApplicantIndividualDetails extends Page{
 	}
 
     private void autoFillClientInfo(GridPane grid) {
-    	autoFillClientButton = new Button("Fill Personal Information");//Create button with the name sign in
-    	autoFillClientButton.setVisible(false);
-        HBox hbBtn = new HBox(21);//Layout pane with 21 pixel spacing
-        hbBtn.setAlignment(Pos.BOTTOM_RIGHT);
-        hbBtn.getChildren().add(autoFillClientButton);
-        grid.add(hbBtn, 3, 2);
+
         
         final Text actionTarget = new Text();
         grid.add(actionTarget, 2, ++gridVert);

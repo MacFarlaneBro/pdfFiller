@@ -85,11 +85,7 @@ public abstract class Page {
             }
         });	
 	}
-	
-	public static Page getInstance(){
-		return instance;
-	}
-	
+
     public void setColumnSizes(GridPane grid, int... sizes){
     	for(int size: sizes){
     		grid.getColumnConstraints().add(new ColumnConstraints(size));
