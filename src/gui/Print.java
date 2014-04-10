@@ -3,9 +3,6 @@ package gui;
 import java.io.File;
 import java.io.IOException;
 
-import javax.swing.filechooser.FileFilter;
-import javax.swing.filechooser.FileNameExtensionFilter;
-
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -14,7 +11,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
-import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 import ascentricClientDetails.ClientHolder;
 import ascentricForm.AscentricForm;
@@ -26,13 +22,11 @@ public class Print {
 	private ClientHolder client;
 	private GridPane grid;
 	private Button save;
-	private Stage primaryStage;
 	private Scene thisScene;
 
 	public Print(ClientHolder client, final Stage primaryStage){
 		
 		this.client = client;
-		this.primaryStage = primaryStage;
 		save = new Button("Save Document");
 		
 		primaryStage.setTitle("Income Payment Instructions");
@@ -54,15 +48,16 @@ public class Print {
             public void handle(ActionEvent e){
             	FileChooser fileChooser = new FileChooser();
                 fileChooser.setTitle("Save Form");
-                FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("PDF files (*.pdf)", "*.pdf");
-                fileChooser.getExtensionFilters().add(filter);
+                fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PDF files (*.pdf)", "*.pdf"));
                 File file = fileChooser.showSaveDialog(primaryStage);
+                if(!file.getName().contains(".")){
+                	file = new File(file.getAbsolutePath() + ".pdf");
+                }
                 printDocument(file);
             }
         });
         
         thisScene = new Scene(grid, 900, 500);  
-		
         primaryStage.setScene(thisScene);
 	}
 	
@@ -71,7 +66,6 @@ public class Print {
 		try {
 			af.fillIt(client, file);
 		} catch (IOException | DocumentException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

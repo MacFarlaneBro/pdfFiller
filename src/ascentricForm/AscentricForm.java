@@ -1,7 +1,11 @@
 package ascentricForm;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.channels.FileChannel;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 
 import ascentricClientDetails.Client;
 import ascentricClientDetails.MakeClients;
@@ -58,8 +62,25 @@ public class AscentricForm{
 		
 		page = new AscentricPage8();
 		page.fillPage(theClient);
+		String finishedFile = page.getFileName();
+		
+		cleanUp(file, finishedFile);
 		
 		System.out.println("finished printing");
+	}
+
+	private void cleanUp(File file, String finishedFile) {
+		try {
+			FileChannel src = new FileInputStream(finishedFile).getChannel();
+			FileChannel dest = new FileOutputStream(file).getChannel();
+			dest.transferFrom(src, 0, src.size());
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }

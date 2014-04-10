@@ -31,6 +31,7 @@ public abstract class AscentricPage {
 	protected PdfStamper stamper;
 	protected PdfContentByte canvas;
 	protected Client theClient;
+	protected int pageNumber;
 	
 	protected void stamp(int x, int y, String text){
 		ColumnText
@@ -44,6 +45,7 @@ public abstract class AscentricPage {
 	}
 	
 	protected void setUp(int pageNumber) throws IOException, DocumentException {
+		this.pageNumber = pageNumber;
 		if(pageNumber > 1){
 			reader = new PdfReader(pageNumber-1 + FORM);
 		} else {
@@ -62,5 +64,10 @@ public abstract class AscentricPage {
 		
 		stamper.close();
 
+	}
+
+	public String getFileName() {
+		return pageNumber + FORM;
+		
 	}
 }
