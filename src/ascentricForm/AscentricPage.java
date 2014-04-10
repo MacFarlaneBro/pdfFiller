@@ -33,8 +33,6 @@ public abstract class AscentricPage {
 	protected Client theClient;
 	
 	protected void stamp(int x, int y, String text){
-		System.out.println(text);
-		System.out.println(canvas);
 		ColumnText
 		.showTextAligned(
 				canvas, 
@@ -47,11 +45,10 @@ public abstract class AscentricPage {
 	
 	protected void setUp(int pageNumber) throws IOException, DocumentException {
 		if(pageNumber > 1){
-		 reader = new PdfReader(pageNumber-1 + FORM);
+			reader = new PdfReader(pageNumber-1 + FORM);
 		} else {
 			reader = new PdfReader(FORM);
 		}
-		System.out.println("pageNumber: "+pageNumber);
 		 stamper = new PdfStamper(reader, new FileOutputStream(pageNumber + FORM));
 		 canvas = stamper.getOverContent(pageNumber);
 
@@ -64,7 +61,6 @@ public abstract class AscentricPage {
 	protected void shutDown() throws DocumentException, IOException {
 		
 		stamper.close();
-		System.out.println("afterStamp");
 
 	}
 }

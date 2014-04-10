@@ -1,5 +1,6 @@
 package ascentricForm;
 
+import java.io.File;
 import java.io.IOException;
 
 import ascentricClientDetails.Client;
@@ -19,11 +20,10 @@ public class AscentricForm{
 	 * Fills the page chosen by the calling class
 	 * @return String address of the form with corresponding page filled
 	 */
-	public void fillIt(MakeClients theClient) throws IOException, DocumentException {
+	public void fillIt(MakeClients theClient, File file) throws IOException, DocumentException {
 		
 		page = new AscentricPage1();
-		//This is an absurdly shitty lazy workaround, I'm going to have to change this some time soon
-		//Like, literally unusably bad, a total joke I'll change it on monday morning when, god-willing, I have some more energy
+		
 		page.fillPage(theClient.getFirstClient());
 		
 		//If a second Client exists then the relevant information is filled in.

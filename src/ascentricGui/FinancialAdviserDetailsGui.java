@@ -1,5 +1,7 @@
 package ascentricGui;
 
+import gui.Print;
+
 import java.util.HashMap;
 
 import javafx.event.ActionEvent;
