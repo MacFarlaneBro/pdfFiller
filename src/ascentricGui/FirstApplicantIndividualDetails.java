@@ -446,7 +446,25 @@ public class FirstApplicantIndividualDetails extends Page{
 		if(!clientSurname.getText().equals("")){
 			id.setForename(((ComboBox<String>)clientFirstName).getValue());
 		id.setTitle(clientData.get("Title"));
-		id.setDob(clientData.get("DOB").replace("/", ""));
+		
+		//Rearranges date of birth from DB from YYYY-MM-DD to DDMMYYYY
+		if(clientData.get("DOB").charAt(4) == '-'){
+			//Using stringbuilder to increase performance
+			String original = clientData.get("DOB");
+			StringBuilder dob = new StringBuilder();
+			//Day
+			dob.append(original.charAt(original.length()-2));
+			dob.append(original.charAt(original.length()-1));
+			//Month
+			dob.append(original.charAt(original.length()-5));
+			dob.append(original.charAt(original.length()-4));
+			//Year
+			dob.append(original.substring(0, 4));
+			id.setDob(dob.toString());
+		} else {
+			id.setDob(clientData.get("DOB").replace("/", ""));
+		}
+		
 		System.out.println(client.getFirstClient().getIndividualDetails().getDob());
 		id.setNationalInsuranceNumber(clientData.get("NationalInsuranceNumber").replace("-", ""));
 		id.setHomeNumber(clientData.get("HomeTel"));

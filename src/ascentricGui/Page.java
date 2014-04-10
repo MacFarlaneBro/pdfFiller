@@ -42,7 +42,7 @@ public abstract class Page {
 	
 	public void createMovementButtons(int depth,int nextWidth) {
 		
-		grid.setGridLinesVisible(true);
+//		grid.setGridLinesVisible(true);
 			    
 		Button backBtn = new Button("Back");//Create button with the name sign in
         HBox hbBtn = new HBox(21);//Layout pane with 21 pixel spacing

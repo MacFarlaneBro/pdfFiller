@@ -34,6 +34,7 @@ public abstract class AscentricPage {
 	protected int pageNumber;
 	
 	protected void stamp(int x, int y, String text){
+		if(text == null) text = "";
 		ColumnText
 		.showTextAligned(
 				canvas, 
