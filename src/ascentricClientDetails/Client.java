@@ -7,6 +7,7 @@ public class Client {
 	private BankAccountDetails bankAccountDetails;
 	private FinancialAdviserDetails financialAdviserDetails;
 	private String clientType;
+	private String appType;
 	
     
     public Client(String type) {
@@ -37,5 +38,12 @@ public class Client {
 		return clientType;
 	}
 
+	public void setApplicationType(String appType) {
+		this.appType = appType;
+	}
+	
+	public String getApplicationType(){
+		return appType;
+	}
 }
 

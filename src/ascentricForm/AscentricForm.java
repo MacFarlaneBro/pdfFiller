@@ -35,6 +35,7 @@ public class AscentricForm{
 			page = new AscentricPage2();
 			page.fillPage(theClient.getSecondClient());
 		} else {
+			//TODO change the name of page 1, rather than unnecessarily filling a blank page 2
 			page = new AscentricPage2();
 			page.fillPage(new Client("second"));
 		}

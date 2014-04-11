@@ -30,6 +30,7 @@ public class AscentricPage1 extends AscentricPage{
 		this.theClient = theClient;
 		IndividualDetails id = theClient.getIndividualDetails();
 		setUp(PAGENUMBER);
+		fillAppType(theClient);
 		fillPersonalDetails(id);	
 		if(id.getNationalInsuranceNumber()== null){
 			natInsurance(false);
@@ -41,14 +42,14 @@ public class AscentricPage1 extends AscentricPage{
 		additionalInfo(id);
 		shutDown();
 	}
-	
-	public void tickBox(MakeClients theClient) throws IOException, DocumentException{
-		if(theClient.getJointAccount()!=null){//If a joint account is present
-			stamp(354, tickDepth, "X");
-		} else if(theClient.getSecondClient()!=null){//If a second client is present
+
+	private void fillAppType(Client theClient) throws IOException, DocumentException{
+		if(theClient.getApplicationType().equals("Single Client")){//If a joint account is present
+			stamp(193, tickDepth, "X");
+		} else if(theClient.getApplicationType().equals("Two Clients")){//If a second client is present
 			stamp(275, tickDepth, "X");
 		} else {
-			stamp(193, tickDepth, "X");
+			stamp(354, tickDepth, "X");
 		}
 	}
 	

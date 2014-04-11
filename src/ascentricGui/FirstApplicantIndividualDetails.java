@@ -45,7 +45,7 @@ public class FirstApplicantIndividualDetails extends Page{
     private Map<String, String> clientData;
     private Button autoFillClientButton;
 	private String sceneT = "Client Personal Info";
-	private ComboBox<String> comboBox;
+	private ComboBox<String> applicationType;
 	
 	static {
 		instance = new FirstApplicantIndividualDetails();
@@ -348,12 +348,12 @@ public class FirstApplicantIndividualDetails extends Page{
                         "Joint Account"
                 );
             
-            comboBox = new ComboBox<String>(formTypes);
-            setNextPage(comboBox);
-            comboBox.setPrefWidth(fieldWidth);
-            comboBox.setPromptText("Single Client");
-            comboBox.setValue("Single Client");
-            grid.add(comboBox, 2, gridVert);
+            applicationType = new ComboBox<String>(formTypes);
+            setNextPage(applicationType);
+            applicationType.setPrefWidth(fieldWidth);
+            applicationType.setPromptText("Single Client");
+            applicationType.setValue("Single Client");
+            grid.add(applicationType, 2, gridVert);
         
             //Client Surname
             Label surname = new Label("Surname");
@@ -440,6 +440,9 @@ public class FirstApplicantIndividualDetails extends Page{
 	@SuppressWarnings("unchecked")
 	protected void fillAndSaveClientInfo() {
 		client.makeNewFirstClient();
+		
+		client.getFirstClient().setApplicationType(applicationType.getValue());
+		
 		IndividualDetails id = client.getFirstClient().getIndividualDetails();
 		
 		id.setSurname(clientSurname.getText());
