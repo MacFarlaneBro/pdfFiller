@@ -466,7 +466,7 @@ public class FirstApplicantIndividualDetails extends Page{
 			id.setDob(dob.toString());
 		} else {
 			id.setDob(clientData.get("DOB").replace("/", ""));
-		}
+		}//comment
 		
 		System.out.println(client.getFirstClient().getIndividualDetails().getDob());
 		if(clientData.get("NationalInsuranceNumber")!= null){
