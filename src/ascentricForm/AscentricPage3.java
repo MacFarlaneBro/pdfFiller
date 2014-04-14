@@ -68,7 +68,7 @@ public class AscentricPage3 extends AscentricPage{
 		if(id.isOnlineAccess()){//if the client has online access rights
 			onlineAccess(theClient.getClientType());
 			System.out.println(theClient.getClientType());
-		}
+		}//cdsa
 		if(id.isEnquiryOnly()){//if the client has enquiry only rights
 			enquiryOnly(theClient.getClientType());
 			System.out.println(theClient.getClientType());
