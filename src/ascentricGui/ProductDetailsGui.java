@@ -255,39 +255,39 @@ public abstract class ProductDetailsGui extends Page {
 		thirdPartyProdAcc.setWrapText(true);
 		GridPane.setHalignment(thirdPartyProdAcc, HPos.CENTER);
 		GridPane.setValignment(thirdPartyProdAcc, VPos.CENTER);
-		grid.add(thirdPartyProdAcc, 3, ++gridVert, 2, 2);
+		grid.add(thirdPartyProdAcc, 2, ++gridVert, 2, 2);
 		
 		Label amountToBeReceived = new Label("Amount to be received");
 		GridPane.setHalignment(amountToBeReceived, HPos.CENTER);
 		GridPane.setValignment(amountToBeReceived, VPos.CENTER);
 		amountToBeReceived.setWrapText(true);
-		grid.add(amountToBeReceived, 5, gridVert, 1, 2);
+		grid.add(amountToBeReceived, 4, gridVert, 1, 2);
 		
 		Label sourceOfFunds = new Label ("Source of Funds \n (Cheque, BACS, Transfer)");
 		sourceOfFunds.setWrapText(true);
 		GridPane.setHalignment(sourceOfFunds, HPos.CENTER);
 		GridPane.setValignment(sourceOfFunds, VPos.CENTER);
-		grid.add(sourceOfFunds, 6, gridVert, 1, 2);
+		grid.add(sourceOfFunds, 5, gridVert, 1, 2);
 		
 		Label approxTransCash = new Label ("Wrapper Type");
 		GridPane.setHalignment(approxTransCash, HPos.CENTER);
 		approxTransCash.setWrapText(true);
-		grid.add(approxTransCash, 7, gridVert, 2, 1);
+		grid.add(approxTransCash, 6, gridVert, 2, 1);
 
 		Label thirdAdvWrap = new Label ("Advisory\nWrapper");
 		GridPane.setHalignment(thirdAdvWrap, HPos.CENTER);
-		grid.add(thirdAdvWrap, 7, gridVert+1);
+		grid.add(thirdAdvWrap, 6, gridVert+1);
 		
 		Label thirdDiscWrap = new Label ("Discretionary\nWrapper");
 		GridPane.setHalignment(thirdDiscWrap, HPos.CENTER);
-		grid.add(thirdDiscWrap, 8, gridVert+1);
+		grid.add(thirdDiscWrap, 7, gridVert+1);
 		
 		gridVert+=2;
 
 	}
 	
 	private void generate2ndLayerFields(GridPane grid) {
-		int fieldWidth = 3;
+		int fieldWidth = 2;
 		
 		//generating all the textfields for the wrapper info
 		for(int i = 0; i < 3; i++){

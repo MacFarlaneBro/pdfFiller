@@ -1,6 +1,7 @@
 package ascentricGui;
 
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
@@ -43,6 +44,7 @@ public class FirstApplicantIndividualDetails extends Page{
     private Set<TextField> theFields;
     private String[] firstnames;
     private Map<String, String> clientData;
+    private Map<String, TextField> fieldMap;
     private Button autoFillClientButton;
 	private String sceneT = "Client Personal Info";
 	private ComboBox<String> applicationType;
@@ -72,6 +74,8 @@ public class FirstApplicantIndividualDetails extends Page{
         
         setColumnSizes(grid, 100, 250, 100, 150, 120);
         setRowSizes(grid);
+        
+    	fieldMap = new HashMap<String, TextField>();
         
         createAutoFillFields(grid);
    
@@ -165,6 +169,7 @@ public class FirstApplicantIndividualDetails extends Page{
 				}
 			}
 			current.setText(clientData.get(current.getId()));
+			System.out.println(current.getId());
 		}
 	}
 	
@@ -197,6 +202,7 @@ public class FirstApplicantIndividualDetails extends Page{
         firstName.setTextAlignment(TextAlignment.RIGHT);
         grid.add(firstName, 1, ++gridVert);
         clientFirstName = new TextField();
+        fieldMap.put("FirstName",(TextField) clientFirstName);
         clientFirstName.setId("FirstName");
         clientFirstName.prefWidth(fieldWidth);
         grid.add(clientFirstName, 2, gridVert);
@@ -206,6 +212,7 @@ public class FirstApplicantIndividualDetails extends Page{
         theLabels.add(title);
         grid.add(title, 1, ++gridVert);
         TextField clientTitle = new TextField();
+        fieldMap.put("Title", clientTitle);
         clientTitle.setId("Title");
         theFields.add(clientTitle);
         clientTitle.setPrefWidth(fieldWidth);
@@ -216,6 +223,7 @@ public class FirstApplicantIndividualDetails extends Page{
         theLabels.add(dob);
         grid.add(dob, 1, ++gridVert);
         TextField clientDOB = new TextField();
+        fieldMap.put("DOB", clientDOB);
         clientDOB.setId("DOB");
         theFields.add(clientDOB);
         clientDOB.setPrefWidth(fieldWidth);
@@ -226,6 +234,7 @@ public class FirstApplicantIndividualDetails extends Page{
         theLabels.add(natIns);
         grid.add(natIns, 1, ++gridVert);
         TextField clientNatIns = new TextField();
+        fieldMap.put("nas", clientNatIns);
         clientNatIns.setId("NationalInsuranceNumber");
         theFields.add(clientNatIns);
         clientNatIns.setPrefWidth(fieldWidth);
@@ -239,6 +248,7 @@ public class FirstApplicantIndividualDetails extends Page{
         theLabels.add(homeNumber);
         grid.add(homeNumber, 3, ++gridVert);
         TextField clientHomeTel = new TextField();
+        fieldMap.put("HomeTel", clientHomeTel);
         clientHomeTel.setId("HomeTel");
         theFields.add(clientHomeTel);
         clientHomeTel.setPrefWidth(fieldWidth);
@@ -249,6 +259,7 @@ public class FirstApplicantIndividualDetails extends Page{
         theLabels.add(workNumber);
         grid.add(workNumber, 3, ++gridVert);
         TextField clientWorkTel = new TextField();
+        fieldMap.put("WorkTel", clientWorkTel);
         clientWorkTel.setId("WorkTel");
         theFields.add(clientWorkTel);
         clientWorkTel.setPrefWidth(fieldWidth);
@@ -259,6 +270,7 @@ public class FirstApplicantIndividualDetails extends Page{
         theLabels.add(mobile);
         grid.add(mobile, 3, ++gridVert);
         TextField clientMobile = new TextField();
+        fieldMap.put("Mobile", clientMobile);
         clientMobile.setId("Mobile");
         theFields.add(clientMobile);
         clientMobile.setPrefWidth(fieldWidth);
@@ -271,18 +283,21 @@ public class FirstApplicantIndividualDetails extends Page{
         
         //line 1
         TextField clientHomeAddress1 = new TextField();
+        fieldMap.put("HomeAddress1", clientHomeAddress1);
         clientHomeAddress1.setId("HomeAddress1");
         theFields.add(clientHomeAddress1);
         clientHomeAddress1.setPrefWidth(fieldWidth);
         grid.add(clientHomeAddress1, 4, gridVert);
         //line 2
         TextField clientHomeAddress2 = new TextField();
+        fieldMap.put("HomeAddress2", clientHomeAddress2);
         theFields.add(clientHomeAddress2);
         clientHomeAddress2.setId("HomeAddress2");
         clientHomeAddress2.setPrefWidth(fieldWidth);
         grid.add(clientHomeAddress2, 4, ++gridVert);
         //line3
         TextField clientHomeAddress3 = new TextField();
+        fieldMap.put("HomeAddress3", clientHomeAddress3);
         theFields.add(clientHomeAddress3);
         clientHomeAddress3.setId("HomeAddress3");
         clientHomeAddress3.setPrefWidth(fieldWidth);
@@ -293,6 +308,7 @@ public class FirstApplicantIndividualDetails extends Page{
         theLabels.add(postcode);
         grid.add(postcode, 3, ++gridVert);
         TextField clientHomePostCode = new TextField();
+        fieldMap.put("HomePostCode", clientHomePostCode);
         clientHomePostCode.setId("HomePostCode");
         theFields.add(clientHomePostCode);
         clientHomePostCode.setPrefWidth(fieldWidth);
@@ -303,6 +319,7 @@ public class FirstApplicantIndividualDetails extends Page{
         theLabels.add(email);
         grid.add(email, 3, ++gridVert);
         TextField clientEmail = new TextField();
+        fieldMap.put("Email", clientEmail);
         clientEmail.setId("Email");
         theFields.add(clientEmail);
         clientEmail.setPrefWidth(fieldWidth);
@@ -330,7 +347,6 @@ public class FirstApplicantIndividualDetails extends Page{
     When working with the gridpane you can specify that gridlines should be
     visible which is useful for debugging purposes
     */
-    
     private void createAutoFillFields(GridPane grid) {
         
         Text sceneTitle = new Text(sceneT);
@@ -348,19 +364,20 @@ public class FirstApplicantIndividualDetails extends Page{
                         "Joint Account"
                 );
             
-            applicationType = new ComboBox<String>(formTypes);
-            setNextPage(applicationType);
-            applicationType.setPrefWidth(fieldWidth);
-            applicationType.setPromptText("Single Client");
-            applicationType.setValue("Single Client");
-            grid.add(applicationType, 2, gridVert);
-        
-            //Client Surname
-            Label surname = new Label("Surname");
-            grid.add(surname, 1, ++gridVert);
-            clientSurname = new TextField();
-            clientSurname.setPrefWidth(fieldWidth);
-            grid.add(clientSurname, 2, gridVert);
+        applicationType = new ComboBox<String>(formTypes);
+        setNextPage(applicationType);
+        applicationType.setPrefWidth(fieldWidth);
+        applicationType.setPromptText("Single Client");
+        applicationType.setValue("Single Client");
+        grid.add(applicationType, 2, gridVert);
+    
+        //Client Surname
+        Label surname = new Label("Surname");
+        grid.add(surname, 1, ++gridVert);
+        clientSurname = new TextField();
+        clientSurname.setPrefWidth(fieldWidth);
+        fieldMap.put("Surname", clientSurname);
+        grid.add(clientSurname, 2, gridVert);
     }
 
 	private void setNextPage(ComboBox<String> comboBox) {
@@ -448,11 +465,11 @@ public class FirstApplicantIndividualDetails extends Page{
 		id.setSurname(clientSurname.getText());
 		if(!clientSurname.getText().equals("")){
 			id.setForename(((ComboBox<String>)clientFirstName).getValue());
-		id.setTitle(clientData.get("Title"));
+		id.setTitle(fieldMap.get("Title").getText());
 		
 		//Rearranges date of birth from DB from YYYY-MM-DD to DDMMYYYY
-		if(clientData.get("DOB").charAt(4) == '-'){
-			//Using stringbuilder to increase performance
+		if(fieldMap.get("DOB").getText().charAt(4) == '-'){
+			//Using string builder to increase performance
 			String original = clientData.get("DOB");
 			StringBuilder dob = new StringBuilder();
 			//Day
@@ -465,25 +482,23 @@ public class FirstApplicantIndividualDetails extends Page{
 			dob.append(original.substring(0, 4));
 			id.setDob(dob.toString());
 		} else {
-			id.setDob(clientData.get("DOB").replace("/", ""));
+			id.setDob(fieldMap.get("DOB").getText().replace("/", ""));
 		}//comment
 		
 		System.out.println(client.getFirstClient().getIndividualDetails().getDob());
-		if(clientData.get("NationalInsuranceNumber")!= null){
-			id.setNationalInsuranceNumber(clientData.get("NationalInsuranceNumber").replace("-", ""));
+		if(fieldMap.get("nas").getText()!= null){
+			id.setNationalInsuranceNumber(fieldMap.get("nas").getText().replace("-", ""));
 		}
-		id.setHomeNumber(clientData.get("HomeTel"));
-		id.setWorkNumber(clientData.get("WorkTel"));
-		id.setMobileNumber(clientData.get("MobTel"));
+		id.setHomeNumber(fieldMap.get("HomeTel").getText());
+		id.setWorkNumber(fieldMap.get("WorkTel").getText());
+		id.setMobileNumber(fieldMap.get("Mobile").getText());
 		//address lines separated by : to provide a string split character at stamp time
-		id.setAddress(clientData.get("HomeAddress1") + ":"
-		+ clientData.get("HomeAddress2") + ":" 
-				+ clientData.get("HomeAddress3"));
-		id.setPostcode(clientData.get("HomePostCode"));
-		id.setEmail(clientData.get("Email"));
+		id.setAddress(fieldMap.get("HomeAddress1").getText() + ":"
+		+ fieldMap.get("HomeAddress2").getText() + ":" 
+				+ fieldMap.get("HomeAddress3").getText());
+		id.setPostcode(fieldMap.get("HomePostCode").getText());
+		id.setEmail(fieldMap.get("Email").getText());
 		}
 	}
-
-
 
 }

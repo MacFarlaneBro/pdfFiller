@@ -72,6 +72,7 @@ public class IndividualDetails{
 		return workNumber;
 	}
 	public void setWorkNumber(String workNumber) {
+		System.out.println("WorkNumber: " + workNumber);
 		this.workNumber = workNumber;
 	}
 	public String getMobileNumber() {

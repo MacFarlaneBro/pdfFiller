@@ -49,10 +49,10 @@ public class FinancialAdviserDetailsGui extends Page {
 
         grid = new GridPane();
         grid.setHgap(10);
-        grid.setVgap(10);
+        grid.setVgap(8);
         grid.setAlignment(Pos.CENTER);
-        setColumnSizes(grid);
-        setRowSizes(grid);
+        setColumnSizes(grid, 3);
+        setRowSizes(grid, 5, 12, 12, 30);
         
         thisScene = new Scene(grid, pageWidth, pageHeight);
                         
@@ -71,8 +71,8 @@ public class FinancialAdviserDetailsGui extends Page {
         sceneTitle.setId("sceneTitle");
         grid.add(sceneTitle, 1, 1, 2, 2);
 		
-		int firstColumn = 0;
-		int row = 5;
+		int firstColumn = 1;
+		int row = 3;
 		
 		checkBoxes = new HashMap<String, CheckBox>();
 		textFields = new HashMap<String, TextField>();
@@ -90,7 +90,7 @@ public class FinancialAdviserDetailsGui extends Page {
 		row++;
 		
 		//Second row of items
-		grid.add(new Label("of investment"), firstColumn+1, row);
+		grid.add(new Label("% of investment"), firstColumn+1, row);
 		grid.add(new Label("fixed amount\n(applicable per payment in)"), firstColumn+3, row);
 		
 		CheckBox cashLumpSum = new CheckBox("A. Cash Lump Sum");
@@ -133,7 +133,7 @@ public class FinancialAdviserDetailsGui extends Page {
 		row++;
 		
 		//Sixth row of items;
-		grid.add(new Label("of Investment"), firstColumn+1, row);
+		grid.add(new Label("% of investment"), firstColumn+1, row);
 		grid.add(new Label("A. Regular Contributions"), firstColumn+4, row);
 		row++;
 		
@@ -156,7 +156,7 @@ public class FinancialAdviserDetailsGui extends Page {
 		row++;
 		
 		//Ninth row of items
-		grid.add(new Label("of Investment"), firstColumn+1, row);
+		grid.add(new Label("% of investment"), firstColumn+1, row);
 		CheckBox singleFund = new CheckBox("A. Single Fund Buy Trades");
 		checkBoxes.put("singleFund", singleFund);
 		grid.add(singleFund, firstColumn+4, row);
@@ -164,7 +164,7 @@ public class FinancialAdviserDetailsGui extends Page {
 		
 		//Tenth row of items
 		TextField tradChargePercent = new TextField();
-		textFields.put("tradChargePercent", tradChargePercent);
+		textFields.put("tradPercent", tradChargePercent);
 		grid.add(tradChargePercent, firstColumn+1, row);
 		
 		CheckBox switchFund = new CheckBox("B. Switch Fund Buy Trades");
@@ -185,7 +185,7 @@ public class FinancialAdviserDetailsGui extends Page {
 		row++;
 		
 		//Twelfth row of items
-		grid.add(new Label("of investment"), firstColumn+1, row);
+		grid.add(new Label("% of investment"), firstColumn+1, row);
 		grid.add(new Label("annual fixed amount"), firstColumn+3, row);
 		
 		CheckBox collectives = new CheckBox("A. Collectives");
@@ -246,7 +246,8 @@ public class FinancialAdviserDetailsGui extends Page {
 		if(checkBoxes.get("tradCharge").isSelected()){
 			TradingCharge tradCharge = new TradingCharge();
 			tradCharge.setVatApplied(checkBoxes.get("tradVAT").isSelected());
-			tradCharge.setOfInvestment(textFields.get("tradPercent").getText());
+			tradCharge.setOfInvestment(
+					textFields.get("tradPercent").getText());
 			tradCharge.setSingleFundBuyTrades(checkBoxes.get("singleFund").isSelected());
 			tradCharge.setSwitchFundBuyTrades(checkBoxes.get("switchFund").isSelected());
 			fad.setTradingCharge(tradCharge);
@@ -265,7 +266,7 @@ public class FinancialAdviserDetailsGui extends Page {
 	
 	@Override
 	public void createMovementButtons(int depth,int nextWidth) {
-		grid.setGridLinesVisible(true);
+//		grid.setGridLinesVisible(true);
 	    
 		Button backBtn = new Button("Back");//Create button with the name sign in
         HBox hbBtn = new HBox(21);//Layout pane with 21 pixel spacing
