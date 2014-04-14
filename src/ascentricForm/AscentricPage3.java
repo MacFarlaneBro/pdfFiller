@@ -5,6 +5,7 @@ import java.io.IOException;
 import ascentricClientDetails.Client;
 import ascentricClientDetails.ClientHolder;
 import ascentricClientDetails.IndividualDetails;
+import ascentricClientDetails.MakeClients;
 import ascentricClientDetails.ProductDetails;
 import ascentricClientDetails.Wrapper;
 
@@ -66,12 +67,17 @@ public class AscentricPage3 extends AscentricPage{
 	private void accessRights(IndividualDetails id) {
 		if(id.isOnlineAccess()){//if the client has online access rights
 			onlineAccess(theClient.getClientType());
+			System.out.println(theClient.getClientType());
 		}
 		if(id.isEnquiryOnly()){//if the client has enquiry only rights
 			enquiryOnly(theClient.getClientType());
+			System.out.println(theClient.getClientType());
+
 		}
 		if(id.isTradingAccess()){//if the client has trading access rights
 			tradingAccess(theClient.getClientType());
+			System.out.println(theClient.getClientType());
+
 		}
 	}
 	
@@ -180,13 +186,13 @@ public class AscentricPage3 extends AscentricPage{
 	
 	/**
 	 * As information from all three potential clients is necessary on this page and the printing mechanism
-	 * wipes the page with every run, this additional fillPage method is used
+	 * wipes the page every time setUp is run, this additional fillPage method is used
 	 * 
 	 * @param theClient
 	 * @throws IOException
 	 * @throws DocumentException
 	 */
-	public void fillPage(ClientHolder theClient) throws IOException, DocumentException {
+	public void fillPage(MakeClients theClient) throws IOException, DocumentException {
 		setUp(pageNumber);
 
 		Client[] clients = {theClient.getFirstClient(),

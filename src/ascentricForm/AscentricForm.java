@@ -41,13 +41,7 @@ public class AscentricForm{
 		}
 		
 		page = new AscentricPage3();
-		page.fillPage(theClient.getFirstClient());//Filling in the separate access rights applying to each of the applicants if
-		if(theClient.getSecondClient()!= null){//they exist
-			page.fillPage(theClient.getSecondClient());
-		}
-		if(theClient.getJointAccount()!= null){
-			page.fillPage(theClient.getJointAccount());
-		}
+		page.fillPage(theClient);//Filling in the separate access rights applying to each of the applicants if
 		
 		page = new AscentricPage4();
 		page.fillPage(theClient);
