@@ -287,7 +287,7 @@ public class SecondApplicantIndividualDetails extends Page{
 		id.setDob(clientData.get("DOB"));
 		
 		//Rearranges date of birth from DB from YYYY-MM-DD to DDMMYYYY
-		if(clientData.get("DOB").charAt(4) == '-'){
+		if(clientData.get("DOB") != null && clientData.get("DOB").charAt(4) == '-'){
 			//Using string builder to increase performance
 			String original = clientData.get("DOB");
 			StringBuilder dob = new StringBuilder();
@@ -300,11 +300,13 @@ public class SecondApplicantIndividualDetails extends Page{
 			//Year
 			dob.append(original.substring(0, 4));
 			id.setDob(dob.toString());
-		} else {
+		} else if(clientData.get("DOB") != null) {
 			id.setDob(clientData.get("DOB").replace("/", ""));
 		}
 		
-		id.setNationalInsuranceNumber(clientData.get("NationalInsuranceNumber").replaceAll("-", ""));
+		if(clientData.get("NationalInsuranceNumber") != null){
+			id.setNationalInsuranceNumber(clientData.get("NationalInsuranceNumber").replaceAll("-", ""));
+		}
 		id.setHomeNumber(clientData.get("HomeTel"));
 		id.setWorkNumber(clientData.get("WorkTel"));
 		id.setMobileNumber(clientData.get("MobTel"));

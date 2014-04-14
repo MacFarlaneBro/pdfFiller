@@ -123,7 +123,7 @@ public class AccessRightsFamilyGroups extends Page {
 	protected void fillAndSaveClientInfo() {
 		
 		IndividualDetails singleApplicant = client.getFirstClient().getIndividualDetails();
-		singleApplicant.setOnlineAccess(!checkBoxes.get("SingleAppNoOnAcc").isSelected());
+		singleApplicant.setOnlineAccess(checkBoxes.get("SingleAppNoOnAcc").isSelected());
 		singleApplicant.setEnquiryOnly(checkBoxes.get("SingleAppEnqOnly").isSelected());
 		singleApplicant.setTradingAccess(checkBoxes.get("SingleAppTradingAcc").isSelected());
 		
@@ -157,6 +157,7 @@ public class AccessRightsFamilyGroups extends Page {
 		GridPane.setHalignment(singleApp, HPos.CENTER);
 		grid.add(singleApp, 2, gridVert);
 		singleApp.setId("SingleApp" + row);
+		System.out.println("SingleApp" + row);
 		singleApp.setSelected(false);
 		checkBoxes.put("SingleApp" + row, singleApp);
 
