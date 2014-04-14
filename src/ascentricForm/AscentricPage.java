@@ -40,7 +40,7 @@ public abstract class AscentricPage {
 	 * @param text - The text to be printed at the specified x and y location
 	 */
 	protected void stamp(int x, int y, String text){
-		if(text != null && text != "null"){ // if null print nothing
+		if(text == null || text == "null"){ // if null print nothing
 		ColumnText
 		.showTextAligned(
 				canvas, 

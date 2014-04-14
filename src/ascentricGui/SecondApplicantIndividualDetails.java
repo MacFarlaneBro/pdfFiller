@@ -285,12 +285,31 @@ public class SecondApplicantIndividualDetails extends Page{
 		id.setForename(clientData.get("ForeNames"));
 		id.setTitle(clientData.get("Title"));
 		id.setDob(clientData.get("DOB"));
-		id.setNationalInsuranceNumber(clientData.get("NationalInsuranceNumber"));
+		
+		//Rearranges date of birth from DB from YYYY-MM-DD to DDMMYYYY
+		if(clientData.get("DOB").charAt(4) == '-'){
+			//Using string builder to increase performance
+			String original = clientData.get("DOB");
+			StringBuilder dob = new StringBuilder();
+			//Day
+			dob.append(original.charAt(original.length()-2));
+			dob.append(original.charAt(original.length()-1));
+			//Month
+			dob.append(original.charAt(original.length()-5));
+			dob.append(original.charAt(original.length()-4));
+			//Year
+			dob.append(original.substring(0, 4));
+			id.setDob(dob.toString());
+		} else {
+			id.setDob(clientData.get("DOB").replace("/", ""));
+		}
+		
+		id.setNationalInsuranceNumber(clientData.get("NationalInsuranceNumber").replaceAll("-", ""));
 		id.setHomeNumber(clientData.get("HomeTel"));
 		id.setWorkNumber(clientData.get("WorkTel"));
 		id.setMobileNumber(clientData.get("MobTel"));
-		id.setAddress(clientData.get("HomeAddress1") + " "
-		+ clientData.get("HomeAddress2") + " " 
+		id.setAddress(clientData.get("HomeAddress1") + ":"
+		+ clientData.get("HomeAddress2") + ":" 
 				+ clientData.get("HomeAddress3"));
 		id.setPostcode(clientData.get("HomePostCode"));
 		id.setEmail(clientData.get("Email"));
