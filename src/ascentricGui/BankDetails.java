@@ -17,6 +17,7 @@ import ascentricClientDetails.ClientHolder;
 public class BankDetails extends Page{
 
 	private String type;
+	private CheckBox same;
 	
 	public BankDetails(String type){
 		this.type = type;
@@ -76,7 +77,7 @@ public class BankDetails extends Page{
 			warning.setFont(Font.font(null, FontWeight.BOLD, 12));
 			grid.add(warning, 2, 3, 2, 2);
 		} else {
-			CheckBox same = new CheckBox("Tick if bank account details are same as those of first client");
+			same = new CheckBox("Tick if bank account details are same as those of first client");
 			grid.add(same, 2, 3);
 		}
 		
@@ -152,20 +153,25 @@ public class BankDetails extends Page{
 			bd = client.getSecondClient().getBankAccountDetails();
 		}
 		
-		bd.setAccountHolderName1(textFields.get("names1").getText());
-		bd.setAccountHolderName2(textFields.get("names2").getText());
-		bd.setBankAccountNumber(textFields.get("accountNumber").getText());
-		if(textFields.get("sortCode").getText().contains("-")){
-			bd.setBranchSortCode(textFields.get("sortCode").getText().replace("-", ""));
+		if(type.equals("second") && same.isSelected()){
+			bd.setSameDetails(true);
 		} else {
-			bd.setBranchSortCode(textFields.get("sortCode").getText());
+			bd.setAccountHolderName1(textFields.get("names1").getText());
+			bd.setAccountHolderName2(textFields.get("names2").getText());
+			bd.setBankAccountNumber(textFields.get("accountNumber").getText());
+			
+			if(textFields.get("sortCode").getText().contains("-")){
+				bd.setBranchSortCode(textFields.get("sortCode").getText().replace("-", ""));
+			} else {
+				bd.setBranchSortCode(textFields.get("sortCode").getText());
+			}
+			
+			bd.setBankName(textFields.get("bankName").getText());
+			bd.setBankAddress(textFields.get("bankAddress1").getText()
+					+ ":" + textFields.get("bankAddress2").getText()
+					+ ":" + textFields.get("bankAddress3").getText());
+			bd.setBankPostCode(textFields.get("postcode").getText());
 		}
-		bd.setBankName(textFields.get("bankName").getText());
-		bd.setBankAddress(textFields.get("bankAddress1").getText()
-				+ ":" + textFields.get("bankAddress2").getText()
-				+ ":" + textFields.get("bankAddress3").getText());
-		bd.setBankPostCode(textFields.get("postcode").getText());
-		
 	}
 
 	
