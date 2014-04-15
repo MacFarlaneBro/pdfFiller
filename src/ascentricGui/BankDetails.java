@@ -161,7 +161,6 @@ public class BankDetails extends Page{
 				+ textFields.get("bankAddress3").getText());
 		bd.setBankPostCode(textFields.get("postcode").getText());
 		
-		System.out.println("More CashTime: "+client.getFirstClient().getProductDetails().getGeneralInvestmentAccount().getCash());
 	}
 
 	

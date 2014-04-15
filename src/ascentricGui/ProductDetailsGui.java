@@ -83,7 +83,6 @@ public abstract class ProductDetailsGui extends Page {
 		
 		gridVert = 2;
 		int firstColumn = 1;
-		int secondColumn = 2;
 		int thirdColumn = 3;
 		int fourthColumn = 4;
 		int fifthColumn = 5;
@@ -224,8 +223,11 @@ public abstract class ProductDetailsGui extends Page {
 			pd = client.getJointAccount().getProductDetails();
 		}
 		
+		pd.setPlatformAccountNameChoice(textFields.get("accountName").getText());
+		
 		//If the general investment account is selected then fill the details
 		if(checkBoxes.get("giaCheckBox").isSelected()){
+			pd.makeGeneralInvestmentAccount();
 			Wrapper gia = pd.getGeneralInvestmentAccount();
 			pd.getGeneralInvestmentAccount().setCash(textFields.get("gia0").getText());
 			System.out.println("CashTime:" + gia.getCash());
@@ -238,6 +240,7 @@ public abstract class ProductDetailsGui extends Page {
 		}
 		
 		if(checkBoxes.get("sasCheckBox").isSelected()){
+			pd.makeStocksAndSharesISA();
 			Wrapper sas = pd.getStocksAndSharesISA();
 			sas.setCash(textFields.get("sas0").getText());
 			sas.setSourceOfFunds(textFields.get("sas1").getText());
@@ -247,7 +250,8 @@ public abstract class ProductDetailsGui extends Page {
 			sas.setAdvisoryWrapper(checkBoxes.get("advsas").isSelected());
 			sas.setDiscretionaryWrapper(checkBoxes.get("discsas").isSelected());
 		}
-		System.out.println("More CashTime: "+client.getFirstClient().getProductDetails().getGeneralInvestmentAccount().getCash());
+		
+		
 	}
 	
 	private void generate2ndLayerLabels(GridPane grid) {
@@ -320,7 +324,7 @@ public abstract class ProductDetailsGui extends Page {
 	/**
 	 * Controls whether the wrapper specfic text fields are enabled or disabled, dependent on whether
 	 * the relevant check box has been selected
-	 * @param cBox The check box referring to the wrapper to be enabled or disabled
+	 * @param cBox The check box associated with wrapper to be enabled or disabled
 	 */
 	private void enableDisableTextFields(final CheckBox cBox){
 		cBox.selectedProperty().addListener(new ChangeListener<Boolean>(){
