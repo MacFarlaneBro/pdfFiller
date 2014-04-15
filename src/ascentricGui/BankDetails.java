@@ -155,7 +155,11 @@ public class BankDetails extends Page{
 		bd.setAccountHolderName1(textFields.get("names1").getText());
 		bd.setAccountHolderName2(textFields.get("names2").getText());
 		bd.setBankAccountNumber(textFields.get("accountNumber").getText());
-		bd.setBranchSortCode(textFields.get("sortCode").getText());
+		if(textFields.get("sortCode").getText().contains("-")){
+			bd.setBranchSortCode(textFields.get("sortCode").getText().replace("-", ""));
+		} else {
+			bd.setBranchSortCode(textFields.get("sortCode").getText());
+		}
 		bd.setBankName(textFields.get("bankName").getText());
 		bd.setBankAddress(textFields.get("bankAddress1").getText()
 				+ ":" + textFields.get("bankAddress2").getText()
