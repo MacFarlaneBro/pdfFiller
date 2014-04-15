@@ -129,14 +129,14 @@ public class AccessRightsFamilyGroups extends Page {
 		
 		if(client.getSecondClient()!= null){
 			IndividualDetails secondApplicant = client.getSecondClient().getIndividualDetails();
-			secondApplicant.setOnlineAccess(!checkBoxes.get("SecondAppNoOnAcc").isSelected());
+			secondApplicant.setOnlineAccess(checkBoxes.get("SecondAppNoOnAcc").isSelected());
 			secondApplicant.setEnquiryOnly(checkBoxes.get("SecondAppEnqOnly").isSelected());
 			secondApplicant.setTradingAccess(checkBoxes.get("SecondAppTradingAcc").isSelected());
 		}
 		
 		if(client.getJointAccount()!= null){
 			IndividualDetails jointAccount = client.getJointAccount().getIndividualDetails();
-			jointAccount.setOnlineAccess(!checkBoxes.get("JointAccNoOnAcc").isSelected());
+			jointAccount.setOnlineAccess(checkBoxes.get("JointAccNoOnAcc").isSelected());
 			jointAccount.setEnquiryOnly(checkBoxes.get("JointAccEnqOnly").isSelected());
 			jointAccount.setTradingAccess(checkBoxes.get("JointAccTradingAcc").isSelected());
 		}
@@ -146,9 +146,7 @@ public class AccessRightsFamilyGroups extends Page {
 		if(checkBoxes.get("famGroup2Check").isSelected()){
 			singleApplicant.setExisingAcctRefNumber(cliRefNum.getText());
 		}
-		
-		System.out.println("First Client Online Access: " + client.getFirstClient().getIndividualDetails().isOnlineAccess());
-		System.out.println("Ref Number: " + singleApplicant.getExisingAcctRefNumber());
+
 	}
 
 	private void createCheckboxes(int gridVert, String row) {
@@ -157,7 +155,6 @@ public class AccessRightsFamilyGroups extends Page {
 		GridPane.setHalignment(singleApp, HPos.CENTER);
 		grid.add(singleApp, 2, gridVert);
 		singleApp.setId("SingleApp" + row);
-		System.out.println("SingleApp" + row);
 		singleApp.setSelected(false);
 		checkBoxes.put("SingleApp" + row, singleApp);
 

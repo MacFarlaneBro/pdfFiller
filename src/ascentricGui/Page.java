@@ -50,7 +50,6 @@ public abstract class Page {
         backBtn.setPrefWidth(100);
         hbBtn.getChildren().add(backBtn);
         if(movementButtonWidth){
-        	System.out.println("2 Column Back Button");
         	grid.add(hbBtn, 0, depth, 2, 1);
         } else { 
         	grid.add(hbBtn, 0, depth);

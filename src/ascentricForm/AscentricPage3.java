@@ -40,7 +40,6 @@ public class AscentricPage3 extends AscentricPage{
 		this.theClient = theClient;
 		IndividualDetails id = theClient.getIndividualDetails();
 		ProductDetails pd = theClient.getProductDetails();
-		setUp(PAGENUMBER);
 		accessRights(id);
 		familyGroups(id.isFamilyGroup(),
 				id.isExistingAccount());
@@ -49,7 +48,6 @@ public class AscentricPage3 extends AscentricPage{
 			applicantWrapperInfo(pd);
 			thirdParty(pd);
 		}		
-		shutDown();
 	}
 
 	private void familyGroups(boolean moreThan1, boolean ascLink) {
@@ -67,11 +65,11 @@ public class AscentricPage3 extends AscentricPage{
 	private void accessRights(IndividualDetails id) {
 		if(id.isOnlineAccess()){//if the client has online access rights
 			onlineAccess(theClient.getClientType());
-			System.out.println(theClient.getClientType());
+			System.out.println("Print Rights " + theClient.getClientType());
 		}//cdsa
 		if(id.isEnquiryOnly()){//if the client has enquiry only rights
 			enquiryOnly(theClient.getClientType());
-			System.out.println(theClient.getClientType());
+			System.out.println("Print Rights " + theClient.getClientType());
 
 		}
 		if(id.isTradingAccess()){//if the client has trading access rights
@@ -83,6 +81,7 @@ public class AscentricPage3 extends AscentricPage{
 	
 	//fills in the trading Access checkboxes
 	private void tradingAccess(String tradAcc) {
+		System.out.println("tradAcc client: " + tradAcc);
 		if(tradAcc.equals(joint)){
 			stamp(jointAccWidth, tradAccDepth, "X");
 		} 
@@ -194,7 +193,7 @@ public class AscentricPage3 extends AscentricPage{
 	 */
 	public void fillPage(MakeClients theClient) throws IOException, DocumentException {
 		setUp(pageNumber);
-
+		
 		Client[] clients = {theClient.getFirstClient(),
 				theClient.getSecondClient(),
 				theClient.getJointAccount()};

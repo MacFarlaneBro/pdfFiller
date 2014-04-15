@@ -139,11 +139,9 @@ public class SecondApplicantIndividualDetails extends Page{
 		while(fields.hasNext()){
 			TextField current = (TextField)fields.next();
 			//Remove the time portion from the date of birth value
-			System.out.print(current.getId() + ": ");
 			if(current.getId()
 					.equals("PartnerDOB") && current.getId()!= null){
 				holder = clientData.get(current.getId());
-				System.out.println(holder + " - Holder");
 				String formatted = holder.replace("-", "/");
 				current.setText(formatted);
 				continue;
@@ -164,7 +162,6 @@ public class SecondApplicantIndividualDetails extends Page{
 			}
 			
 			current.setText(clientData.get(current.getId()));
-			System.out.println(clientData.get(current.getId()));
 		}
 	}
 
@@ -179,7 +176,6 @@ public class SecondApplicantIndividualDetails extends Page{
 				.getFirstClient()
 				.getIndividualDetails()
 				.getForename());
-		System.out.println("Returned Client Forename: " + clientData.get("ForeNames"));
 		return clientData;
 	}
 
@@ -233,7 +229,6 @@ public class SecondApplicantIndividualDetails extends Page{
             @Override
             public void handle(ActionEvent e){
                 try {
-                	System.out.println(clientSurname.getText());
                 	if(clientSurname.getText().equals("")){
                 		actionTarget.setFill(Color.FIREBRICK);
                 		actionTarget.setText("Please enter a surname to search for client");
