@@ -251,7 +251,11 @@ public abstract class ProductDetailsGui extends Page {
 			sas.setDiscretionaryWrapper(checkBoxes.get("discsas").isSelected());
 		}
 		
-		
+		pd.setThirdPartyProductAccounts(textFields.get("Third0").getText());
+		pd.setAmountToBeReceived(textFields.get("Third1").getText());
+		pd.setSourceOfFunds(textFields.get("Third2").getText());
+		pd.setAdvisoryWrapper(checkBoxes.get("ThirdAdv").isSelected());
+		pd.setDiscretionaryWrapper(checkBoxes.get("ThirdDisc").isSelected());
 	}
 	
 	private void generate2ndLayerLabels(GridPane grid) {

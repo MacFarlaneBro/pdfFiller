@@ -55,7 +55,7 @@ public class AscentricPage4Test {
 		fpd.setGeneralInvestmentAccount(gia);
 		
 		fpd.setThirdPartyProductAccounts("Dooleys");
-		fpd.setAmountToBeReceived(839834);
+		fpd.setAmountToBeReceived("Dooleys");
 		fpd.setSourceOfFunds("Cheque");
 		fpd.setAdvisoryWrapper(true);
 		fpd.setDiscretionaryWrapper(true);	

@@ -7,7 +7,7 @@ public class ProductDetails{
 	private Wrapper stocksAndSharesISA;
 	
 	private String thirdPartyProductAccounts;
-	private int amountToBeReceived;
+	private String amountToBeReceived;
 	private String sourceOfFunds;
 	private boolean advisoryWrapper;
 	private boolean discretionaryWrapper;
@@ -42,10 +42,10 @@ public class ProductDetails{
 	public void setThirdPartyProductAccounts(String thirdPartyProductAccounts) {
 		this.thirdPartyProductAccounts = thirdPartyProductAccounts;
 	}
-	public int getAmountToBeReceived() {
+	public String getAmountToBeReceived() {
 		return amountToBeReceived;
 	}
-	public void setAmountToBeReceived(int amountToBeReceived) {
+	public void setAmountToBeReceived(String amountToBeReceived) {
 		this.amountToBeReceived = amountToBeReceived;
 	}
 	public String getSourceOfFunds() {
