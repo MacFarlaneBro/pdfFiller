@@ -139,11 +139,11 @@ public class FirstApplicantIndividualDetails extends Page{
 	}
     
 	private void fillClientInfo() {
-		Iterator<TextField> fields = theFields.iterator();
 		String holder;
 		int homeAddress = 1;
 		
-		while(fields.hasNext()){
+		//Use of a for loop prevents premature declaration
+		for(Iterator<TextField> fields = theFields.iterator(); fields.hasNext(); ){
 			TextField current = fields.next();
 			
 			//Remove the time portion from the date of birth value

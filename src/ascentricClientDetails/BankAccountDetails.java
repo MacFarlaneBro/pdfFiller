@@ -2,7 +2,8 @@ package ascentricClientDetails;
 
 public class BankAccountDetails{
 	
-	private String accountHolderNames;
+	private String accountHolderName1;
+	private String accountHolderName2;
 	private String bankAccountNumber;
 	private String branchSortCode;
 	private String bankName;
@@ -22,11 +23,17 @@ public class BankAccountDetails{
 	private boolean sameDetails;
 	private String regWithdrawalAmount;
 	
-	public String getAccountHolderNames() {
-		return accountHolderNames;
+	public String getAccountHolderName1() {
+		return accountHolderName1;
 	}
-	public void setAccountHolderNames(String accountHolderNames) {
-		this.accountHolderNames = accountHolderNames;
+	public void setAccountHolderName1(String accountHolderName1) {
+		this.accountHolderName1 = accountHolderName1;
+	}
+	public String getAccountHolderName2() {
+		return accountHolderName2;
+	}
+	public void setAccountHolderName2(String accountHolderName2) {
+		this.accountHolderName2 = accountHolderName2;
 	}
 	public String getBankAccountNumber() {
 		return bankAccountNumber;
@@ -126,8 +133,7 @@ public class BankAccountDetails{
 		this.regWithdrawalAmount = regw;
 	}
 	public void setPaymentTiming(String paymentTiming) {
-		this.payTiming = paymentTiming;
-		
+		this.payTiming = paymentTiming;	
 	}
 
 }

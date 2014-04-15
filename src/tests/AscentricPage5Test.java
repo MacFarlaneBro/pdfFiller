@@ -34,7 +34,6 @@ public class AscentricPage5Test {
 	}
 	
 	private void setBankAccountDetails(BankAccountDetails bd) {
-		bd.setAccountHolderNames("Daniel Orthodox");
 		bd.setBankAccountNumber("2949291");
 		bd.setBankAddress("23 Sutton road, Dumblefor, Yorkshire");
 		bd.setBankName("Natwest");

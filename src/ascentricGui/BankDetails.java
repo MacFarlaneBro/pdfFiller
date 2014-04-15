@@ -152,13 +152,14 @@ public class BankDetails extends Page{
 			bd = client.getSecondClient().getBankAccountDetails();
 		}
 		
-		bd.setAccountHolderNames(textFields.get("names1").getText() + textFields.get("names2").getText());
+		bd.setAccountHolderName1(textFields.get("names1").getText());
+		bd.setAccountHolderName2(textFields.get("names2").getText());
 		bd.setBankAccountNumber(textFields.get("accountNumber").getText());
 		bd.setBranchSortCode(textFields.get("sortCode").getText());
 		bd.setBankName(textFields.get("bankName").getText());
 		bd.setBankAddress(textFields.get("bankAddress1").getText()
-				+ textFields.get("bankAddress2").getText()
-				+ textFields.get("bankAddress3").getText());
+				+ ":" + textFields.get("bankAddress2").getText()
+				+ ":" + textFields.get("bankAddress3").getText());
 		bd.setBankPostCode(textFields.get("postcode").getText());
 		
 	}

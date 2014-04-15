@@ -122,16 +122,13 @@ public class AscentricPage5 extends AscentricPage {
 		} else {
 			depth = secondDepth;
 		}
-		System.out.println(depth);
 		//Names of account holders
-		String[] names = bad.getAccountHolderNames().split(" ");
-		stamp(accDetailsWidth, depth+20, names[0]);
-		if(names.length>1){
-			stamp(accDetailsWidth, depth, names[1]);
+		stamp(accDetailsWidth, depth+20, bad.getAccountHolderName1());
+		if(bad.getAccountHolderName2()!= null){
+			stamp(accDetailsWidth, depth, bad.getAccountHolderName2());
 		}
 		accountNumber(bad.getBankAccountNumber(), depth-37);
 		if(bad.getBranchSortCode()!= null && bad.getBranchSortCode().length()> 2){
-			System.out.println(bad.getBranchSortCode());
 			sortCode(bad.getBranchSortCode(), depth-70);
 		}
 		bankDetails(bad, depth+19);
@@ -149,7 +146,7 @@ public class AscentricPage5 extends AscentricPage {
 		//Bank Name
 		stamp(bankDetailsWidth, depth, bad.getBankName());
 		//Split the bank address into lines and then print them out
-		String[] bankAddress = bad.getBankAddress().split(",");
+		String[] bankAddress = bad.getBankAddress().split(":");
 		for(int i = 0; i < bankAddress.length; i++){
 			stamp(bankDetailsWidth, depth-20 -(i*20), bankAddress[i]);
 		}
