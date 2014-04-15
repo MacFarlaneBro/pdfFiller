@@ -144,7 +144,7 @@ public class AccessRightsFamilyGroups extends Page {
 		singleApplicant.setFamilyGroup(checkBoxes.get("famGroup1Check").isSelected());
 		singleApplicant.setExistingAccount(checkBoxes.get("famGroup2Check").isSelected());
 		if(checkBoxes.get("famGroup2Check").isSelected()){
-			singleApplicant.setExisingAcctRefNumber(cliRefNum.getText());
+			singleApplicant.setClientRef((cliRefNum.getText()));
 		}
 
 	}

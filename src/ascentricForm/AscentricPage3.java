@@ -65,23 +65,17 @@ public class AscentricPage3 extends AscentricPage{
 	private void accessRights(IndividualDetails id) {
 		if(id.isOnlineAccess()){//if the client has online access rights
 			onlineAccess(theClient.getClientType());
-			System.out.println("Print Rights " + theClient.getClientType());
 		}//cdsa
 		if(id.isEnquiryOnly()){//if the client has enquiry only rights
 			enquiryOnly(theClient.getClientType());
-			System.out.println("Print Rights " + theClient.getClientType());
-
 		}
 		if(id.isTradingAccess()){//if the client has trading access rights
 			tradingAccess(theClient.getClientType());
-			System.out.println(theClient.getClientType());
-
 		}
 	}
 	
 	//fills in the trading Access checkboxes
 	private void tradingAccess(String tradAcc) {
-		System.out.println("tradAcc client: " + tradAcc);
 		if(tradAcc.equals(joint)){
 			stamp(jointAccWidth, tradAccDepth, "X");
 		} 
