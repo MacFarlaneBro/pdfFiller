@@ -19,6 +19,7 @@ import com.itextpdf.text.DocumentException;
 public class AscentricForm{
 	
 	private AscentricPage page;
+
 	
 	/*
 	 * Fills the page chosen by the calling class
@@ -65,19 +66,28 @@ public class AscentricForm{
 	}
 
 	private void cleanUp(File file, String finishedFile) {
+		FileChannel src = null;
+		FileChannel dest = null;
 		try {
-			@SuppressWarnings("resource")
-			FileChannel src = new FileInputStream(finishedFile).getChannel();
-			@SuppressWarnings("resource")
-			FileChannel dest = new FileOutputStream(file).getChannel();
+			
+			src = new FileInputStream(finishedFile).getChannel();
+			dest = new FileOutputStream(file).getChannel();
 			dest.transferFrom(src, 0, src.size());
+			
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			try {
+				src.close();
+				dest.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
-
 }

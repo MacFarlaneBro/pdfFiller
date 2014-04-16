@@ -47,7 +47,7 @@ public class Print {
         grid.add(save, 0, 1);
         
         Label tf = new Label("You have now completed filling in the document,"
-        		+ "click save to produce a finished document and return to the home screen.");
+        		+ "click Save to produce a finished document and return to the home screen.");
         
         grid.add(tf, 0, 0);
         
@@ -76,7 +76,12 @@ public class Print {
 		AscentricForm af = new AscentricForm();
 		try {
 			af.fillIt(client, file);
+			Main main = new Main();
+			main.start(primaryStage);
 		} catch (IOException | DocumentException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

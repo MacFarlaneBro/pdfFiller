@@ -3,6 +3,7 @@ package ascentricGui;
 import java.util.HashMap;
 
 import javafx.collections.FXCollections;
+import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
@@ -16,6 +17,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import ascentricClientDetails.BankAccountDetails;
 import ascentricClientDetails.ClientHolder;
+import javafx.scene.text.Font;
 
 public class IncomePayment extends Page {
 
@@ -61,35 +63,38 @@ public class IncomePayment extends Page {
 		textFields = new HashMap<String, TextField>();
 		
 		Label nipi = new Label("Natural Income Payment Instructions");
-		grid.add(nipi, 2, 4);
+		nipi.setFont(Font.font(null, FontWeight.BOLD, 12));
+		GridPane.setHalignment(nipi, HPos.CENTER);
+		grid.add(nipi, 1, 4, 2, 1);
 		
 		Label noIncWith = new Label("No income widthdrawal (transfer to deposit)");
-		grid.add(noIncWith, 2, 5);
+		grid.add(noIncWith, 1, 5, 2, 1);
 		CheckBox noInc = new CheckBox();
 		checkBoxes.put("noIncomeWithdrawl", noInc);
 		grid.add(noInc, 3, 5);
 		
 		Label leaveIncAcc = new Label("Leave in income account pending instructions");
-		grid.add(leaveIncAcc, 2, 6);
+		grid.add(leaveIncAcc, 1, 6, 2, 1);
 		CheckBox incAcc = new CheckBox();
 		checkBoxes.put("leaveIncomeAccount", incAcc);
 		grid.add(incAcc, 3, 6);
 		
-		Label withdraw = new Label("Withdraw the Natural Income \n(This will be paid out upon receipt unless\notherwise "
+		Label withdraw = new Label("Withdraw the Natural Income\n (This will be paid out upon receipt unless\n otherwise "
 				+ "indicated below)");
-		grid.add(withdraw, 2, 7);
+		grid.add(withdraw, 1, 7, 2, 2);
 		CheckBox natInc = new CheckBox();
 		checkBoxes.put("withdrawNaturalIncome", natInc);
 		grid.add(natInc, 3, 7);
 		
 		Label wrapper = new Label("Wrapper(s)");
-		grid.add(wrapper, 2, 8);
+		grid.add(wrapper, 1, 9, 2, 1);
 		TextField wrap = new TextField();
 		textFields.put("natWrapper", wrap);
-		grid.add(wrap, 3, 8);
+		grid.add(wrap, 3, 9);
 		
 		Label regularity = new Label("Regularity:");
-		grid.add(regularity, 2, 9);
+		grid.add(regularity, 1, 10, 2, 1);
+		GridPane.setHalignment(regularity, HPos.RIGHT);
 		timing = new ComboBox<String>(FXCollections.observableArrayList(
                 "Monthly",
                 "Quarterly",
@@ -97,35 +102,35 @@ public class IncomePayment extends Page {
                 "Annually"
         ));
 		timing.setValue("Monthly");
-		grid.add(timing, 3, 9);
+		grid.add(timing, 3, 10);
 		
-		grid.add(new Label("Regular Withdrawal Instructions"), 4, 4);
+		grid.add(new Label("Regular Withdrawal Instructions"), 4, 5);
 		
-		grid.add(new Label("Payment from deposit (or reserve account\n"
-				+ "where applicable) and withdraw the\n"
-				+ "following fixed amount:"), 4, 5);
+		grid.add(new Label("Payment from deposit (or reserve\naccount"
+				+ "where applicable) and withdraw\nthe"
+				+ " following fixed amount:"), 4, 6);
 		TextField amount = new TextField();
 		textFields.put("amount", amount);
-		grid.add(amount, 5, 5);
+		grid.add(amount, 5, 6);
 		
-		grid.add(new Label("Regularity:"), 4, 6);
+		grid.add(new Label("Regularity:"), 4, 7);
 		natTiming = new ComboBox<String>(FXCollections.observableArrayList(
                 "Monthly",
                 "Quarterly",
                 "Half Yearly",
                 "Annually"
         ));
-		grid.add(natTiming, 5, 6);
+		grid.add(natTiming, 5, 7);
 		natTiming.setValue("Monthly");
-		grid.add(new Label("Wrapper(s)"), 4, 7);
+		grid.add(new Label("Wrapper(s)"), 4, 8);
 		TextField regWrap = new TextField();
 		textFields.put("regularWrapper", regWrap);
-		grid.add(regWrap, 5, 7);
+		grid.add(regWrap, 5, 8);
 		
-		grid.add(new Label("Start Date (DDMMYYYY)"), 4, 8);
+		grid.add(new Label("Start Date (DDMMYYYY)"), 4, 9);
 		TextField startDate = new TextField();
 		textFields.put("startDate", startDate);
-		grid.add(startDate, 5, 8);
+		grid.add(startDate, 5, 9);
 	}
 	
 
