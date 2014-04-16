@@ -5,6 +5,7 @@ import java.util.HashMap;
 import javafx.collections.FXCollections;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
+import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
@@ -104,11 +105,16 @@ public class IncomePayment extends Page {
 		timing.setValue("Monthly");
 		grid.add(timing, 3, 10);
 		
-		grid.add(new Label("Regular Withdrawal Instructions"), 4, 5);
+		Label regWithDraw = new Label("Regular Withdrawal Instructions");
+		regWithDraw.setFont(Font.font(null, FontWeight.BOLD, 12));
+		grid.add(regWithDraw, 4, 4);
 		
-		grid.add(new Label("Payment from deposit (or reserve\naccount"
-				+ "where applicable) and withdraw\nthe"
-				+ " following fixed amount:"), 4, 6, 2, 2);
+		Label pfd = new Label("Payment from deposit (or reserve\naccount"
+				+ "where applicable) and\nwithdraw the"
+				+ " following fixed\namount:");
+		GridPane.setValignment(pfd, VPos.CENTER);
+		
+		grid.add(pfd , 4, 5, 2, 2);
 		TextField amount = new TextField();
 		textFields.put("amount", amount);
 		grid.add(amount, 5, 6);
@@ -132,7 +138,6 @@ public class IncomePayment extends Page {
 		textFields.put("startDate", startDate);
 		grid.add(startDate, 5, 9);
 	}
-	
 
 	protected void fillAndSaveClientInfo() {
 		BankAccountDetails bad = client.getFirstClient().getBankAccountDetails();
@@ -144,6 +149,14 @@ public class IncomePayment extends Page {
 		bad.setPaymentFromDeposit(textFields.get("amount").getText());
 		bad.setRegWithdrawalPayTiming(natTiming.getValue());
 		bad.setRegWithdrawlWrappers(textFields.get("regularWrapper").getText());
-		bad.setStartDate(textFields.get("startDate").getText());
+		
+		//Sanitising the date input prior to storage
+		if(textFields.get("startDate").getText().contains("/")){
+			bad.setStartDate(textFields.get("startDate").getText().replace("/", ""));
+		} else if(textFields.get("startDate").getText().contains("-")){
+			bad.setStartDate(textFields.get("startDate").getText().replace("-", ""));
+		} else {
+			bad.setStartDate(textFields.get("startDate").getText());
+		}
 	}
 }

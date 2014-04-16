@@ -38,7 +38,7 @@ public abstract class ProductDetailsGui extends Page {
         grid.setVgap(10);
         grid.setAlignment(Pos.CENTER);
         
-        setColumnSizes(grid, 5, 90, 80, 120 ,110 ,80 ,80 ,100 , 80);
+        setColumnSizes(grid, 5, 90, 80, 120 ,110 ,90 ,80 ,100 , 80);
         setRowSizes(grid, 10, 20, 20, 20, 20, 50, 20, 20, 20, 30, 20, 20);
         
 		setTitleAndHeader(grid);

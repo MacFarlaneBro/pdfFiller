@@ -65,7 +65,7 @@ public class AscentricForm{
 		System.out.println("finished printing");
 	}
 
-	private void cleanUp(File file, String finishedFile) {
+	private void cleanUp(File file, String finishedFile) throws IOException {
 		FileChannel src = null;
 		FileChannel dest = null;
 		try {
@@ -77,17 +77,10 @@ public class AscentricForm{
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		
 		} finally {
-			try {
-				src.close();
-				dest.close();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			src.close();
+			dest.close();
 		}
 	}
 }

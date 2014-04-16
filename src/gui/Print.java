@@ -1,6 +1,7 @@
 package gui;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import javax.swing.filechooser.FileSystemView;
@@ -13,6 +14,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -30,6 +35,7 @@ public class Print {
 	private Scene thisScene;
 	private Stage primaryStage;
 	private Scene previousScene;
+	private Text actionTarget;
 
 	public Print(final ClientHolder client, final Stage primaryStage, Scene previousScene){
 		
@@ -55,11 +61,14 @@ public class Print {
             
             @Override
             public void handle(ActionEvent e){
+            	
             	FileChooser fileChooser = new FileChooser();
+            	
                 fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PDF files (*.pdf)", "*.pdf"));
                 fileChooser.setInitialFileName(client.getFirstClient().getIndividualDetails().getSurname()
                 		+ " Ascentric Form");
                 File file = fileChooser.showSaveDialog(primaryStage);
+                
                 if(!file.getName().contains(".")){
                 	file = new File(file.getAbsolutePath() + ".pdf");
                 }
@@ -67,19 +76,28 @@ public class Print {
             }
         });
         
+        actionTarget = new Text();
+        actionTarget.setWrappingWidth(300);
+        grid.add(actionTarget, 0, 3, 2, 4);
+        actionTarget.setFont(Font.font(null, FontWeight.BOLD, 15));
         createMovementButtons(3,5);
         thisScene = new Scene(grid, 900, 500);  
         primaryStage.setScene(thisScene);
+        
 	}
 	
 	protected void printDocument(File file) {
 		AscentricForm af = new AscentricForm();
 		try {
+			actionTarget.setFill(Color.BLUE);
+            actionTarget.setText("Filling PDF");
 			af.fillIt(client, file);
 			Main main = new Main();
 			main.start(primaryStage);
 		} catch (IOException | DocumentException e) {
-			e.printStackTrace();
+    		actionTarget.setFill(Color.FIREBRICK);
+    		actionTarget.setText("The document has failed to fill, please check to see if a previous instance of the"
+    				+ "document is open, if so, please close it and try again.");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

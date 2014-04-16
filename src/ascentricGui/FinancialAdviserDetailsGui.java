@@ -53,11 +53,12 @@ public class FinancialAdviserDetailsGui extends Page {
         grid.setAlignment(Pos.CENTER);
         setColumnSizes(grid, 3);
         setRowSizes(grid, 5, 12, 12, 30);
-        
+        grid.setGridLinesVisible(true);
         thisScene = new Scene(grid, pageWidth, pageHeight);
                         
         createLeftFields(grid);
         
+        movementButtons2Columns(true);
         createMovementButtons(20, 6);
 
         primaryStage.setScene(thisScene);
@@ -266,14 +267,13 @@ public class FinancialAdviserDetailsGui extends Page {
 	
 	@Override
 	public void createMovementButtons(int depth,int nextWidth) {
-//		grid.setGridLinesVisible(true);
 	    
 		Button backBtn = new Button("Back");//Create button with the name sign in
         HBox hbBtn = new HBox(21);//Layout pane with 21 pixel spacing
         hbBtn.setAlignment(Pos.BOTTOM_LEFT);
         backBtn.setPrefWidth(100);
         hbBtn.getChildren().add(backBtn);
-        grid.add(hbBtn, 0, depth);
+        grid.add(hbBtn, 0, depth, 2, 1);
         
         backBtn.setOnAction(new EventHandler<ActionEvent>(){
             

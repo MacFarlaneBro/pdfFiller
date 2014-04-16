@@ -64,33 +64,34 @@ public class AscentricPage5 extends AscentricPage {
 
 		//National Income Payment Wrappers
 		stamp(95, 170, bad.getNatIncomeWrappers());
+		
 		int firstRowWidth = 10;
+		
 		if(bad.getPayTiming().equals("Quarterly")){
 			firstRowWidth+=65;
-		}
-		if(bad.getPayTiming().equals("HalfYearly")){
+		} else if(bad.getPayTiming().equals("Half Yearly")){
 			firstRowWidth+=130;
-		}
-		if(bad.getPayTiming().equals("Annually")){
+		} else if(bad.getPayTiming().equals("Annually")){
 			firstRowWidth+=195;
 		}
+		
 		stamp(firstRowWidth+=65, 148, "X");
 		//Regular Withdrawal Instructions
 		int rwiDepth = 254;
 		//Amount
 		stamp(482, rwiDepth, bad.getRegWithdrawalAmount());
+		
 		//TimeFrame
 		int secondRowWidth = 282;
 
 		//Regular WithdrawalWrappers
-		System.out.println(bad.getDepositPayTiming());
 		if(bad.getDepositPayTiming().equals("Monthly")){
 			secondRowWidth+=65;
 		}
 		if(bad.getDepositPayTiming().equals("Quarterly")){
 			secondRowWidth+=130;
 		}
-		if(bad.getDepositPayTiming().equals("HalfYearly")){
+		if(bad.getDepositPayTiming().equals("Half Yearly")){
 			secondRowWidth+=195;
 		}
 		if(bad.getDepositPayTiming().equals("Annually")){
