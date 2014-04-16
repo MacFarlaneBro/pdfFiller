@@ -74,12 +74,12 @@ public class AscentricPage5 extends AscentricPage {
 		} else if(bad.getPayTiming().equals("Annually")){
 			firstRowWidth+=195;
 		}
-		
 		stamp(firstRowWidth+=65, 148, "X");
+		
 		//Regular Withdrawal Instructions
 		int rwiDepth = 254;
 		//Amount
-		stamp(482, rwiDepth, bad.getRegWithdrawalAmount());
+		stamp(482, rwiDepth, bad.getPaymentFromDeposit());
 		
 		//TimeFrame
 		int secondRowWidth = 282;
