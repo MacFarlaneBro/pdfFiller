@@ -271,7 +271,7 @@ public abstract class ProductDetailsGui extends Page {
 		amountToBeReceived.setWrapText(true);
 		grid.add(amountToBeReceived, 4, gridVert, 1, 2);
 		
-		Label sourceOfFunds = new Label ("Source of Funds \n (Cheque, BACS, Transfer)");
+		Label sourceOfFunds = new Label ("Source of Funds\n(Cheque, BACS, Transfer)");
 		sourceOfFunds.setWrapText(true);
 		GridPane.setHalignment(sourceOfFunds, HPos.CENTER);
 		GridPane.setValignment(sourceOfFunds, VPos.CENTER);

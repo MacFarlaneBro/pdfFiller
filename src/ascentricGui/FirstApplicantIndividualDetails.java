@@ -150,8 +150,7 @@ public class FirstApplicantIndividualDetails extends Page{
 			if(current.getId()
 					.equals("DOB")){
 				holder = clientData.get(current.getId());
-				String formatted = holder.replace("-", "/");
-				current.setText(formatted);
+				current.setText(holder);
 				continue;
 			}
 			
@@ -466,6 +465,8 @@ public class FirstApplicantIndividualDetails extends Page{
 		if(!clientSurname.getText().equals("")){
 			id.setForename(((ComboBox<String>)clientFirstName).getValue());
 		id.setTitle(fieldMap.get("Title").getText());
+		
+		System.out.println(fieldMap.get("DOB"));
 		
 		//Rearranges date of birth from DB from YYYY-MM-DD to DDMMYYYY
 		if(fieldMap.get("DOB").getText().charAt(4) == '-'){

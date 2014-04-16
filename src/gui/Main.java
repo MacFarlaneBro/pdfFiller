@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package gui;
 
 import javafx.application.Application;
@@ -46,8 +40,7 @@ public class Main extends Application{
         this.primaryStage = primaryStage;
         primaryStage.setTitle("PDF Filler 0.01");
         primaryStage.setMinWidth(500);
-        primaryStage.initStyle(StageStyle.DECORATED);
-//        primaryStage.getIcons().add(new Image("\\M.png"));
+        primaryStage.getIcons().add(new Image("\\M.JPEG"));
         
         GridPane grid = new GridPane();
         Scene firstScene = new Scene(grid, 300, 300);

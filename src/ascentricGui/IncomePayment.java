@@ -108,7 +108,7 @@ public class IncomePayment extends Page {
 		
 		grid.add(new Label("Payment from deposit (or reserve\naccount"
 				+ "where applicable) and withdraw\nthe"
-				+ " following fixed amount:"), 4, 6);
+				+ " following fixed amount:"), 4, 6, 2, 2);
 		TextField amount = new TextField();
 		textFields.put("amount", amount);
 		grid.add(amount, 5, 6);
