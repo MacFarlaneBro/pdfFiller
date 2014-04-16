@@ -1,6 +1,7 @@
 package ascentricGui;
 
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
@@ -275,6 +276,12 @@ public class SecondApplicantIndividualDetails extends Page{
 		
 		client.makeNewSecondClient();
 		
+		//Putting all form data in a new map, otherwise only autofilled fields are included
+		clientData = new HashMap<String, String>();
+		for(TextField field: theFields){
+			clientData.put(field.getId(), field.getText());
+		}
+		
 		IndividualDetails id = client.getSecondClient().getIndividualDetails();
 		id.setSurname(clientData.get("Surname"));
 		id.setForename(clientData.get("ForeNames"));
@@ -304,7 +311,7 @@ public class SecondApplicantIndividualDetails extends Page{
 		}
 		id.setHomeNumber(clientData.get("HomeTel"));
 		id.setWorkNumber(clientData.get("WorkTel"));
-		id.setMobileNumber(clientData.get("MobTel"));
+		id.setMobileNumber(clientData.get("Mobile"));
 		id.setAddress(clientData.get("HomeAddress1") + ":"
 		+ clientData.get("HomeAddress2") + ":" 
 				+ clientData.get("HomeAddress3"));

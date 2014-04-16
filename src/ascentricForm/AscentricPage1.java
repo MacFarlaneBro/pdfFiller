@@ -106,11 +106,13 @@ public class AscentricPage1 extends AscentricPage{
 		//Splitting the address string
 		if(id.getAddress()!=null){
 			String[] addressParts = id.getAddress().split(":");
-			
+			System.out.println("Address with null: " + id.getAddress());
 			int addPart = 60;
 			//Address
 			for(String part: addressParts){
-				stamp(contactWidth, contactDepth - addPart, part);
+				System.out.println(part);
+				System.out.println("Null Length: " + part.length());
+				if(part!= null && part != "null")	stamp(contactWidth, contactDepth - addPart, part);
 				addPart+=20;
 			}
 		}
