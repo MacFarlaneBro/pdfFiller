@@ -51,6 +51,7 @@ public class Print {
         grid.setVgap(10);
         grid.setAlignment(Pos.CENTER);
         grid.add(save, 0, 1);
+        grid.setGridLinesVisible(true);
         
         Label tf = new Label("You have now completed filling in the document,"
         		+ "click Save to produce a finished document and return to the home screen.");

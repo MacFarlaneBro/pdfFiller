@@ -53,7 +53,6 @@ public class FinancialAdviserDetailsGui extends Page {
         grid.setAlignment(Pos.CENTER);
         setColumnSizes(grid, 3);
         setRowSizes(grid, 5, 12, 12, 30);
-        grid.setGridLinesVisible(true);
         thisScene = new Scene(grid, pageWidth, pageHeight);
                         
         createLeftFields(grid);
