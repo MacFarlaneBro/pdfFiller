@@ -8,7 +8,9 @@ import javafx.scene.text.Text;
 public class JointProductDetails extends ProductDetailsGui {
 
 	private String pageTitle = "Product Details - Joint Account";
-	public final String appType = "Joint";
+	public JointProductDetails(){
+		appType = "Joint";
+	}
 	
 	@Override
 	public void setTitleAndHeader(GridPane grid) {

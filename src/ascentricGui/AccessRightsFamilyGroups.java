@@ -45,7 +45,11 @@ public class AccessRightsFamilyGroups extends Page {
         
         thisScene = new Scene(grid, pageWidth, pageHeight);
         
-        nextPage = new FirstProductDetails();
+        if(client.getJointAccount() == null){
+        	nextPage = new FirstProductDetails();
+        } else {
+        	nextPage = new JointProductDetails();
+        }
         
         createFields(grid);
         

@@ -25,7 +25,7 @@ public class AscentricPage5 extends AscentricPage {
 		if(theClient.getJointAccount() == null){//If the account is not joint use the first client information
 			accDetails(theClient.getFirstClient().getBankAccountDetails(), "first");
 		} else {
-			accDetails(theClient.getJointAccount().getBankAccountDetails(), "joint");
+			accDetails(theClient.getSecondClient().getBankAccountDetails(), "joint");
 		}
 		
 		//this little stamp selects whether the second applicants details
@@ -165,9 +165,11 @@ public class AscentricPage5 extends AscentricPage {
 
 	private void accountNumber(String accNum, int depth) {
 		int tempWidth = accDetailsWidth-20;
-		for(int i = 0; i < accNum.length(); i++){
-			stamp(tempWidth+=21, depth, ""+ accNum.charAt(i));
-		}
 		
+		if(accNum!= null){//The use of the n variable means the costly length method is only called once
+			for(int i = 0, n = accNum.length(); i < n; i++){
+				stamp(tempWidth+=21, depth, ""+ accNum.charAt(i));
+			}
+		}
 	}
 }

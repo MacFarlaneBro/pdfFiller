@@ -47,19 +47,18 @@ public class FinancialAdviserDetailsGui extends Page {
         this.previousScene = firstScene;
         this.primaryStage = primaryStage;
         primaryStage.setTitle("Financial Adviser Details");
-
         grid = new GridPane();
         grid.setHgap(10);
         grid.setVgap(8);
         grid.setAlignment(Pos.CENTER);
+        grid.setGridLinesVisible(true);
+
         setColumnSizes(grid, 3);
         setRowSizes(grid, 5, 12, 12, 30);
         thisScene = new Scene(grid, pageWidth, pageHeight);
                         
         createLeftFields(grid);
-        
-        setColumnSizes(grid, 30, 30, 30, 30);
-        
+                
         movementButtons2Columns(true);
         createMovementButtons(20, 6);
 

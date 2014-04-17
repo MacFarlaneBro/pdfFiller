@@ -11,7 +11,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.HPos;
 import javafx.geometry.Pos;
+import javafx.geometry.VPos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -72,8 +74,9 @@ public class SecondApplicantIndividualDetails extends Page{
         
         autoFillClientInfo(grid);
         
-        setColumnSizes(grid);
+        setColumnSizes(grid, 15);
         setRowSizes(grid);
+        
         movementButtons2Columns(true);
         createMovementButtons(13, 5);
 
@@ -198,9 +201,11 @@ public class SecondApplicantIndividualDetails extends Page{
         Text sceneTitle = new Text(sceneT);
         sceneTitle.setFont(Font.font("courier", FontWeight.NORMAL, 21));
         sceneTitle.setId("sceneTitle");
-        grid.add(sceneTitle, 1, 1, 2, 2);
+        GridPane.setValignment(sceneTitle, VPos.CENTER);
+        grid.add(sceneTitle, 1, 0, 2, 2);
         
         gridVert = 2;
+        
         //Client Surname
         Label surname = new Label("Surname");
         grid.add(surname, 1, ++gridVert);
@@ -208,6 +213,17 @@ public class SecondApplicantIndividualDetails extends Page{
         clientSurname.setId("Surname");
         clientSurname.setPrefWidth(fieldWidth);
         grid.add(clientSurname, 2, gridVert);
+        
+        checkBoxes = new HashMap<String, CheckBox>();
+        
+        CheckBox sameDetails = new CheckBox("If your contact details (including e-mail address)"
+        		+ "are the same as the first applicant, please tick this box.");
+        sameDetails.setWrapText(true);
+        sameDetails.setTranslateX(50);
+        checkBoxes.put("sameDetails", sameDetails);
+        GridPane.setHalignment(sameDetails, HPos.CENTER);
+        GridPane.setValignment(sameDetails, VPos.CENTER);
+        grid.add(sameDetails, 2, 0, 2, 2);
         
     }
     
@@ -276,7 +292,7 @@ public class SecondApplicantIndividualDetails extends Page{
 		
 		client.makeNewSecondClient();
 		
-		//Putting all form data in a new map, otherwise only autofilled fields are included
+		//Putting all form data in a new map, otherwise only auto-filled fields are included
 		clientData = new HashMap<String, String>();
 		for(TextField field: theFields){
 			clientData.put(field.getId(), field.getText());
@@ -309,15 +325,25 @@ public class SecondApplicantIndividualDetails extends Page{
 		if(clientData.get("NationalInsuranceNumber") != null){
 			id.setNationalInsuranceNumber(clientData.get("NationalInsuranceNumber").replaceAll("-", ""));
 		}
-		id.setHomeNumber(clientData.get("HomeTel"));
-		id.setWorkNumber(clientData.get("WorkTel"));
-		id.setMobileNumber(clientData.get("Mobile"));
-		id.setAddress(clientData.get("HomeAddress1") + ":"
-		+ clientData.get("HomeAddress2") + ":" 
-				+ clientData.get("HomeAddress3"));
-		id.setPostcode(clientData.get("HomePostCode"));
-		id.setEmail(clientData.get("Email"));
-
+		
+		if(checkBoxes.get("sameDetails").isSelected()){
+			IndividualDetails firstID = client.getFirstClient().getIndividualDetails();
+			id.setHomeNumber(firstID.getHomeNumber());
+			id.setWorkNumber(firstID.getWorkNumber());
+			id.setMobileNumber(firstID.getMobileNumber());
+			id.setAddress(firstID.getAddress());
+			id.setPostcode(firstID.getPostcode());
+			id.setEmail(firstID.getEmail());
+		} else {
+			id.setHomeNumber(clientData.get("HomeTel"));
+			id.setWorkNumber(clientData.get("WorkTel"));
+			id.setMobileNumber(clientData.get("Mobile"));
+			id.setAddress(clientData.get("HomeAddress1") + ":"
+			+ clientData.get("HomeAddress2") + ":" 
+					+ clientData.get("HomeAddress3"));
+			id.setPostcode(clientData.get("HomePostCode"));
+			id.setEmail(clientData.get("Email"));
+		}
 	}
 
 	/**
@@ -459,6 +485,7 @@ public class SecondApplicantIndividualDetails extends Page{
         theLabels.add(email);
         grid.add(natInsTick, 1, 9);
         CheckBox natInsTickClient = new CheckBox();
+        GridPane.setHalignment(natInsTickClient, HPos.CENTER);
         natInsTickClient.setId("natInsTickClient");
         clientEmail.setPrefWidth(fieldWidth);
         grid.add(natInsTickClient, 2, 9);

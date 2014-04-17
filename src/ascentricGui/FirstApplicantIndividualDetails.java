@@ -14,6 +14,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
+import javafx.geometry.VPos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -353,7 +354,8 @@ public class FirstApplicantIndividualDetails extends Page{
         Text sceneTitle = new Text(sceneT);
         sceneTitle.setFont(Font.font("courier", FontWeight.NORMAL, 21));
         sceneTitle.setId("sceneTitle");
-        grid.add(sceneTitle, 1, 1, 2, 2);
+        GridPane.setValignment(sceneTitle, VPos.CENTER);
+        grid.add(sceneTitle, 1, 0, 2, 2);
         
       //Type of Application
         Label appType = new Label("Application Type");
@@ -461,9 +463,15 @@ public class FirstApplicantIndividualDetails extends Page{
 		
 		client.getFirstClient().setApplicationType(applicationType.getValue());
 		
+		if(applicationType.getValue().equals("Joint Account")){
+			System.out.print("I made a new" + applicationType.getValue());
+			client.makeNewJointClient();
+		};
+		System.out.print("I made a new " + applicationType.getValue());
 		IndividualDetails id = client.getFirstClient().getIndividualDetails();
 		
 		id.setSurname(clientSurname.getText());
+		
 		if(!clientSurname.getText().equals("")){
 			id.setForename(((ComboBox<String>)clientFirstName).getValue());
 		id.setTitle(fieldMap.get("Title").getText());
