@@ -72,7 +72,7 @@ public class FirstApplicantIndividualDetails extends Page{
         
         thisScene = new Scene(grid, pageWidth, pageHeight);
         
-        setColumnSizes(grid, 20, 250, 175, 210, 150, 20);
+        setColumnSizes(grid, 20, 250, 175, 190, 170, 20);
         setRowSizes(grid, 50);
         setRowSizes(grid);
         

@@ -1,5 +1,6 @@
 package gui;
 
+import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
 
@@ -33,13 +34,13 @@ public class Print {
 	private Stage primaryStage;
 	private Scene previousScene;
 	private Text actionTarget;
+	private Button nextBtn;
 
 	public Print(final ClientHolder client, final Stage primaryStage, Scene previousScene){
 		
 		this.client = client;
 		this.primaryStage = primaryStage;
 		this.previousScene = previousScene;
-		save = new Button("Save Document");
 		
 		primaryStage.setTitle("Income Payment Instructions");
         
@@ -47,15 +48,19 @@ public class Print {
         grid.setHgap(10);
         grid.setVgap(10);
         grid.setAlignment(Pos.CENTER);
+        
+		save = new Button("Save Document");
         grid.add(save, 3, 2, 2, 1);
 
     	Page page = new GenericPage();
-    	
     	page.setRowSizes(grid, 100, 100, 100, 100, 100);
     	page.setColumnSizes(grid, 100, 100, 100, 100, 100, 100, 100);
         
         Label tf = new Label("You have now completed filling in the document,"
-        		+ "click Save to produce a finished document and return to the home screen.");
+        		+ "click Save to produce a finished document."
+        		+ " The document will then be opened in adobe acrobat"
+        		+ " so that you may check it to make sure everything is correct"
+        		+ " and return to the home screen.");
         
         grid.add(tf, 1, 1, 4, 1);
         tf.setWrapText(true);
@@ -95,8 +100,8 @@ public class Print {
 			actionTarget.setFill(Color.BLUE);
             actionTarget.setText("Filling PDF");
 			af.fillIt(client, file);
-			Main main = new Main();
-			main.start(primaryStage);
+			Desktop dt = Desktop.getDesktop();
+			dt.open(file);
 		} catch (IOException | DocumentException e) {
     		actionTarget.setFill(Color.FIREBRICK);
     		actionTarget.setText("The document has failed to fill, please check to see if a previous instance of the"
@@ -124,6 +129,26 @@ public class Print {
                 primaryStage.setScene(previousScene);
             }
         });
+        
+        nextBtn = new Button("Home");//Create button with the name sign in
+        HBox hNextBtn = new HBox(21);//Layout pane with 21 pixel spacing
+        hNextBtn.setAlignment(Pos.BOTTOM_RIGHT);
+        nextBtn.setPrefWidth(100);
+        hNextBtn.getChildren().add(nextBtn);
+        grid.add(hNextBtn, 4, depth);
+        nextBtn.setOnAction(new EventHandler<ActionEvent>(){
+
+			@Override
+            public void handle(ActionEvent e){
+				Main main = new Main();
+				try {
+					main.start(primaryStage);
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+            }
+        });	
 	}
 	
 } 

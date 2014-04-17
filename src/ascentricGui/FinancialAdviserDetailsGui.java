@@ -58,6 +58,8 @@ public class FinancialAdviserDetailsGui extends Page {
                         
         createLeftFields(grid);
         
+        setColumnSizes(grid, 30, 30, 30, 30);
+        
         movementButtons2Columns(true);
         createMovementButtons(20, 6);
 
