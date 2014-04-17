@@ -2,17 +2,17 @@ package ascentricClientDetails;
 
 public class OngoingAdviserCharge extends Charge {
 
-	private int annualFixedAmount;
+	private String annualFixedAmount;
 	private boolean collectives;
 	private boolean cash;
 	private boolean stocksAndShares;
 	private boolean nonCustodyAssets;
 	
-	public int getAnnualFixedAmount() {
+	public String getAnnualFixedAmount() {
 		return annualFixedAmount;
 	}
-	public void setAnnualFixedAmount(int annualFixedAmount) {
-		this.annualFixedAmount = annualFixedAmount;
+	public void setAnnualFixedAmount(String string) {
+		this.annualFixedAmount = string;
 	}
 	public boolean isCollectives() {
 		return collectives;

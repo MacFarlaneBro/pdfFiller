@@ -259,6 +259,7 @@ public class FinancialAdviserDetailsGui extends Page {
 			ongAdv.setOfInvestment(textFields.get("ongAdvPercent").getText());
 			ongAdv.setCollectives(checkBoxes.get("collectives").isSelected());
 			ongAdv.setCash(checkBoxes.get("cash").isSelected());
+			ongAdv.setAnnualFixedAmount(textFields.get("ongAdvAmount").getText());
 			ongAdv.setStocksAndShares(checkBoxes.get("sas").isSelected());
 			ongAdv.setNonCustodyAssets(checkBoxes.get("nonCustAss").isSelected());
 			fad.setOngoingAdviser(ongAdv);

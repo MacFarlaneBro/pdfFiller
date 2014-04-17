@@ -56,7 +56,7 @@ public class AscentricPage6Test {
 		fad.setTradingCharge(trad);
 		
 		OngoingAdviserCharge ong = new OngoingAdviserCharge();
-		ong.setAnnualFixedAmount(342);
+		ong.setAnnualFixedAmount("dfasf");
 		ong.setVatApplied(true);
 		ong.setCash(true);
 		ong.setCollectives(true);
