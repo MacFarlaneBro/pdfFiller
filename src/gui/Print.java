@@ -1,14 +1,12 @@
 package gui;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-
-import javax.swing.filechooser.FileSystemView;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
+import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -18,12 +16,11 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 import ascentricClientDetails.ClientHolder;
 import ascentricForm.AscentricForm;
+import ascentricGui.Page;
 
 import com.itextpdf.text.DocumentException;
 
@@ -50,13 +47,18 @@ public class Print {
         grid.setHgap(10);
         grid.setVgap(10);
         grid.setAlignment(Pos.CENTER);
-        grid.add(save, 0, 1);
-        grid.setGridLinesVisible(true);
+        grid.add(save, 3, 2, 2, 1);
+
+    	Page page = new GenericPage();
+    	
+    	page.setRowSizes(grid, 100, 100, 100, 100, 100);
+    	page.setColumnSizes(grid, 100, 100, 100, 100, 100, 100, 100);
         
         Label tf = new Label("You have now completed filling in the document,"
         		+ "click Save to produce a finished document and return to the home screen.");
         
-        grid.add(tf, 0, 0);
+        grid.add(tf, 1, 1, 4, 1);
+        tf.setWrapText(true);
         
         save.setOnAction(new EventHandler<ActionEvent>(){
             
@@ -78,10 +80,10 @@ public class Print {
         });
         
         actionTarget = new Text();
-        actionTarget.setWrappingWidth(300);
-        grid.add(actionTarget, 0, 3, 2, 4);
+        actionTarget.setWrappingWidth(600);
+        grid.add(actionTarget, 1, 3, 6, 1);
         actionTarget.setFont(Font.font(null, FontWeight.BOLD, 15));
-        createMovementButtons(3,5);
+        createMovementButtons(2);
         thisScene = new Scene(grid, 900, 500);  
         primaryStage.setScene(thisScene);
         
@@ -98,21 +100,22 @@ public class Print {
 		} catch (IOException | DocumentException e) {
     		actionTarget.setFill(Color.FIREBRICK);
     		actionTarget.setText("The document has failed to fill, please check to see if a previous instance of the"
-    				+ "document is open, if so, please close it and try again.");
+    				+  " document, or of the pdf filler application is open, if so, please close it and try again.");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 	
-	public void createMovementButtons(int depth,int nextWidth) {
+	public void createMovementButtons(int depth) {
 					    
 		Button backBtn = new Button("Back");//Create button with the name sign in
         HBox hbBtn = new HBox(21);//Layout pane with 21 pixel spacing
-        hbBtn.setAlignment(Pos.BOTTOM_LEFT);
+        hbBtn.setAlignment(Pos.CENTER);
         backBtn.setPrefWidth(100);
         hbBtn.getChildren().add(backBtn);
-       	grid.add(hbBtn, 0, depth);
+        GridPane.setValignment(backBtn, VPos.CENTER);
+       	grid.add(hbBtn, 1, depth, 1, 1);
         
         backBtn.setOnAction(new EventHandler<ActionEvent>(){
             

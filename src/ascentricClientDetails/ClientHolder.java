@@ -10,7 +10,6 @@ public class ClientHolder implements MakeClients{
 	private static ClientHolder instance;
 	
 	MakeClients makeClients;
-	private String appType;
 	
 	private ClientHolder(){
 		 makeClients = new ClientFactory();

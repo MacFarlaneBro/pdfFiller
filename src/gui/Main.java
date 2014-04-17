@@ -15,7 +15,6 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import ascentricClientDetails.ClientHolder;
 import ascentricGui.FirstApplicantIndividualDetails;
 

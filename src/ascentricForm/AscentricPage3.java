@@ -3,7 +3,6 @@ package ascentricForm;
 import java.io.IOException;
 
 import ascentricClientDetails.Client;
-import ascentricClientDetails.ClientHolder;
 import ascentricClientDetails.IndividualDetails;
 import ascentricClientDetails.MakeClients;
 import ascentricClientDetails.ProductDetails;
@@ -23,7 +22,6 @@ public class AscentricPage3 extends AscentricPage{
 	private int tradAccDepth = 637;
 	private int famGroupDepth = 566;
 	
-	private int pageNumber = 3;
 	protected int firstSingleDepth = 424;
 	protected int giaDepth = 309;
 	protected int wrapWidth = 127;
@@ -186,7 +184,7 @@ public class AscentricPage3 extends AscentricPage{
 	 * @throws DocumentException
 	 */
 	public void fillPage(MakeClients theClient) throws IOException, DocumentException {
-		setUp(pageNumber);
+		setUp(PAGENUMBER);
 		
 		Client[] clients = {theClient.getFirstClient(),
 				theClient.getSecondClient(),

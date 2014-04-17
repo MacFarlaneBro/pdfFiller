@@ -381,7 +381,7 @@ public class FirstApplicantIndividualDetails extends Page{
 
 	private void setNextPage(ComboBox<String> comboBox) {
 		 comboBox.valueProperty().addListener(new ChangeListener<String>() {
-	            @Override public void changed(ObservableValue ov, String t, String t1) {                
+	            @Override public void changed(ObservableValue<? extends String> ov, String t, String t1) {                
 	               if(t1.equals("Single Client")){
 	            	   nextPage = AccessRightsFamilyGroups.getInstance();
 	               } else {

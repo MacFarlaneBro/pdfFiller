@@ -4,7 +4,6 @@ import java.io.IOException;
 
 import ascentricClientDetails.Client;
 import ascentricClientDetails.IndividualDetails;
-import ascentricClientDetails.MakeClients;
 
 import com.itextpdf.text.DocumentException;
 

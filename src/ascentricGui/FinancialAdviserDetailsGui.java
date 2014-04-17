@@ -28,6 +28,7 @@ import ascentricClientDetails.TradingCharge;
 public class FinancialAdviserDetailsGui extends Page {
 	
 	private static Page instance;
+	@SuppressWarnings("unused")
 	private Print nextPage;
 	
 	static{

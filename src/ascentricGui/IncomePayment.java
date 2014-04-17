@@ -18,7 +18,6 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import ascentricClientDetails.BankAccountDetails;
 import ascentricClientDetails.ClientHolder;
-import javafx.scene.text.Font;
 
 public class IncomePayment extends Page {
 
