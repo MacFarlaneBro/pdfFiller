@@ -72,7 +72,8 @@ public class FirstApplicantIndividualDetails extends Page{
         
         thisScene = new Scene(grid, pageWidth, pageHeight);
         
-        setColumnSizes(grid, 100, 250, 100, 150, 120);
+        setColumnSizes(grid, 20, 250, 175, 210, 150, 20);
+        setRowSizes(grid, 50);
         setRowSizes(grid);
         
     	fieldMap = new HashMap<String, TextField>();
@@ -85,6 +86,7 @@ public class FirstApplicantIndividualDetails extends Page{
         
         autoFillClientInfo(grid);
         
+        movementButtons2Columns(true);
         createMovementButtons(12, 5);
 
         primaryStage.setScene(thisScene);
