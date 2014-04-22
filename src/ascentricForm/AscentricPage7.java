@@ -1,6 +1,8 @@
 package ascentricForm;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import ascentricClientDetails.Client;
 import ascentricClientDetails.FinancialAdviserDetails;
@@ -11,7 +13,7 @@ public class AscentricPage7 extends AscentricPage {
 
 	private static final int PAGENUMBER = 7;
 	private static final String FIRMNAME = "Master Adviser";
-	private static final String FIRMREF = "593723";
+	private static final String FIRMREF = "458919";
 	
 	
 	public void fillPage(Client theClient) throws IOException, DocumentException {
@@ -40,11 +42,12 @@ public class AscentricPage7 extends AscentricPage {
 		
 		//FCA Individual Reference Number
 		temp = formWidth;
-		if(fad.getFcaIndividualReferenceNumber()!= null){
-			stamp(temp, formHeight-126, fad.getFcaIndividualReferenceNumber().charAt(0) + "");
-			for(int i = 1; i < 8; i++){
-				stamp(temp+=20, formHeight-126, fad.getFcaIndividualReferenceNumber().charAt(i) + "");
-			}
+		
+		
+		
+		stamp(temp, formHeight-126, fad.getFcaIndividualReferenceNumber().charAt(0) + "");
+		for(int i = 1; i < 8; i++){
+			stamp(temp+=20, formHeight-126, fad.getFcaIndividualReferenceNumber().charAt(i) + "");
 		}
 		
 		//Date
@@ -56,6 +59,18 @@ public class AscentricPage7 extends AscentricPage {
 					//stamp(temp+=35, formHeight-206, fad.getDate().charAt(i) + "");
 				} else {
 					stamp(temp+=20, formHeight-206, fad.getDate().charAt(i) + "");
+				}
+			}
+		} else {
+			SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+			String date = df.format(new Date());
+			
+			stamp(temp, formHeight-206, date.charAt(0) + "");
+			for(int i = 1; i < fad.getDate().length(); i++){
+				if(i %2 == 0 && i < 5){
+					//stamp(temp+=35, formHeight-206, fad.getDate().charAt(i) + "");
+				} else {
+					stamp(temp+=20, formHeight-206, date.charAt(i) + "");
 				}
 			}
 		}

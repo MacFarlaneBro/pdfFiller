@@ -34,7 +34,7 @@ public abstract class Page {
 	
 	public abstract void setUp(Stage primaryStage, Scene previousScene, ClientHolder client);
 	
-	protected abstract void fillAndSaveClientInfo();
+	protected abstract void fillAndSaveClientInfo() throws Exception;
 	
 	protected void movementButtons2Columns(Boolean tf){
 		movementButtonWidth = tf;
@@ -79,7 +79,12 @@ public abstract class Page {
 
 			@Override
             public void handle(ActionEvent e){
-            	fillAndSaveClientInfo();
+            	try {
+					fillAndSaveClientInfo();
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
             	nextPage.setUp(primaryStage, thisScene, client);
             }
         });	

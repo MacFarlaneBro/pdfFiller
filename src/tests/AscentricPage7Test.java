@@ -32,7 +32,6 @@ public class AscentricPage7Test {
 	private void fillDetails(FinancialAdviserDetails fad) {
 		fad.setFcaFirmNumber("839483");
 		fad.setRegisteredIndividual("Douglas Brodie");
-		fad.setFcaIndividualReferenceNumber("38595634");
 		fad.setFaceToFaceContact(true);
 		fad.setDate("25091989");
 	}

@@ -13,6 +13,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.Node;
@@ -24,11 +25,13 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBoxBuilder;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import ascentricClientDetails.ClientHolder;
 import ascentricClientDetails.IndividualDetails;
@@ -49,6 +52,7 @@ public class FirstApplicantIndividualDetails extends Page{
     private Button autoFillClientButton;
 	private String sceneT = "Client Personal Info";
 	private ComboBox<String> applicationType;
+	private CheckBox natInsTickClient;
 	
 	static {
 		instance = new FirstApplicantIndividualDetails();
@@ -331,7 +335,7 @@ public class FirstApplicantIndividualDetails extends Page{
         Label natInsTick = new Label("Tick if client has no national Insurance number");
         theLabels.add(email);
         grid.add(natInsTick, 1, 9);
-        CheckBox natInsTickClient = new CheckBox();
+        natInsTickClient = new CheckBox();
         natInsTickClient.setId("natInsTickClient");
         clientEmail.setPrefWidth(fieldWidth);
         grid.add(natInsTickClient, 2, 9);
@@ -458,7 +462,21 @@ public class FirstApplicantIndividualDetails extends Page{
 
 
 	@SuppressWarnings("unchecked")
-	protected void fillAndSaveClientInfo() {
+	protected void fillAndSaveClientInfo() throws Exception {
+
+		if(fieldMap.get("nas").getText().equals("") && !natInsTickClient.isSelected()){
+			System.out.println("null nas warning");
+			Stage dialogStage = new Stage();
+			dialogStage.initModality(Modality.WINDOW_MODAL);
+			dialogStage.setScene(new Scene(VBoxBuilder.create().
+					children(new Text("Warning! No national insurance number has been entered!\n"
+							+ "If the client has no NI number please tick the appropriate\nbox before"
+							+ " continuing.\n"), new Button("OK.")).
+					alignment(Pos.CENTER).padding(new Insets(5)).build()));
+			dialogStage.show();
+			throw new Exception();
+		}
+			
 		client.makeNewFirstClient();
 		
 		client.getFirstClient().setApplicationType(applicationType.getValue());

@@ -6,7 +6,6 @@ public class FinancialAdviserDetails{
 	private Charge tradingCharge;
 	private Charge ongoingAdviser;
 	
-	private String firmName = "Master Adviser";
 	private String fcaFirmNumber;
 	private String registeredIndividual;
 	private String fcaIndividualReferenceNumber;
@@ -38,12 +37,6 @@ public class FinancialAdviserDetails{
 	public void setOngoingAdviser(Charge ongoingAdviser) {
 		this.ongoingAdviser = ongoingAdviser;
 	}
-	public String getFirmName() {
-		return firmName;
-	}
-	public void setFirmName(String firmName) {
-		this.firmName = firmName;
-	}
 	public String getFcaFirmNumber() {
 		return fcaFirmNumber;
 	}
@@ -55,12 +48,37 @@ public class FinancialAdviserDetails{
 	}
 	public void setRegisteredIndividual(String registeredIndividual) {
 		this.registeredIndividual = registeredIndividual;
+		
+		switch(registeredIndividual){
+		
+		case "Mrs Jacalyn Karen Baker": 
+			fcaIndividualReferenceNumber = "JKB01086";
+			break;	
+		case "Mr Douglas David McFarlane Brodie":
+			fcaIndividualReferenceNumber = "DDB00002";
+			break;
+		case "Mr Paul Michael Grant":
+			fcaIndividualReferenceNumber = "PMG00013";
+			break;
+		case "Mr Richard Neil Higham":
+			fcaIndividualReferenceNumber = "RNH00010";
+			break;
+		case "Miss Natalie Victoria Lucy Hull":
+			fcaIndividualReferenceNumber = "NVH00005";
+			break;
+		case "Mr Roy McLoughlin":
+			fcaIndividualReferenceNumber = "RXM00129";
+			break;
+		case "Mr David Gordon Tom":
+			fcaIndividualReferenceNumber = "DXT00055";
+			break;
+		case "Mr Jeremy Bryce Watson":
+			fcaIndividualReferenceNumber = "JBW00013";
+			break;
+		}
 	}
 	public String getFcaIndividualReferenceNumber() {
 		return fcaIndividualReferenceNumber;
-	}
-	public void setFcaIndividualReferenceNumber(String fcaIndividualReferenceNumber) {
-		this.fcaIndividualReferenceNumber = fcaIndividualReferenceNumber;
 	}
 	public String getDate() {
 		return date;

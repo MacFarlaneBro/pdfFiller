@@ -5,13 +5,13 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -33,13 +33,13 @@ public class Main extends Application{
     }
     
     private double fieldWidth = 100d;
+	private ComboBox<String> registeredIndividual;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
         this.primaryStage = primaryStage;
         primaryStage.setTitle("PDF Filler 0.01");
         primaryStage.setMinWidth(500);
-        primaryStage.getIcons().add(new Image("\\M.JPEG"));
         
         GridPane grid = new GridPane();
         Scene firstScene = new Scene(grid, 300, 300);
@@ -54,6 +54,23 @@ public class Main extends Application{
         sceneTitle.setId("sceneTitle");
         sceneTitle.setLayoutX(20);
         grid.add(sceneTitle, 0, 0, 3, 1);
+        
+        grid.add(new Label("Select Registered Individual:"), 0, 2);
+		
+		 ObservableList<String> ri =
+	                FXCollections.observableArrayList(
+	                        "Mrs Jacalyn Karen Baker",
+	                        "Mr Douglas David McFarlane Brodie",
+	                        "Mr Paul Michael Grant",
+	                        "Mr Richard Neil Higham",
+	                        "Miss Natalie Victoria Lucy Hull",
+	                        "Mr Roy McLoughlin",
+	                        "Mr David Gordon Tom",
+	                        "Mr Jeremy Bryce Watson"
+	                );
+		registeredIndividual = new ComboBox<String>(ri);
+		GridPane.setHalignment(registeredIndividual, HPos.CENTER);
+    	grid.add(registeredIndividual, 1, 2, 2, 1);
 
         Label formType = new Label("Choose Form Type");
         grid.add(formType, 0, 3);
@@ -61,9 +78,7 @@ public class Main extends Application{
         //List of form types
         ObservableList<String> formTypes =
             FXCollections.observableArrayList(
-                    "Ascentric",
-                    "Standard Life",
-                    "Scot Prov"
+                    "Ascentric"
             );
         
         ComboBox<String> comboBox = 
@@ -92,6 +107,10 @@ public class Main extends Application{
             @Override
             public void handle(ActionEvent e){
             	client = ClientHolder.getInstance();
+            	client.makeNewFirstClient();
+            	client.getFirstClient().getfinancialAdviserDetails()
+            	.setRegisteredIndividual(registeredIndividual.getValue());
+            	
                 FirstApplicantIndividualDetails page1 = new FirstApplicantIndividualDetails();
                 page1.setUp(primaryStage, firstScene, client);
             }
