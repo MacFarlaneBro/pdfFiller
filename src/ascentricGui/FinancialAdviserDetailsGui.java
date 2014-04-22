@@ -51,7 +51,7 @@ public class FinancialAdviserDetailsGui extends Page {
         grid.setHgap(10);
         grid.setVgap(8);
         grid.setAlignment(Pos.CENTER);
-        grid.setGridLinesVisible(true);
+//        grid.setGridLinesVisible(true);
 
         setColumnSizes(grid, 3);
         setRowSizes(grid, 5, 12, 12, 30);

@@ -45,7 +45,10 @@ public abstract class ProductDetailsGui extends Page {
         set1stLayerLabels(grid);
         
         generate1stLayerFields(grid, "gia");
-        generate1stLayerFields(grid, "sas");
+        
+        if(!appType.equals("Joint")){
+        	generate1stLayerFields(grid, "sas");
+        }
         
         generate2ndLayerLabels(grid);
         generate2ndLayerFields(grid);
@@ -162,16 +165,21 @@ public abstract class ProductDetailsGui extends Page {
 		grid.add(generalInvestmentAccount, 1, ++gridVert, 2, 1);
 		enableDisableTextFields(generalInvestmentAccount);
 		
-		CheckBox stocksAndSharesISA = new CheckBox("Stocks & Shares ISA");
-		checkBoxes.put("sasCheckBox", stocksAndSharesISA);
-		stocksAndSharesISA.setId("sasCheckBox");
-		enableDisableTextFields(stocksAndSharesISA);
-		GridPane.setHalignment(stocksAndSharesISA, HPos.LEFT);
-		stocksAndSharesISA.setWrapText(true);
-		grid.add(stocksAndSharesISA, 1, ++gridVert, 2, 1);
-		enableDisableTextFields(stocksAndSharesISA);
+		if(!appType.equals("Joint")){
+			
+			CheckBox stocksAndSharesISA = new CheckBox("Stocks & Shares ISA");
+			checkBoxes.put("sasCheckBox", stocksAndSharesISA);
+			stocksAndSharesISA.setId("sasCheckBox");
+			enableDisableTextFields(stocksAndSharesISA);
+			GridPane.setHalignment(stocksAndSharesISA, HPos.LEFT);
+			stocksAndSharesISA.setWrapText(true);
+			grid.add(stocksAndSharesISA, 1, ++gridVert, 2, 1);
+			enableDisableTextFields(stocksAndSharesISA);
+			
+			gridVert--;
+		}
 		
-		gridVert--;
+		
 		
 		return textFields;
 		
@@ -239,7 +247,7 @@ public abstract class ProductDetailsGui extends Page {
 			gia.setDiscretionaryWrapper(checkBoxes.get("discgia").isSelected());
 		}
 		
-		if(checkBoxes.get("sasCheckBox").isSelected()){
+		if(!appType.equals("Joint") && checkBoxes.get("sasCheckBox").isSelected()){
 			pd.makeStocksAndSharesISA();
 			Wrapper sas = pd.getStocksAndSharesISA();
 			sas.setCash(textFields.get("sas0").getText());

@@ -74,7 +74,7 @@ public class SecondApplicantIndividualDetails extends Page{
         
         autoFillClientInfo(grid);
         
-        setColumnSizes(grid, 15);
+        setColumnSizes(grid, 15, 200, 200, 200, 200);
         setRowSizes(grid);
         
         movementButtons2Columns(true);
@@ -217,7 +217,7 @@ public class SecondApplicantIndividualDetails extends Page{
         checkBoxes = new HashMap<String, CheckBox>();
         
         CheckBox sameDetails = new CheckBox("If your contact details (including e-mail address)"
-        		+ "are the same as the first applicant, please tick this box.");
+        		+ " are the same as the first applicant, please tick this box.");
         sameDetails.setWrapText(true);
         sameDetails.setTranslateX(50);
         checkBoxes.put("sameDetails", sameDetails);
@@ -481,9 +481,9 @@ public class SecondApplicantIndividualDetails extends Page{
         grid.add(clientEmail, 4, gridVert);
         
         //Does the client have a national insurance number?
-        Label natInsTick = new Label("Tick if client has no national Insurance number");
+        Label natInsTick = new Label("Tick if client has no National Insurance Number:");
         theLabels.add(email);
-        grid.add(natInsTick, 1, 9);
+        grid.add(natInsTick, 1, 9, 2, 1);
         CheckBox natInsTickClient = new CheckBox();
         GridPane.setHalignment(natInsTickClient, HPos.CENTER);
         natInsTickClient.setId("natInsTickClient");

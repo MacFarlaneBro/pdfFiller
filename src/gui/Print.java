@@ -57,10 +57,10 @@ public class Print {
     	page.setColumnSizes(grid, 100, 100, 100, 100, 100, 100, 100);
         
         Label tf = new Label("You have now completed filling in the document,"
-        		+ "click Save to produce a finished document."
+        		+ " click 'Save Document' to produce a finished document."
         		+ " The document will then be opened in adobe acrobat"
         		+ " so that you may check it to make sure everything is correct"
-        		+ " and return to the home screen.");
+        		+ " before returning to the home screen.");
         
         grid.add(tf, 1, 1, 4, 1);
         tf.setWrapText(true);
