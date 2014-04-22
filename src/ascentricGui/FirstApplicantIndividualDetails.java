@@ -53,6 +53,7 @@ public class FirstApplicantIndividualDetails extends Page{
 	private String sceneT = "Client Personal Info";
 	private ComboBox<String> applicationType;
 	private CheckBox natInsTickClient;
+	private CheckBox facetoface;
 	
 	static {
 		instance = new FirstApplicantIndividualDetails();
@@ -201,6 +202,10 @@ public class FirstApplicantIndividualDetails extends Page{
     	
     	theFields = new HashSet<TextField>();
     	theLabels = new HashSet<Label>();
+    	
+    	facetoface = new CheckBox("Tick here if you have confirmed the clients identity\nin a face"
+    			+ " to face meeting");
+    	grid.add(facetoface, 3, 1, 2, 1);
         
         //Client First Name
         Label firstName = new Label("First name");
@@ -463,7 +468,9 @@ public class FirstApplicantIndividualDetails extends Page{
 
 	@SuppressWarnings("unchecked")
 	protected void fillAndSaveClientInfo() throws Exception {
-
+		
+		client.getFirstClient().getfinancialAdviserDetails().setFaceToFaceContact(facetoface.isSelected());
+		
 		if(fieldMap.get("nas").getText().equals("") && !natInsTickClient.isSelected()){
 			System.out.println("null nas warning");
 			Stage dialogStage = new Stage();
@@ -474,10 +481,7 @@ public class FirstApplicantIndividualDetails extends Page{
 							+ " continuing.\n"), new Button("OK.")).
 					alignment(Pos.CENTER).padding(new Insets(5)).build()));
 			dialogStage.show();
-			throw new Exception();
 		}
-			
-		client.makeNewFirstClient();
 		
 		client.getFirstClient().setApplicationType(applicationType.getValue());
 		

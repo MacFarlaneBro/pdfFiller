@@ -86,7 +86,7 @@ public class Print {
         
         actionTarget = new Text();
         actionTarget.setWrappingWidth(600);
-        grid.add(actionTarget, 1, 3, 6, 1);
+        grid.add(actionTarget, 1, 4, 6, 1);
         actionTarget.setFont(Font.font(null, FontWeight.BOLD, 15));
         createMovementButtons(3);
         thisScene = new Scene(grid, 900, 500);  
