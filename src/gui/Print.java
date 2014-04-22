@@ -49,8 +49,10 @@ public class Print {
         grid.setVgap(10);
         grid.setAlignment(Pos.CENTER);
         
+//        grid.setGridLinesVisible(true);
+        
 		save = new Button("Save Document");
-        grid.add(save, 3, 2, 2, 1);
+        grid.add(save, 4, 2, 2, 1);
 
     	Page page = new GenericPage();
     	page.setRowSizes(grid, 100, 100, 100, 100, 100);
@@ -88,7 +90,7 @@ public class Print {
         actionTarget.setWrappingWidth(600);
         grid.add(actionTarget, 1, 3, 6, 1);
         actionTarget.setFont(Font.font(null, FontWeight.BOLD, 15));
-        createMovementButtons(2);
+        createMovementButtons(3);
         thisScene = new Scene(grid, 900, 500);  
         primaryStage.setScene(thisScene);
         
@@ -115,12 +117,8 @@ public class Print {
 	public void createMovementButtons(int depth) {
 					    
 		Button backBtn = new Button("Back");//Create button with the name sign in
-        HBox hbBtn = new HBox(21);//Layout pane with 21 pixel spacing
-        hbBtn.setAlignment(Pos.CENTER);
         backBtn.setPrefWidth(100);
-        hbBtn.getChildren().add(backBtn);
-        GridPane.setValignment(backBtn, VPos.CENTER);
-       	grid.add(hbBtn, 1, depth, 1, 1);
+       	grid.add(backBtn, 1, depth, 1, 1);
         
         backBtn.setOnAction(new EventHandler<ActionEvent>(){
             
@@ -131,11 +129,9 @@ public class Print {
         });
         
         nextBtn = new Button("Home");//Create button with the name sign in
-        HBox hNextBtn = new HBox(21);//Layout pane with 21 pixel spacing
-        hNextBtn.setAlignment(Pos.BOTTOM_RIGHT);
         nextBtn.setPrefWidth(100);
-        hNextBtn.getChildren().add(nextBtn);
-        grid.add(hNextBtn, 4, depth);
+        grid.add(nextBtn, 4, depth);
+        
         nextBtn.setOnAction(new EventHandler<ActionEvent>(){
 
 			@Override
