@@ -4,6 +4,7 @@ import java.util.Map;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -14,6 +15,9 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
+import javafx.scene.layout.VBoxBuilder;
+import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import ascentricClientDetails.ClientHolder;
 
@@ -40,10 +44,31 @@ public abstract class Page {
 		movementButtonWidth = tf;
 	}
 	
+	/**
+	 * Creates a little warning pop up box alerting the user to something
+	 * @param warningString - The message that will appear in the warning box
+	 */
+	public void warning(String warningString){
+
+		System.out.println("Warning!");
+		final Stage warningStage = new Stage();
+		Button button = new Button("OK");
+		warningStage.setTitle("Warning!");
+		warningStage.initModality(Modality.WINDOW_MODAL);
+		warningStage.setScene(new Scene(VBoxBuilder.create().children(new Text(warningString), button).alignment(Pos.CENTER).padding(new Insets(5)).build()));
+				button.setOnAction(
+						new EventHandler<ActionEvent>(){
+							@Override
+							public void handle(ActionEvent arg0) {
+								warningStage.close();
+							}
+						}
+				);		
+		warningStage.show();
+	}
+	
 	public void createMovementButtons(int depth,int nextWidth) {
-		
-//		grid.setGridLinesVisible(true);
-			    
+					    
 		Button backBtn = new Button("Back");//Create button with the name sign in
         HBox hbBtn = new HBox(21);//Layout pane with 21 pixel spacing
         hbBtn.setAlignment(Pos.BOTTOM_LEFT);

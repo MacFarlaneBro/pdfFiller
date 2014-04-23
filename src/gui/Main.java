@@ -12,7 +12,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import ascentricClientDetails.ClientHolder;
@@ -34,15 +36,18 @@ public class Main extends Application{
     
     private double fieldWidth = 100d;
 	private ComboBox<String> registeredIndividual;
+	private Text actionTarget;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
         this.primaryStage = primaryStage;
-        primaryStage.setTitle("PDF Filler 0.01");
+        primaryStage.setTitle("PDF Filler 0.9");
         primaryStage.setMinWidth(500);
         
         GridPane grid = new GridPane();
         Scene firstScene = new Scene(grid, 300, 300);
+        
+        grid.getColumnConstraints().add(new ColumnConstraints(150));
         
         grid.setAlignment(Pos.CENTER);
         //sets the horizontal and vertical gaps around the border of the application
@@ -90,15 +95,18 @@ public class Main extends Application{
         go.setPrefWidth(fieldWidth);
         grid.add(go, 2, 3);
         
+        actionTarget = new Text("You must select a Registered Individual"
+        		+ " before continuing.");
+        actionTarget.setFill(Color.DARKRED);
+        actionTarget.setVisible(false);
+        grid.add(actionTarget, 0, 5, 3, 1);
         setUpFormFiller(go);
                
         primaryStage.show();
         this.firstScene = firstScene;
         
         primaryStage.setScene(firstScene);
-//        firstScene.getStylesheets().add(
-//                Page1.class//This must be the class that the stylesheet is styling
-//                .getResource("gui/Style.css").toExternalForm());
+
     }   
     
 	public void setUpFormFiller(Button btn){
@@ -106,13 +114,18 @@ public class Main extends Application{
             
             @Override
             public void handle(ActionEvent e){
-            	client = ClientHolder.getInstance();
-            	client.makeNewFirstClient();
-            	client.getFirstClient().getfinancialAdviserDetails()
-            	.setRegisteredIndividual(registeredIndividual.getValue());
             	
-                FirstApplicantIndividualDetails page1 = new FirstApplicantIndividualDetails();
-                page1.setUp(primaryStage, firstScene, client);
+            	if(registeredIndividual.getValue() == null){
+            		actionTarget.setVisible(true);
+            	} else {
+	            	client = ClientHolder.getInstance();
+	            	client.makeNewFirstClient();
+	            	client.getFirstClient().getfinancialAdviserDetails()
+	            	.setRegisteredIndividual(registeredIndividual.getValue());
+	            	
+	                FirstApplicantIndividualDetails page1 = new FirstApplicantIndividualDetails();
+	                page1.setUp(primaryStage, firstScene, client);
+            	}
             }
         });
     }

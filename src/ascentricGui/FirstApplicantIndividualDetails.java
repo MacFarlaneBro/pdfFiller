@@ -13,7 +13,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.Node;
@@ -25,13 +24,11 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBoxBuilder;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import ascentricClientDetails.ClientHolder;
 import ascentricClientDetails.IndividualDetails;
@@ -464,24 +461,66 @@ public class FirstApplicantIndividualDetails extends Page{
 		GetDatabase db = MSSQLDatabase.getDatabaseConnector();
 		firstnames = db.fetchInfoUsingName(clientSurname.getText());
 	}
+    
+    @Override
+    /**
+     * This method is overridden from the default so that a warning can be triggered if the next button is pressed
+     * while the national insurance field is blank and the "tick here if no national insurance number" check box remains 
+     * unselected, this is to stop people just clicking through the form without concentrating on what's actually going in
+     * to it.
+     */
+    public void createMovementButtons(int depth,int nextWidth) {
+	    
+		Button backBtn = new Button("Back");//Create button with the name sign in
+        HBox hbBtn = new HBox(21);//Layout pane with 21 pixel spacing
+        hbBtn.setAlignment(Pos.BOTTOM_LEFT);
+        backBtn.setPrefWidth(100);
+        hbBtn.getChildren().add(backBtn);
+    	grid.add(hbBtn, 0, depth, 2, 1);
+
+        backBtn.setOnAction(new EventHandler<ActionEvent>(){
+            
+            @Override
+            public void handle(ActionEvent e){
+                primaryStage.setScene(previousScene);
+            }
+        });
+        
+        Button nextBtn = new Button("Next");//Create button with the name sign in
+        HBox hNextBtn = new HBox(21);//Layout pane with 21 pixel spacing
+        hNextBtn.setAlignment(Pos.BOTTOM_RIGHT);
+        nextBtn.setPrefWidth(100);
+        hNextBtn.getChildren().add(nextBtn);
+        grid.add(hNextBtn, nextWidth-1, depth, 2, 1);
+        nextBtn.setOnAction(new EventHandler<ActionEvent>(){
+        	
+			@Override
+            public void handle(ActionEvent e){
+				//This hideous lump is where I make sure that the NI number is accounted for
+        		if(fieldMap.get("nas").getText().equals("")
+        				&& !natInsTickClient.isSelected()){
+        			
+        			warning("Warning! No national insurance number has been entered!\n"
+        							+ "If the client has no NI number please tick the appropriate\nbox before"
+        							+ " continuing.\n");
+        		} else {
+	            	try {		
+	            			fillAndSaveClientInfo();
+					} catch (Exception e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+	            	nextPage.setUp(primaryStage, thisScene, client);
+        		}
+            }
+        });	
+	}
 
 
 	@SuppressWarnings("unchecked")
 	protected void fillAndSaveClientInfo() throws Exception {
 		
 		client.getFirstClient().getfinancialAdviserDetails().setFaceToFaceContact(facetoface.isSelected());
-		
-		if(fieldMap.get("nas").getText().equals("") && !natInsTickClient.isSelected()){
-			System.out.println("null nas warning");
-			Stage dialogStage = new Stage();
-			dialogStage.initModality(Modality.WINDOW_MODAL);
-			dialogStage.setScene(new Scene(VBoxBuilder.create().
-					children(new Text("Warning! No national insurance number has been entered!\n"
-							+ "If the client has no NI number please tick the appropriate\nbox before"
-							+ " continuing.\n"), new Button("OK.")).
-					alignment(Pos.CENTER).padding(new Insets(5)).build()));
-			dialogStage.show();
-		}
 		
 		client.getFirstClient().setApplicationType(applicationType.getValue());
 		
