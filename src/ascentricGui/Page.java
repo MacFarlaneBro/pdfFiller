@@ -67,12 +67,8 @@ public abstract class Page {
 		warningStage.show();
 	}
 	
-	public void createMovementButtons(int depth, int nextWidth, String...warningString) {
-		
-		if(warningString!= null){
-			warning(warningString[0]);
-		}
-		
+	public void createMovementButtons(int depth, int nextWidth) {
+					    
 		Button backBtn = new Button("Back");//Create button with the name sign in
         HBox hbBtn = new HBox(21);//Layout pane with 21 pixel spacing
         hbBtn.setAlignment(Pos.BOTTOM_LEFT);
