@@ -518,7 +518,7 @@ public class FirstApplicantIndividualDetails extends Page{
      * to it, thus making the finished product invalid.
      */
     public void createMovementButtons(int depth,int nextWidth) {
-	    
+		
 		Button backBtn = new Button("Back");//Create button with the name sign in
         HBox hbBtn = new HBox(21);//Layout pane with 21 pixel spacing
         hbBtn.setAlignment(Pos.BOTTOM_LEFT);
@@ -545,7 +545,8 @@ public class FirstApplicantIndividualDetails extends Page{
 			@Override
             public void handle(ActionEvent e){
 				//This hideous lump is where I make sure that the NI number is accounted for
-        		if(clientData.get("nas").equals("")
+				System.out.println(fieldMap.get("nas").getText());
+        		if(fieldMap.get("nas").getText().equals("")
         				&& !natInsTickClient.isSelected()){
         			warning("Warning! No national insurance number has been entered!\n"
         							+ "If the client has no NI number please tick the appropriate\nbox before"
