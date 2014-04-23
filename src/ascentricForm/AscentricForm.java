@@ -18,7 +18,6 @@ import com.itextpdf.text.DocumentException;
 public class AscentricForm{
 	
 	private AscentricPage page;
-
 	
 	/*
 	 * Fills the page chosen by the calling class

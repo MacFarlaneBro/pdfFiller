@@ -40,6 +40,7 @@ public class FirstApplicantIndividualDetails extends Page{
 	public static final FirstApplicantIndividualDetails INSTANCE = new FirstApplicantIndividualDetails();
     private TextField clientSurname;
     private Node clientFirstName;
+    private Node postcode;
     private int gridVert = 2;
     private double fieldWidth = 221;
     private Set<Label> theLabels;
@@ -123,10 +124,13 @@ public class FirstApplicantIndividualDetails extends Page{
                 	} else {
                 		actionTarget.setFill(Color.BLUE);
                         actionTarget.setText("Finding Client Information");
-                         
-						getClientInfo();
-						fillClientInfo();
-						actionTarget.setFill(null);
+                        Map<String,String> info = getClientInfo();
+                        if(info.get("client0") == null){
+							fillClientInfo();
+							actionTarget.setFill(null);
+                        } else {
+                        	setPostCode(info);
+                        }
                 	}
 				} catch (InstantiationException | IllegalAccessException
 						| ClassNotFoundException | SQLException e2) {
@@ -139,6 +143,15 @@ public class FirstApplicantIndividualDetails extends Page{
         });
 	}
     
+	private void setPostCode(Map<String, String> info) {
+		ObservableList<String> postCodes =
+                FXCollections.observableArrayList(info.values());
+		postcode = new ComboBox<String>(postCodes);
+		((ComboBox<?>)postcode).setPrefWidth(fieldWidth);
+		grid.add(postcode, 2, 5);
+		
+	}
+
 	private void fillClientInfo() {
 		String holder;
 		int homeAddress = 1;
@@ -180,7 +193,7 @@ public class FirstApplicantIndividualDetails extends Page{
 			clientData = db.getClientPersonalData(clientSurname.getText() + '/' + ((ComboBox<String>)clientFirstName).getValue());
 		} catch (ClassCastException ex){
 			System.out.println("This is complaining because of the cast but really what I'm doing is fine. I think.");
-		}
+		}		
 		return clientData;
 	}
 

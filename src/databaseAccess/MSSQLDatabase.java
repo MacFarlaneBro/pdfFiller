@@ -15,7 +15,7 @@ import java.util.Set;
 public class MSSQLDatabase implements GetDatabase{
 	
 	private static MSSQLDatabase instance;
-	protected String url =  "jdbc:sqlserver://localhost;databaseName=Main1st;integratedSecurity=true";
+	protected String url = "jdbc:sqlserver://localhost;databaseName=Main1st;integratedSecurity=true";
 	protected String driver = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
 	protected String dbName;
 	protected String userName;
@@ -144,13 +144,13 @@ public class MSSQLDatabase implements GetDatabase{
 
 	@Override
 	public Map<String, String> getClientPersonalData(String name) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
-		Class.forName(driver).newInstance();
+		  Class.forName(driver).newInstance();
 	      conn = DriverManager.getConnection(url);
 	      
 	      System.out.println("Connected to MSSQL Database");
 	      System.out.println(name);
 	      
-	      Statement st = conn.createStatement();
+	      Statement st = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 	      String[] names = name.split("/");
 	      
 	      String query = "SELECT * FROM Clients WHERE Surname = '";
@@ -165,35 +165,46 @@ public class MSSQLDatabase implements GetDatabase{
 	    		+ "';");
 	      
 	      Map<String,String> pData = new HashMap<String, String>();
-	      while(rs.next()){
-		      pData.put("Title", rs.getString("Title"));
-		      //Removing the time portion of the date object returned by the database before adding it to the map
-		      
-		      String dob = null;
-		      if(rs.getString("DOB")!= null){
-		    	  dob = rs.getString("DOB").substring(0,10);
+	      
+	      if(rs.isLast()){
+		     System.out.println("No Dupes");
+		     rs.beforeFirst();
+		      while(rs.next()){
+		    	  System.out.println("No Dupes");
+			      pData.put("Title", rs.getString("Title"));
+			      //Removing the time portion of the date object returned by the database before adding it to the map
+			      
+			      String dob = null;
+			      if(rs.getString("DOB")!= null){
+			    	  dob = rs.getString("DOB").substring(0,10);
+			      }
+			      pData.put("ForeNames", "ForeNames");
+			      pData.put("Surname", "Surname");
+			      pData.put("DOB", dob);
+			      pData.put("HomeTel", rs.getString("HomeTel"));
+			      pData.put("WorkTel", rs.getString("BusTel"));
+			      pData.put("Mobile", rs.getString("MobTel"));
+			      pData.put("HomeAddress1", rs.getString("HomeAddress1"));
+			      pData.put("HomeAddress2", rs.getString("HomeAddress2"));
+			      pData.put("HomeAddress3", rs.getString("HomeAddress3"));
+			      pData.put("HomeAddress4", rs.getString("HomeAddress4"));
+			      pData.put("HomeAddress5", rs.getString("HomeAddress5"));
+			      pData.put("HomePostCode", rs.getString("HomePostCode"));
+			      pData.put("Email", rs.getString("EmailAddress"));
+			      pData.put("PartnerFirstName", rs.getString("PartnerForenames"));
+			      pData.put("PartnerSurname", rs.getString("PartnerSurname"));
+			      cliRef = rs.getInt("clientRef");
+			      getNationalInsuranceNumber(pData, cliRef);
 		      }
-		      pData.put("ForeNames", "ForeNames");
-		      pData.put("Surname", "Surname");
-		      pData.put("DOB", dob);
-		      pData.put("HomeTel", rs.getString("HomeTel"));
-		      pData.put("WorkTel", rs.getString("BusTel"));
-		      pData.put("Mobile", rs.getString("MobTel"));
-		      pData.put("HomeAddress1", rs.getString("HomeAddress1"));
-		      pData.put("HomeAddress2", rs.getString("HomeAddress2"));
-		      pData.put("HomeAddress3", rs.getString("HomeAddress3"));
-		      pData.put("HomeAddress4", rs.getString("HomeAddress4"));
-		      pData.put("HomeAddress5", rs.getString("HomeAddress5"));
-		      pData.put("HomePostCode", rs.getString("HomePostCode"));
-		      pData.put("Email", rs.getString("EmailAddress"));
-		      pData.put("PartnerFirstName", rs.getString("PartnerForenames"));
-		      pData.put("PartnerSurname", rs.getString("PartnerSurname"));
-		      cliRef = rs.getInt("clientRef");
+	      } else {
+	    	  System.out.println("Dupes");
+
+	    	  int i = 0;
+	    	  while(rs.next()){
+	    		  pData.put("client" + i, rs.getString("HomePostCode"));
+	    	  }
 	      }
 	      
-	      
-	      getNationalInsuranceNumber(pData, cliRef);
-	      		
 	      if(!conn.equals(null)){
 	    	  conn.close();
 	    	  System.out.println("disconnected from mySQL Database");
