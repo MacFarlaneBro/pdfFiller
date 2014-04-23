@@ -83,4 +83,10 @@ public abstract class AscentricPage {
 		return pageNumber + FORM;
 		
 	}
+
+	public void skipPage(int pageNumber) throws IOException, DocumentException {
+		setUp(pageNumber);
+		shutDown();
+		
+	}
 }

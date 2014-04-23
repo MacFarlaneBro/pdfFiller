@@ -38,7 +38,7 @@ public class AscentricForm{
 		} else {
 			//TODO change the name of page 1, rather than unnecessarily filling a blank page 2
 			page = new AscentricPage2();
-			page.fillPage(new Client("second"));
+			page.skipPage(2);
 		}
 		
 		page = new AscentricPage3();
