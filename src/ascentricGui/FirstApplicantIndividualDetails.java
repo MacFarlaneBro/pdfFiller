@@ -90,7 +90,9 @@ public class FirstApplicantIndividualDetails extends Page{
         autoFillClientInfo(grid);
         
         movementButtons2Columns(true);
-        createMovementButtons(12, 5);
+        createMovementButtons(12, 5, "Warning! No national insurance number has been entered!\n"
+				+ "If the client has no NI number please tick the appropriate\nbox before"
+				+ " continuing.\n");
 
         primaryStage.setScene(thisScene);
         
@@ -462,61 +464,7 @@ public class FirstApplicantIndividualDetails extends Page{
 		firstnames = db.fetchInfoUsingName(clientSurname.getText());
 	}
     
-    @Override
-    /**
-     * This method is overridden from the default so that a warning can be triggered if the next button is pressed
-     * while the national insurance field is blank and the "tick here if no national insurance number" check box remains 
-     * unselected, this is to stop people just clicking through the form without concentrating on what's actually going in
-     * to it.
-     */
-    public void createMovementButtons(int depth,int nextWidth) {
-	    
-		Button backBtn = new Button("Back");//Create button with the name sign in
-        HBox hbBtn = new HBox(21);//Layout pane with 21 pixel spacing
-        hbBtn.setAlignment(Pos.BOTTOM_LEFT);
-        backBtn.setPrefWidth(100);
-        hbBtn.getChildren().add(backBtn);
-    	grid.add(hbBtn, 0, depth, 2, 1);
-
-        backBtn.setOnAction(new EventHandler<ActionEvent>(){
-            
-            @Override
-            public void handle(ActionEvent e){
-                primaryStage.setScene(previousScene);
-            }
-        });
-        
-        Button nextBtn = new Button("Next");//Create button with the name sign in
-        HBox hNextBtn = new HBox(21);//Layout pane with 21 pixel spacing
-        hNextBtn.setAlignment(Pos.BOTTOM_RIGHT);
-        nextBtn.setPrefWidth(100);
-        hNextBtn.getChildren().add(nextBtn);
-        grid.add(hNextBtn, nextWidth-1, depth, 2, 1);
-        nextBtn.setOnAction(new EventHandler<ActionEvent>(){
-        	
-			@Override
-            public void handle(ActionEvent e){
-				//This hideous lump is where I make sure that the NI number is accounted for
-        		if(fieldMap.get("nas").getText().equals("")
-        				&& !natInsTickClient.isSelected()){
-        			
-        			warning("Warning! No national insurance number has been entered!\n"
-        							+ "If the client has no NI number please tick the appropriate\nbox before"
-        							+ " continuing.\n");
-        		} else {
-	            	try {		
-	            			fillAndSaveClientInfo();
-					} catch (Exception e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-	            	nextPage.setUp(primaryStage, thisScene, client);
-        		}
-            }
-        });	
-	}
-
-
+   
 	@SuppressWarnings("unchecked")
 	protected void fillAndSaveClientInfo() throws Exception {
 		

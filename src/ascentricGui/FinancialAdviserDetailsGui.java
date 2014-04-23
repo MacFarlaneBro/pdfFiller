@@ -267,7 +267,7 @@ public class FinancialAdviserDetailsGui extends Page {
 		}
 	}
 	
-	@Override
+	
 	public void createMovementButtons(int depth,int nextWidth) {
 	    
 		Button backBtn = new Button("Back");//Create button with the name sign in
