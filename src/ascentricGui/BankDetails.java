@@ -58,7 +58,7 @@ public class BankDetails extends Page{
         if(type.equals("first") && client.getSecondClient()!= null){
         	nextPage = new BankDetails("second");
         } else {
-        	nextPage = new IncomePayment();
+        	nextPage = IncomePayment.INSTANCE;
         }
         
         createMovementButtons(12, 7);

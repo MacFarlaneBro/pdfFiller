@@ -21,9 +21,12 @@ import ascentricClientDetails.ClientHolder;
 
 public class IncomePayment extends Page {
 
+	public static final IncomePayment INSTANCE = new IncomePayment();
 	private ComboBox<String> timing;
 	private ComboBox<String> natTiming;
 
+	private IncomePayment(){}
+	
 	@Override
 	public void setUp(Stage primaryStage, Scene firstScene, ClientHolder client) {
 
@@ -48,7 +51,7 @@ public class IncomePayment extends Page {
         
         createFields(grid);
         
-        nextPage = FinancialAdviserDetailsGui.getInstance();
+        nextPage = FinancialAdviserDetailsGui.INSTANCE;
         
         movementButtons2Columns(true);
         createMovementButtons(12, 6);

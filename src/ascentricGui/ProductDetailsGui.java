@@ -69,7 +69,7 @@ public abstract class ProductDetailsGui extends Page {
         gridVert++;
         
         if(appType.equals("First") && client.getSecondClient()!= null){
-        	nextPage = new SecondProductDetails();
+        	nextPage = SecondProductDetails.INSTANCE;
         } else {
         	nextPage = new BankDetails("first");
         }

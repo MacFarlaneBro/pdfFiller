@@ -7,9 +7,10 @@ import javafx.scene.text.Text;
 
 public class FirstProductDetails extends ProductDetailsGui {
 	
+	public static final FirstProductDetails INSTANCE = new FirstProductDetails();
 	public final String pageTitle = "Product Details - First Client";	
 	
-	public FirstProductDetails(){
+	private FirstProductDetails(){
 		appType = "First";
 	}
 	

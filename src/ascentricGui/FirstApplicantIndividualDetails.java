@@ -37,6 +37,7 @@ import databaseAccess.MSSQLDatabase;
  
 public class FirstApplicantIndividualDetails extends Page{
     
+	public static final FirstApplicantIndividualDetails INSTANCE = new FirstApplicantIndividualDetails();
     private TextField clientSurname;
     private Node clientFirstName;
     private int gridVert = 2;
@@ -52,13 +53,7 @@ public class FirstApplicantIndividualDetails extends Page{
 	private CheckBox natInsTickClient;
 	private CheckBox facetoface;
 	
-	static {
-		instance = new FirstApplicantIndividualDetails();
-	}
-	
-	public static Page getInstance(){
-		return instance;
-	}
+	private FirstApplicantIndividualDetails(){}
 
 	/*
     The start method is the entry point for all javaFX applications, the main
@@ -103,7 +98,6 @@ public class FirstApplicantIndividualDetails extends Page{
         
     }
 
-    
     private void autoFillClientInfo(GridPane grid) {
     	autoFillClientButton = new Button("Fill Personal Information");//Create button with the name sign in
     	autoFillClientButton.setVisible(false);
@@ -177,7 +171,6 @@ public class FirstApplicantIndividualDetails extends Page{
 		}
 	}
 	
-
 	@SuppressWarnings("unchecked")
 	private Map<String, String> getClientInfo() throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
 		GetDatabase db = MSSQLDatabase.getDatabaseConnector();
@@ -343,7 +336,6 @@ public class FirstApplicantIndividualDetails extends Page{
         grid.add(natInsTickClient, 2, 9);
 	}
 
-
 	/*
     the numbers in the grid.add() method specify the number of rows and columns
     in the the gridpane. These rows and columns are dynamically added with the
@@ -393,9 +385,9 @@ public class FirstApplicantIndividualDetails extends Page{
 		 comboBox.valueProperty().addListener(new ChangeListener<String>() {
 	            @Override public void changed(ObservableValue<? extends String> ov, String t, String t1) {                
 	               if(t1.equals("Single Client")){
-	            	   nextPage = AccessRightsFamilyGroups.getInstance();
+	            	   nextPage = AccessRightsFamilyGroups.INSTANCE;
 	               } else {
-	            	   nextPage = SecondApplicantIndividualDetails.getInstance();
+	            	   nextPage = SecondApplicantIndividualDetails.INSTANCE;
 	               }
 	            }    
 	        });
@@ -462,60 +454,6 @@ public class FirstApplicantIndividualDetails extends Page{
 		firstnames = db.fetchInfoUsingName(clientSurname.getText());
 	}
     
-    @Override
-    /**
-     * This method is overridden from the default so that a warning can be triggered if the next button is pressed
-     * while the national insurance field is blank and the "tick here if no national insurance number" check box remains 
-     * unselected, this is to stop people just clicking through the form without concentrating on what's actually going in
-     * to it.
-     */
-    public void createMovementButtons(int depth,int nextWidth) {
-	    
-		Button backBtn = new Button("Back");//Create button with the name sign in
-        HBox hbBtn = new HBox(21);//Layout pane with 21 pixel spacing
-        hbBtn.setAlignment(Pos.BOTTOM_LEFT);
-        backBtn.setPrefWidth(100);
-        hbBtn.getChildren().add(backBtn);
-    	grid.add(hbBtn, 0, depth, 2, 1);
-
-        backBtn.setOnAction(new EventHandler<ActionEvent>(){
-            
-            @Override
-            public void handle(ActionEvent e){
-                primaryStage.setScene(previousScene);
-            }
-        });
-        
-        Button nextBtn = new Button("Next");//Create button with the name sign in
-        HBox hNextBtn = new HBox(21);//Layout pane with 21 pixel spacing
-        hNextBtn.setAlignment(Pos.BOTTOM_RIGHT);
-        nextBtn.setPrefWidth(100);
-        hNextBtn.getChildren().add(nextBtn);
-        grid.add(hNextBtn, nextWidth-1, depth, 2, 1);
-        nextBtn.setOnAction(new EventHandler<ActionEvent>(){
-        	
-			@Override
-            public void handle(ActionEvent e){
-				//This hideous lump is where I make sure that the NI number is accounted for
-        		if(fieldMap.get("nas").getText().equals("")
-        				&& !natInsTickClient.isSelected()){
-        			warning("Warning! No national insurance number has been entered!\n"
-        							+ "If the client has no NI number please tick the appropriate\nbox before"
-        							+ " continuing.\n");
-        		} else {
-	            	try {		
-	            			fillAndSaveClientInfo();
-					} catch (Exception e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-	            	nextPage.setUp(primaryStage, thisScene, client);
-        		}
-            }
-        });	
-	}
-
-
 	@SuppressWarnings("unchecked")
 	protected void fillAndSaveClientInfo() throws Exception {
 		
@@ -570,6 +508,58 @@ public class FirstApplicantIndividualDetails extends Page{
 		id.setPostcode(fieldMap.get("HomePostCode").getText());
 		id.setEmail(fieldMap.get("Email").getText());
 		}
+	}
+	
+	@Override
+    /**
+     * This method is overridden from the default so that a warning can be triggered if the next button is pressed
+     * while the national insurance field is blank and the "tick here if no national insurance number" check box remains 
+     * unselected, this is to stop people just clicking through the form without concentrating on what's actually going in
+     * to it, thus making the finished product invalid.
+     */
+    public void createMovementButtons(int depth,int nextWidth) {
+	    
+		Button backBtn = new Button("Back");//Create button with the name sign in
+        HBox hbBtn = new HBox(21);//Layout pane with 21 pixel spacing
+        hbBtn.setAlignment(Pos.BOTTOM_LEFT);
+        backBtn.setPrefWidth(100);
+        hbBtn.getChildren().add(backBtn);
+    	grid.add(hbBtn, 0, depth, 2, 1);
+
+        backBtn.setOnAction(new EventHandler<ActionEvent>(){
+            
+            @Override
+            public void handle(ActionEvent e){
+                primaryStage.setScene(previousScene);
+            }
+        });
+        
+        Button nextBtn = new Button("Next");//Create button with the name sign in
+        HBox hNextBtn = new HBox(21);//Layout pane with 21 pixel spacing
+        hNextBtn.setAlignment(Pos.BOTTOM_RIGHT);
+        nextBtn.setPrefWidth(100);
+        hNextBtn.getChildren().add(nextBtn);
+        grid.add(hNextBtn, nextWidth-1, depth, 2, 1);
+        nextBtn.setOnAction(new EventHandler<ActionEvent>(){
+        	
+			@Override
+            public void handle(ActionEvent e){
+				//This hideous lump is where I make sure that the NI number is accounted for
+        		if(clientData.get("nas").equals("")
+        				&& !natInsTickClient.isSelected()){
+        			warning("Warning! No national insurance number has been entered!\n"
+        							+ "If the client has no NI number please tick the appropriate\nbox before"
+        							+ " continuing.\n");
+        		} else {
+	            	try {		
+	            			fillAndSaveClientInfo();
+					} catch (Exception e1) {
+						e1.printStackTrace();
+					}
+	            	nextPage.setUp(primaryStage, thisScene, client);
+        		}
+            }
+        });	
 	}
 
 }

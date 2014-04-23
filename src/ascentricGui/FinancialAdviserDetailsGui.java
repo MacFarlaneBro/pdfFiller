@@ -27,17 +27,10 @@ import ascentricClientDetails.TradingCharge;
 
 public class FinancialAdviserDetailsGui extends Page {
 	
-	private static Page instance;
+	public static final FinancialAdviserDetailsGui INSTANCE = new FinancialAdviserDetailsGui();
+	
 	@SuppressWarnings("unused")
 	private Print nextPage;
-	
-	static{
-		instance = new FinancialAdviserDetailsGui();
-	}
-	
-	public static Page getInstance(){
-		return instance;
-	}
 	
 	private FinancialAdviserDetailsGui(){}
 

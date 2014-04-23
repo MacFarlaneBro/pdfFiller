@@ -123,8 +123,7 @@ public class Main extends Application{
 	            	client.getFirstClient().getfinancialAdviserDetails()
 	            	.setRegisteredIndividual(registeredIndividual.getValue());
 	            	
-	                FirstApplicantIndividualDetails page1 = new FirstApplicantIndividualDetails();
-	                page1.setUp(primaryStage, firstScene, client);
+	                FirstApplicantIndividualDetails.INSTANCE.setUp(primaryStage, firstScene, client);
             	}
             }
         });

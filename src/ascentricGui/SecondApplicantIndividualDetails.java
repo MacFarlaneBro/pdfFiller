@@ -35,7 +35,8 @@ import databaseAccess.GetDatabase;
 import databaseAccess.MSSQLDatabase;
 
 public class SecondApplicantIndividualDetails extends Page{
-
+	
+	public static final SecondApplicantIndividualDetails INSTANCE = new SecondApplicantIndividualDetails();
     private TextField clientSurname;
     private Node clientFirstName;
     private int gridVert = 2;
@@ -46,10 +47,9 @@ public class SecondApplicantIndividualDetails extends Page{
     private Map<String, String> clientData;
     private Button autoFillClientButton;
 	private String sceneT = "Partner Personal Info";
-
-	static { 
-		instance = new SecondApplicantIndividualDetails();
-	}
+	private CheckBox natInsTickClient;
+	
+	private SecondApplicantIndividualDetails(){}
 	
 	public void setUp(Stage primaryStage, Scene previousScene, ClientHolder client) {
 		this.client = client;
@@ -64,7 +64,7 @@ public class SecondApplicantIndividualDetails extends Page{
         
         thisScene = new Scene(grid, pageWidth, pageHeight);
         
-        nextPage = AccessRightsFamilyGroups.getInstance();
+        nextPage = AccessRightsFamilyGroups.INSTANCE;
         		
         createAutoFillFields(grid);
         
@@ -183,7 +183,6 @@ public class SecondApplicantIndividualDetails extends Page{
 		return clientData;
 	}
 
-
 	/*
     the numbers in the grid.add() method specify the number of rows and columns
     in the the gridpane. These rows and columns are dynamically added with the
@@ -246,7 +245,7 @@ public class SecondApplicantIndividualDetails extends Page{
             @Override
             public void handle(ActionEvent e){
                 try {
-                	if(clientSurname.getText().equals("")){
+                	if(clientSurname.getText().equals("")|| clientSurname.getText() == null){
                 		actionTarget.setFill(Color.FIREBRICK);
                 		actionTarget.setText("Please enter a surname to search for client");
                 	} else {
@@ -484,15 +483,63 @@ public class SecondApplicantIndividualDetails extends Page{
         Label natInsTick = new Label("Tick if client has no National Insurance Number:");
         theLabels.add(email);
         grid.add(natInsTick, 1, 9, 2, 1);
-        CheckBox natInsTickClient = new CheckBox();
+        natInsTickClient = new CheckBox();
         GridPane.setHalignment(natInsTickClient, HPos.CENTER);
         natInsTickClient.setId("natInsTickClient");
         clientEmail.setPrefWidth(fieldWidth);
         grid.add(natInsTickClient, 2, 9);
 	}
+	
+	 @Override
+	    /**
+	     * This method is overridden from the default so that a warning can be triggered if the next button is pressed
+	     * while the national insurance field is blank and the "tick here if no national insurance number" check box remains 
+	     * unselected, this is to stop people just clicking through the form without concentrating on what's actually going in
+	     * to it, thus making the finished product invalid.
+	     */
+	    public void createMovementButtons(int depth,int nextWidth) {
+		    
+			Button backBtn = new Button("Back");//Create button with the name sign in
+	        HBox hbBtn = new HBox(21);//Layout pane with 21 pixel spacing
+	        hbBtn.setAlignment(Pos.BOTTOM_LEFT);
+	        backBtn.setPrefWidth(100);
+	        hbBtn.getChildren().add(backBtn);
+	    	grid.add(hbBtn, 0, depth, 2, 1);
 
-
-	public static Page getInstance() {
-		return instance;
-	}
+	        backBtn.setOnAction(new EventHandler<ActionEvent>(){
+	            
+	            @Override
+	            public void handle(ActionEvent e){
+	                primaryStage.setScene(previousScene);
+	            }
+	        });
+	        
+	        Button nextBtn = new Button("Next");//Create button with the name sign in
+	        HBox hNextBtn = new HBox(21);//Layout pane with 21 pixel spacing
+	        hNextBtn.setAlignment(Pos.BOTTOM_RIGHT);
+	        nextBtn.setPrefWidth(100);
+	        hNextBtn.getChildren().add(nextBtn);
+	        grid.add(hNextBtn, nextWidth-1, depth, 2, 1);
+	        nextBtn.setOnAction(new EventHandler<ActionEvent>(){
+	        	
+				@Override
+	            public void handle(ActionEvent e){
+					//This hideous lump is where I make sure that the NI number is accounted for
+	        		if(clientData.get("nas").equals("")
+	        				&& !natInsTickClient.isSelected()){
+	        			warning("Warning! No national insurance number has been entered!\n"
+	        							+ "If the client has no NI number please tick the appropriate\nbox before"
+	        							+ " continuing.\n");
+	        		} else {
+		            	try {		
+		            			fillAndSaveClientInfo();
+						} catch (Exception e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+		            	nextPage.setUp(primaryStage, thisScene, client);
+	        		}
+	            }
+	        });	
+		}
 }

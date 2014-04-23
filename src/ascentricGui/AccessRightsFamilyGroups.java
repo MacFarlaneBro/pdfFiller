@@ -18,16 +18,10 @@ import ascentricClientDetails.IndividualDetails;
 
 public class AccessRightsFamilyGroups extends Page {
 
+	public static final AccessRightsFamilyGroups INSTANCE = new AccessRightsFamilyGroups();
 	private TextField cliRefNum;
 
-	static { 
-		instance = new AccessRightsFamilyGroups();
-	}
-	
-	public static Page getInstance(){
-		instance = new AccessRightsFamilyGroups();
-		return instance;
-	}
+	private AccessRightsFamilyGroups(){}
 
 	@Override
 	public void setUp(Stage primaryStage, Scene firstScene, ClientHolder client) {
@@ -46,9 +40,9 @@ public class AccessRightsFamilyGroups extends Page {
         thisScene = new Scene(grid, pageWidth, pageHeight);
         
         if(client.getJointAccount() == null){
-        	nextPage = new FirstProductDetails();
+        	nextPage = FirstProductDetails.INSTANCE;
         } else {
-        	nextPage = new JointProductDetails();
+        	nextPage = JointProductDetails.INSTANCE;
         }
         
         createFields(grid);

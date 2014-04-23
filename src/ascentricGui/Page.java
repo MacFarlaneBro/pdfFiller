@@ -34,7 +34,6 @@ public abstract class Page {
 	protected Map<String, CheckBox> checkBoxes;
 	protected Map<String, TextField> textFields;
 	private Boolean movementButtonWidth = false;
-	protected static Page instance;
 	
 	public abstract void setUp(Stage primaryStage, Scene previousScene, ClientHolder client);
 	

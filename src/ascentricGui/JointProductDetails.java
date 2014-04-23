@@ -7,8 +7,10 @@ import javafx.scene.text.Text;
 
 public class JointProductDetails extends ProductDetailsGui {
 
+	public static final JointProductDetails INSTANCE = new JointProductDetails();
 	private String pageTitle = "Product Details - Joint Account";
-	public JointProductDetails(){
+	
+	private JointProductDetails(){
 		appType = "Joint";
 	}
 	
