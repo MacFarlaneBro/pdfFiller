@@ -65,12 +65,18 @@ public class AccessRightsFamilyGroups extends Page {
     	Label singleApp  = new Label("Single Applicant");
     	grid.add(singleApp, 2, gridVert);
     	GridPane.setHalignment(singleApp, HPos.CENTER);
-    	Label secondApp  = new Label("Second Applicant");
-    	grid.add(secondApp, 3, gridVert);
-    	GridPane.setHalignment(secondApp, HPos.CENTER);
-    	Label jointApp  = new Label("Joint Account");
-    	grid.add(jointApp, 4, gridVert);
-    	GridPane.setHalignment(jointApp, HPos.CENTER);
+    	
+    	if(client.getSecondClient()!= null){
+	    	Label secondApp  = new Label("Second Applicant");
+	    	grid.add(secondApp, 3, gridVert);
+	    	GridPane.setHalignment(secondApp, HPos.CENTER);
+    	}
+    	
+    	if(client.getJointAccount()!= null){
+	    	Label jointApp  = new Label("Joint Account");
+	    	grid.add(jointApp, 4, gridVert);
+	    	GridPane.setHalignment(jointApp, HPos.CENTER);
+    	}
     	
         //Label for first row of checkboxes
         Label noOnlineAccess = new Label("No Online Access");
@@ -155,21 +161,23 @@ public class AccessRightsFamilyGroups extends Page {
 		singleApp.setId("SingleApp" + row);
 		singleApp.setSelected(false);
 		checkBoxes.put("SingleApp" + row, singleApp);
-
-		CheckBox secondApp = new CheckBox();
-		GridPane.setHalignment(secondApp, HPos.CENTER);
-		grid.add(secondApp, 3, gridVert);
-		secondApp.setId("SecondApp" + row);
-		singleApp.setSelected(false);
-		checkBoxes.put("SecondApp" + row, secondApp);
 		
-		CheckBox jointAcc = new CheckBox();
-		GridPane.setHalignment(jointAcc, HPos.CENTER);
-		grid.add(jointAcc, 4, gridVert);
-		jointAcc.setId("JointAcc" + row);
-		singleApp.setSelected(false);
-		checkBoxes.put("JointAcc" + row, jointAcc);
-		
+		if(client.getSecondClient()!= null){
+			CheckBox secondApp = new CheckBox();
+			GridPane.setHalignment(secondApp, HPos.CENTER);
+			grid.add(secondApp, 3, gridVert);
+			secondApp.setId("SecondApp" + row);
+			singleApp.setSelected(false);
+			checkBoxes.put("SecondApp" + row, secondApp);
+		}
+		if(client.getJointAccount()!= null){
+			CheckBox jointAcc = new CheckBox();
+			GridPane.setHalignment(jointAcc, HPos.CENTER);
+			grid.add(jointAcc, 4, gridVert);
+			jointAcc.setId("JointAcc" + row);
+			singleApp.setSelected(false);
+			checkBoxes.put("JointAcc" + row, jointAcc);
+		}
 	}
 
 }

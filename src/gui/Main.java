@@ -55,7 +55,7 @@ public class Main extends Application{
         grid.setVgap(10);
         grid.setPadding(new Insets(25, 25, 25, 25));
         
-        Text sceneTitle = new Text("Welcome to the PDF Filler mark 0.01");
+        Text sceneTitle = new Text("Welcome to the PDF Filler mark 0.9");
         sceneTitle.setId("sceneTitle");
         sceneTitle.setLayoutX(20);
         grid.add(sceneTitle, 0, 0, 3, 1);
@@ -88,6 +88,7 @@ public class Main extends Application{
         
         ComboBox<String> comboBox = 
         		new ComboBox<String>(formTypes);
+        comboBox.setPromptText("Ascentric");
         comboBox.setPrefWidth(fieldWidth);
         grid.add(comboBox, 1, 3);
         
@@ -118,6 +119,7 @@ public class Main extends Application{
             	if(registeredIndividual.getValue() == null){
             		actionTarget.setVisible(true);
             	} else {
+            		actionTarget.setVisible(false);
 	            	client = ClientHolder.getInstance();
 	            	client.makeNewFirstClient();
 	            	client.getFirstClient().getfinancialAdviserDetails()

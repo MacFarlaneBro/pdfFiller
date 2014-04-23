@@ -106,6 +106,8 @@ public class FirstApplicantIndividualDetails extends Page{
         hbBtn.getChildren().add(autoFillClientButton);
         grid.add(hbBtn, 3, 2);
         
+        gridVert = 1;
+        
         final Text actionTarget = new Text();
         grid.add(actionTarget, 2, ++gridVert);
         autoFillClientButton.setOnAction(new EventHandler<ActionEvent>(){

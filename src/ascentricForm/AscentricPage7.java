@@ -62,13 +62,14 @@ public class AscentricPage7 extends AscentricPage {
 				}
 			}
 		} else {
-			SimpleDateFormat df = new SimpleDateFormat("ddMMyyyy");
+			SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 			String date = df.format(new Date());
-			
 			stamp(temp, formHeight-206, date.charAt(0) + "");
-			for(int i = 1; i < date.length(); i++){
-				if(i %2 == 0 && i < 5){
-					stamp(temp+=35, formHeight-206, fad.getDate().charAt(i) + "");
+			System.out.println(date.length());
+			for(int i = 1,n = date.length(); i < n; i++){
+				System.out.println(n);
+				if(date.charAt(i) == '/'){
+					temp+=17;
 				} else {
 					stamp(temp+=20, formHeight-206, date.charAt(i) + "");
 				}

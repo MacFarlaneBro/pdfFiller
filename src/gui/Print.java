@@ -102,6 +102,8 @@ public class Print {
 			af.fillIt(client, file);
 			Desktop dt = Desktop.getDesktop();
 			dt.open(file);
+			actionTarget.setFill(Color.BLACK);
+			actionTarget.setText("Document Filled!");
 		} catch (IOException | DocumentException e) {
     		actionTarget.setFill(Color.FIREBRICK);
     		actionTarget.setText("The document has failed to fill, please check to see if a previous instance of the"
