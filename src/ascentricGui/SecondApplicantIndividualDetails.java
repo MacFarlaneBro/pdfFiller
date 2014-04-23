@@ -321,8 +321,8 @@ public class SecondApplicantIndividualDetails extends Page{
 			id.setDob(clientData.get("DOB").replace("/", ""));
 		}
 		
-		if(clientData.get("NationalInsuranceNumber") != null){
-			id.setNationalInsuranceNumber(clientData.get("NationalInsuranceNumber").replaceAll("-", ""));
+		if(clientData.get("nas") != null){
+			id.setNationalInsuranceNumber(clientData.get("nas").replaceAll("-", ""));
 		}
 		
 		if(checkBoxes.get("sameDetails").isSelected()){
@@ -397,7 +397,7 @@ public class SecondApplicantIndividualDetails extends Page{
         theLabels.add(natIns);
         grid.add(natIns, 1, ++gridVert);
         TextField clientNatIns = new TextField();
-        clientNatIns.setId("NationalInsuranceNumber");
+        clientNatIns.setId("nas");
         theFields.add(clientNatIns);
         clientNatIns.setPrefWidth(fieldWidth);
         grid.add(clientNatIns, 2, gridVert);
@@ -525,6 +525,7 @@ public class SecondApplicantIndividualDetails extends Page{
 				@Override
 	            public void handle(ActionEvent e){
 					//This hideous lump is where I make sure that the NI number is accounted for
+					System.out.println(clientData.get("nas"));
 	        		if(clientData.get("nas").equals("")
 	        				&& !natInsTickClient.isSelected()){
 	        			warning("Warning! No national insurance number has been entered!\n"
