@@ -1,13 +1,12 @@
 package ascentricForm;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 
-import ascentricClientDetails.Client;
 import ascentricClientDetails.MakeClients;
 
 import com.itextpdf.text.DocumentException;
@@ -36,7 +35,6 @@ public class AscentricForm{
 			page = new AscentricPage2();
 			page.fillPage(theClient.getSecondClient());
 		} else {
-			//TODO change the name of page 1, rather than unnecessarily filling a blank page 2
 			page = new AscentricPage2();
 			page.skipPage(2);
 		}
