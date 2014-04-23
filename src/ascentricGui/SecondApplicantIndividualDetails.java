@@ -45,6 +45,7 @@ public class SecondApplicantIndividualDetails extends Page{
     private Set<TextField> theFields;
     private String[] firstnames;
     private Map<String, String> clientData;
+    private Map<String, TextField> fieldMap;
     private Button autoFillClientButton;
 	private String sceneT = "Partner Personal Info";
 	private CheckBox natInsTickClient;
@@ -286,25 +287,23 @@ public class SecondApplicantIndividualDetails extends Page{
 	}
 
 
-
 	protected void fillAndSaveClientInfo() {
 		
 		client.makeNewSecondClient();
 		
 		//Putting all form data in a new map, otherwise only auto-filled fields are included
-		clientData = new HashMap<String, String>();
 		for(TextField field: theFields){
-			clientData.put(field.getId(), field.getText());
+			fieldMap.put(field.getId(), field);
 		}
 		
 		IndividualDetails id = client.getSecondClient().getIndividualDetails();
-		id.setSurname(clientData.get("Surname"));
-		id.setForename(clientData.get("ForeNames"));
-		id.setTitle(clientData.get("Title"));
-		id.setDob(clientData.get("DOB"));
+		id.setSurname(fieldMap.get("Surname").getText());
+		id.setForename(fieldMap.get("ForeNames").getText());
+		id.setTitle(fieldMap.get("Title").getText());
+		id.setDob(fieldMap.get("DOB").getText());
 		
 		//Rearranges date of birth from DB from YYYY-MM-DD to DDMMYYYY
-		if(clientData.get("DOB") != null && clientData.get("DOB").charAt(4) == '-'){
+		if(fieldMap.get("DOB").getText() != null && fieldMap.get("DOB").getText().charAt(4) == '-'){
 			//Using string builder to increase performance
 			String original = clientData.get("DOB");
 			StringBuilder dob = new StringBuilder();
@@ -317,12 +316,12 @@ public class SecondApplicantIndividualDetails extends Page{
 			//Year
 			dob.append(original.substring(0, 4));
 			id.setDob(dob.toString());
-		} else if(clientData.get("DOB") != null) {
+		} else if(fieldMap.get("DOB").getText() != null) {
 			id.setDob(clientData.get("DOB").replace("/", ""));
 		}
 		
-		if(clientData.get("nas") != null){
-			id.setNationalInsuranceNumber(clientData.get("nas").replaceAll("-", ""));
+		if(fieldMap.get("NationalInsuranceNumber").getText() != null){
+			id.setNationalInsuranceNumber(fieldMap.get("NationalInsuranceNumber").getText().replaceAll("-", ""));
 		}
 		
 		if(checkBoxes.get("sameDetails").isSelected()){
@@ -355,7 +354,8 @@ public class SecondApplicantIndividualDetails extends Page{
     	
     	theFields = new HashSet<TextField>();
     	theLabels = new HashSet<Label>();
-        
+        fieldMap = new HashMap<String, TextField>();
+    	
         //Resetting gridVert to 2 here should stop backwards and forwards navigation from moving the fields up and down
         gridVert = 3;
         
@@ -397,8 +397,9 @@ public class SecondApplicantIndividualDetails extends Page{
         theLabels.add(natIns);
         grid.add(natIns, 1, ++gridVert);
         TextField clientNatIns = new TextField();
-        clientNatIns.setId("nas");
+        clientNatIns.setId("NationalInsuranceNumber");
         theFields.add(clientNatIns);
+        fieldMap.put("NationalInsuranceNumber", clientNatIns);
         clientNatIns.setPrefWidth(fieldWidth);
         grid.add(clientNatIns, 2, gridVert);
         
@@ -525,8 +526,8 @@ public class SecondApplicantIndividualDetails extends Page{
 				@Override
 	            public void handle(ActionEvent e){
 					//This hideous lump is where I make sure that the NI number is accounted for
-					System.out.println(clientData.get("nas"));
-	        		if(clientData.get("nas").equals("")
+					System.out.println(fieldMap.get("NationalInsuranceNumber").getText());
+	        		if(fieldMap.get("NationalInsuranceNumber").getText()== null
 	        				&& !natInsTickClient.isSelected()){
 	        			warning("Warning! No national insurance number has been entered!\n"
 	        							+ "If the client has no NI number please tick the appropriate\nbox before"
@@ -535,7 +536,6 @@ public class SecondApplicantIndividualDetails extends Page{
 		            	try {		
 		            			fillAndSaveClientInfo();
 						} catch (Exception e1) {
-							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}
 		            	nextPage.setUp(primaryStage, thisScene, client);
