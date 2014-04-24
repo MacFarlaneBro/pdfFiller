@@ -595,19 +595,19 @@ public class ClientPersonalInfo extends Page{
 			@Override
             public void handle(ActionEvent e){
 				//This hideous lump is where I make sure that the NI number is accounted for
-				String nas = fieldMap.get("nas").getText();
+				String nas = fieldMap.get("nas").getText().replace("-", "");
         		if((nas == null || nas.equals(""))
         			&& !natInsTickClient.isSelected()){
         			warning("Warning! No national insurance number has been entered!\n"
         							+ "If the client has no NI number please tick the appropriate\nbox before"
         							+ " continuing.\n");
         		} else if(
-        				nas.replace("-", "").length()!= 9//if the number isn't 9 characters
-    				|| (Character.isAlphabetic(nas.charAt(0))//if the first
-    				&& Character.isAlphabetic(nas.charAt(1)))//second
-    				|| (Character.isAlphabetic(nas.charAt(8))))//or ninth characters aren't letters
+        				nas.length()!= 9//if the number isn't 9 characters
+    				|| (!Character.isAlphabetic(nas.charAt(0))//if the first
+    				&& !Character.isAlphabetic(nas.charAt(1)))//second
+    				|| (!Character.isAlphabetic(nas.charAt(8))))//or ninth characters aren't letters
     				{
-    				warning("The NI number entered is incorrectly formatted, please re-enter it and try again.\n");	
+    				warning("The NI number entered: " + nas + " is incorrectly formatted, please re-enter it and try again.\n");	
         			
         		} else {
 	            	try {		

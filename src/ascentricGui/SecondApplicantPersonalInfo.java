@@ -526,13 +526,21 @@ public class SecondApplicantPersonalInfo extends Page{
 				@Override
 	            public void handle(ActionEvent e){
 					//This hideous lump is where I make sure that the NI number is accounted for
-					System.out.println(fieldMap.get("NationalInsuranceNumber").getText());
-	        		if(fieldMap.get("NationalInsuranceNumber").getText()== null
+					String nas = fieldMap.get("NationalInsuranceNumber").getText().replace("-", "");
+	        		if((nas == null || nas.equals(""))
 	        				&& !natInsTickClient.isSelected()){
 	        			warning("Warning! No national insurance number has been entered!\n"
 	        							+ "If the client has no NI number please tick the appropriate\nbox before"
 	        							+ " continuing.\n");
-	        		} else {
+	        		}  else if(
+	        				nas.length()!= 9//if the number isn't 9 characters
+	        				|| (!Character.isAlphabetic(nas.charAt(0))//if the first
+	        				&& !Character.isAlphabetic(nas.charAt(1)))//second
+	        				|| (!Character.isAlphabetic(nas.charAt(8))))//or ninth characters aren't letters
+	        				{
+	        				warning("The NI number" + nas + "entered is incorrectly formatted, please re-enter it and try again.\n");	
+	            			
+	            		} else {
 		            	try {		
 		            			fillAndSaveClientInfo();
 						} catch (Exception e1) {
