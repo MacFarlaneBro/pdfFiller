@@ -7,11 +7,14 @@ import java.util.Set;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
@@ -26,6 +29,8 @@ public abstract class ProductDetailsGui extends Page {
 	protected int gridVert = 2;
 	protected String appType;
 	protected Set<Label> theLabels;
+	private ComboBox<String> giaSourceOfFunds;
+	private ComboBox<String> sasSourceOfFunds;
 
 	@Override
 	public void setUp(Stage primaryStage, Scene previousScene, ClientHolder client) {
@@ -61,6 +66,8 @@ public abstract class ProductDetailsGui extends Page {
         		tf.setDisable(true);
         	}
         }
+        giaSourceOfFunds.setDisable(true);
+        sasSourceOfFunds.setDisable(true);
         
         for(Label label: theLabels){
         	GridPane.setHalignment(label, HPos.CENTER);
@@ -80,7 +87,6 @@ public abstract class ProductDetailsGui extends Page {
         thisScene = new Scene(grid, pageWidth, pageHeight);
         primaryStage.setScene(thisScene);
 	}
-
 
 	protected Map<String, TextField> set1stLayerLabels(GridPane grid) {
 		
@@ -188,15 +194,31 @@ public abstract class ProductDetailsGui extends Page {
 	protected void generate1stLayerFields(GridPane grid, String wrap) {
 		
 		int fieldWidth = 3;
+		int comboboxWidth = 4;
 		
 		//generating all the textfields for the wrapper info
 		for(int i = 0; i < 5; i++){
 			TextField newField = new TextField();
 			newField.setId(wrap + i);
-			System.out.println(wrap + i);
 			newField.setMaxWidth(70);
 			textFields.put(wrap+i, newField);
 			grid.add(newField, fieldWidth+i, gridVert);
+		}
+		//The options for the source of funds combo box
+		ObservableList<String> sofOptions =
+                FXCollections.observableArrayList(
+                        "Cheque",
+                        "BACS",
+                        "Transfer"
+                );
+		if(wrap.equals("gia")){
+			giaSourceOfFunds = new ComboBox<String>(sofOptions);
+			giaSourceOfFunds.setMaxWidth(100);
+			grid.add(giaSourceOfFunds, comboboxWidth, gridVert);
+		} else {
+			sasSourceOfFunds = new ComboBox<String>(sofOptions);
+			sasSourceOfFunds.setMaxWidth(100);
+			grid.add(sasSourceOfFunds, comboboxWidth, gridVert);
 		}
 		
 		fieldWidth +=5;

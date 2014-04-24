@@ -595,7 +595,10 @@ public class ClientPersonalInfo extends Page{
 			@Override
             public void handle(ActionEvent e){
 				//This hideous lump is where I make sure that the NI number is accounted for
-				String nas = fieldMap.get("nas").getText().replace("-", "");
+				String nas = null;
+				if(fieldMap.get("nas").getText() != null){
+					nas = fieldMap.get("nas").getText().replace("-", "");
+				}
         		if((nas == null || nas.equals(""))
         			&& !natInsTickClient.isSelected()){
         			warning("Warning! No national insurance number has been entered!\n"
