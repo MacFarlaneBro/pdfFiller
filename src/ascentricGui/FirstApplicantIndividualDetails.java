@@ -20,6 +20,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.ComboBoxBase;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
@@ -53,6 +54,8 @@ public class FirstApplicantIndividualDetails extends Page{
 	private ComboBox<String> applicationType;
 	private CheckBox natInsTickClient;
 	private CheckBox facetoface;
+	private Text actionTarget;
+    private boolean duplicateFirstNames = false;
 	
 	private FirstApplicantIndividualDetails(){}
 
@@ -87,7 +90,8 @@ public class FirstApplicantIndividualDetails extends Page{
         
         movementButtons2Columns(true);
         createMovementButtons(12, 5);
-
+        createClearButton();
+        
         primaryStage.setScene(thisScene);
         
         try {
@@ -107,30 +111,42 @@ public class FirstApplicantIndividualDetails extends Page{
         hbBtn.getChildren().add(autoFillClientButton);
         grid.add(hbBtn, 3, 2);
         
-        gridVert = 1;
+        gridVert = 2;
         
-        final Text actionTarget = new Text();
-        grid.add(actionTarget, 2, ++gridVert);
         autoFillClientButton.setOnAction(new EventHandler<ActionEvent>(){
             
-            @Override
+			@SuppressWarnings("unchecked")
+			@Override
             public void handle(ActionEvent e){
                 try {
-                	System.out.println(clientSurname.getText());
-                	if(clientSurname.getText().equals("")){
-                		actionTarget.setFill(Color.FIREBRICK);
-                		actionTarget.setText("More information Required, please\n enter a Surname and click 'Find Client\n'"
-                				+ " first, then select the clients first\n name from the dropdown when it appears");
+                	if(duplicateFirstNames){
+                		getClientInfoWithPostCode();
+						fillClientInfo();
+						actionTarget.setVisible(false);
                 	} else {
-                		actionTarget.setFill(Color.BLUE);
-                        actionTarget.setText("Finding Client Information");
-                        Map<String,String> info = getClientInfo();
-                        if(info.get("client0") == null){
-							fillClientInfo();
-							actionTarget.setFill(null);
-                        } else {
-                        	setPostCode(info);
-                        }
+	                	System.out.println(clientSurname.getText());
+	                	if(clientSurname.getText().equals("")){
+	                		actionTarget.setFill(Color.FIREBRICK);
+	                		actionTarget.setText("More information Required, please\n enter a Surname and click 'Search Surname\n'"
+	                				+ " first, then select the clients first\n name from the dropdown when it appears");
+	                	} else if(((ComboBox<String>)clientFirstName).getValue()==null) {
+	        				actionTarget.setText("A firstname and surname are required to search for a client, please select"
+	        						+ "a first\nname from the dropdown or click 'clear fields' to enter the details manually.");
+	                	} else {
+	                		actionTarget.setFill(Color.BLUE);
+	                        actionTarget.setText("Finding Client Information");
+	                        Map<String,String> info = getClientInfo();
+	                        if(info.get("client1") == null){
+								fillClientInfo();
+								actionTarget.setVisible(false);
+	                        } else {
+	                        	duplicateFirstNames = true;
+	                        	actionTarget.setText("Multiple Clients with this name have been found, please select"
+	                        			+ " the\nrequired clients postcode from the dropdown then press find\nclient again.");
+	                        	actionTarget.setVisible(true);
+	                        	setPostCode(info);
+	                        }
+	                	}
                 	}
 				} catch (InstantiationException | IllegalAccessException
 						| ClassNotFoundException | SQLException e2) {
@@ -148,7 +164,7 @@ public class FirstApplicantIndividualDetails extends Page{
                 FXCollections.observableArrayList(info.values());
 		postcode = new ComboBox<String>(postCodes);
 		((ComboBox<?>)postcode).setPrefWidth(fieldWidth);
-		grid.add(postcode, 2, 5);
+		grid.add(postcode, 4, 9);
 		
 	}
 
@@ -191,6 +207,20 @@ public class FirstApplicantIndividualDetails extends Page{
 		GetDatabase db = MSSQLDatabase.getDatabaseConnector();
 		try{
 			clientData = db.getClientPersonalData(clientSurname.getText() + '/' + ((ComboBox<String>)clientFirstName).getValue());
+		} catch (ClassCastException ex){
+			System.out.println("This is complaining because of the cast but really what I'm doing is fine. I think.");
+		}		
+		return clientData;
+	}
+	
+	@SuppressWarnings("unchecked")
+	private Map<String, String> getClientInfoWithPostCode() throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
+		GetDatabase db = MSSQLDatabase.getDatabaseConnector();
+		try{
+			clientData = db.getClientPersonalData(clientSurname.getText() 
+					+ '/' 
+					+ ((ComboBox<String>)clientFirstName).getValue(),
+					((ComboBox<String>)postcode).getValue());
 		} catch (ClassCastException ex){
 			System.out.println("This is complaining because of the cast but really what I'm doing is fine. I think.");
 		}		
@@ -415,14 +445,16 @@ public class FirstApplicantIndividualDetails extends Page{
      * @param grid
      */
     private void findClient(GridPane grid) {
-        Button btn = new Button("Find Client");//Create button with the name sign in
+        Button btn = new Button("Search Surname");//Create button with the name sign in
         HBox hbBtn = new HBox(21);//Layout pane with 21 pixel spacing
         hbBtn.setAlignment(Pos.BOTTOM_RIGHT);
         hbBtn.getChildren().add(btn);
         grid.add(hbBtn, 2, 2);
         
-        final Text actionTarget = new Text();
-        grid.add(actionTarget, 2, ++gridVert);
+        gridVert++;
+        
+        actionTarget = new Text();
+        grid.add(actionTarget, 1, 10);
         btn.setOnAction(new EventHandler<ActionEvent>(){
             
             @Override
@@ -438,7 +470,7 @@ public class FirstApplicantIndividualDetails extends Page{
                         autoFillClientButton.setVisible(true);
 						getFirstNames();
 						setFirstNameDropdown();
-						actionTarget.setFill(null);
+						actionTarget.setVisible(false);
                 	}
 				} catch (InstantiationException | IllegalAccessException
 						| ClassNotFoundException | SQLException e2) {
@@ -455,11 +487,14 @@ public class FirstApplicantIndividualDetails extends Page{
      * This method reinitializes the first name field of the form to a drop down of all the first names correlating to the given
      * surname used for the detail finder
      */
+	@SuppressWarnings("unchecked")
 	private void setFirstNameDropdown() {
 		ObservableList<String> firstNames =
                 FXCollections.observableArrayList(firstnames);
+		FXCollections.sort(firstNames);
 		clientFirstName = new ComboBox<String>(firstNames);
-		((ComboBox<?>)clientFirstName).setPrefWidth(fieldWidth);
+		((ComboBoxBase<String>)clientFirstName).setEditable(true);
+		((ComboBox<String>)clientFirstName).setPrefWidth(fieldWidth);
 		grid.add(clientFirstName, 2, 5);
 	}
 
@@ -561,14 +596,14 @@ public class FirstApplicantIndividualDetails extends Page{
             public void handle(ActionEvent e){
 				//This hideous lump is where I make sure that the NI number is accounted for
 				System.out.println(fieldMap.get("nas").getText());
-        		if(fieldMap.get("nas").getText().equals("")
+        		if((fieldMap.get("nas").getText() == null || fieldMap.get("nas").getText().equals(""))
         				&& !natInsTickClient.isSelected()){
         			warning("Warning! No national insurance number has been entered!\n"
         							+ "If the client has no NI number please tick the appropriate\nbox before"
         							+ " continuing.\n");
         		} else {
 	            	try {		
-	            			fillAndSaveClientInfo();
+	            		fillAndSaveClientInfo();
 					} catch (Exception e1) {
 						e1.printStackTrace();
 					}
@@ -578,4 +613,15 @@ public class FirstApplicantIndividualDetails extends Page{
         });	
 	}
 
+	public void createClearButton(){
+		Button clear = new Button("Clear Details");
+		grid.add(clear, 4, 0);
+		clear.setOnAction(new EventHandler<ActionEvent>(){
+				
+				public void handle(ActionEvent e){
+					duplicateFirstNames = false;
+					setUp(primaryStage, previousScene, client);
+				}
+		});
+	}
 }

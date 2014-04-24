@@ -166,7 +166,9 @@ public class MSSQLDatabase implements GetDatabase{
 	      
 	      Map<String,String> pData = new HashMap<String, String>();
 	      
-	      if(rs.isLast()){
+	      boolean hasMoreThanOneRow = rs.first() && rs.next();
+	      
+	      if(!hasMoreThanOneRow){
 		     System.out.println("No Dupes");
 		     rs.beforeFirst();
 		      while(rs.next()){
@@ -200,7 +202,10 @@ public class MSSQLDatabase implements GetDatabase{
 	    	  System.out.println("Dupes");
 
 	    	  int i = 0;
+	    	  rs.beforeFirst();
 	    	  while(rs.next()){
+	    		  i++;
+	    		  System.out.println(rs.getString("HomePostCode"));
 	    		  pData.put("client" + i, rs.getString("HomePostCode"));
 	    	  }
 	      }
@@ -225,5 +230,69 @@ public class MSSQLDatabase implements GetDatabase{
 		 while(rs.next()){
 			 pData.put("NationalInsuranceNumber", rs.getString("NINO"));
 		 }
+	}
+
+	@Override
+	public Map<String, String> getClientPersonalData(String name, String postcode) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
+		Class.forName(driver).newInstance();
+		conn = DriverManager.getConnection(url);
+      
+		System.out.println("Connected to MSSQL Database");
+		System.out.println(name);
+      
+	    Statement st = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+	    String[] names = name.split("/");
+	      
+	    String query = "SELECT * FROM Clients WHERE Surname = '";
+	      
+	    int cliRef = 0;
+	      
+	    ResultSet rs = st.executeQuery(query 
+    		+ names[0] 
+    		+ "'"
+      		+ "AND Forenames ='" 
+    		+ names[1] 
+    		+ "' AND HomePostCode ='"
+    		+ postcode
+    		+ "';");
+      
+     Map<String,String> pData = new HashMap<String, String>();
+            
+     rs.beforeFirst();
+      while(rs.next()){
+    	  System.out.println("No Dupes");
+	      pData.put("Title", rs.getString("Title"));
+	      //Removing the time portion of the date object returned by the database before adding it to the map
+	      
+	      String dob = null;
+	      if(rs.getString("DOB")!= null){
+	    	  dob = rs.getString("DOB").substring(0,10);
+	      }
+	      pData.put("ForeNames", "ForeNames");
+	      pData.put("Surname", "Surname");
+	      pData.put("DOB", dob);
+	      pData.put("HomeTel", rs.getString("HomeTel"));
+	      pData.put("WorkTel", rs.getString("BusTel"));
+	      pData.put("Mobile", rs.getString("MobTel"));
+	      pData.put("HomeAddress1", rs.getString("HomeAddress1"));
+	      pData.put("HomeAddress2", rs.getString("HomeAddress2"));
+	      pData.put("HomeAddress3", rs.getString("HomeAddress3"));
+	      pData.put("HomeAddress4", rs.getString("HomeAddress4"));
+	      pData.put("HomeAddress5", rs.getString("HomeAddress5"));
+	      pData.put("HomePostCode", rs.getString("HomePostCode"));
+	      pData.put("Email", rs.getString("EmailAddress"));
+	      pData.put("PartnerFirstName", rs.getString("PartnerForenames"));
+	      pData.put("PartnerSurname", rs.getString("PartnerSurname"));
+	      cliRef = rs.getInt("clientRef");
+	      getNationalInsuranceNumber(pData, cliRef);
+      }
+      
+      
+      if(conn != null){
+    	  conn.close();
+    	  System.out.println("disconnected from mySQL Database");
+      }
+      
+	return pData;
 	}
 }
