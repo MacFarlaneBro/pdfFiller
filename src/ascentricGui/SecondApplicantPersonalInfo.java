@@ -34,9 +34,9 @@ import ascentricClientDetails.IndividualDetails;
 import databaseAccess.GetDatabase;
 import databaseAccess.MSSQLDatabase;
 
-public class SecondApplicantIndividualDetails extends Page{
+public class SecondApplicantPersonalInfo extends Page{
 	
-	public static final SecondApplicantIndividualDetails INSTANCE = new SecondApplicantIndividualDetails();
+	public static final SecondApplicantPersonalInfo INSTANCE = new SecondApplicantPersonalInfo();
     private TextField clientSurname;
     private Node clientFirstName;
     private int gridVert = 2;
@@ -50,7 +50,7 @@ public class SecondApplicantIndividualDetails extends Page{
 	private String sceneT = "Partner Personal Info";
 	private CheckBox natInsTickClient;
 	
-	private SecondApplicantIndividualDetails(){}
+	private SecondApplicantPersonalInfo(){}
 	
 	public void setUp(Stage primaryStage, Scene previousScene, ClientHolder client) {
 		this.client = client;

@@ -18,7 +18,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import ascentricClientDetails.ClientHolder;
-import ascentricGui.FirstApplicantIndividualDetails;
+import ascentricGui.ClientPersonalInfo;
 
 /**
  *
@@ -125,7 +125,7 @@ public class Main extends Application{
 	            	client.getFirstClient().getfinancialAdviserDetails()
 	            	.setRegisteredIndividual(registeredIndividual.getValue());
 	            	
-	                FirstApplicantIndividualDetails.INSTANCE.setUp(primaryStage, firstScene, client);
+	                ClientPersonalInfo.INSTANCE.setUp(primaryStage, firstScene, client);
             	}
             }
         });

@@ -36,9 +36,9 @@ import ascentricClientDetails.IndividualDetails;
 import databaseAccess.GetDatabase;
 import databaseAccess.MSSQLDatabase;
  
-public class FirstApplicantIndividualDetails extends Page{
+public class ClientPersonalInfo extends Page{
     
-	public static final FirstApplicantIndividualDetails INSTANCE = new FirstApplicantIndividualDetails();
+	public static final ClientPersonalInfo INSTANCE = new ClientPersonalInfo();
     private TextField clientSurname;
     private Node clientFirstName;
     private Node postcode;
@@ -57,7 +57,7 @@ public class FirstApplicantIndividualDetails extends Page{
 	private Text actionTarget;
     private boolean duplicateFirstNames = false;
 	
-	private FirstApplicantIndividualDetails(){}
+	private ClientPersonalInfo(){}
 
 	/*
     The start method is the entry point for all javaFX applications, the main
@@ -432,7 +432,7 @@ public class FirstApplicantIndividualDetails extends Page{
 	               if(t1.equals("Single Client")){
 	            	   nextPage = AccessRightsFamilyGroups.INSTANCE;
 	               } else {
-	            	   nextPage = SecondApplicantIndividualDetails.INSTANCE;
+	            	   nextPage = SecondApplicantPersonalInfo.INSTANCE;
 	               }
 	            }    
 	        });
@@ -595,15 +595,24 @@ public class FirstApplicantIndividualDetails extends Page{
 			@Override
             public void handle(ActionEvent e){
 				//This hideous lump is where I make sure that the NI number is accounted for
-				System.out.println(fieldMap.get("nas").getText());
-        		if((fieldMap.get("nas").getText() == null || fieldMap.get("nas").getText().equals(""))
-        				&& !natInsTickClient.isSelected()){
+				String nas = fieldMap.get("nas").getText();
+        		if((nas == null || nas.equals(""))
+        			&& !natInsTickClient.isSelected()){
         			warning("Warning! No national insurance number has been entered!\n"
         							+ "If the client has no NI number please tick the appropriate\nbox before"
         							+ " continuing.\n");
+        		} else if(
+        				nas.replace("-", "").length()!= 9//if the number isn't 9 characters
+    				|| (Character.isAlphabetic(nas.charAt(0))//if the first
+    				&& Character.isAlphabetic(nas.charAt(1)))//second
+    				|| (Character.isAlphabetic(nas.charAt(8))))//or ninth characters aren't letters
+    				{
+    				warning("The NI number entered is incorrectly formatted, please re-enter it and try again.\n");	
+        			
         		} else {
 	            	try {		
 	            		fillAndSaveClientInfo();
+	            		
 					} catch (Exception e1) {
 						e1.printStackTrace();
 					}
