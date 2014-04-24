@@ -3,6 +3,8 @@ package gui;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -40,7 +42,7 @@ public class Print {
 		this.primaryStage = primaryStage;
 		this.previousScene = previousScene;
 		
-		primaryStage.setTitle("Income Payment Instructions");
+		primaryStage.setTitle("Save File");
         
         grid = new GridPane();
         grid.setHgap(10);
@@ -73,8 +75,10 @@ public class Print {
             	FileChooser fileChooser = new FileChooser();
             	
                 fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PDF files (*.pdf)", "*.pdf"));
-                fileChooser.setInitialFileName(client.getFirstClient().getIndividualDetails().getSurname()
-                		+ " Ascentric Form");
+                fileChooser.setInitialFileName(client.getFirstClient().getIndividualDetails().getForename()
+                		+ client.getFirstClient().getIndividualDetails().getSurname()
+                		+ " Ascentric Form "
+                		+ (new SimpleDateFormat("ddMMyy")).format(new Date()));
                 File file = fileChooser.showSaveDialog(primaryStage);
                 
                 if(!file.getName().contains(".")){
