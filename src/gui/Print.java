@@ -8,16 +8,19 @@ import java.util.Date;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBoxBuilder;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import ascentricClientDetails.ClientHolder;
 import ascentricForm.AscentricForm;
@@ -35,6 +38,7 @@ public class Print {
 	private Scene previousScene;
 	private Text actionTarget;
 	private Button nextBtn;
+	private boolean printed;
 
 	public Print(final ClientHolder client, final Stage primaryStage, Scene previousScene){
 		
@@ -98,9 +102,29 @@ public class Print {
         
 	}
 	
+	public void warning(String warningString){
+
+		System.out.println("Warning!");
+		final Stage warningStage = new Stage();
+		Button button = new Button("OK");
+		warningStage.setTitle("Warning!");
+		warningStage.initModality(Modality.WINDOW_MODAL);
+		warningStage.setScene(new Scene(VBoxBuilder.create().children(new Text(warningString), button).alignment(Pos.CENTER).padding(new Insets(5)).build()));
+				button.setOnAction(
+						new EventHandler<ActionEvent>(){
+							@Override
+							public void handle(ActionEvent arg0) {
+								warningStage.close();
+							}
+						}
+				);		
+		warningStage.show();
+	}
+	
 	protected void printDocument(File file) {
 		AscentricForm af = new AscentricForm();
 		try {
+			printed = true;
 			actionTarget.setFill(Color.BLUE);
             actionTarget.setText("Filling PDF");
 			af.fillIt(client, file);
@@ -141,11 +165,16 @@ public class Print {
 			@Override
             public void handle(ActionEvent e){
 				Main main = new Main();
-				try {
-					main.start(primaryStage);
-				} catch (Exception e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+				if(printed){
+					try {
+						main.start(primaryStage);
+					} catch (Exception e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				} else {
+					warning("You have yet to save the document,\nif you return to the home page all"
+							+ "details will be lost.");
 				}
             }
         });	
