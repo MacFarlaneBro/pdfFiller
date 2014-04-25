@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
+import java.util.zip.DataFormatException;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -287,7 +288,36 @@ public class PartnerPersonalInfo extends Page{
 	}
 
 
-	protected void fillAndSaveClientInfo() {
+	protected void fillAndSaveClientInfo() throws DataFormatException {
+		
+		if(!natInsTickClient.isSelected()){
+			
+			String nas = null;
+			
+			//If client has not been declared as having no NI number and the field isn't null
+			//then prepare the input for a validity check
+			if(fieldMap.get("NationalInsuranceNumber").getText() != null 
+					&& !fieldMap.get("NationalInsuranceNumber").getText().equals("")){
+				nas = fieldMap.get("NationalInsuranceNumber").getText().replace("-", "");
+			}
+			
+			//If the field is null
+    		if(nas == null || nas.equals("")){
+    			throw new DataFormatException("Warning! No national insurance number has been entered!\n"
+    							+ "If the client has no NI number please tick the appropriate\nbox before"
+    							+ " continuing.\n");
+    			
+    		} else if(//if the field is invalid
+    				nas.length()!= 9//if the number isn't 9 characters
+				|| (!Character.isAlphabetic(nas.charAt(0))//if the first
+				&& !Character.isAlphabetic(nas.charAt(1)))//second
+				|| (!Character.isAlphabetic(nas.charAt(8))))//or ninth characters aren't letters
+				{
+    			throw new DataFormatException("The NI number entered: " 
+				+ nas
+				+ " is incorrectly formatted, please re-enter it and try again.\n");		
+    		}
+		}
 		
 		client.makeNewSecondClient();
 		

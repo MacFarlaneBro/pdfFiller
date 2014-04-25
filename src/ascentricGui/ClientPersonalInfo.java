@@ -575,7 +575,8 @@ public class ClientPersonalInfo extends Page{
 		id.setHomeNumber(fieldMap.get("HomeTel").getText());
 		id.setWorkNumber(fieldMap.get("WorkTel").getText());
 		id.setMobileNumber(fieldMap.get("Mobile").getText());
-		//address lines separated by : to provide a string split character at stamp time
+		
+		//address lines separated by ':' to provide a string split character at stamp time
 		id.setAddress(fieldMap.get("HomeAddress1").getText() + ":"
 		+ fieldMap.get("HomeAddress2").getText() + ":" 
 				+ fieldMap.get("HomeAddress3").getText());
