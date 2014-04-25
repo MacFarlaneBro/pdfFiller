@@ -273,12 +273,14 @@ public class PartnerPersonalInfo extends Page{
      * This method reinitializes the first name field of the form to a drop down of all the first names correlating to the given
      * surname used for the detail finder
      */
+	@SuppressWarnings("unchecked")
 	private void setFirstNameDropdown() {
 		ObservableList<String> firstNames =
                 FXCollections.observableArrayList(firstnames);
 		clientFirstName = new ComboBox<String>(firstNames);
-		((ComboBox<?>)clientFirstName).setPrefWidth(fieldWidth);
-		grid.add(clientFirstName, 2, 5);
+		((ComboBox<String>)clientFirstName).setPrefWidth(fieldWidth);
+		((ComboBox<String>)clientFirstName).setEditable(true);
+		grid.add(clientFirstName, 2, 4);
 	}
 
     private void getFirstNames() throws InstantiationException,

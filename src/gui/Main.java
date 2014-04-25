@@ -94,6 +94,7 @@ public class Main extends Application{
         
         Button go = new Button("Go");
         go.setPrefWidth(fieldWidth);
+        GridPane.setHalignment(go, HPos.RIGHT);
         grid.add(go, 2, 3);
         
         actionTarget = new Text("You must select a Registered Individual"

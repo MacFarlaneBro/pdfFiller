@@ -79,10 +79,10 @@ public class Print {
             	FileChooser fileChooser = new FileChooser();
             	
                 fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PDF files (*.pdf)", "*.pdf"));
-                fileChooser.setInitialFileName(client.getFirstClient().getIndividualDetails().getForename()
-                		+ client.getFirstClient().getIndividualDetails().getSurname()
-                		+ " Ascentric Form "
-                		+ (new SimpleDateFormat("ddMMyy")).format(new Date()));
+                fileChooser.setInitialFileName(client.getFirstClient().getIndividualDetails().getSurname() + " "
+                		+ client.getFirstClient().getIndividualDetails().getForename().charAt(0)
+                		+ " Ascentric App "
+                		+ (new SimpleDateFormat("ddMMyyyy")).format(new Date()));
                 File file = fileChooser.showSaveDialog(primaryStage);
                 
                 if(!file.getName().contains(".")){
