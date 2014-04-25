@@ -48,7 +48,7 @@ public abstract class Page {
 	 * Creates a little warning pop up box alerting the user to something
 	 * @param warningString - The message that will appear in the warning box
 	 */
-	public void warning(String warningString){
+	private void warning(String warningString){
 
 		System.out.println("Warning!");
 		final Stage warningStage = new Stage();
@@ -105,7 +105,9 @@ public abstract class Page {
 			@Override
             public void handle(ActionEvent e){
             	try {
+            		System.out.println("Before fill and save");
 					fillAndSaveClientInfo();
+            		System.out.println("After fill and save");
 					nextPage.setUp(primaryStage, thisScene, client);
 				} catch(DataFormatException dfe){ 
 					warning(dfe.getMessage());

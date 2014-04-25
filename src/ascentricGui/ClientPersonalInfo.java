@@ -91,6 +91,7 @@ public class ClientPersonalInfo extends Page{
         
         movementButtons2Columns(true);
         createMovementButtons(12, 5);
+        
         createClearButton();
         
         primaryStage.setScene(thisScene);
@@ -507,7 +508,8 @@ public class ClientPersonalInfo extends Page{
 	@SuppressWarnings("unchecked")
 	protected void fillAndSaveClientInfo() throws DataFormatException{
 		
-		if(!natInsTickClient.isSelected()){ {
+		if(!natInsTickClient.isSelected()){
+						
 			//This hideous lump is where I make sure that the NI number is accounted for
 			String nas = null;
 			//If client has not been declared as having no NI number and the field isn't null then check the input for validity
@@ -532,13 +534,15 @@ public class ClientPersonalInfo extends Page{
     		}
 		}
 		
+		System.out.println("is not selected");
+
 		client.getFirstClient().getfinancialAdviserDetails().setFaceToFaceContact(facetoface.isSelected());
 		client.getFirstClient().setApplicationType(applicationType.getValue());
 		
 		if(applicationType.getValue().equals("Joint Account")){
-			System.out.print("I made a new" + applicationType.getValue());
 			client.makeNewJointClient();
 		};
+		System.out.print("I made a new " + applicationType.getValue());
 		
 		IndividualDetails id = client.getFirstClient().getIndividualDetails();
 		id.setSurname(clientSurname.getText());
@@ -548,7 +552,7 @@ public class ClientPersonalInfo extends Page{
 			id.setTitle(fieldMap.get("Title").getText());
 		}
 		
-		if(fieldMap.get("DOB").getText()!= null){
+		if(fieldMap.get("DOB").getText()!= null && fieldMap.get("DOB").getText().length()>4){
 			//Rearranges date of birth from DB from YYYY-MM-DD to DDMMYYYY
 			if(fieldMap.get("DOB").getText().charAt(4) == '-'){
 				//Using string builder to increase performance
@@ -582,9 +586,7 @@ public class ClientPersonalInfo extends Page{
 				+ fieldMap.get("HomeAddress3").getText());
 		id.setPostcode(fieldMap.get("HomePostCode").getText());
 		id.setEmail(fieldMap.get("Email").getText());
-		}
 	}
-	
 	
 	public void createClearButton(){
 		Button clear = new Button("Clear Details");

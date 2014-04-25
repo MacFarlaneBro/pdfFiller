@@ -148,8 +148,8 @@ public class BankDetails extends Page{
 
 		if(textFields.get("sortCode")!= null){
 			if(textFields.get("sortCode").getText().replace("-", "").length()!= 6){
-
-				throw new DataFormatException("The sort code entered is not in the correct format,\nplease re-enter is and try again");
+				throw new DataFormatException("The sort code entered is not in the correct format,\n"
+						+ "please re-enter is and try again\n");
 			}
 		}
 		

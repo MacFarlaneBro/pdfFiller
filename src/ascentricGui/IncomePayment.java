@@ -104,7 +104,6 @@ public class IncomePayment extends Page {
                 "Half Yearly",
                 "Annually"
         ));
-		timing.setValue("Monthly");
 		grid.add(timing, 3, 10);
 		
 		Label regWithDraw = new Label("Regular Withdrawal Instructions");
@@ -129,8 +128,8 @@ public class IncomePayment extends Page {
                 "Annually"
         ));
 		grid.add(natTiming, 5, 7);
-		natTiming.setValue("Monthly");
 		grid.add(new Label("Wrapper(s)"), 4, 8);
+		
 		TextField regWrap = new TextField();
 		textFields.put("regularWrapper", regWrap);
 		grid.add(regWrap, 5, 8);
