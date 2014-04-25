@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
+import java.util.zip.DataFormatException;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -427,16 +428,15 @@ public class ClientPersonalInfo extends Page{
     }
 
 	private void setNextPage(ComboBox<String> comboBox) {
-		 comboBox.valueProperty().addListener(new ChangeListener<String>() {
-	            @Override public void changed(ObservableValue<? extends String> ov, String t, String t1) {                
-	               if(t1.equals("Single Client")){
-	            	   nextPage = AccessRightsFamilyGroups.INSTANCE;
-	               } else {
-	            	   nextPage = PartnerPersonalInfo.INSTANCE;
-	               }
-	            }    
-	        });
-		
+		comboBox.valueProperty().addListener(new ChangeListener<String>() {
+            @Override public void changed(ObservableValue<? extends String> ov, String t, String t1) {                
+               if(t1.equals("Single Client")){
+            	   nextPage = AccessRightsFamilyGroups.INSTANCE;
+               } else {
+            	   nextPage = PartnerPersonalInfo.INSTANCE;
+               }
+            }    
+	    });
 	}
 
 	/**
@@ -505,49 +505,73 @@ public class ClientPersonalInfo extends Page{
 	}
     
 	@SuppressWarnings("unchecked")
-	protected void fillAndSaveClientInfo() throws Exception {
+	protected void fillAndSaveClientInfo() throws DataFormatException{
+		
+		if(!natInsTickClient.isSelected()){ {
+			//This hideous lump is where I make sure that the NI number is accounted for
+			String nas = null;
+			//If client has not been declared as having no NI number and the field isn't null then check the input for validity
+			if(fieldMap.get("nas").getText() != null && !fieldMap.get("nas").getText().equals("")){
+				nas = fieldMap.get("nas").getText().replace("-", "");
+			}
+			//If the field is null
+    		if(nas == null || nas.equals("")){
+    			throw new DataFormatException("Warning! No national insurance number has been entered!\n"
+    							+ "If the client has no NI number please tick the appropriate\nbox before"
+    							+ " continuing.\n");
+    		} else if(//if the field is invalid
+    				nas.length()!= 9//if the number isn't 9 characters
+				|| (!Character.isAlphabetic(nas.charAt(0))//if the first
+				&& !Character.isAlphabetic(nas.charAt(1)))//second
+				|| (!Character.isAlphabetic(nas.charAt(8))))//or ninth characters aren't letters
+				{
+    			throw new DataFormatException("The NI number entered: " 
+				+ nas 
+				+ " is incorrectly formatted, please re-enter it and try again.\n");	
+
+    		}
+		}
 		
 		client.getFirstClient().getfinancialAdviserDetails().setFaceToFaceContact(facetoface.isSelected());
-		
 		client.getFirstClient().setApplicationType(applicationType.getValue());
 		
 		if(applicationType.getValue().equals("Joint Account")){
 			System.out.print("I made a new" + applicationType.getValue());
 			client.makeNewJointClient();
 		};
-		System.out.print("I made a new " + applicationType.getValue());
-		IndividualDetails id = client.getFirstClient().getIndividualDetails();
 		
+		IndividualDetails id = client.getFirstClient().getIndividualDetails();
 		id.setSurname(clientSurname.getText());
 		
 		if(!clientSurname.getText().equals("")){
 			id.setForename(((ComboBox<String>)clientFirstName).getValue());
-		id.setTitle(fieldMap.get("Title").getText());
+			id.setTitle(fieldMap.get("Title").getText());
+		}
 		
-		System.out.println(fieldMap.get("DOB"));
+		if(fieldMap.get("DOB").getText()!= null){
+			//Rearranges date of birth from DB from YYYY-MM-DD to DDMMYYYY
+			if(fieldMap.get("DOB").getText().charAt(4) == '-'){
+				//Using string builder to increase performance
+				String original = clientData.get("DOB");
+				StringBuilder dob = new StringBuilder();
+				//Day
+				dob.append(original.charAt(original.length()-2));
+				dob.append(original.charAt(original.length()-1));
+				//Month
+				dob.append(original.charAt(original.length()-5));
+				dob.append(original.charAt(original.length()-4));
+				//Year
+				dob.append(original.substring(0, 4));
+				id.setDob(dob.toString());
+			} else {
+				id.setDob(fieldMap.get("DOB").getText().replace("/", ""));
+			}
+		}
 		
-		//Rearranges date of birth from DB from YYYY-MM-DD to DDMMYYYY
-		if(fieldMap.get("DOB").getText().charAt(4) == '-'){
-			//Using string builder to increase performance
-			String original = clientData.get("DOB");
-			StringBuilder dob = new StringBuilder();
-			//Day
-			dob.append(original.charAt(original.length()-2));
-			dob.append(original.charAt(original.length()-1));
-			//Month
-			dob.append(original.charAt(original.length()-5));
-			dob.append(original.charAt(original.length()-4));
-			//Year
-			dob.append(original.substring(0, 4));
-			id.setDob(dob.toString());
-		} else {
-			id.setDob(fieldMap.get("DOB").getText().replace("/", ""));
-		}//comment
-		
-		System.out.println(client.getFirstClient().getIndividualDetails().getDob());
 		if(fieldMap.get("nas").getText()!= null){
 			id.setNationalInsuranceNumber(fieldMap.get("nas").getText().replace("-", ""));
 		}
+		
 		id.setHomeNumber(fieldMap.get("HomeTel").getText());
 		id.setWorkNumber(fieldMap.get("WorkTel").getText());
 		id.setMobileNumber(fieldMap.get("Mobile").getText());
@@ -560,83 +584,7 @@ public class ClientPersonalInfo extends Page{
 		}
 	}
 	
-	@Override
-    /**
-     * This method is overridden from the default so that a warning can be triggered if the next button is pressed
-     * while the national insurance field is blank and the "tick here if no national insurance number" check box remains 
-     * unselected, this is to stop people just clicking through the form without concentrating on what's actually going in
-     * to it, thus making the finished product invalid.
-     */
-    public void createMovementButtons(int depth,int nextWidth) {
-		
-		Button backBtn = new Button("Back");//Create button with the name sign in
-        HBox hbBtn = new HBox(21);//Layout pane with 21 pixel spacing
-        hbBtn.setAlignment(Pos.BOTTOM_LEFT);
-        backBtn.setPrefWidth(100);
-        hbBtn.getChildren().add(backBtn);
-    	grid.add(hbBtn, 0, depth, 2, 1);
-
-        backBtn.setOnAction(new EventHandler<ActionEvent>(){
-            
-            @Override
-            public void handle(ActionEvent e){
-                primaryStage.setScene(previousScene);
-            }
-        });
-        
-        Button nextBtn = new Button("Next");//Create button with the name sign in
-        HBox hNextBtn = new HBox(21);//Layout pane with 21 pixel spacing
-        hNextBtn.setAlignment(Pos.BOTTOM_RIGHT);
-        nextBtn.setPrefWidth(100);
-        hNextBtn.getChildren().add(nextBtn);
-        grid.add(hNextBtn, nextWidth-1, depth, 2, 1);
-        nextBtn.setOnAction(new EventHandler<ActionEvent>(){
-        	
-			@Override
-            public void handle(ActionEvent e){
-
-				if(natInsTickClient.isSelected()){//If the client ha
-					try {		
-	            		fillAndSaveClientInfo();
-	            		
-					} catch (Exception e1) {
-						e1.printStackTrace();
-					}
-	            	nextPage.setUp(primaryStage, thisScene, client);
-				} else{
-					//This hideous lump is where I make sure that the NI number is accounted for
-					String nas = null;
-					//If client has not been declared as having no NI number and the field isn't null then check the input for validity
-					if(fieldMap.get("nas").getText() != null && !fieldMap.get("nas").getText().equals("")){
-						nas = fieldMap.get("nas").getText().replace("-", "");
-					}
-				//If the field is null
-	        		if(nas == null || nas.equals("")){
-	        			warning("Warning! No national insurance number has been entered!\n"
-	        							+ "If the client has no NI number please tick the appropriate\nbox before"
-	        							+ " continuing.\n");
-	        		} else if(//if the field is invalid
-	        				nas.length()!= 9//if the number isn't 9 characters
-	    				|| (!Character.isAlphabetic(nas.charAt(0))//if the first
-	    				&& !Character.isAlphabetic(nas.charAt(1)))//second
-	    				|| (!Character.isAlphabetic(nas.charAt(8))))//or ninth characters aren't letters
-	    				{
-	    				warning("The NI number entered: " + nas + " is incorrectly formatted, please re-enter it and try again.\n");	
-	        			
-	        		} else {
-		            	try {		
-		            		fillAndSaveClientInfo();
-		            		
-						} catch (Exception e1) {
-							e1.printStackTrace();
-						}
-		            	nextPage.setUp(primaryStage, thisScene, client);
-	        		}
-				}
-            }
-        });	
-	}
-
+	
 	public void createClearButton(){
 		Button clear = new Button("Clear Details");
 		grid.add(clear, 4, 0);
