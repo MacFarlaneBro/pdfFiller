@@ -1,6 +1,7 @@
 package ascentricGui;
 
 import java.util.HashMap;
+import java.util.zip.DataFormatException;
 
 import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
@@ -141,9 +142,16 @@ public class BankDetails extends Page{
 		
 	}
 	
-	protected void fillAndSaveClientInfo() {
+	protected void fillAndSaveClientInfo() throws DataFormatException{
 		
 		BankAccountDetails bd = null;
+
+		if(textFields.get("sortCode")!= null){
+			if(textFields.get("sortCode").getText().replace("-", "").length()!= 6){
+
+				throw new DataFormatException("The sort code entered is not in the correct format,\nplease re-enter is and try again");
+			}
+		}
 		
 		if(type.equals("first")){
 			bd = client.getFirstClient().getBankAccountDetails();

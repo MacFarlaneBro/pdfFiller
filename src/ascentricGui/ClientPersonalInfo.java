@@ -432,7 +432,7 @@ public class ClientPersonalInfo extends Page{
 	               if(t1.equals("Single Client")){
 	            	   nextPage = AccessRightsFamilyGroups.INSTANCE;
 	               } else {
-	            	   nextPage = SecondApplicantPersonalInfo.INSTANCE;
+	            	   nextPage = PartnerPersonalInfo.INSTANCE;
 	               }
 	            }    
 	        });

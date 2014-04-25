@@ -1,6 +1,7 @@
 package ascentricGui;
 
 import java.util.Map;
+import java.util.zip.DataFormatException;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -105,11 +106,13 @@ public abstract class Page {
             public void handle(ActionEvent e){
             	try {
 					fillAndSaveClientInfo();
+					nextPage.setUp(primaryStage, thisScene, client);
+				} catch(DataFormatException dfe){ 
+					warning(dfe.getMessage());
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-            	nextPage.setUp(primaryStage, thisScene, client);
             }
         });	
 	}
