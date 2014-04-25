@@ -198,11 +198,13 @@ public abstract class ProductDetailsGui extends Page {
 		
 		//generating all the textfields for the wrapper info
 		for(int i = 0; i < 5; i++){
+			if(i!=1){//Skips out the second field as that is now a combo box
 			TextField newField = new TextField();
 			newField.setId(wrap + i);
 			newField.setMaxWidth(70);
 			textFields.put(wrap+i, newField);
 			grid.add(newField, fieldWidth+i, gridVert);
+			}
 		}
 		//The options for the source of funds combo box
 		ObservableList<String> sofOptions =
@@ -356,7 +358,7 @@ public abstract class ProductDetailsGui extends Page {
 	}
 	
 	/**
-	 * Controls whether the wrapper specfic text fields are enabled or disabled, dependent on whether
+	 * Controls whether the wrapper specific text fields are enabled or disabled, dependent on whether
 	 * the relevant check box has been selected
 	 * @param cBox The check box associated with wrapper to be enabled or disabled
 	 */
@@ -369,10 +371,20 @@ public abstract class ProductDetailsGui extends Page {
 			        for(TextField tf: theFields){
 			        	if(tf.getId().startsWith(cBox.getId().substring(0,3)))tf.setDisable(false);
 			        }
+			        if(cBox.getId().equals("giaCheckBox")){
+			        	giaSourceOfFunds.setDisable(false);
+			        } else {
+			        	sasSourceOfFunds.setDisable(false);
+			        }
 				}
 				if(oldVal){
 					for(TextField tf: theFields){
 			        	if(tf.getId().startsWith(cBox.getId().substring(0,3)))tf.setDisable(true);
+			        }
+			        if(cBox.getId().equals("giaCheckBox")){
+			        	giaSourceOfFunds.setDisable(true);
+			        } else {
+			        	sasSourceOfFunds.setDisable(true);
 			        }
 				}
 			}
