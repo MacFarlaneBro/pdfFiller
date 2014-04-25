@@ -523,31 +523,50 @@ public class SecondApplicantPersonalInfo extends Page{
 	        grid.add(hNextBtn, nextWidth-1, depth, 2, 1);
 	        nextBtn.setOnAction(new EventHandler<ActionEvent>(){
 	        	
-				@Override
+	        	@Override
 	            public void handle(ActionEvent e){
-					//This hideous lump is where I make sure that the NI number is accounted for
-					String nas = fieldMap.get("NationalInsuranceNumber").getText().replace("-", "");
-	        		if((nas == null || nas.equals(""))
-	        				&& !natInsTickClient.isSelected()){
-	        			warning("Warning! No national insurance number has been entered!\n"
-	        							+ "If the client has no NI number please tick the appropriate\nbox before"
-	        							+ " continuing.\n");
-	        		}  else if(
-	        				nas.length()!= 9//if the number isn't 9 characters
-	        				|| (!Character.isAlphabetic(nas.charAt(0))//if the first
-	        				&& !Character.isAlphabetic(nas.charAt(1)))//second
-	        				|| (!Character.isAlphabetic(nas.charAt(8))))//or ninth characters aren't letters
-	        				{
-	        				warning("The NI number" + nas + "entered is incorrectly formatted, please re-enter it and try again.\n");	
-	            			
-	            		} else {
-		            	try {		
-		            			fillAndSaveClientInfo();
+
+					if(natInsTickClient.isSelected()){//If the client ha
+						try {		
+		            		fillAndSaveClientInfo();
+		            		
 						} catch (Exception e1) {
 							e1.printStackTrace();
 						}
 		            	nextPage.setUp(primaryStage, thisScene, client);
-	        		}
+					} else{
+						
+						//This hideous lump is where I make sure that the NI number is accounted for
+						String nas = null;
+						
+						//If client has not been declared as having no NI number and the field isn't null then check the input for validity
+						if(fieldMap.get("NationalInsuranceNumber").getText() != null && !fieldMap.get("NationalInsuranceNumber").getText().equals("")){
+							nas = fieldMap.get("NationalInsuranceNumber").getText().replace("-", "");
+						}
+						
+						//If the field is null
+		        		if(nas == null || nas.equals("")){
+		        			warning("Warning! No national insurance number has been entered!\n"
+		        							+ "If the client has no NI number please tick the appropriate\nbox before"
+		        							+ " continuing.\n");
+		        		} else if(//if the field is invalid
+		        				nas.length()!= 9//if the number isn't 9 characters
+		    				|| (!Character.isAlphabetic(nas.charAt(0))//if the first
+		    				&& !Character.isAlphabetic(nas.charAt(1)))//second
+		    				|| (!Character.isAlphabetic(nas.charAt(8))))//or ninth characters aren't letters
+		    				{
+		    				warning("The NI number entered: " + nas + " is incorrectly formatted, please re-enter it and try again.\n");	
+		        			
+		        		} else {
+			            	try {		
+			            		fillAndSaveClientInfo();
+			            		
+							} catch (Exception e1) {
+								e1.printStackTrace();
+							}
+			            	nextPage.setUp(primaryStage, thisScene, client);
+		        		}
+					}
 	            }
 	        });	
 		}

@@ -246,12 +246,9 @@ public abstract class ProductDetailsGui extends Page {
 		
 		if(appType.equals("First")){
 			pd = client.getFirstClient().getProductDetails();
-			System.out.println("First");
 		} else if(appType.equals("Second")){
-			System.out.println("Second");
 			pd = client.getSecondClient().getProductDetails();
 		} else if(appType.equals("Joint")){
-			System.out.println("Joint");
 			pd = client.getJointAccount().getProductDetails();
 		}
 		
@@ -262,7 +259,6 @@ public abstract class ProductDetailsGui extends Page {
 			pd.makeGeneralInvestmentAccount();
 			Wrapper gia = pd.getGeneralInvestmentAccount();
 			pd.getGeneralInvestmentAccount().setCash(textFields.get("gia0").getText());
-			System.out.println("CashTime:" + gia.getCash());
 			gia.setSourceOfFunds(textFields.get("gia1").getText());
 			gia.setCashToBeTransferred(textFields.get("gia2").getText());
 			gia.setAssetsToBeReregistered(textFields.get("gia3").getText());
@@ -333,7 +329,6 @@ public abstract class ProductDetailsGui extends Page {
 		for(int i = 0; i < 3; i++){
 			TextField newField = new TextField();
 			newField.setId("Third" + i);
-			System.out.println("Third" + i);
 			newField.setMaxWidth(70);
 			textFields.put("Third"+i, newField);
 			if(i == 0){
