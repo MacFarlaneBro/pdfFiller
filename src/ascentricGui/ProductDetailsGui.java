@@ -258,8 +258,8 @@ public abstract class ProductDetailsGui extends Page {
 		if(checkBoxes.get("giaCheckBox").isSelected()){
 			pd.makeGeneralInvestmentAccount();
 			Wrapper gia = pd.getGeneralInvestmentAccount();
-			pd.getGeneralInvestmentAccount().setCash(textFields.get("gia0").getText());
-			gia.setSourceOfFunds(textFields.get("gia1").getText());
+			gia.setCash(textFields.get("gia0").getText());
+			gia.setSourceOfFunds(giaSourceOfFunds.getValue());
 			gia.setCashToBeTransferred(textFields.get("gia2").getText());
 			gia.setAssetsToBeReregistered(textFields.get("gia3").getText());
 			gia.setReserverAccount(textFields.get("gia4").getText());
@@ -271,7 +271,7 @@ public abstract class ProductDetailsGui extends Page {
 			pd.makeStocksAndSharesISA();
 			Wrapper sas = pd.getStocksAndSharesISA();
 			sas.setCash(textFields.get("sas0").getText());
-			sas.setSourceOfFunds(textFields.get("sas1").getText());
+			sas.setSourceOfFunds(sasSourceOfFunds.getValue());
 			sas.setCashToBeTransferred(textFields.get("sas2").getText());
 			sas.setAssetsToBeReregistered(textFields.get("sas3").getText());
 			sas.setReserverAccount(textFields.get("sas4").getText());

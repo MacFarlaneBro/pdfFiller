@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.zip.DataFormatException;
 
+import utilities.AutoCompleteComboBoxListener;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -496,6 +497,8 @@ public class ClientPersonalInfo extends Page{
 		clientFirstName = new ComboBox<String>(firstNames);
 		((ComboBoxBase<String>)clientFirstName).setEditable(true);
 		((ComboBox<String>)clientFirstName).setPrefWidth(fieldWidth);
+        new AutoCompleteComboBoxListener<>(((ComboBox<String>)clientFirstName));
+
 		grid.add(clientFirstName, 2, 5);
 	}
 

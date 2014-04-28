@@ -145,13 +145,6 @@ public class BankDetails extends Page{
 	protected void fillAndSaveClientInfo() throws DataFormatException{
 		
 		BankAccountDetails bd = null;
-
-		if(textFields.get("sortCode")!= null){
-			if(textFields.get("sortCode").getText().replace("-", "").length()!= 6){
-				throw new DataFormatException("The sort code entered is not in the correct format,\n"
-						+ "please re-enter is and try again\n");
-			}
-		}
 		
 		if(type.equals("first")){
 			bd = client.getFirstClient().getBankAccountDetails();
@@ -164,6 +157,16 @@ public class BankDetails extends Page{
 		if(type.equals("second") && same.isSelected()){
 			bd.setSameDetails(true);
 		} else {
+			
+			if(textFields.get("sortCode").getText()!= null 
+					&& textFields.get("sortCode").getText().length() > 1){
+				System.out.println("sort" + textFields.get("sortCode").getText() + "code");
+				if(textFields.get("sortCode").getText().replace("-", "").length()!= 6){
+					throw new DataFormatException("The sort code entered is not in the correct format,\n"
+							+ "please re-enter is and try again\n");
+				}
+			}
+			
 			bd.setAccountHolderName1(textFields.get("names1").getText());
 			bd.setAccountHolderName2(textFields.get("names2").getText());
 			bd.setBankAccountNumber(textFields.get("accountNumber").getText());
@@ -181,6 +184,4 @@ public class BankDetails extends Page{
 			bd.setBankPostCode(textFields.get("postcode").getText());
 		}
 	}
-
-	
 }
