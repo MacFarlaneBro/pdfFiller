@@ -14,6 +14,11 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
+import javafx.scene.shape.Line;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.RectangleBuilder;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -49,14 +54,73 @@ public class FinancialAdviserDetailsGui extends Page {
         setColumnSizes(grid, 3);
         setRowSizes(grid, 5, 12, 12, 30, 32, 18, 18, 30);
         thisScene = new Scene(grid, pageWidth, pageHeight);
-                        
+         
+        createBoxes();
+
         createLeftFields(grid);
                 
         movementButtons2Columns(true);
         createMovementButtons(20, 6);
+        
+        createBoxes();
 
         primaryStage.setScene(thisScene);
 
+	}
+
+	private void createBoxes() {
+		float leftBoundary = 5;
+		float boxWidth = 800;
+		
+		Rectangle r1 = RectangleBuilder.create()
+			.fill(Color.WHITE)
+			.strokeWidth(2)
+			.stroke(Color.BLACK)
+			.opacity(0.1)
+			.width(boxWidth)
+			.height(130)
+			.translateX(leftBoundary)
+			.translateY(111)
+			.build();
+		
+		Rectangle r2 = RectangleBuilder.create()
+			.fill(Color.WHITE)
+			.strokeWidth(2)
+			.stroke(Color.BLACK)
+			.opacity(0.1)
+			.width(boxWidth)
+			.height(81)
+			.translateX(leftBoundary)
+			.translateY(220)
+			.build();
+		
+		Rectangle r3 = RectangleBuilder.create()
+			.fill(Color.WHITE)
+			.strokeWidth(2)
+			.stroke(Color.BLACK)
+			.opacity(0.1)
+			.width(boxWidth)
+			.height(70)
+			.translateX(leftBoundary)
+			.translateY(299)
+			.build();
+		
+		Rectangle r4 = RectangleBuilder.create()
+				.fill(Color.WHITE)
+				.strokeWidth(2)
+				.stroke(Color.BLACK)
+				.opacity(0.1)
+				.width(boxWidth)
+				.height(120)
+				.translateX(leftBoundary)
+				.translateY(397)
+				.build();
+		
+		grid.getChildren().add(r1);
+		grid.getChildren().add(r2);
+		grid.getChildren().add(r3);
+		grid.getChildren().add(r4);
+		
 	}
 
 	private void createLeftFields(GridPane grid) {
