@@ -33,22 +33,22 @@ public class AscentricPage8 extends AscentricPage {
 		int nameHeight = 415;
 		stamp(clientWidth, nameHeight, client.getIndividualDetails().getForename() 
 				+ "" + client.getIndividualDetails().getSurname());
-		int sigHeight = 365;
-		stamp(clientWidth, sigHeight, client.getIndividualDetails().getForename() 
-				+ "" + client.getIndividualDetails().getSurname());
-		int dateHeight = 335;
-		int temp = clientWidth+50;
-		String theDate =
-				sdf.format(date);
-		stamp(temp, dateHeight, theDate.charAt(0) + "");
-		for(int i = 1; i < theDate.length(); i++){
-			
-			if(theDate.charAt(i) == '/'){
-				temp+=16;
-			} else {
-				stamp(temp+=20, dateHeight, theDate.charAt(i) + "");
-			}
-		}
+//		int sigHeight = 365;
+//		stamp(clientWidth, sigHeight, client.getIndividualDetails().getForename() 
+//				+ "" + client.getIndividualDetails().getSurname());
+//		int dateHeight = 335;
+//		int temp = clientWidth+50;
+//		String theDate =
+//				sdf.format(date);
+//		stamp(temp, dateHeight, theDate.charAt(0) + "");
+//		for(int i = 1; i < theDate.length(); i++){
+//			
+//			if(theDate.charAt(i) == '/'){
+//				temp+=16;
+//			} else {
+//				stamp(temp+=20, dateHeight, theDate.charAt(i) + "");
+//			}
+//		}
 	}
 
 	@Override

@@ -21,10 +21,9 @@ public class AscentricPage5 extends AscentricPage {
 	public void fillPage(MakeClients theClient) throws IOException, DocumentException {
 		
 		setUp(PAGENUMBER);
-		
-		if(theClient.getJointAccount() == null){//If the account is not joint use the first client information
-			accDetails(theClient.getFirstClient().getBankAccountDetails(), "first");
-		} else {
+		accDetails(theClient.getFirstClient().getBankAccountDetails(), "first");
+
+		if(theClient.getJointAccount() != null){//If the account is not joint use the first client information
 			accDetails(theClient.getSecondClient().getBankAccountDetails(), "joint");
 		}
 		
@@ -87,20 +86,22 @@ public class AscentricPage5 extends AscentricPage {
 		int secondRowWidth = 282;
 
 		//Regular WithdrawalWrappers
-		if(bad.getDepositPayTiming().equals("Monthly")){
-			secondRowWidth+=65;
+		if(bad.getDepositPayTiming()!= null){
+			if(bad.getDepositPayTiming().equals("Monthly")){
+				secondRowWidth+=65;
+			}
+			if(bad.getDepositPayTiming().equals("Quarterly")){
+				secondRowWidth+=130;
+			}
+			if(bad.getDepositPayTiming().equals("Half Yearly")){
+				secondRowWidth+=195;
+			}
+			if(bad.getDepositPayTiming().equals("Annually")){
+				secondRowWidth+=260;
+			}
+			stamp(370, 208, bad.getRegWithdrawlWrappers());
+			stamp(secondRowWidth, 229, "X");
 		}
-		if(bad.getDepositPayTiming().equals("Quarterly")){
-			secondRowWidth+=130;
-		}
-		if(bad.getDepositPayTiming().equals("Half Yearly")){
-			secondRowWidth+=195;
-		}
-		if(bad.getDepositPayTiming().equals("Annually")){
-			secondRowWidth+=260;
-		}
-		stamp(370, 208, bad.getRegWithdrawlWrappers());
-		stamp(secondRowWidth, 229, "X");
 		
 		
 		secondRowWidth = 350;
@@ -148,10 +149,13 @@ public class AscentricPage5 extends AscentricPage {
 	private void bankDetails(BankAccountDetails bad, int depth) {
 		//Bank Name
 		stamp(bankDetailsWidth, depth, bad.getBankName());
-		//Split the bank address into lines and then print them out
-		String[] bankAddress = bad.getBankAddress().split(":");
-		for(int i = 0; i < bankAddress.length; i++){
-			stamp(bankDetailsWidth, depth-20 -(i*20), bankAddress[i]);
+		//Split the bank address into separate lines and then print them out
+		if(bad.getBankAddress()!= null){
+			String[] bankAddress = bad.getBankAddress().split(":");
+		
+			for(int i = 0; i < bankAddress.length; i++){
+				stamp(bankDetailsWidth, depth-20 -(i*20), bankAddress[i]);
+			}
 		}
 		//Bank postcode
 		stamp(bankDetailsWidth, depth-80, bad.getBankPostCode());

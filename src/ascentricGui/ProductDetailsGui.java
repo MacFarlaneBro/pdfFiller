@@ -67,7 +67,9 @@ public abstract class ProductDetailsGui extends Page {
         	}
         }
         giaSourceOfFunds.setDisable(true);
-        sasSourceOfFunds.setDisable(true);
+        if(sasSourceOfFunds != null){
+        	sasSourceOfFunds.setDisable(true);
+        }
         
         for(Label label: theLabels){
         	GridPane.setHalignment(label, HPos.CENTER);

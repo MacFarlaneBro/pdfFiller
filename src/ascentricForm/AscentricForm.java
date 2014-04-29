@@ -53,8 +53,8 @@ public class AscentricForm{
 		page = new AscentricPage7();
 		page.fillPage(theClient.getFirstClient());
 		
-//		page = new AscentricPage8();
-//		page.fillPage(theClient);
+		page = new AscentricPage8();
+		page.fillPage(theClient);
 		String finishedFile = page.getFileName();
 		
 		cleanUp(file, finishedFile);
