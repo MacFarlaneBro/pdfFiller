@@ -23,6 +23,7 @@ public class AscentricPage2 extends AscentricPage1{
 		natInYN +=165;
 		usPersonDepth +=148;
 	}
+
 	
 	@Override
 	public void fillPage(Client theClient) throws IOException, DocumentException{
