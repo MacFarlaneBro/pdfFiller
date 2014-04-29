@@ -67,12 +67,14 @@ public class AscentricPage5 extends AscentricPage {
 		
 		int firstRowWidth = 10;
 		
-		if(bad.getPayTiming().equals("Quarterly")){
-			firstRowWidth+=65;
-		} else if(bad.getPayTiming().equals("Half Yearly")){
-			firstRowWidth+=130;
-		} else if(bad.getPayTiming().equals("Annually")){
-			firstRowWidth+=195;
+		if(bad.getPayTiming()!= null){
+			if(bad.getPayTiming().equals("Quarterly")){
+				firstRowWidth+=65;
+			} else if(bad.getPayTiming().equals("Half Yearly")){
+				firstRowWidth+=130;
+			} else if(bad.getPayTiming().equals("Annually")){
+				firstRowWidth+=195;
+			}
 		}
 		stamp(firstRowWidth+=65, 148, "X");
 		

@@ -60,8 +60,6 @@ public class FinancialAdviserDetailsGui extends Page {
         movementButtons2Columns(true);
         createMovementButtons(20, 6);
         
-        createBoxes();
-
         primaryStage.setScene(thisScene);
 
 	}
