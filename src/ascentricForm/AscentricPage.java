@@ -24,7 +24,7 @@ import com.itextpdf.text.pdf.PdfStamper;
  * Each of the pages contains a series of integer values ending in either width, indicating their distance from the left margin of the page
  * or depth, indicating their distance from the bottom of the page.
  */
-public abstract class AscentricPage {
+public abstract class AscentricPage{
 	
 	public static final String FORM = "AscentricForm.pdf";
 	protected PdfReader reader;
@@ -40,7 +40,6 @@ public abstract class AscentricPage {
 	 * @param text - The text to be printed at the specified x and y location
 	 */
 	protected void stamp(int x, int y, String text){
-		
 		if(text == null
 				|| text.equals("null")){ // if null print nothing
 			System.out.println("Not printed: " + text);

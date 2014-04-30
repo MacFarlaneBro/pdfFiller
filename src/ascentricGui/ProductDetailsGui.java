@@ -19,6 +19,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import utilities.Money;
 import ascentricClientDetails.ClientHolder;
 import ascentricClientDetails.ProductDetails;
 import ascentricClientDetails.Wrapper;
@@ -256,15 +257,15 @@ public abstract class ProductDetailsGui extends Page {
 		}
 		
 		pd.setPlatformAccountNameChoice(textFields.get("accountName").getText());
-		
+				
 		//If the general investment account is selected then fill the details
 		if(checkBoxes.get("giaCheckBox").isSelected()){
 			pd.makeGeneralInvestmentAccount();
 			Wrapper gia = pd.getGeneralInvestmentAccount();
-			gia.setCash(textFields.get("gia0").getText());
+			gia.setCash((new Money(textFields.get("gia0").getText())).toString());
 			gia.setSourceOfFunds(giaSourceOfFunds.getValue());
-			gia.setCashToBeTransferred(textFields.get("gia2").getText());
-			gia.setAssetsToBeReregistered(textFields.get("gia3").getText());
+			gia.setCashToBeTransferred((new Money(textFields.get("gia2").getText())).toString());
+			gia.setAssetsToBeReregistered((new Money(textFields.get("gia3").getText())).toString());
 			gia.setReserverAccount(textFields.get("gia4").getText());
 			gia.setAdvisoryWrapper(checkBoxes.get("advgia").isSelected());
 			gia.setDiscretionaryWrapper(checkBoxes.get("discgia").isSelected());
@@ -273,17 +274,17 @@ public abstract class ProductDetailsGui extends Page {
 		if(!appType.equals("Joint") && checkBoxes.get("sasCheckBox").isSelected()){
 			pd.makeStocksAndSharesISA();
 			Wrapper sas = pd.getStocksAndSharesISA();
-			sas.setCash(textFields.get("sas0").getText());
+			sas.setCash((new Money(textFields.get("sas0").getText())).toString());
 			sas.setSourceOfFunds(sasSourceOfFunds.getValue());
-			sas.setCashToBeTransferred(textFields.get("sas2").getText());
-			sas.setAssetsToBeReregistered(textFields.get("sas3").getText());
+			sas.setCashToBeTransferred((new Money(textFields.get("sas2").getText())).toString());
+			sas.setAssetsToBeReregistered((new Money(textFields.get("sas3").getText())).toString());
 			sas.setReserverAccount(textFields.get("sas4").getText());
 			sas.setAdvisoryWrapper(checkBoxes.get("advsas").isSelected());
 			sas.setDiscretionaryWrapper(checkBoxes.get("discsas").isSelected());
 		}
 		
 		pd.setThirdPartyProductAccounts(textFields.get("Third0").getText());
-		pd.setAmountToBeReceived(textFields.get("Third1").getText());
+		pd.setAmountToBeReceived((new Money(textFields.get("Third1").getText())).toString());
 		pd.setSourceOfFunds(secondLayerSourceOfFunds.getValue());
 		pd.setAdvisoryWrapper(checkBoxes.get("ThirdAdv").isSelected());
 		pd.setDiscretionaryWrapper(checkBoxes.get("ThirdDisc").isSelected());

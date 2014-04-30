@@ -9,6 +9,7 @@ import ascentricClientDetails.ProductDetails;
 import ascentricClientDetails.Wrapper;
 
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Font;
 
 public class AscentricPage3 extends AscentricPage{
 	
@@ -135,13 +136,13 @@ public class AscentricPage3 extends AscentricPage{
 		//Wrappers
 		stamp(wrapWidth, yAxis, "X");
 		//Cash
-		stamp(wrapWidth+25, yAxis,"" + wrapper.getCash());
+		stamp(wrapWidth+25, yAxis, wrapper.getCash());
 		//Source of funds
 		stamp(wrapWidth+77, yAxis, wrapper.getSourceOfFunds());
 		//Transfer/Approx
-		stamp(wrapWidth+150, yAxis, "" + wrapper.getCashToBeTransferred());
+		stamp(wrapWidth+150, yAxis, wrapper.getCashToBeTransferred());
 		//Transfer/Assets
-		stamp(wrapWidth+212, yAxis,"" + wrapper.getAssetsToBeReregistered());
+		stamp(wrapWidth+212, yAxis, wrapper.getAssetsToBeReregistered());
 		//Reserve Account
 		stamp(wrapWidth+260, yAxis, wrapper.getReserverAccount());
 		
