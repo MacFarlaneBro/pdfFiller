@@ -7,6 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -17,6 +18,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBoxBuilder;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -49,7 +52,7 @@ public abstract class Page {
 	 * @param warningString - The message that will appear in the warning box
 	 */
 	private void warning(String warningString){
-
+		
 		System.out.println("Warning!");
 		final Stage warningStage = new Stage();
 		Button button = new Button("OK");
@@ -68,6 +71,8 @@ public abstract class Page {
 	}
 	
 	public void createMovementButtons(int depth, int nextWidth) {
+		
+		grid.setGridLinesVisible(true);
 					    
 		Button backBtn = new Button("Back");//Create button with the name sign in
         HBox hbBtn = new HBox(21);//Layout pane with 21 pixel spacing
@@ -117,6 +122,15 @@ public abstract class Page {
 				}
             }
         });	
+	}
+	
+	public void setTitle(GridPane grid, String title, Stage primaryStage){
+		
+		Text sceneTitle = new Text(title);
+		primaryStage.setTitle(title);
+		sceneTitle.setFont(Font.font("courier", FontWeight.NORMAL, 21));
+        sceneTitle.setId("sceneTitle");
+        grid.add(sceneTitle, 0, 0, 4, 2);
 	}
 
     public void setColumnSizes(GridPane grid, int... sizes){

@@ -52,7 +52,6 @@ public class ClientPersonalInfo extends Page{
     private Map<String, String> clientData;
     private Map<String, TextField> fieldMap;
     private Button autoFillClientButton;
-	private String sceneT = "Client Personal Info";
 	private ComboBox<String> applicationType;
 	private CheckBox natInsTickClient;
 	private CheckBox facetoface;
@@ -69,17 +68,17 @@ public class ClientPersonalInfo extends Page{
     	this.client = client;
         this.previousScene = firstScene;
         this.primaryStage = primaryStage;
-        primaryStage.setTitle("Personal Information - Client");
         grid = new GridPane();
         grid.setHgap(15);
         grid.setVgap(15);
+        
+        setTitle(grid, "Client Personal Info", primaryStage);
         
         thisScene = new Scene(grid, pageWidth, pageHeight);
         
         setColumnSizes(grid, 20, 250, 175, 190, 170, 20);
         setRowSizes(grid, 50);
-        setRowSizes(grid);
-        
+                
     	fieldMap = new HashMap<String, TextField>();
         
         createAutoFillFields(grid);
@@ -94,6 +93,8 @@ public class ClientPersonalInfo extends Page{
         createMovementButtons(12, 5);
         
         createClearButton();
+        
+        setTitle(grid, "Client Personal Info", primaryStage);
         
         primaryStage.setScene(thisScene);
         
@@ -397,21 +398,15 @@ public class ClientPersonalInfo extends Page{
     */
     private void createAutoFillFields(GridPane grid) {
         
-        Text sceneTitle = new Text(sceneT);
-        sceneTitle.setFont(Font.font("courier", FontWeight.NORMAL, 21));
-        sceneTitle.setId("sceneTitle");
-        GridPane.setValignment(sceneTitle, VPos.CENTER);
-        grid.add(sceneTitle, 1, 0, 2, 2);
-        
       //Type of Application
-        Label appType = new Label("Application Type");
-        grid.add(appType, 1, ++gridVert);
-        ObservableList<String> formTypes =
-                FXCollections.observableArrayList(
-                        "Single Client",
-                        "Two Clients",
-                        "Joint Account"
-                );
+	  Label appType = new Label("Application Type");
+	  grid.add(appType, 1, ++gridVert);
+	  ObservableList<String> formTypes =
+	          FXCollections.observableArrayList(
+	                  "Single Client",
+	                  "Two Clients",
+	                  "Joint Account"
+	          );
             
         applicationType = new ComboBox<String>(formTypes);
         setNextPage(applicationType);
