@@ -31,9 +31,11 @@ public class AscentricPage1 extends AscentricPage{
 		setUp(PAGENUMBER);
 		fillAppType(theClient);
 		fillPersonalDetails(id);	
-		if(id.getNationalInsuranceNumber()== null){
+		if(id.getNationalInsuranceNumber()==null
+			|| id.getNationalInsuranceNumber().equals("")){
 			natInsurance(false);
 		} else {
+			System.out.println(id.getNationalInsuranceNumber());
 			fillNatInsure(id.getNationalInsuranceNumber());
 		}
 		fillContactDetails(id);
@@ -84,12 +86,14 @@ public class AscentricPage1 extends AscentricPage{
 	
 	protected void fillNatInsure(String nin){
 		
-		stamp(firstRow, natInsureDepth, "" + nin.charAt(0));
-		for(int i = 1; i < nin.length(); i++){
-			if(i %2 == 0 && i < 9){
-				stamp(firstRow+=23, natInsureDepth, "" + nin.charAt(i));
-			} else {
-				stamp(firstRow+=20, natInsureDepth, "" + nin.charAt(i));
+		if(nin!= null){
+			stamp(firstRow, natInsureDepth, "" + nin.charAt(0));
+			for(int i = 1; i < nin.length(); i++){
+				if(i %2 == 0 && i < 9){
+					stamp(firstRow+=23, natInsureDepth, "" + nin.charAt(i));
+				} else {
+					stamp(firstRow+=20, natInsureDepth, "" + nin.charAt(i));
+				}
 			}
 		}
 	}

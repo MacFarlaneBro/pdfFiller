@@ -31,6 +31,7 @@ public abstract class ProductDetailsGui extends Page {
 	protected Set<Label> theLabels;
 	private ComboBox<String> giaSourceOfFunds;
 	private ComboBox<String> sasSourceOfFunds;
+	private ComboBox<String> secondLayerSourceOfFunds;
 
 	@Override
 	public void setUp(Stage primaryStage, Scene previousScene, ClientHolder client) {
@@ -283,7 +284,7 @@ public abstract class ProductDetailsGui extends Page {
 		
 		pd.setThirdPartyProductAccounts(textFields.get("Third0").getText());
 		pd.setAmountToBeReceived(textFields.get("Third1").getText());
-		pd.setSourceOfFunds(textFields.get("Third2").getText());
+		pd.setSourceOfFunds(secondLayerSourceOfFunds.getValue());
 		pd.setAdvisoryWrapper(checkBoxes.get("ThirdAdv").isSelected());
 		pd.setDiscretionaryWrapper(checkBoxes.get("ThirdDisc").isSelected());
 	}
@@ -329,18 +330,31 @@ public abstract class ProductDetailsGui extends Page {
 		
 		//generating all the textfields for the wrapper info
 		for(int i = 0; i < 3; i++){
-			TextField newField = new TextField();
-			newField.setId("Third" + i);
-			newField.setMaxWidth(70);
-			textFields.put("Third"+i, newField);
-			if(i == 0){
-				newField.setPrefWidth(70);
-				grid.add(newField,  fieldWidth+i, gridVert, 2, 1);
-				fieldWidth++;
-				continue;
+			if(i!=2){
+				TextField newField = new TextField();
+				newField.setId("Third" + i);
+				newField.setMaxWidth(70);
+				textFields.put("Third"+i, newField);
+				if(i == 0){
+					newField.setPrefWidth(70);
+					grid.add(newField,  fieldWidth+i, gridVert, 2, 1);
+					fieldWidth++;
+					continue;
+				}
+				grid.add(newField, fieldWidth+i, gridVert);
 			}
-			grid.add(newField, fieldWidth+i, gridVert);
 		}
+		
+		ObservableList<String> sofOptions =
+                FXCollections.observableArrayList(
+                        "Cheque",
+                        "BACS",
+                        "Transfer"
+                );
+		
+		secondLayerSourceOfFunds = new ComboBox<String>(sofOptions);
+		secondLayerSourceOfFunds.setMaxWidth(100);
+		grid.add(secondLayerSourceOfFunds, 5, gridVert);
 		
 		CheckBox advWrap = new CheckBox();
 		checkBoxes.put("ThirdAdv", advWrap);

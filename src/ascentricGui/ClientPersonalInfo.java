@@ -375,7 +375,7 @@ public class ClientPersonalInfo extends Page{
         grid.add(clientEmail, 4, gridVert);
         
         //Does the client have a national insurance number?
-        Label natInsTick = new Label("Tick if client has no national Insurance number");
+        Label natInsTick = new Label("Tick if client has no National Insurance number");
         theLabels.add(email);
         grid.add(natInsTick, 1, 9);
         natInsTickClient = new CheckBox();
@@ -511,6 +511,8 @@ public class ClientPersonalInfo extends Page{
 	@SuppressWarnings("unchecked")
 	protected void fillAndSaveClientInfo() throws DataFormatException{
 		
+		System.out.println(natInsTickClient.isSelected());
+		
 		if(!natInsTickClient.isSelected()){
 						
 			//This hideous lump is where I make sure that the NI number is accounted for
@@ -519,6 +521,7 @@ public class ClientPersonalInfo extends Page{
 			if(fieldMap.get("nas").getText() != null && !fieldMap.get("nas").getText().equals("")){
 				nas = fieldMap.get("nas").getText().replace("-", "");
 			}
+			
 			//If the field is null
     		if(nas == null || nas.equals("")){
     			throw new DataFormatException("Warning! No national insurance number has been entered!\n"
@@ -533,7 +536,6 @@ public class ClientPersonalInfo extends Page{
     			throw new DataFormatException("The NI number entered: " 
 				+ nas 
 				+ " is incorrectly formatted, please re-enter it and try again.\n");	
-
     		}
 		}
 		

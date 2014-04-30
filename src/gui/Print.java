@@ -47,7 +47,8 @@ public class Print {
 		this.previousScene = previousScene;
 		
 		primaryStage.setTitle("Save File");
-        
+        primaryStage.setHeight(400);
+        primaryStage.setWidth(400);
         grid = new GridPane();
         grid.setHgap(10);
         grid.setVgap(10);
@@ -59,8 +60,8 @@ public class Print {
         grid.add(save, 4, 2, 2, 1);
 
     	Page page = new GenericPage();
-    	page.setRowSizes(grid, 100, 100, 100, 100, 100);
-    	page.setColumnSizes(grid, 100, 100, 100, 100, 100, 100, 100);
+    	page.setRowSizes(grid, 0, 100, 100, 100);
+    	page.setColumnSizes(grid, 0, 100, 100, 100, 100);
         
         Label tf = new Label("You have now completed filling in the document,"
         		+ " click 'Save Document' to produce a finished document."
@@ -79,12 +80,17 @@ public class Print {
             	FileChooser fileChooser = new FileChooser();
             	
                 fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PDF files (*.pdf)", "*.pdf"));
-                fileChooser.setInitialFileName(client.getFirstClient().getIndividualDetails().getSurname() + " "
-                		+ client.getFirstClient().getIndividualDetails().getForename().charAt(0)
-                		+ " Ascentric App "
-                		+ (new SimpleDateFormat("ddMMyyyy")).format(new Date()));
-                File file = fileChooser.showSaveDialog(primaryStage);
-                
+                File file;
+                if(client.getFirstClient().getIndividualDetails().getSurname()!= null
+                		&& client.getFirstClient().getIndividualDetails().getForename()!= null){
+	                fileChooser.setInitialFileName(client.getFirstClient().getIndividualDetails().getSurname() + " "
+	                		+ client.getFirstClient().getIndividualDetails().getForename().charAt(0)
+	                		+ " Ascentric App "
+	                		+ (new SimpleDateFormat("ddMMyyyy")).format(new Date()));
+	                file = fileChooser.showSaveDialog(primaryStage);
+                } else {
+                	file = fileChooser.showSaveDialog(primaryStage);
+                }
                 if(!file.getName().contains(".")){
                 	file = new File(file.getAbsolutePath() + ".pdf");
                 }
@@ -93,8 +99,8 @@ public class Print {
         });
         
         actionTarget = new Text();
-        actionTarget.setWrappingWidth(600);
-        grid.add(actionTarget, 1, 4, 6, 1);
+        actionTarget.setWrappingWidth(300);
+        grid.add(actionTarget, 1, 2, 3, 1);
         actionTarget.setFont(Font.font(null, FontWeight.BOLD, 15));
         createMovementButtons(3);
         thisScene = new Scene(grid, 900, 500);  
