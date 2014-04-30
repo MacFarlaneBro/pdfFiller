@@ -1,11 +1,8 @@
 package ascentricForm;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import ascentricClientDetails.Client;
 import ascentricClientDetails.MakeClients;
-
 import com.itextpdf.text.DocumentException;
 
 public class AscentricPage8 extends AscentricPage {
@@ -26,7 +23,7 @@ public class AscentricPage8 extends AscentricPage {
 	}
 
 	private void applicant(Client client, int clientWidth) {
-		int nameHeight = 415;
+		int nameHeight = 413;
 		stamp(clientWidth, nameHeight, client.getIndividualDetails().getForename() 
 				+ " " + client.getIndividualDetails().getSurname());
 	}

@@ -146,6 +146,17 @@ public class BankDetails extends Page{
 		
 		BankAccountDetails bd = null;
 		
+		if(textFields.get("accountNumber").getText().length()< 6
+			|| textFields.get("accountNumber").getText().length()> 8){
+			throw new DataFormatException("The account number given is too long or too short");
+		}
+		
+		for(char a: textFields.get("accountNumber").getText().toCharArray()){
+			if(Character.isAlphabetic(a)){
+				throw new DataFormatException("The account number must contain only numbers");
+			}
+		}
+		
 		if(type.equals("first")){
 			bd = client.getFirstClient().getBankAccountDetails();
 			System.out.println("first");

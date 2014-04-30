@@ -111,7 +111,7 @@ public class IncomePayment extends Page {
 		grid.add(regWithDraw, 4, 4);
 		
 		Label pfd = new Label("Payment from deposit (or reserve\naccount"
-				+ "where applicable) and\nwithdraw the"
+				+ " where applicable) and\nwithdraw the"
 				+ " following fixed\namount:");
 		GridPane.setValignment(pfd, VPos.CENTER);
 		
