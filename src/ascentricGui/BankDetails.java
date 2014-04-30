@@ -148,7 +148,7 @@ public class BankDetails extends Page{
 		
 		if(textFields.get("accountNumber").getText().length()< 6
 			|| textFields.get("accountNumber").getText().length()> 8){
-			throw new DataFormatException("The account number given is too long or too short");
+			throw new DataFormatException("The account number given must be between 6 and 8 numbers");
 		}
 		
 		for(char a: textFields.get("accountNumber").getText().toCharArray()){

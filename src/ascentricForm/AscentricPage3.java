@@ -9,7 +9,6 @@ import ascentricClientDetails.ProductDetails;
 import ascentricClientDetails.Wrapper;
 
 import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Font;
 
 public class AscentricPage3 extends AscentricPage{
 	

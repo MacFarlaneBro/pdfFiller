@@ -8,7 +8,10 @@ import ascentricClientDetails.MakeClients;
 
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
 import com.itextpdf.text.Phrase;
+import com.itextpdf.text.Font.FontFamily;
+import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.ColumnText;
 import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfReader;
@@ -48,6 +51,29 @@ public abstract class AscentricPage{
 		ColumnText
 		.showTextAligned(
 				canvas, 
+				Element.ALIGN_LEFT, 
+				new Phrase(text), 
+				x, 
+				y,
+				0);
+		}
+	}
+	
+	protected void stamp(int x, int y, String text, int textSize){
+		PdfContentByte tempCanvas = canvas;
+		tempCanvas.setFontAndSize(
+				(new Font(
+						FontFamily.HELVETICA))
+						.getBaseFont()
+						, textSize);
+		if(text == null
+				|| text.equals("null")){ // if null print nothing
+			System.out.println("Not printed: " + text);
+		} else {			
+			System.out.println("Printed: " + text);
+		ColumnText
+		.showTextAligned(
+				tempCanvas, 
 				Element.ALIGN_LEFT, 
 				new Phrase(text), 
 				x, 
