@@ -6,13 +6,13 @@ import org.junit.Before;
 import org.junit.Test;
 
 import ascentricClientDetails.ClientHolder;
-import ascentricForm.AscentricPage8;
+import ascentricForm.AscentricPage9;
 
 import com.itextpdf.text.DocumentException;
 
 public class AscentricPage8Test {
 	
-	AscentricPage8 thePage = new AscentricPage8();
+	AscentricPage9 thePage = new AscentricPage9();
 	ClientHolder theClient = ClientHolder.getInstance();
 	
 	

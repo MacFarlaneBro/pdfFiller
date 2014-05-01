@@ -8,13 +8,13 @@ import org.junit.Test;
 import ascentricClientDetails.Client;
 import ascentricClientDetails.ClientHolder;
 import ascentricClientDetails.FinancialAdviserDetails;
-import ascentricForm.AscentricPage7;
+import ascentricForm.AscentricPage8;
 
 import com.itextpdf.text.DocumentException;
 
 public class AscentricPage7Test {
 	
-	AscentricPage7 thePage = new AscentricPage7();
+	AscentricPage8 thePage = new AscentricPage8();
 	ClientHolder theClientHolder = ClientHolder.getInstance();
 	Client theClient;
 	

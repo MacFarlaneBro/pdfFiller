@@ -50,10 +50,10 @@ public class AscentricForm{
 		page = new AscentricPage6();
 		page.fillPage(theClient);
 		
-		page = new AscentricPage7();
+		page = new AscentricPage8();
 		page.fillPage(theClient.getFirstClient());
 		
-		page = new AscentricPage8();
+		page = new AscentricPage9();
 		page.fillPage(theClient);
 		String finishedFile = page.getFileName();
 		
