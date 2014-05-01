@@ -57,6 +57,8 @@ public abstract class ProductDetailsGui extends Page {
         	generate1stLayerFields(grid, "sas");
         }
         
+//        grid.setGridLinesVisible(true);
+        
         generate2ndLayerLabels(grid);
         generate2ndLayerFields(grid);
         
@@ -67,6 +69,7 @@ public abstract class ProductDetailsGui extends Page {
         	if(tf.getId().startsWith("gia") || tf.getId().startsWith("sas")){
         		tf.setDisable(true);
         	}
+//        	GridPane.set
         }
         giaSourceOfFunds.setDisable(true);
         if(sasSourceOfFunds != null){
@@ -295,31 +298,37 @@ public abstract class ProductDetailsGui extends Page {
 		thirdPartyProdAcc.setWrapText(true);
 		GridPane.setHalignment(thirdPartyProdAcc, HPos.CENTER);
 		GridPane.setValignment(thirdPartyProdAcc, VPos.CENTER);
+		theLabels.add(thirdPartyProdAcc);
 		grid.add(thirdPartyProdAcc, 2, ++gridVert, 2, 2);
 		
 		Label amountToBeReceived = new Label("Amount to be received");
 		GridPane.setHalignment(amountToBeReceived, HPos.CENTER);
 		GridPane.setValignment(amountToBeReceived, VPos.CENTER);
 		amountToBeReceived.setWrapText(true);
+		theLabels.add(amountToBeReceived);
 		grid.add(amountToBeReceived, 4, gridVert, 1, 2);
 		
 		Label sourceOfFunds = new Label ("Source of Funds\n(Cheque, BACS, Transfer)");
 		sourceOfFunds.setWrapText(true);
 		GridPane.setHalignment(sourceOfFunds, HPos.CENTER);
 		GridPane.setValignment(sourceOfFunds, VPos.CENTER);
+		theLabels.add(sourceOfFunds);
 		grid.add(sourceOfFunds, 5, gridVert, 1, 2);
 		
 		Label approxTransCash = new Label ("Wrapper Type");
 		GridPane.setHalignment(approxTransCash, HPos.CENTER);
 		approxTransCash.setWrapText(true);
+		theLabels.add(approxTransCash);
 		grid.add(approxTransCash, 6, gridVert, 2, 1);
 
 		Label thirdAdvWrap = new Label ("Advisory\nWrapper");
 		GridPane.setHalignment(thirdAdvWrap, HPos.CENTER);
+		theLabels.add(thirdAdvWrap);
 		grid.add(thirdAdvWrap, 6, gridVert+1);
 		
 		Label thirdDiscWrap = new Label ("Discretionary\nWrapper");
 		GridPane.setHalignment(thirdDiscWrap, HPos.CENTER);
+		theLabels.add(thirdDiscWrap);
 		grid.add(thirdDiscWrap, 7, gridVert+1);
 		
 		gridVert+=2;

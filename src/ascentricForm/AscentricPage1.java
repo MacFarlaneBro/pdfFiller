@@ -63,10 +63,11 @@ public class AscentricPage1 extends AscentricPage{
 		int extraDistance = 0;
 		//Title
 		stamp(firstRow, detailDepth, id.getTitle());
-		//First Name
-		stamp(firstRow, detailDepth-20, id.getForename());
 		//Surname
-		stamp(firstRow, detailDepth-40, id.getSurname());
+		stamp(firstRow, detailDepth-20, id.getSurname());
+		//First Name
+		stamp(firstRow, detailDepth-40, id.getForename());
+		
 		
 		//Date of Birth stamping loop
 		if(dob!= null){
