@@ -90,7 +90,6 @@ public abstract class AscentricPage{
 		}
 		 stamper = new PdfStamper(reader, new FileOutputStream(pageNumber + FORM));
 		 canvas = stamper.getOverContent(pageNumber);
-
 	}
 	
 	public abstract void fillPage(Client theClient) throws IOException, DocumentException;
@@ -100,12 +99,10 @@ public abstract class AscentricPage{
 	protected void shutDown() throws DocumentException, IOException {
 		
 		stamper.close();
-
 	}
 
 	public String getFileName() {
-		return pageNumber + FORM;
-		
+		return pageNumber + FORM;	
 	}
 
 	public void skipPage(int pageNumber) throws IOException, DocumentException {

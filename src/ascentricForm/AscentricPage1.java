@@ -135,7 +135,7 @@ public class AscentricPage1 extends AscentricPage{
 		
 		contactWidth -= 50;
 		//Splitting the address string
-		if(id.getAddress()!=null && !id.getAddress().equals("")){
+		if(id.getAddress()!=null && id.getAddress().length() > 2){
 			String[] addressParts = id.getAddress().split(":");
 
 			int addPart = 80;

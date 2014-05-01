@@ -68,7 +68,8 @@ public class Print {
         		+ " The document will then be opened in adobe acrobat"
         		+ " so that you may check it to make sure everything is correct"
         		+ " before returning to the home screen.");
-        
+		System.out.println("Entering print section");
+
         grid.add(tf, 1, 1, 4, 1);
         tf.setWrapText(true);
         
@@ -78,7 +79,8 @@ public class Print {
             public void handle(ActionEvent e){
             	
             	FileChooser fileChooser = new FileChooser();
-            	
+        		System.out.println("Begindning Print");
+
                 fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PDF files (*.pdf)", "*.pdf"));
                 File file;
                 if(client.getFirstClient().getIndividualDetails().getSurname()!= null
@@ -88,8 +90,12 @@ public class Print {
 	                		+ " Ascentric App "
 	                		+ (new SimpleDateFormat("ddMMyyyy")).format(new Date()));
 	                file = fileChooser.showSaveDialog(primaryStage);
+                	printDocument(file);
+	                System.out.println("Begin1324ning Print");
                 } else {
                 	file = fileChooser.showSaveDialog(primaryStage);
+                	printDocument(file);
+                	System.out.println("Begi434ndning Print");
                 }
                 if(!file.getName().contains(".")){
                 	file = new File(file.getAbsolutePath() + ".pdf");
@@ -104,7 +110,6 @@ public class Print {
         createMovementButtons(3);
         thisScene = new Scene(grid, 900, 500);  
         primaryStage.setScene(thisScene);
-        
 	}
 	
 	public void warning(String warningString){
@@ -126,11 +131,14 @@ public class Print {
 		warningStage.show();
 	}
 	
-	protected void printDocument(File file) throws Exception {
+	protected void printDocument(File file){
 		AscentricForm af = new AscentricForm();
+		System.out.println("Beginaning Print");
 		try {
 			printed = true;
 			actionTarget.setFill(Color.BLUE);
+			System.out.println("Beginnfdfing Print");
+
             actionTarget.setText("Filling PDF");
 			af.fillIt(client, file);
 			Desktop dt = Desktop.getDesktop();

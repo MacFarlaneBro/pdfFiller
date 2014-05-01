@@ -14,7 +14,7 @@ public class AscentricPage7 extends AscentricPage{
 	public void fillPage(Client theClient) throws IOException,
 			DocumentException {
 		setUp(PAGENUMBER);
-		
+		shutDown();
 	}
 
 }
