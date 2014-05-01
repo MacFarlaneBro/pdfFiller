@@ -22,7 +22,7 @@ public class AscentricPage1 extends AscentricPage{
 	protected int tinDepth = 127;
 	protected int passInfo = 75;
 	protected int cliRef = 295;
-	protected int usPersonDepth = 305;
+	protected int usPersonDepth = 455;
 	protected int natInYN = 332;
 
 	public void fillPage(Client theClient) throws IOException, DocumentException {
@@ -38,10 +38,36 @@ public class AscentricPage1 extends AscentricPage{
 			System.out.println(id.getNationalInsuranceNumber());
 			fillNatInsure(id.getNationalInsuranceNumber());
 		}
+//		if(id.isCorrespondenceAddressSame()){
+			fillCorrespondenceAddress(id);
+//		}
 		fillContactDetails(id);
 		usPerson(id.isUsPerson());
 		additionalInfo(id);
 		shutDown();
+	}
+
+	private void fillCorrespondenceAddress(IndividualDetails id) {
+		if(id.getCorrAddress()!=null){
+			String[] addressParts = id.getCorrAddress().split(":");
+			contactWidth-=50;
+			for(int i = 0; i < addressParts.length; i++){
+				addressParts[0] = "Boo!";
+			}
+			
+			id.setCorrPostCode("NW2 4DS");
+			int addPart = 160;
+			//Address
+			stamp(contactWidth, contactDepth - addPart, addressParts[0]);
+			addPart +=20;
+			if(addressParts.length == 3){
+				stamp(contactWidth, contactDepth - addPart, addressParts[2]);
+			} else {
+				stamp(contactWidth, contactDepth - addPart, addressParts[1]);
+			}
+		}
+		//Postcode
+		stamp(contactWidth, contactDepth - 120, id.getCorrPostcode());
 	}
 
 	private void fillAppType(Client theClient) throws IOException, DocumentException{
@@ -107,21 +133,23 @@ public class AscentricPage1 extends AscentricPage{
 		//Mobile Telephone Number
 		stamp(contactWidth, contactDepth - 40, id.getMobileNumber());
 		
+		contactWidth -= 50;
 		//Splitting the address string
-		if(id.getAddress()!=null){
+		if(id.getAddress()!=null && !id.getAddress().equals("")){
 			String[] addressParts = id.getAddress().split(":");
 
-			int addPart = 60;
+			int addPart = 80;
 			//Address
-			for(String part: addressParts){
-				stamp(contactWidth, contactDepth - addPart, part);
-				addPart+=20;
+			stamp(contactWidth, contactDepth - addPart, addressParts[0]);
+			addPart +=20;
+			if(addressParts.length == 3){
+				stamp(contactWidth, contactDepth - addPart, addressParts[2]);
+			} else {
+				stamp(contactWidth, contactDepth - addPart, addressParts[1]);
 			}
 		}
-		//Postcode
-		stamp(contactWidth, contactDepth - 120, id.getPostcode());
 		//E-mail
-		stamp(contactWidth, contactDepth - 140, id.getEmail());
+		stamp(contactWidth, contactDepth - 300, id.getEmail());
 	}
 
 	protected void natInsurance(boolean natIn){

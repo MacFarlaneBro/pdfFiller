@@ -94,7 +94,6 @@ public class Print {
                 if(!file.getName().contains(".")){
                 	file = new File(file.getAbsolutePath() + ".pdf");
                 }
-                printDocument(file);
             }
         });
         
@@ -127,7 +126,7 @@ public class Print {
 		warningStage.show();
 	}
 	
-	protected void printDocument(File file) {
+	protected void printDocument(File file) throws Exception {
 		AscentricForm af = new AscentricForm();
 		try {
 			printed = true;
@@ -135,13 +134,14 @@ public class Print {
             actionTarget.setText("Filling PDF");
 			af.fillIt(client, file);
 			Desktop dt = Desktop.getDesktop();
-			dt.open(file);
+			dt.open(file); 
 			actionTarget.setFill(Color.BLACK);
 			actionTarget.setText("Document Filled!");
 		} catch (IOException | DocumentException e) {
     		actionTarget.setFill(Color.FIREBRICK);
     		actionTarget.setText("The document has failed to fill, please check to see if a previous instance of the"
     				+  " document, or of the pdf filler application is open, if so, please close it and try again.");
+    		e.printStackTrace();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

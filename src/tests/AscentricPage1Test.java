@@ -47,8 +47,6 @@ public class AscentricPage1Test {
 	@Test
 	public void fillFirstPage() throws IOException, DocumentException{
 		System.out.println(theClient.getFirstClient());
-		thePage.fillPage(
-				theClient
-				.getFirstClient());
+		thePage.fillPage(theClient);
 	}
 }

@@ -50,6 +50,9 @@ public class AscentricForm{
 		page = new AscentricPage6();
 		page.fillPage(theClient);
 		
+		page = new AscentricPage7();
+		page.fillPage(theClient);
+		
 		page = new AscentricPage8();
 		page.fillPage(theClient.getFirstClient());
 		
@@ -61,7 +64,7 @@ public class AscentricForm{
 		
 		System.out.println("finished printing");
 	}
-
+	
 	private void cleanUp(File file, String finishedFile) throws IOException {
 		FileChannel src = null;
 		FileChannel dest = null;

@@ -27,6 +27,9 @@ public class IndividualDetails{
 	private boolean existingAccount;
 	private String exisingAcctRefNumber;
 	private boolean isSameDetails;
+	private boolean correspondenceAddressSame;
+	private String correspondenceAddress;
+	private String corrPostCode;
 
 	
 	public void setEmail(String email){
@@ -181,8 +184,19 @@ public class IndividualDetails{
 	}
 	
 	public boolean isSameDetails() {
-		// TODO Auto-generated method stub
 		return isSameDetails;
+	}
+	public boolean isCorrespondenceAddressSame() {
+		return correspondenceAddressSame;
+	}
+	public String getCorrAddress() {
+		return correspondenceAddress;
+	}
+	public String getCorrPostcode() {
+		return corrPostCode;
+	}
+	public void setCorrPostCode(String corrPostCode) {
+		this.corrPostCode = corrPostCode;
 	}
 
 }
