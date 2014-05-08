@@ -2,6 +2,7 @@ package ascentricGui;
 
 import java.util.HashMap;
 
+import javafx.geometry.HPos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -13,7 +14,6 @@ import ascentricClientDetails.ClientHolder;
 public class CorrespondenceAddress extends Page {
 
 	protected static final Page INSTANCE = new CorrespondenceAddress();
-	private int gridVert = 1;
 	
 	private CorrespondenceAddress(){}
 
@@ -28,15 +28,14 @@ public class CorrespondenceAddress extends Page {
         grid.setVgap(15);
                 
         thisScene = new Scene(grid, pageWidth, pageHeight);
-        grid.setGridLinesVisible(true);
         createFields(grid);
         
-        setRowSizes(grid);
-        setColumnSizes(grid);
+        setColumnSizes(grid, 150, 120, 150, 150);
+        setRowSizes(grid, 35, 35, 35, 20, 20, 20, 70);
                         
         movementButtons2Columns(true);
         
-        createMovementButtons(6, 5);
+        createMovementButtons(7, 5);
                 
         setTitle(grid, "Correspondence Address", primaryStage);
         
@@ -46,31 +45,35 @@ public class CorrespondenceAddress extends Page {
 	private void createFields(GridPane grid) {
     	textFields = new HashMap<String, TextField>();
     	
+    	int gridVert = 2;
+    	
     	//Correspondence Address Line 1
         Label address = new Label("Address");
         address.setTextAlignment(TextAlignment.RIGHT);
+        GridPane.setHalignment(address, HPos.RIGHT);
         grid.add(address, 1, ++gridVert);
         TextField addressLine1 = new TextField();
         addressLine1.setId("addressLine1");
-        grid.add(addressLine1, 2, gridVert++);
+        grid.add(addressLine1, 2, gridVert++, 2, 1);
         
         //Correspondence Address Line 2
         TextField addressLine2 = new TextField();
         addressLine2.setId("addressLine2");
-        grid.add(addressLine2, 2, gridVert++);
+        grid.add(addressLine2, 2, gridVert++, 2, 1);
         
         //Correspondence Address Line 3
         TextField addressLine3 = new TextField();
         addressLine3.setId("addressLine3");
-        grid.add(addressLine3, 2, gridVert++);
+        grid.add(addressLine3, 2, gridVert++, 2, 1);
         
         //Correspondence PostCode
         Label pCode = new Label("Post Code");
         pCode.setTextAlignment(TextAlignment.RIGHT);
-        grid.add(pCode, 1, ++gridVert);
+        GridPane.setHalignment(pCode, HPos.RIGHT);
+        grid.add(pCode, 1, gridVert);
         TextField postCode = new TextField();
         postCode.setId("postCode");
-        grid.add(postCode, 2, gridVert++);
+        grid.add(postCode, 2, gridVert++, 2, 1);
 	}
 
 
