@@ -3,8 +3,8 @@ package ascentricForm;
 import java.io.IOException;
 
 import ascentricClientDetails.Client;
+import ascentricClientDetails.CorrespondenceDetails;
 import ascentricClientDetails.IndividualDetails;
-import ascentricGui.CorrespondenceDetails;
 
 import com.itextpdf.text.DocumentException;
 
@@ -17,7 +17,7 @@ public class AscentricPage1 extends AscentricPage{
 	protected int dobDepth = 440;
 	protected int firstRow = 100;
 	protected int contactDepth = 500;
-	protected int contactWidth = 440;
+	protected int contactWidth = 370;
 	protected int corrDepth = 370;
 	protected int tickDepth = 560;
 	protected int addInfoRow = 45;
@@ -41,10 +41,12 @@ public class AscentricPage1 extends AscentricPage{
 			System.out.println(id.getNationalInsuranceNumber());
 			fillNatInsure(id.getNationalInsuranceNumber());
 		}
-		if(id.isCorrespondenceAddressSame()){
-			fillCorrespondenceAddress(id.getCorrespondenceDetails());
-		}
+
 		fillContactDetails(id);
+		
+//		if(id.isCorrespondenceAddressSame()){
+			fillCorrespondenceAddress(id.getCorrespondenceDetails());
+//		}
 		usPerson(id.isUsPerson());
 		additionalInfo(id);
 		shutDown();
@@ -56,12 +58,8 @@ public class AscentricPage1 extends AscentricPage{
 		
 		//Address
 		stamp(contactWidth, corrDepth, cd.getFirstAdd());
+		stamp(contactWidth, corrDepth-20, cd.getSecondAdd());
 
-		if(cd.getThirdAdd()!= null){
-			stamp(contactWidth, corrDepth-20, cd.getThirdAdd());
-		} else {
-			stamp(contactWidth, corrDepth-20, cd.getSecondAdd());
-		}
 		//PostCode
 		stamp(contactWidth, corrDepth-40, cd.getPostCode());
 	}

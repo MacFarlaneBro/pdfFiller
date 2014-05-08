@@ -1,11 +1,10 @@
-package ascentricGui;
+package ascentricClientDetails;
 
 
 public class CorrespondenceDetails {
 
 	private String firstAdd;
 	private String secondAdd;
-	private String thirdAdd;
 	private String postCode;
 	public String getFirstAdd() {
 		return firstAdd;
@@ -18,12 +17,6 @@ public class CorrespondenceDetails {
 	}
 	public void setSecondAdd(String secondAdd) {
 		this.secondAdd = secondAdd;
-	}
-	public String getThirdAdd() {
-		return thirdAdd;
-	}
-	public void setThirdAdd(String thirdAdd) {
-		this.thirdAdd = thirdAdd;
 	}
 	public String getPostCode() {
 		return postCode;

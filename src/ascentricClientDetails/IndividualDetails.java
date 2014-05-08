@@ -1,6 +1,5 @@
 package ascentricClientDetails;
 
-import ascentricGui.CorrespondenceDetails;
 
 public class IndividualDetails{
 	

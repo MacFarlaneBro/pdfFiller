@@ -1,4 +1,4 @@
-package ascentricClientDetails;
+package ascentricGui;
 
 import java.util.HashMap;
 
@@ -9,8 +9,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
-import ascentricGui.CorrespondenceDetails;
-import ascentricGui.Page;
+import ascentricClientDetails.ClientHolder;
+import ascentricClientDetails.CorrespondenceDetails;
 
 public class CorrespondenceAddress extends Page {
 
@@ -62,11 +62,6 @@ public class CorrespondenceAddress extends Page {
         textFields.put("addressLine2", addressLine2);
         grid.add(addressLine2, 2, gridVert++, 2, 1);
         
-        //Correspondence Address Line 3
-        TextField addressLine3 = new TextField();
-        textFields.put("addressLine3", addressLine3);
-        grid.add(addressLine3, 2, gridVert++, 2, 1);
-        
         //Correspondence PostCode
         Label pCode = new Label("Post Code");
         pCode.setTextAlignment(TextAlignment.RIGHT);
@@ -84,7 +79,6 @@ public class CorrespondenceAddress extends Page {
 		
 		cd.setFirstAdd(textFields.get("addressLine1").getText());
 		cd.setSecondAdd(textFields.get("addressLine2").getText());
-		cd.setThirdAdd(textFields.get("addressLine3").getText());
 		cd.setPostCode(textFields.get("postCode").getText());
 		
 	}

@@ -31,7 +31,6 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import utilities.AutoCompleteComboBoxListener;
 import ascentricClientDetails.ClientHolder;
-import ascentricClientDetails.CorrespondenceAddress;
 import ascentricClientDetails.IndividualDetails;
 import databaseAccess.GetDatabase;
 import databaseAccess.MSSQLDatabase;
@@ -347,13 +346,6 @@ public class ClientPersonalInfo extends Page{
         clientHomeAddress2.setId("HomeAddress2");
         clientHomeAddress2.setPrefWidth(fieldWidth);
         grid.add(clientHomeAddress2, 4, ++gridVert);
-        //line3
-        TextField clientHomeAddress3 = new TextField();
-        fieldMap.put("HomeAddress3", clientHomeAddress3);
-        theFields.add(clientHomeAddress3);
-        clientHomeAddress3.setId("HomeAddress3");
-        clientHomeAddress3.setPrefWidth(fieldWidth);
-        grid.add(clientHomeAddress3, 4, ++gridVert);
         
         //Client PostCode
         Label postcode = new Label("Postcode");
@@ -592,8 +584,7 @@ public class ClientPersonalInfo extends Page{
 		
 		//address lines separated by ':' to provide a string split character at stamp time
 		id.setAddress(fieldMap.get("HomeAddress1").getText() + ":"
-		+ fieldMap.get("HomeAddress2").getText() + ":" 
-				+ fieldMap.get("HomeAddress3").getText());
+		+ fieldMap.get("HomeAddress2").getText());
 		id.setPostcode(fieldMap.get("HomePostCode").getText());
 		id.setEmail(fieldMap.get("Email").getText());
 	}

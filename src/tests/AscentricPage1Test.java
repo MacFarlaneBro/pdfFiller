@@ -6,8 +6,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import ascentricClientDetails.ClientHolder;
+import ascentricClientDetails.CorrespondenceDetails;
 import ascentricForm.AscentricPage1;
-import ascentricGui.CorrespondenceDetails;
 
 import com.itextpdf.text.DocumentException;
 
@@ -25,7 +25,7 @@ public class AscentricPage1Test {
 	}
 
 	private void setPersonalDetails() {
-		theClient.getFirstClient().setApplicationType("Single");
+		theClient.getFirstClient().setApplicationType("Single Client");
 		theClient.getFirstClient().getIndividualDetails().setAddress("23 St Gabriels rd:Willesden:London");
 		theClient.getFirstClient().getIndividualDetails().setPostcode("NW3 2UD");
 		theClient.getFirstClient().getIndividualDetails().setHomeNumber("079928472");
@@ -39,7 +39,7 @@ public class AscentricPage1Test {
 		theClient.getFirstClient().getIndividualDetails().setTitle("Mr");
 		theClient.getFirstClient().getIndividualDetails().setSurname("Brodie");
 		theClient.getFirstClient().getIndividualDetails().setForename("Charlie");
-		theClient.getFirstClient().getIndividualDetails().setNationalInsuranceNumber(null);
+		theClient.getFirstClient().getIndividualDetails().setNationalInsuranceNumber("09090909a");
 		theClient.getFirstClient().getIndividualDetails().setEmail("rabidwolves911@hotmail.com");
 		theClient.getFirstClient().getIndividualDetails().setUsPerson(true);
 		theClient.getFirstClient().getIndividualDetails().setNationality("Scottish");
@@ -47,7 +47,6 @@ public class AscentricPage1Test {
 		CorrespondenceDetails cd = theClient.getFirstClient().getIndividualDetails().getCorrespondenceDetails();
 		cd.setFirstAdd("Barnsley");
 		cd.setSecondAdd("Hull");
-		cd.setThirdAdd("Tupelo");
 		cd.setPostCode("James Hay");
 	}
 	
