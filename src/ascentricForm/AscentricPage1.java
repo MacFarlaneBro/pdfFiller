@@ -17,7 +17,7 @@ public class AscentricPage1 extends AscentricPage{
 	protected int dobDepth = 440;
 	protected int firstRow = 100;
 	protected int contactDepth = 500;
-	protected int contactWidth = 370;
+	protected int contactWidth = 440;
 	protected int corrDepth = 370;
 	protected int tickDepth = 560;
 	protected int addInfoRow = 45;
@@ -30,6 +30,7 @@ public class AscentricPage1 extends AscentricPage{
 	public void fillPage(Client theClient) throws IOException, DocumentException {
 		this.theClient = theClient;
 		IndividualDetails id = theClient.getIndividualDetails();
+		System.out.println("Here");
 		setUp(PAGENUMBER);
 		fillAppType(theClient);
 		fillPersonalDetails(id);	

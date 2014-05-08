@@ -551,13 +551,10 @@ public class ClientPersonalInfo extends Page{
 		};
 		System.out.print("I made a new " + applicationType.getValue());
 		
-		
 		id.setSurname(clientSurname.getText());
-		
-		System.out.println("Client first name class: " +clientFirstName.getClass());
-		
+				
 		//Checking whether clientfirstname is in combobox or textfield name before adding it to the db
-		if(clientFirstName.getClass().equals(new ComboBox<String>().getClass())){
+		if(clientFirstName.getClass().equals(ComboBox.class)){
 			id.setForename(((ComboBox<String>)clientFirstName).getValue());
 		} else {
 			id.setForename(((TextField)clientFirstName).getText());

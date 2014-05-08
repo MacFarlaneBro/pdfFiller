@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import ascentricClientDetails.ClientHolder;
 import ascentricForm.AscentricPage1;
+import ascentricGui.CorrespondenceDetails;
 
 import com.itextpdf.text.DocumentException;
 
@@ -24,6 +25,7 @@ public class AscentricPage1Test {
 	}
 
 	private void setPersonalDetails() {
+		theClient.getFirstClient().setApplicationType("Single");
 		theClient.getFirstClient().getIndividualDetails().setAddress("23 St Gabriels rd:Willesden:London");
 		theClient.getFirstClient().getIndividualDetails().setPostcode("NW3 2UD");
 		theClient.getFirstClient().getIndividualDetails().setHomeNumber("079928472");
@@ -42,11 +44,16 @@ public class AscentricPage1Test {
 		theClient.getFirstClient().getIndividualDetails().setUsPerson(true);
 		theClient.getFirstClient().getIndividualDetails().setNationality("Scottish");
 		theClient.getFirstClient().getIndividualDetails().setTin("12826294291234322842");
+		CorrespondenceDetails cd = theClient.getFirstClient().getIndividualDetails().getCorrespondenceDetails();
+		cd.setFirstAdd("Barnsley");
+		cd.setSecondAdd("Hull");
+		cd.setThirdAdd("Tupelo");
+		cd.setPostCode("James Hay");
 	}
 	
 	@Test
 	public void fillFirstPage() throws IOException, DocumentException{
-		System.out.println(theClient.getFirstClient());
-		thePage.fillPage(theClient);
+		thePage.fillPage(theClient.getFirstClient());
+		System.out.println("Page Filled");
 	}
 }
