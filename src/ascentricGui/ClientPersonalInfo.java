@@ -507,8 +507,9 @@ public class ClientPersonalInfo extends Page{
     
 	@SuppressWarnings("unchecked")
 	protected void fillAndSaveClientInfo() throws DataFormatException{
-				
+		IndividualDetails id = client.getFirstClient().getIndividualDetails();
 		if(correspondenceAddress.isSelected()){
+			id.setSameCorrDetails(true);
 			Page nextNextPage = nextPage;
 			nextPage = CorrespondenceAddress.INSTANCE;
 			nextPage.setNextPage(nextNextPage);
@@ -550,13 +551,19 @@ public class ClientPersonalInfo extends Page{
 		};
 		System.out.print("I made a new " + applicationType.getValue());
 		
-		IndividualDetails id = client.getFirstClient().getIndividualDetails();
+		
 		id.setSurname(clientSurname.getText());
 		
-		if(!clientSurname.getText().equals("")){
+		System.out.println("Client first name class: " +clientFirstName.getClass());
+		
+		//Checking whether clientfirstname is in combobox or textfield name before adding it to the db
+		if(clientFirstName.getClass().equals(new ComboBox<String>().getClass())){
 			id.setForename(((ComboBox<String>)clientFirstName).getValue());
-			id.setTitle(fieldMap.get("Title").getText());
+		} else {
+			id.setForename(((TextField)clientFirstName).getText());
 		}
+		
+		id.setTitle(fieldMap.get("Title").getText());
 		
 		if(fieldMap.get("DOB").getText()!= null && fieldMap.get("DOB").getText().length()>4){
 			//Rearranges date of birth from DB from YYYY-MM-DD to DDMMYYYY

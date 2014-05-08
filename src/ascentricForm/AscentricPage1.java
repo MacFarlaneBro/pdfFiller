@@ -12,19 +12,20 @@ public class AscentricPage1 extends AscentricPage{
 	
 	public static final int PAGENUMBER = 1;
 		
-	protected int natInsureDepth = 403;
+	protected int natInsureDepth = 407;
 	protected int detailDepth = 500;
 	protected int dobDepth = 440;
 	protected int firstRow = 100;
 	protected int contactDepth = 500;
 	protected int contactWidth = 370;
+	protected int corrDepth = 370;
 	protected int tickDepth = 560;
 	protected int addInfoRow = 45;
 	protected int tinDepth = 127;
 	protected int passInfo = 75;
 	protected int cliRef = 295;
-	protected int usPersonDepth = 455;
-	protected int natInYN = 332;
+	protected int usPersonDepth = 240;
+	protected int natInYN = 327;
 
 	public void fillPage(Client theClient) throws IOException, DocumentException {
 		this.theClient = theClient;
@@ -39,9 +40,9 @@ public class AscentricPage1 extends AscentricPage{
 			System.out.println(id.getNationalInsuranceNumber());
 			fillNatInsure(id.getNationalInsuranceNumber());
 		}
-//		if(id.isCorrespondenceAddressSame()){
+		if(id.isCorrespondenceAddressSame()){
 			fillCorrespondenceAddress(id.getCorrespondenceDetails());
-//		}
+		}
 		fillContactDetails(id);
 		usPerson(id.isUsPerson());
 		additionalInfo(id);
@@ -49,20 +50,19 @@ public class AscentricPage1 extends AscentricPage{
 	}
 
 	private void fillCorrespondenceAddress(CorrespondenceDetails cd) {
-
+		System.out.println("printing Corr Details");
 		contactWidth-=50;
-		int addPart = 160;
 		
 		//Address
-		stamp(contactWidth, contactDepth - addPart, cd.getFirstAdd());
-		addPart +=20;
+		stamp(contactWidth, corrDepth, cd.getFirstAdd());
+
 		if(cd.getThirdAdd()!= null){
-			stamp(contactWidth, contactDepth - addPart, cd.getThirdAdd());
+			stamp(contactWidth, corrDepth-20, cd.getThirdAdd());
 		} else {
-			stamp(contactWidth, contactDepth - addPart, cd.getSecondAdd());
+			stamp(contactWidth, corrDepth-20, cd.getSecondAdd());
 		}
 		//PostCode
-		stamp(contactWidth, contactDepth - 120, cd.getPostCode());
+		stamp(contactWidth, corrDepth-40, cd.getPostCode());
 	}
 
 	private void fillAppType(Client theClient) throws IOException, DocumentException{

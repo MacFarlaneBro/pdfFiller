@@ -30,8 +30,6 @@ public class IndividualDetails{
 	private String exisingAcctRefNumber;
 	private boolean isSameDetails;
 	private boolean correspondenceAddressSame;
-	private String correspondenceAddress;
-	private String corrPostCode;
 	private CorrespondenceDetails correspondenceDetails;
 
 	
@@ -192,20 +190,15 @@ public class IndividualDetails{
 	public boolean isCorrespondenceAddressSame() {
 		return correspondenceAddressSame;
 	}
-	public String getCorrAddress() {
-		return correspondenceAddress;
-	}
-	public String getCorrPostcode() {
-		return corrPostCode;
-	}
-	public void setCorrPostCode(String corrPostCode) {
-		this.corrPostCode = corrPostCode;
-	}
+
 	public CorrespondenceDetails getCorrespondenceDetails() {
 		if(correspondenceDetails == null){
 			correspondenceDetails = new CorrespondenceDetails();
 		}
 		return correspondenceDetails;
+	}
+	public void setSameCorrDetails(boolean correspondenceAddressSame) {
+		this.correspondenceAddressSame = correspondenceAddressSame;
 	}
 
 }

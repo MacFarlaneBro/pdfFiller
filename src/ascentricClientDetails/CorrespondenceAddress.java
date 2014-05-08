@@ -54,17 +54,17 @@ public class CorrespondenceAddress extends Page {
         GridPane.setHalignment(address, HPos.RIGHT);
         grid.add(address, 1, ++gridVert);
         TextField addressLine1 = new TextField();
-        addressLine1.setId("addressLine1");
+        textFields.put("addressLine1", addressLine1);
         grid.add(addressLine1, 2, gridVert++, 2, 1);
         
         //Correspondence Address Line 2
         TextField addressLine2 = new TextField();
-        addressLine2.setId("addressLine2");
+        textFields.put("addressLine2", addressLine2);
         grid.add(addressLine2, 2, gridVert++, 2, 1);
         
         //Correspondence Address Line 3
         TextField addressLine3 = new TextField();
-        addressLine3.setId("addressLine3");
+        textFields.put("addressLine3", addressLine3);
         grid.add(addressLine3, 2, gridVert++, 2, 1);
         
         //Correspondence PostCode
@@ -73,7 +73,7 @@ public class CorrespondenceAddress extends Page {
         GridPane.setHalignment(pCode, HPos.RIGHT);
         grid.add(pCode, 1, gridVert);
         TextField postCode = new TextField();
-        postCode.setId("postCode");
+        textFields.put("postCode", postCode);
         grid.add(postCode, 2, gridVert++, 2, 1);
 	}
 
