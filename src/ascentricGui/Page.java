@@ -97,6 +97,7 @@ public abstract class Page {
         hNextBtn.setAlignment(Pos.BOTTOM_RIGHT);
         nextBtn.setPrefWidth(100);
         hNextBtn.getChildren().add(nextBtn);
+        
         if(movementButtonWidth){
         	 grid.add(hNextBtn, nextWidth-1, depth, 2, 1);
         } else { 
@@ -131,7 +132,14 @@ public abstract class Page {
         sceneTitle.setId("sceneTitle");
         grid.add(sceneTitle, 0, 0, 4, 2);
 	}
-
+	
+	/**
+	 * Allows specification of the column widths for the current window of the gui each argument specifies
+	 * a column progressing from the left to the right, passing no arguments sets the content of the window
+	 * to fill all available space
+	 * @param grid - the gridpane relating to the current window
+	 * @param sizes - the widths in pixels you want  the rows to be
+	 */
     public void setColumnSizes(GridPane grid, int... sizes){
     	for(int size: sizes){
     		grid.getColumnConstraints().add(new ColumnConstraints(size));
@@ -142,6 +150,13 @@ public abstract class Page {
     	grid.getColumnConstraints().add(c);
     }
     
+    /**
+     * Allows specification of the row heights for the current window of the gui each argument specifies
+	 * a row progressing from the top to the bottom, passing no arguments sets the content of the window
+	 * to fill all available space
+     * @param grid - the gridpane relating to the current window
+	 * @param sizes - the widths in pixels you want  the rows to be
+     */
     public void setRowSizes(GridPane grid, int... sizes){
     	for(int size: sizes){
     		grid.getRowConstraints().add(new RowConstraints(size));
@@ -151,5 +166,9 @@ public abstract class Page {
     	r.setVgrow(Priority.ALWAYS);
     	grid.getRowConstraints().add(r);
     }
+
+	public void setNextPage(Page nextNextPage) {
+		nextPage = nextNextPage;
+	}
 
 }

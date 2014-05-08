@@ -54,6 +54,7 @@ public class ClientPersonalInfo extends Page{
 	private CheckBox facetoface;
 	private Text actionTarget;
     private boolean duplicateFirstNames = false;
+	private CheckBox correspondenceAddress;
 	
 	private ClientPersonalInfo(){}
 
@@ -68,9 +69,7 @@ public class ClientPersonalInfo extends Page{
         grid = new GridPane();
         grid.setHgap(15);
         grid.setVgap(15);
-        
-        setTitle(grid, "Client Personal Info", primaryStage);
-        
+                
         thisScene = new Scene(grid, pageWidth, pageHeight);
         
         setColumnSizes(grid, 20, 250, 175, 190, 170, 20);
@@ -241,7 +240,12 @@ public class ClientPersonalInfo extends Page{
     	
     	facetoface = new CheckBox("Tick here if you have confirmed the clients identity\nin a face"
     			+ " to face meeting");
-    	grid.add(facetoface, 3, 1, 2, 1);
+    	grid.add(facetoface, 1, 2, 2, 1);
+    	
+    	correspondenceAddress = new CheckBox("Tick here if the clients the clients correspondence\naddress differs"
+    			+ " from that given below");
+    	correspondenceAddress.setDisable(false);
+    	grid.add(correspondenceAddress, 3, 1, 2, 1);
         
         //Client First Name
         Label firstName = new Label("First name");
@@ -423,13 +427,13 @@ public class ClientPersonalInfo extends Page{
 
 	private void setNextPage(ComboBox<String> comboBox) {
 		comboBox.valueProperty().addListener(new ChangeListener<String>() {
-            @Override public void changed(ObservableValue<? extends String> ov, String t, String t1) {                
-               if(t1.equals("Single Client")){
-            	   nextPage = AccessRightsFamilyGroups.INSTANCE;
-               } else {
-            	   nextPage = PartnerPersonalInfo.INSTANCE;
-               }
-            }    
+            @Override public void changed(ObservableValue<? extends String> ov, String t, String t1) { 
+                if(t1.equals("Single Client")){
+            	    nextPage = AccessRightsFamilyGroups.INSTANCE;
+                } else {
+            	    nextPage = PartnerPersonalInfo.INSTANCE;
+                }
+            }   
 	    });
 	}
 
@@ -502,6 +506,12 @@ public class ClientPersonalInfo extends Page{
     
 	@SuppressWarnings("unchecked")
 	protected void fillAndSaveClientInfo() throws DataFormatException{
+				
+		if(correspondenceAddress.isSelected()){
+			Page nextNextPage = nextPage;
+			nextPage = CorrespondenceAddress.INSTANCE;
+			nextPage.setNextPage(nextNextPage);
+		}
 		
 		System.out.println(natInsTickClient.isSelected());
 		
@@ -531,8 +541,6 @@ public class ClientPersonalInfo extends Page{
     		}
 		}
 		
-		System.out.println("is not selected");
-
 		client.getFirstClient().getfinancialAdviserDetails().setFaceToFaceContact(facetoface.isSelected());
 		client.getFirstClient().setApplicationType(applicationType.getValue());
 		
