@@ -79,8 +79,13 @@ public class CorrespondenceAddress extends Page {
 
 	@Override
 	protected void fillAndSaveClientInfo() throws Exception {
-		// TODO Auto-generated method stub
-
+		CorrespondenceDetails cd = client.getFirstClient().getIndividualDetails().getCorrespondenceDetails();
+		
+		cd.setFirstAdd(textFields.get("addressLine1").getText());
+		cd.setSecondAdd(textFields.get("addressLine2").getText());
+		cd.setThirdAdd(textFields.get("addressLine3").getText());
+		cd.setPostCode(textFields.get("postCode").getText());
+		
 	}
 
 }

@@ -1,5 +1,7 @@
 package ascentricClientDetails;
 
+import ascentricGui.CorrespondenceDetails;
+
 public class IndividualDetails{
 	
 	private String title;
@@ -30,6 +32,7 @@ public class IndividualDetails{
 	private boolean correspondenceAddressSame;
 	private String correspondenceAddress;
 	private String corrPostCode;
+	private CorrespondenceDetails correspondenceDetails;
 
 	
 	public void setEmail(String email){
@@ -197,6 +200,12 @@ public class IndividualDetails{
 	}
 	public void setCorrPostCode(String corrPostCode) {
 		this.corrPostCode = corrPostCode;
+	}
+	public CorrespondenceDetails getCorrespondenceDetails() {
+		if(correspondenceDetails == null){
+			correspondenceDetails = new CorrespondenceDetails();
+		}
+		return correspondenceDetails;
 	}
 
 }
