@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import ascentricClientDetails.Client;
 import ascentricClientDetails.IndividualDetails;
+import ascentricGui.CorrespondenceDetails;
 
 import com.itextpdf.text.DocumentException;
 
@@ -39,7 +40,7 @@ public class AscentricPage1 extends AscentricPage{
 			fillNatInsure(id.getNationalInsuranceNumber());
 		}
 //		if(id.isCorrespondenceAddressSame()){
-			fillCorrespondenceAddress(id);
+			fillCorrespondenceAddress(id.getCorrespondenceDetails());
 //		}
 		fillContactDetails(id);
 		usPerson(id.isUsPerson());
@@ -47,27 +48,21 @@ public class AscentricPage1 extends AscentricPage{
 		shutDown();
 	}
 
-	private void fillCorrespondenceAddress(IndividualDetails id) {
-		if(id.getCorrAddress()!=null){
-			String[] addressParts = id.getCorrAddress().split(":");
-			contactWidth-=50;
-			for(int i = 0; i < addressParts.length; i++){
-				addressParts[0] = "Boo!";
-			}
-			
-			id.setCorrPostCode("NW2 4DS");
-			int addPart = 160;
-			//Address
-			stamp(contactWidth, contactDepth - addPart, addressParts[0]);
-			addPart +=20;
-			if(addressParts.length == 3){
-				stamp(contactWidth, contactDepth - addPart, addressParts[2]);
-			} else {
-				stamp(contactWidth, contactDepth - addPart, addressParts[1]);
-			}
+	private void fillCorrespondenceAddress(CorrespondenceDetails cd) {
+
+		contactWidth-=50;
+		int addPart = 160;
+		
+		//Address
+		stamp(contactWidth, contactDepth - addPart, cd.getFirstAdd());
+		addPart +=20;
+		if(cd.getThirdAdd()!= null){
+			stamp(contactWidth, contactDepth - addPart, cd.getThirdAdd());
+		} else {
+			stamp(contactWidth, contactDepth - addPart, cd.getSecondAdd());
 		}
-		//Postcode
-		stamp(contactWidth, contactDepth - 120, id.getCorrPostcode());
+		//PostCode
+		stamp(contactWidth, contactDepth - 120, cd.getPostCode());
 	}
 
 	private void fillAppType(Client theClient) throws IOException, DocumentException{

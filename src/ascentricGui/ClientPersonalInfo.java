@@ -31,6 +31,7 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import utilities.AutoCompleteComboBoxListener;
 import ascentricClientDetails.ClientHolder;
+import ascentricClientDetails.CorrespondenceAddress;
 import ascentricClientDetails.IndividualDetails;
 import databaseAccess.GetDatabase;
 import databaseAccess.MSSQLDatabase;

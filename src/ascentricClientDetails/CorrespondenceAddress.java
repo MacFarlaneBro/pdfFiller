@@ -1,4 +1,4 @@
-package ascentricGui;
+package ascentricClientDetails;
 
 import java.util.HashMap;
 
@@ -9,11 +9,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
-import ascentricClientDetails.ClientHolder;
+import ascentricGui.CorrespondenceDetails;
+import ascentricGui.Page;
 
 public class CorrespondenceAddress extends Page {
 
-	protected static final Page INSTANCE = new CorrespondenceAddress();
+	public static final Page INSTANCE = new CorrespondenceAddress();
 	
 	private CorrespondenceAddress(){}
 
