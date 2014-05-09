@@ -31,7 +31,7 @@ public class AscentricPage8Test {
 
 	private void fillDetails(FinancialAdviserDetails fad) {
 		fad.setFcaFirmNumber("839483");
-		fad.setRegisteredIndividual("Douglas Brodie");
+		fad.setRegisteredIndividual("Mr Douglas David McFarlane Brodie");
 		fad.setFaceToFaceContact(true);
 		fad.setDate("25091989");
 	}

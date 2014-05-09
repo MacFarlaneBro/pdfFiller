@@ -42,9 +42,7 @@ public class AscentricPage8 extends AscentricPage {
 		
 		//FCA Individual Reference Number
 		temp = formWidth;
-		
-		
-		
+
 		stamp(temp, formHeight-126, fad.getFcaIndividualReferenceNumber().charAt(0));
 		for(int i = 1; i < 8; i++){
 			stamp(temp+=20, formHeight-126, fad.getFcaIndividualReferenceNumber().charAt(i));
@@ -78,7 +76,7 @@ public class AscentricPage8 extends AscentricPage {
 	}
 
 	private void tickFacetoFace(boolean b) {
-			if(b) stamp(271, 477, "X");
+			if(b) stamp(280, 483, "X");
 	}
 
 }
