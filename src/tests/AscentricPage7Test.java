@@ -24,12 +24,12 @@ public class AscentricPage7Test {
 		theClientHolder.makeNewFirstClient();
 		theClient = theClientHolder.getFirstClient();
 		ConfirmationDetails con = theClient.getConfirmationDetails();
-		
-		fillDetails(con);
+		FinancialAdviserDetails fad = theClient.getfinancialAdviserDetails();
+		fillDetails(con, fad);
 		
 	}
 
-	private void fillDetails(ConfirmationDetails con) {
+	private void fillDetails(ConfirmationDetails con, FinancialAdviserDetails fad) {
 		con.setName("James Woods");
 		con.setCurrentAddress("23 Nassdfe road:Bignely:England");
 		con.setCurrentPostCode("NE3 777");
@@ -38,7 +38,10 @@ public class AscentricPage7Test {
 		con.setPreviousPostCode("ME3 IOP");
 		con.setMoneyLaunderingCheck(true);
 		con.setClientIdentityCheck(true);
-
+		
+		fad.setFcaFirmNumber("9903930");
+		fad.setRegisteredIndividual("Mr Douglas David McFarlane Brodie");
+		fad.setDate("09091989");
 	}
 	
 	@Test
