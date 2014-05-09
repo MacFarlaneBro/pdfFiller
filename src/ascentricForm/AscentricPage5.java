@@ -78,10 +78,11 @@ public class AscentricPage5 extends AscentricPage {
 		stamp(firstRowWidth+=65, 148, "X");
 		
 		//Regular Withdrawal Instructions
-		int rwiDepth = 254;
-		//Amount
-		stamp(482, rwiDepth, bad.getPaymentFromDeposit());
-		
+		int rwiDepth = 240;
+		//Payment from deposit account (if present)
+		stamp(460, rwiDepth, bad.getPaymentFromDepositAccount());
+		//Payment from reserve account (if present)
+		stamp(460, rwiDepth-35, bad.getPaymentFromReserveAccount());
 		//TimeFrame
 		int secondRowWidth = 282;
 
@@ -100,7 +101,7 @@ public class AscentricPage5 extends AscentricPage {
 				secondRowWidth+=260;
 			}
 			stamp(370, 208, bad.getRegWithdrawlWrappers());
-			stamp(secondRowWidth, 229, "X");
+			stamp(secondRowWidth, 190, "X");
 		}
 		
 		
@@ -111,9 +112,9 @@ public class AscentricPage5 extends AscentricPage {
 		System.out.println(startDate);
 			for(int i = 0; i < 8; i++){
 				if(i == 2 ||i == 4){
-					stamp(secondRowWidth+=35, 188,""+startDate.charAt(i));
+					stamp(secondRowWidth+=35, 150,""+startDate.charAt(i));
 				} else {
-					stamp(secondRowWidth+=20, 188,""+startDate.charAt(i));
+					stamp(secondRowWidth+=20, 150,""+startDate.charAt(i));
 				}
 			}
 		}

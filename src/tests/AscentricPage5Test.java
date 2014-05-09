@@ -19,6 +19,7 @@ public class AscentricPage5Test {
 	@Before
 	public void setUp() throws IOException, DocumentException{
 		theClient.makeNewFirstClient();
+		theClient.getFirstClient().setApplicationType("Second Applicant");
 		theClient.makeNewSecondClient();
 		BankAccountDetails fbd = theClient.getFirstClient().getBankAccountDetails();
 		BankAccountDetails sbd = theClient.getSecondClient().getBankAccountDetails();
@@ -34,15 +35,18 @@ public class AscentricPage5Test {
 	}
 	
 	private void setBankAccountDetails(BankAccountDetails bd) {
-		bd.setBankAccountNumber("2949291");
-		bd.setBankAddress("23 Sutton road, Dumblefor, Yorkshire");
+		bd.setAccountHolderName1("Charlie Brodie");
+		bd.setAccountHolderName2("Naomi Grant");
+		bd.setBankAccountNumber("29493291");
+		bd.setBankAddress("23 Sutton road:Dumblefor:Yorkshire");
 		bd.setBankName("Natwest");
 		bd.setBankPostCode("YWD 4XP");
 		bd.setBranchSortCode("602847");
 		bd.setLeaveInIncomeAccount(true);
 		bd.setNatIncomeWrappers("Turnabout");
 		bd.setNoIncomeWithdrawl(false);
-		bd.setPaymentFromDeposit("Turnabout");
+		bd.setPaymentFromDepositAccount("130000");
+		bd.setPaymentFromReserveAccount("260000");
 		bd.setNatIncomePayTiming("38439");
 		bd.setRegWithdrawlWrappers("These are wrappers");
 		bd.setStartDate("30092014");
