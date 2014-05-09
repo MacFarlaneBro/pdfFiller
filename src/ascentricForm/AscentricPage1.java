@@ -50,7 +50,7 @@ public class AscentricPage1 extends AscentricPage{
 		shutDown();
 	}
 
-	private void fillCorrespondenceAddress(CorrespondenceDetails cd) {
+	protected void fillCorrespondenceAddress(CorrespondenceDetails cd) {
 		
 		//Address
 		stamp(contactWidth, corrDepth, cd.getFirstAdd());
