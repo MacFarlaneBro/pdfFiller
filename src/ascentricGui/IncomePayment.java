@@ -28,10 +28,10 @@ public class IncomePayment extends Page {
 	private IncomePayment(){}
 	
 	@Override
-	public void setUp(Stage primaryStage, Scene firstScene, ClientHolder client) {
+	public void setUp(Stage primaryStage, Scene previousScene, ClientHolder client) {
 
 		this.client = client;
-        this.previousScene = firstScene;
+        this.previousScene = previousScene;
         this.primaryStage = primaryStage;
         primaryStage.setTitle("Income Payment Instructions");
         
@@ -126,7 +126,7 @@ public class IncomePayment extends Page {
 		Label pfda = new Label("Payment From Deposit Account");
 		grid.add(pfda, 4, gridVert);
 		TextField pdaAmount = new TextField();
-		textFields.put("amount", pdaAmount);
+		textFields.put("pfda", pdaAmount);
 		grid.add(pdaAmount, 5, gridVert++);
 		
 		grid.add(new Label("OR"), 4, gridVert++);
@@ -134,7 +134,7 @@ public class IncomePayment extends Page {
 		Label pfra = new Label("Payment From Reserve Account");
 		grid.add(pfra, 4, gridVert);
 		TextField pfaAmount = new TextField();
-		textFields.put("amount", pfaAmount);
+		textFields.put("pfra", pfaAmount);
 		grid.add(pfaAmount, 5, gridVert++);
 		
 		grid.add(new Label("Regularity:"), 4, gridVert);
