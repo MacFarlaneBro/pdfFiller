@@ -86,7 +86,7 @@ public class AscentricPage5 extends AscentricPage {
 		//TimeFrame
 		int secondRowWidth = 282;
 
-		//Regular WithdrawalWrappers
+		//Regular Withdrawal Wrapper timing
 		if(bad.getDepositPayTiming()!= null){
 			if(bad.getDepositPayTiming().equals("Monthly")){
 				secondRowWidth+=65;
@@ -100,8 +100,10 @@ public class AscentricPage5 extends AscentricPage {
 			if(bad.getDepositPayTiming().equals("Annually")){
 				secondRowWidth+=260;
 			}
-			stamp(370, 208, bad.getRegWithdrawlWrappers());
-			stamp(secondRowWidth, 190, "X");
+			stamp(secondRowWidth, 180, "X");
+			
+			//Regular withdrawal wrapper name
+			stamp(370, 160, bad.getRegWithdrawlWrappers());			
 		}
 		
 		
@@ -109,11 +111,15 @@ public class AscentricPage5 extends AscentricPage {
 		//StartDate
 		if(bad.getStartDate()!= null && bad.getStartDate().length() >= 4){
 		String startDate = bad.getStartDate();
+		System.out.println("Start Date Printing");
 			for(int i = 0; i < 8; i++){
+				System.out.println("Start Date Printing Loop");
 				if(i == 2 ||i == 4){
-					stamp(secondRowWidth+=35, 150, startDate.charAt(i));
+					System.out.println("even number");
+					stamp(secondRowWidth+=35, 140, startDate.charAt(i));
 				} else {
-					stamp(secondRowWidth+=20, 150, startDate.charAt(i));
+					System.out.println("Odd number");
+					stamp(secondRowWidth+=20, 140, startDate.charAt(i));
 				}
 			}
 		}

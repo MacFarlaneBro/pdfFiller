@@ -69,7 +69,7 @@ public abstract class AscentricPage{
 	.showTextAligned(
 			canvas, 
 			Element.ALIGN_LEFT, 
-			new Phrase(text), 
+			new Phrase(text + ""), 
 			x, 
 			y,
 			0);
