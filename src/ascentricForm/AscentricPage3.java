@@ -160,7 +160,7 @@ public class AscentricPage3 extends AscentricPage{
 		//Third Party Name
 		stamp(thirdPartyWidth, thirdPartyDepth, pd.getThirdPartyProductAccounts());
 		//Amount to be received
-		stamp(thirdPartyWidth+150, thirdPartyDepth,"" + pd.getAmountToBeReceived());
+		stamp(thirdPartyWidth+150, thirdPartyDepth, pd.getAmountToBeReceived());
 		//source of funds
 		stamp(thirdPartyWidth+200, thirdPartyDepth, pd.getSourceOfFunds());
 		

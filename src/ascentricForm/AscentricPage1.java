@@ -89,14 +89,14 @@ public class AscentricPage1 extends AscentricPage{
 		if(dob!= null){
 			stamp(firstRow,
 					dobDepth,
-					"" + dob.charAt(0));
+					dob.charAt(0));
 			for(int i = 1; i < dob.length(); i++){
 				if(i == 2 || i == 4){
 					extraDistance+=35;
 				} else {
 					extraDistance+=20;
 				}
-				stamp(firstRow + extraDistance, dobDepth, "" + dob.charAt(i));
+				stamp(firstRow + extraDistance, dobDepth, dob.charAt(i));
 			}
 		}
 	}
@@ -104,12 +104,12 @@ public class AscentricPage1 extends AscentricPage{
 	protected void fillNatInsure(String nin){
 		
 		if(nin!= null){
-			stamp(firstRow, natInsureDepth, "" + nin.charAt(0));
+			stamp(firstRow, natInsureDepth, nin.charAt(0));
 			for(int i = 1; i < nin.length(); i++){
 				if(i %2 == 0 && i < 9){
-					stamp(firstRow+=23, natInsureDepth, "" + nin.charAt(i));
+					stamp(firstRow+=23, natInsureDepth, nin.charAt(i));
 				} else {
-					stamp(firstRow+=20, natInsureDepth, "" + nin.charAt(i));
+					stamp(firstRow+=20, natInsureDepth, nin.charAt(i));
 				}
 			}
 		}
@@ -169,7 +169,7 @@ public class AscentricPage1 extends AscentricPage{
 	
 	protected void tinNumber(String tin) {
 		for(int i = 0; i < tin.length(); i++){
-			stamp(addInfoRow+(i*12)+1, tinDepth, "" + tin.charAt(i));
+			stamp(addInfoRow+(i*12)+1, tinDepth, tin.charAt(i));
 		}
 		
 	}

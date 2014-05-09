@@ -49,9 +49,9 @@ public class AscentricPage6 extends AscentricPage {
 		}
 		int secondRowHeight = 368;
 		//of investment
-		stamp(secondColumnWidth, secondRowHeight,"" + oac.getOfInvestment());
+		stamp(secondColumnWidth, secondRowHeight, oac.getOfInvestment());
 		//fixed amount
-		stamp(thirdColumnWidth, secondRowHeight,"" + oac.getAnnualFixedAmount());
+		stamp(thirdColumnWidth, secondRowHeight, oac.getAnnualFixedAmount());
 		//A
 		if(oac.isCollectives()){
 			stamp(fourthColumnWidth, secondRowHeight+15, "X");
@@ -80,7 +80,7 @@ public class AscentricPage6 extends AscentricPage {
 		}
 		int secondRowHeight = 444;
 		//of investment
-		stamp(secondColumnWidth, secondRowHeight,"" + charge.getOfInvestment());
+		stamp(secondColumnWidth, secondRowHeight, charge.getOfInvestment());
 		//A
 		if(charge.isSingleFundBuyTrades()){
 			stamp(fourthColumnWidth, secondRowHeight+23, "X");
@@ -101,7 +101,7 @@ public class AscentricPage6 extends AscentricPage {
 		}
 		int secondRowHeight = 530;
 		//of investment
-		stamp(secondColumnWidth, secondRowHeight, "" + charge.getOfInvestment());
+		stamp(secondColumnWidth, secondRowHeight, charge.getOfInvestment());
 
 	}
 
@@ -115,9 +115,9 @@ public class AscentricPage6 extends AscentricPage {
 		}
 		int secondRowHeight = 620;
 		//of investment
-		stamp(secondColumnWidth, secondRowHeight,"" + iac.getOfInvestment());
+		stamp(secondColumnWidth, secondRowHeight, iac.getOfInvestment());
 		//fixed amount
-		stamp(thirdColumnWidth, secondRowHeight,"" + iac.getFixedAmount());
+		stamp(thirdColumnWidth, secondRowHeight, iac.getFixedAmount());
 		//A
 		if(iac.isAppCashLump()){
 			stamp(fourthColumnWidth, secondRowHeight+25, "X");
