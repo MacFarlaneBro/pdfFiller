@@ -5,31 +5,39 @@ import java.io.IOException;
 import org.junit.Before;
 import org.junit.Test;
 
+import ascentricClientDetails.Client;
 import ascentricClientDetails.ClientHolder;
-import ascentricForm.AscentricPage9;
+import ascentricClientDetails.FinancialAdviserDetails;
+import ascentricForm.AscentricPage8;
 
 import com.itextpdf.text.DocumentException;
 
 public class AscentricPage8Test {
 	
-	AscentricPage9 thePage = new AscentricPage9();
-	ClientHolder theClient = ClientHolder.getInstance();
+	AscentricPage8 thePage = new AscentricPage8();
+	ClientHolder theClientHolder = ClientHolder.getInstance();
+	Client theClient;
 	
 	
 	@Before
 	public void setUp(){
-		theClient.makeNewFirstClient();
-		theClient.makeNewSecondClient();
+		theClientHolder.makeNewFirstClient();
+		theClient = theClientHolder.getFirstClient();
+		FinancialAdviserDetails fad = theClient.getfinancialAdviserDetails();
 		
-		theClient.getFirstClient().getIndividualDetails().setForename("Dave");
-		theClient.getFirstClient().getIndividualDetails().setSurname("Davison");
-		theClient.getSecondClient().getIndividualDetails().setForename("Dave");
-		theClient.getSecondClient().getIndividualDetails().setSurname("Davison");
-		theClient.getFirstClient().getfinancialAdviserDetails().setDate("09294828");
+		fillDetails(fad);
+		
 	}
 
+	private void fillDetails(FinancialAdviserDetails fad) {
+		fad.setFcaFirmNumber("839483");
+		fad.setRegisteredIndividual("Douglas Brodie");
+		fad.setFaceToFaceContact(true);
+		fad.setDate("25091989");
+	}
+	
 	@Test
-	public void testPage7() throws IOException, DocumentException{
+	public void testPage8() throws IOException, DocumentException{
 		thePage.fillPage(theClient);
 	}
 }

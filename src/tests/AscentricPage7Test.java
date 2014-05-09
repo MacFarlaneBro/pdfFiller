@@ -7,37 +7,43 @@ import org.junit.Test;
 
 import ascentricClientDetails.Client;
 import ascentricClientDetails.ClientHolder;
+import ascentricClientDetails.ConfirmationDetails;
 import ascentricClientDetails.FinancialAdviserDetails;
-import ascentricForm.AscentricPage8;
+import ascentricForm.AscentricPage7;
 
 import com.itextpdf.text.DocumentException;
 
 public class AscentricPage7Test {
 	
-	AscentricPage8 thePage = new AscentricPage8();
+	AscentricPage7 thePage = new AscentricPage7();
 	ClientHolder theClientHolder = ClientHolder.getInstance();
 	Client theClient;
-	
 	
 	@Before
 	public void setUp(){
 		theClientHolder.makeNewFirstClient();
 		theClient = theClientHolder.getFirstClient();
-		FinancialAdviserDetails fad = theClient.getfinancialAdviserDetails();
+		ConfirmationDetails con = theClient.getConfirmationDetails();
 		
-		fillDetails(fad);
+		fillDetails(con);
 		
 	}
 
-	private void fillDetails(FinancialAdviserDetails fad) {
-		fad.setFcaFirmNumber("839483");
-		fad.setRegisteredIndividual("Douglas Brodie");
-		fad.setFaceToFaceContact(true);
-		fad.setDate("25091989");
+	private void fillDetails(ConfirmationDetails con) {
+		con.setName("James Woods");
+		con.setCurrentAddress("23 Nassdfe road:Bignely:England");
+		con.setCurrentPostCode("NE3 777");
+		con.setDob("09121954");
+		con.setPreviousAddress("49 Bummer road:YourMum:IsLovely");
+		con.setPreviousPostCode("ME3 IOP");
+		con.setMoneyLaunderingCheck(true);
+		con.setClientIdentityCheck(true);
+
 	}
 	
 	@Test
 	public void testPage7() throws IOException, DocumentException{
 		thePage.fillPage(theClient);
 	}
+
 }

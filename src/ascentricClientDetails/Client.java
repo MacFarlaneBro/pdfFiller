@@ -6,8 +6,10 @@ public class Client {
 	private ProductDetails productDetails;
 	private BankAccountDetails bankAccountDetails;
 	private FinancialAdviserDetails financialAdviserDetails;
+	private ConfirmationDetails confirmationDetails;
 	private String clientType;
 	private String appType;
+	
 	
     
     public Client(String type) {
@@ -16,6 +18,7 @@ public class Client {
     	bankAccountDetails = new BankAccountDetails();
     	productDetails = new ProductDetails();
     	financialAdviserDetails = new FinancialAdviserDetails();
+    	confirmationDetails = new ConfirmationDetails();
 	}
 
 	public IndividualDetails getIndividualDetails(){
@@ -44,6 +47,10 @@ public class Client {
 	
 	public String getApplicationType(){
 		return appType;
+	}
+
+	public ConfirmationDetails getConfirmationDetails() {
+		return confirmationDetails;
 	}
 }
 
