@@ -12,20 +12,20 @@ public class AscentricPage1 extends AscentricPage{
 	
 	public static final int PAGENUMBER = 1;
 		
-	protected int natInsureDepth = 407;
+	protected int natInsureDepth = 404;
 	protected int detailDepth = 500;
 	protected int dobDepth = 440;
 	protected int firstRow = 100;
 	protected int contactDepth = 500;
-	protected int contactWidth = 370;
-	protected int corrDepth = 370;
+	protected int contactWidth = 368;
+	protected int corrDepth = 345;
 	protected int tickDepth = 560;
 	protected int addInfoRow = 45;
 	protected int tinDepth = 127;
 	protected int passInfo = 75;
 	protected int cliRef = 295;
-	protected int usPersonDepth = 240;
-	protected int natInYN = 327;
+	protected int usPersonDepth = 225;
+	protected int natInYN = 326;
 
 	public void fillPage(Client theClient) throws IOException, DocumentException {
 		this.theClient = theClient;
@@ -38,30 +38,26 @@ public class AscentricPage1 extends AscentricPage{
 			|| id.getNationalInsuranceNumber().equals("")){
 			natInsurance(false);
 		} else {
-			System.out.println(id.getNationalInsuranceNumber());
 			fillNatInsure(id.getNationalInsuranceNumber());
 		}
 
 		fillContactDetails(id);
 		
-//		if(id.isCorrespondenceAddressSame()){
-			fillCorrespondenceAddress(id.getCorrespondenceDetails());
-//		}
+		fillCorrespondenceAddress(id.getCorrespondenceDetails());
+
 		usPerson(id.isUsPerson());
 		additionalInfo(id);
 		shutDown();
 	}
 
 	private void fillCorrespondenceAddress(CorrespondenceDetails cd) {
-		System.out.println("printing Corr Details");
-		contactWidth-=50;
 		
 		//Address
 		stamp(contactWidth, corrDepth, cd.getFirstAdd());
 		stamp(contactWidth, corrDepth-20, cd.getSecondAdd());
 
 		//PostCode
-		stamp(contactWidth, corrDepth-40, cd.getPostCode());
+		stamp(contactWidth+52, corrDepth-40, cd.getPostCode());
 	}
 
 	private void fillAppType(Client theClient) throws IOException, DocumentException{
@@ -127,28 +123,27 @@ public class AscentricPage1 extends AscentricPage{
 		//Mobile Telephone Number
 		stamp(contactWidth, contactDepth - 40, id.getMobileNumber());
 		
-		contactWidth -= 50;
+		contactWidth -= 52;
 		//Splitting the address string
 		if(id.getAddress()!=null && id.getAddress().length() > 2){
 			String[] addressParts = id.getAddress().split(":");
 
-			int addPart = 80;
+			int addPart = 77;
 			//Address
 			stamp(contactWidth, contactDepth - addPart, addressParts[0]);
 			addPart +=20;
-			if(addressParts.length == 3){
-				stamp(contactWidth, contactDepth - addPart, addressParts[2]);
-			} else {
-				stamp(contactWidth, contactDepth - addPart, addressParts[1]);
-			}
+			stamp(contactWidth, contactDepth - addPart, addressParts[1]);
 		}
+		//Post code
+		stamp(contactWidth+52, contactDepth - 117, id.getPostcode());
+		
 		//E-mail
-		stamp(contactWidth, contactDepth - 300, id.getEmail());
+		stamp(contactWidth+52, contactDepth - 215, id.getEmail());
 	}
 
 	protected void natInsurance(boolean natIn){
 		if(!natIn){
-			stamp(272, natInYN, "X");
+			stamp(271, natInYN, "X");
 		}
 	}
 	

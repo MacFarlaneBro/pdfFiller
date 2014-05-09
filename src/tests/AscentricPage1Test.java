@@ -19,15 +19,13 @@ public class AscentricPage1Test {
 	@Before
 	public void setUp() throws IOException, DocumentException{
 		theClient.makeNewFirstClient();
-		System.out.println(theClient.getFirstClient());
 		setPersonalDetails();
-		System.out.println(theClient.getFirstClient().getIndividualDetails().getAddress());
 	}
 
 	private void setPersonalDetails() {
 		theClient.getFirstClient().setApplicationType("Single Client");
 		theClient.getFirstClient().getIndividualDetails().setAddress("23 St Gabriels rd:Willesden:London");
-		theClient.getFirstClient().getIndividualDetails().setPostcode("NW3 2UD");
+		theClient.getFirstClient().getIndividualDetails().setPostcode("NW2 4DS");
 		theClient.getFirstClient().getIndividualDetails().setHomeNumber("079928472");
 		theClient.getFirstClient().getIndividualDetails().setWorkNumber("0998274452");
 		theClient.getFirstClient().getIndividualDetails().setMobileNumber("9338273928");
@@ -39,15 +37,15 @@ public class AscentricPage1Test {
 		theClient.getFirstClient().getIndividualDetails().setTitle("Mr");
 		theClient.getFirstClient().getIndividualDetails().setSurname("Brodie");
 		theClient.getFirstClient().getIndividualDetails().setForename("Charlie");
-		theClient.getFirstClient().getIndividualDetails().setNationalInsuranceNumber("09090909a");
+		theClient.getFirstClient().getIndividualDetails().setNationalInsuranceNumber(null);
 		theClient.getFirstClient().getIndividualDetails().setEmail("rabidwolves911@hotmail.com");
-		theClient.getFirstClient().getIndividualDetails().setUsPerson(true);
+		theClient.getFirstClient().getIndividualDetails().setUsPerson(false);
 		theClient.getFirstClient().getIndividualDetails().setNationality("Scottish");
 		theClient.getFirstClient().getIndividualDetails().setTin("12826294291234322842");
 		CorrespondenceDetails cd = theClient.getFirstClient().getIndividualDetails().getCorrespondenceDetails();
 		cd.setFirstAdd("Barnsley");
 		cd.setSecondAdd("Hull");
-		cd.setPostCode("James Hay");
+		cd.setPostCode("NW3 2UD");
 	}
 	
 	@Test
