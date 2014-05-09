@@ -58,6 +58,23 @@ public abstract class AscentricPage{
 		}
 	}
 	
+	/**
+	 * Overloading of the above stamp method to remove the costly concatenation of a null string prior to char printing
+	 * @param x - The distance in pixels from the left margin of the page
+	 * @param y - The distance in pixels from the bottom of the page
+	 * @param text - The char to be printed at the specified x and y location
+	 */
+	protected void stamp(int x, int y, char text){
+	ColumnText
+	.showTextAligned(
+			canvas, 
+			Element.ALIGN_LEFT, 
+			new Phrase(text), 
+			x, 
+			y,
+			0);
+	}
+	
 	protected void stamp(int x, int y, String text, int textSize){
 		PdfContentByte tempCanvas = canvas;
 		tempCanvas.setFontAndSize(

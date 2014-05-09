@@ -109,12 +109,11 @@ public class AscentricPage5 extends AscentricPage {
 		//StartDate
 		if(bad.getStartDate()!= null && bad.getStartDate().length() >= 4){
 		String startDate = bad.getStartDate();
-		System.out.println(startDate);
 			for(int i = 0; i < 8; i++){
 				if(i == 2 ||i == 4){
-					stamp(secondRowWidth+=35, 150,""+startDate.charAt(i));
+					stamp(secondRowWidth+=35, 150, startDate.charAt(i));
 				} else {
-					stamp(secondRowWidth+=20, 150,""+startDate.charAt(i));
+					stamp(secondRowWidth+=20, 150, startDate.charAt(i));
 				}
 			}
 		}
@@ -166,7 +165,7 @@ public class AscentricPage5 extends AscentricPage {
 	private void sortCode(String sortCode, int depth) {
 		int tempWidth = accDetailsWidth-20;
 		for(int i = 0; i <= 5; i++){
-			stamp(tempWidth+=22, depth, ""+ sortCode.charAt(i));
+			stamp(tempWidth+=22, depth, sortCode.charAt(i));
 		}		
 	}
 
@@ -175,7 +174,7 @@ public class AscentricPage5 extends AscentricPage {
 		
 		if(accNum!= null){//The use of the n variable means the costly length method is only called once
 			for(int i = 0, n = accNum.length(); i < n; i++){
-				stamp(tempWidth+=21, depth, ""+ accNum.charAt(i));
+				stamp(tempWidth+=21, depth, accNum.charAt(i));
 			}
 		}
 	}
