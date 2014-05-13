@@ -6,7 +6,7 @@ public class FinancialAdviserDetails{
 	private Charge tradingCharge;
 	private Charge ongoingAdviser;
 	
-	private String fcaFirmNumber;
+	private String fcaFirmNumber = "458919";
 	private String registeredIndividual;
 	private String fcaIndividualReferenceNumber;
 	

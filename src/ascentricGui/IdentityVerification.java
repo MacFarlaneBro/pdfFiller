@@ -47,12 +47,12 @@ public class IdentityVerification extends Page{
         primaryStage.setTitle("Confirmation of Verification of Identity Certificate");
         
         grid = new GridPane();
-        grid.setHgap(5);
+        grid.setHgap(10);
         grid.setVgap(5);
         grid.setAlignment(Pos.CENTER);
         
-        setColumnSizes(grid, 3, 150, 200, 200, 200);
-        setRowSizes(grid, 0, 20, 20, 30, 30, 30, 30, 30, 100, 100);        
+        setColumnSizes(grid, 3, 200, 200, 200, 200);
+        setRowSizes(grid, 0, 20, 20, 30, 30, 30, 30, 30, 30, 30, 40, 100);        
         
         thisScene = new Scene(grid, PAGEWIDTH, PAGEHEIGHT);
         
@@ -64,12 +64,10 @@ public class IdentityVerification extends Page{
         createConfirmationFields(grid);
                 
         movementButtons2Columns(true);
-        createMovementButtons(10, 5);
+        createMovementButtons(12, 5);
 
         primaryStage.setScene(thisScene);
 	}
-
-
 
 	private void createPrivateIndividualFields(GridPane grid) {
 		
@@ -135,20 +133,20 @@ public class IdentityVerification extends Page{
 		textFields.put("previousPostCode", previousPostCode);
 	}
 
-	
 	private void createConfirmationFields(GridPane grid) {
+		gridVert+=2;
 		
 		moneyLaunder = new CheckBox("The evidence I/we have obtained meets the standard"
 				+ " requirements which are defined within the guidance for the UK Financial Sector"
 				+ "issued by the Joint Money Laundering Steering Group (JMLSG)");
 		moneyLaunder.setWrapText(true);
-		grid.add(moneyLaunder, thirdColumn, gridVert++, 2, 1);
+		grid.add(moneyLaunder, firstColumn, gridVert, 2, 2);
 		
 		identityVerification = new CheckBox("The evidence I/we have obtained exceeds the"
 				+ " standard requirements and I/we have attached the further evidence I/we used to"
 				+ " verify the identity of my/our client to this form.");
 		identityVerification.setWrapText(true);
-		grid.add(identityVerification, thirdColumn, gridVert, 2, 1);
+		grid.add(identityVerification, thirdColumn, gridVert, 2, 2);
 		
 	}
 	
