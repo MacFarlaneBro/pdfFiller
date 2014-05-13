@@ -56,9 +56,7 @@ public abstract class ProductDetailsGui extends Page {
         if(!appType.equals("Joint")){
         	generate1stLayerFields(grid, "sas");
         }
-        
-//        grid.setGridLinesVisible(true);
-        
+                
         generate2ndLayerLabels(grid);
         generate2ndLayerFields(grid);
         
@@ -269,7 +267,7 @@ public abstract class ProductDetailsGui extends Page {
 			gia.setSourceOfFunds(giaSourceOfFunds.getValue());
 			gia.setCashToBeTransferred((new Money(textFields.get("gia2").getText())).toString());
 			gia.setAssetsToBeReregistered((new Money(textFields.get("gia3").getText())).toString());
-			gia.setReserverAccount(textFields.get("gia4").getText());
+			gia.setReserverAccount(new Money(textFields.get("gia4").getText()).toString());
 			gia.setAdvisoryWrapper(checkBoxes.get("advgia").isSelected());
 			gia.setDiscretionaryWrapper(checkBoxes.get("discgia").isSelected());
 		}
@@ -281,7 +279,7 @@ public abstract class ProductDetailsGui extends Page {
 			sas.setSourceOfFunds(sasSourceOfFunds.getValue());
 			sas.setCashToBeTransferred((new Money(textFields.get("sas2").getText())).toString());
 			sas.setAssetsToBeReregistered((new Money(textFields.get("sas3").getText())).toString());
-			sas.setReserverAccount(textFields.get("sas4").getText());
+			sas.setReserverAccount(new Money(textFields.get("sas4").getText()).toString());
 			sas.setAdvisoryWrapper(checkBoxes.get("advsas").isSelected());
 			sas.setDiscretionaryWrapper(checkBoxes.get("discsas").isSelected());
 		}

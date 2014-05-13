@@ -140,7 +140,7 @@ public class IdentityVerification extends Page{
 		
 		moneyLaunder = new CheckBox("The evidence I/we have obtained meets the standard"
 				+ " requirements which are defined within the guidance for the UK Financial Sector"
-				+ "issued by the Joint Money Laundering Steering Group (JMLSG); or");
+				+ "issued by the Joint Money Laundering Steering Group (JMLSG)");
 		moneyLaunder.setWrapText(true);
 		grid.add(moneyLaunder, thirdColumn, gridVert++, 2, 1);
 		
@@ -156,23 +156,25 @@ public class IdentityVerification extends Page{
 	protected void fillAndSaveClientInfo(){
 		ConfirmationDetails cd = client.getFirstClient().getConfirmationDetails();
 		cd.setName(textFields.get("name").getText());
-		cd.setCurrentAddress(textFields.get("currAdd1").getText()
-				+ textFields.get("currAdd2").getText()
+		cd.setCurrentAddress(textFields.get("currAdd1").getText() + ":"
+				+ textFields.get("currAdd2").getText() + ":"
 				+ textFields.get("currAdd3").getText());
 		cd.setCurrentPostCode(textFields.get("currPostCode").getText());
 		
 		//Sanitising the dob input prior to storage
 		if(textFields.get("dob").getText().contains("/")){
-			cd.setDob(textFields.get("startDate").getText().replace("/", ""));
-		} else if(textFields.get("startDate").getText().contains("-")){
-			cd.setDob(textFields.get("startDate").getText().replace("-", ""));
-		} else if(textFields.get("startDate").getText().contains(" ")){
-			cd.setDob(textFields.get("startDate").getText().replace(" ", ""));
+			cd.setDob(textFields.get("dob").getText().replace("/", ""));
+		} else if(textFields.get("dob").getText().contains("-")){
+			cd.setDob(textFields.get("dob").getText().replace("-", ""));
+		} else if(textFields.get("dob").getText().contains(" ")){
+			cd.setDob(textFields.get("dob").getText().replace(" ", ""));
 		} else {
-			cd.setDob(textFields.get("startDate").getText());
+			cd.setDob(textFields.get("dob").getText());
 		}
 		
-		cd.setPreviousAddress(textFields.get("previousAddress").getText());
+		cd.setPreviousAddress(textFields.get("prevAdd1").getText() + ":"
+				+ textFields.get("prevAdd2").getText() + ":"
+				+ textFields.get("prevAdd3").getText());
 		cd.setPreviousPostCode(textFields.get("previousPostCode").getText());
 		cd.setClientIdentityCheck(identityVerification.isSelected());
 		cd.setMoneyLaunderingCheck(moneyLaunder.isSelected());

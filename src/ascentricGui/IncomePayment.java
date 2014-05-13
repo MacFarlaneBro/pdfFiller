@@ -118,7 +118,7 @@ public class IncomePayment extends Page {
 		
 		gridVert = 5;
 		Label pfd = new Label("You can choose whether a fixed payment is withdrawn from the deposit"
-				+ " or the reserve account. Please insert the amount into the apropriate box:");
+				+ " or the reserve account. Please insert the amount into the appropriate box:");
 		pfd.setWrapText(true);
 		GridPane.setValignment(pfd, VPos.CENTER);
 		grid.add(pfd, 4, gridVert++, 2, 2);

@@ -9,10 +9,10 @@ public class Money {
 		StringBuilder temp = new StringBuilder();
 		value = new StringBuilder(value).reverse().toString();
 		
-		for(int i = 1, length = value.length(); i <= length; i++){
-	
+		for(int i = 1, length = value.length(); i <= length; i++)
+		{
 			temp.append(value.charAt(i-1));
-			if(i%3 == 0) temp.append(',');
+			if(i%3 == 0 && i < length) temp.append(',');
 		}
 		moneyString = temp.reverse().toString();
 	}

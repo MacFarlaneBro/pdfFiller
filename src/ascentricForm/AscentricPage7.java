@@ -47,7 +47,7 @@ public class AscentricPage7 extends AscentricPage{
 		privateIndividualHeight-=23;
 		//Date of Birth
 		String dob = con.getDob();
-		if(dob!= null){
+		if(dob!= null && dob.length() > 3){
 			stamp(firstIndividualColumnWidth,
 					privateIndividualHeight,
 					dob.charAt(0));
