@@ -174,6 +174,8 @@ public class IncomePayment extends Page {
 			bad.setStartDate(textFields.get("startDate").getText().replace("/", ""));
 		} else if(textFields.get("startDate").getText().contains("-")){
 			bad.setStartDate(textFields.get("startDate").getText().replace("-", ""));
+		} else if(textFields.get("startDate").getText().contains(" ")){
+			bad.setStartDate(textFields.get("startDate").getText().replace(" ", ""));
 		} else {
 			bad.setStartDate(textFields.get("startDate").getText());
 		}

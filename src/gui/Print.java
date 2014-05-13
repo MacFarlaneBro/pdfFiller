@@ -53,9 +53,7 @@ public class Print {
         grid.setHgap(10);
         grid.setVgap(10);
         grid.setAlignment(Pos.CENTER);
-        
-//        grid.setGridLinesVisible(true);
-        
+                
 		save = new Button("Save Document");
         grid.add(save, 4, 2, 2, 1);
 
@@ -79,27 +77,24 @@ public class Print {
             public void handle(ActionEvent e){
             	
             	FileChooser fileChooser = new FileChooser();
-        		System.out.println("Begindning Print");
 
                 fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PDF files (*.pdf)", "*.pdf"));
                 File file;
-                if(client.getFirstClient().getIndividualDetails().getSurname()!= null
-                		&& client.getFirstClient().getIndividualDetails().getForename()!= null){
+                if(client.getFirstClient().getIndividualDetails().getSurname().length() >= 2
+                		&& client.getFirstClient().getIndividualDetails().getForename().length() >= 2){
 	                fileChooser.setInitialFileName(client.getFirstClient().getIndividualDetails().getSurname() + " "
 	                		+ client.getFirstClient().getIndividualDetails().getForename().charAt(0)
 	                		+ " Ascentric App "
 	                		+ (new SimpleDateFormat("ddMMyyyy")).format(new Date()));
 	                file = fileChooser.showSaveDialog(primaryStage);
                 	printDocument(file);
-	                System.out.println("Begin1324ning Print");
                 } else {
                 	file = fileChooser.showSaveDialog(primaryStage);
-                	printDocument(file);
-                	System.out.println("Begi434ndning Print");
                 }
-                if(!file.getName().contains(".")){
+                if(!file.getName().contains(".pdf")){
                 	file = new File(file.getAbsolutePath() + ".pdf");
                 }
+            	printDocument(file);
             }
         });
         
@@ -133,16 +128,13 @@ public class Print {
 	
 	protected void printDocument(File file){
 		AscentricForm af = new AscentricForm();
-		System.out.println("Beginaning Print");
 		try {
 			printed = true;
 			actionTarget.setFill(Color.BLUE);
-			System.out.println("Beginnfdfing Print");
-
             actionTarget.setText("Filling PDF");
 			af.fillIt(client, file);
-			Desktop dt = Desktop.getDesktop();
-			dt.open(file); 
+			System.out.println(file.getName());
+			Desktop.getDesktop().open(file); 
 			actionTarget.setFill(Color.BLACK);
 			actionTarget.setText("Document Filled!");
 		} catch (IOException | DocumentException e) {
@@ -195,6 +187,5 @@ public class Print {
             }
         });	
 	}
-	
 } 
 

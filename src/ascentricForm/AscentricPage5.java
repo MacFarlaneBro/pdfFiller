@@ -111,14 +111,10 @@ public class AscentricPage5 extends AscentricPage {
 		//StartDate
 		if(bad.getStartDate()!= null && bad.getStartDate().length() >= 4){
 		String startDate = bad.getStartDate();
-		System.out.println("Start Date Printing");
-			for(int i = 0; i < 8; i++){
-				System.out.println("Start Date Printing Loop");
+			for(int i = 0, l = startDate.length(); i < l; i++){
 				if(i == 2 ||i == 4){
-					System.out.println("even number");
 					stamp(secondRowWidth+=35, 140, startDate.charAt(i));
 				} else {
-					System.out.println("Odd number");
 					stamp(secondRowWidth+=20, 140, startDate.charAt(i));
 				}
 			}
