@@ -18,6 +18,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import ascentricClientDetails.ClientHolder;
+import ascentricClientDetails.ConfirmationDetails;
 
 public class IdentityVerification extends Page{
 
@@ -29,6 +30,10 @@ public class IdentityVerification extends Page{
 	private int firstColumn;
 	private int secondColumn;
 	private int thirdColumn = 3;
+
+	private CheckBox moneyLaunder;
+
+	private CheckBox identityVerification;
 	
 	private IdentityVerification(){}
 
@@ -48,7 +53,6 @@ public class IdentityVerification extends Page{
         
         setColumnSizes(grid, 3, 150, 200, 200, 200);
         setRowSizes(grid, 0, 20, 20, 30, 30, 30, 30, 30, 100, 100);        
-//        grid.setGridLinesVisible(true);
         
         thisScene = new Scene(grid, PAGEWIDTH, PAGEHEIGHT);
         
@@ -100,7 +104,7 @@ public class IdentityVerification extends Page{
 		grid.add(new Label("Current Postcode"), firstColumn, gridVert);
 		TextField postCode = new TextField();
 		grid.add(postCode, secondColumn, gridVert++);
-		textFields.put("postCode", postCode);
+		textFields.put("currPostCode", postCode);
 		
 		//Date of Birth
 		grid.add(new Label("Date of Birth (DDMMYYYY)"), firstColumn, gridVert);
@@ -134,13 +138,13 @@ public class IdentityVerification extends Page{
 	
 	private void createConfirmationFields(GridPane grid) {
 		
-		CheckBox moneyLaunder = new CheckBox("The evidence I/we have obtained meets the standard"
+		moneyLaunder = new CheckBox("The evidence I/we have obtained meets the standard"
 				+ " requirements which are defined within the guidance for the UK Financial Sector"
 				+ "issued by the Joint Money Laundering Steering Group (JMLSG); or");
 		moneyLaunder.setWrapText(true);
 		grid.add(moneyLaunder, thirdColumn, gridVert++, 2, 1);
 		
-		CheckBox identityVerification = new CheckBox("The evidence I/we have obtained exceeds the"
+		identityVerification = new CheckBox("The evidence I/we have obtained exceeds the"
 				+ " standard requirements and I/we have attached the further evidence I/we used to"
 				+ " verify the identity of my/our client to this form.");
 		identityVerification.setWrapText(true);
@@ -150,7 +154,28 @@ public class IdentityVerification extends Page{
 	
 	@Override
 	protected void fillAndSaveClientInfo(){
+		ConfirmationDetails cd = client.getFirstClient().getConfirmationDetails();
+		cd.setName(textFields.get("name").getText());
+		cd.setCurrentAddress(textFields.get("currAdd1").getText()
+				+ textFields.get("currAdd2").getText()
+				+ textFields.get("currAdd3").getText());
+		cd.setCurrentPostCode(textFields.get("currPostCode").getText());
 		
+		//Sanitising the dob input prior to storage
+		if(textFields.get("dob").getText().contains("/")){
+			cd.setDob(textFields.get("startDate").getText().replace("/", ""));
+		} else if(textFields.get("startDate").getText().contains("-")){
+			cd.setDob(textFields.get("startDate").getText().replace("-", ""));
+		} else if(textFields.get("startDate").getText().contains(" ")){
+			cd.setDob(textFields.get("startDate").getText().replace(" ", ""));
+		} else {
+			cd.setDob(textFields.get("startDate").getText());
+		}
+		
+		cd.setPreviousAddress(textFields.get("previousAddress").getText());
+		cd.setPreviousPostCode(textFields.get("previousPostCode").getText());
+		cd.setClientIdentityCheck(identityVerification.isSelected());
+		cd.setMoneyLaunderingCheck(moneyLaunder.isSelected());
 	}
 	
 public void createMovementButtons(int depth,int nextWidth) {
