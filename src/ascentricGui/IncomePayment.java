@@ -47,7 +47,7 @@ public class IncomePayment extends Page {
         sceneTitle.setFont(Font.font("courier", FontWeight.NORMAL, 21));
         grid.add(sceneTitle, 1, 1, 2, 2);
         
-        thisScene = new Scene(grid, pageWidth, pageHeight);       
+        thisScene = new Scene(grid, PAGEWIDTH, PAGEHEIGHT);       
         
         createFields(grid);
         

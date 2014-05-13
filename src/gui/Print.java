@@ -158,8 +158,8 @@ public class Print {
             
             @Override
             public void handle(ActionEvent e){
-            	primaryStage.setHeight(900);
-            	primaryStage.setWidth(900);
+            	primaryStage.setHeight(Page.PAGEHEIGHT);
+            	primaryStage.setWidth(Page.PAGEWIDTH);
                 primaryStage.setScene(previousScene);
             }
         });

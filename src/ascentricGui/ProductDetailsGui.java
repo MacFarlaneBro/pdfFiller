@@ -91,7 +91,7 @@ public abstract class ProductDetailsGui extends Page {
         movementButtons2Columns(true);
         createMovementButtons(12, 9);
         
-        thisScene = new Scene(grid, pageWidth, pageHeight);
+        thisScene = new Scene(grid, PAGEWIDTH, PAGEHEIGHT);
         primaryStage.setScene(thisScene);
 	}
 

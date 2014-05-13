@@ -5,6 +5,7 @@ import java.io.IOException;
 import ascentricClientDetails.Client;
 import ascentricClientDetails.CorrespondenceDetails;
 import ascentricClientDetails.IndividualDetails;
+import ascentricClientDetails.MakeClients;
 
 import com.itextpdf.text.DocumentException;
 
@@ -180,5 +181,12 @@ public class AscentricPage1 extends AscentricPage{
 		} else {
 			stamp(440, usPersonDepth, "X");
 		}		
+	}
+
+	@Override
+	public void fillPage(MakeClients theClient) throws IOException,
+			DocumentException {
+		// TODO Auto-generated method stub
+		
 	}
 }

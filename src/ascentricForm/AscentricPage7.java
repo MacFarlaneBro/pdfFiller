@@ -5,13 +5,13 @@ import java.io.IOException;
 import ascentricClientDetails.Client;
 import ascentricClientDetails.ConfirmationDetails;
 import ascentricClientDetails.FinancialAdviserDetails;
+import ascentricClientDetails.MakeClients;
 
 import com.itextpdf.text.DocumentException;
 
 public class AscentricPage7 extends AscentricPage{
 	
 	public static final int PAGENUMBER = 7;
-
 
 	@Override
 	public void fillPage(Client theClient) throws IOException,
@@ -34,11 +34,13 @@ public class AscentricPage7 extends AscentricPage{
 		//Name of individual
 		stamp(firstIndividualColumnWidth, privateIndividualHeight-=20, con.getName());
 		//Individual's current address
-		String[] address = con.getCurrentAddress().split(":");
-		
-		for(String line: address)
-		{
-			stamp(firstIndividualColumnWidth, privateIndividualHeight-=20, line);
+		if(con.getCurrentAddress() != null && con.getCurrentAddress().length() > 2){
+			String[] address = con.getCurrentAddress().split(":");
+			
+			for(String line: address)
+			{
+				stamp(firstIndividualColumnWidth, privateIndividualHeight-=20, line);
+			}
 		}
 		//Postcode
 		stamp(firstIndividualColumnWidth, privateIndividualHeight-=20, con.getCurrentPostCode());
@@ -65,13 +67,16 @@ public class AscentricPage7 extends AscentricPage{
 		privateIndividualHeight = 520;
 		
 		//Individuals previous address
-		address = con.getPreviousAddress().split(":");
-		for(String line: address){
-			stamp(secondIndividualColumnWidth, privateIndividualHeight-=20, line);
+		if(con.getCurrentAddress() != null && con.getCurrentAddress().length() > 2){
+			String[] address = con.getPreviousAddress().split(":");
+			for(String line: address)
+			{
+				stamp(secondIndividualColumnWidth, privateIndividualHeight-=20, line);
+			}
+			privateIndividualHeight-=21;
+			//Post code
+			stamp(secondIndividualColumnWidth, privateIndividualHeight, con.getPreviousPostCode());
 		}
-		privateIndividualHeight-=21;
-		//Post code
-		stamp(secondIndividualColumnWidth, privateIndividualHeight, con.getPreviousPostCode());
 	}
 
 
@@ -118,4 +123,8 @@ public class AscentricPage7 extends AscentricPage{
 			}
 		}
 	}
+
+	@Override
+	public void fillPage(MakeClients theClient) throws IOException,
+			DocumentException {}
 }

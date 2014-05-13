@@ -70,7 +70,7 @@ public class ClientPersonalInfo extends Page{
         grid.setHgap(15);
         grid.setVgap(15);
                 
-        thisScene = new Scene(grid, pageWidth, pageHeight);
+        thisScene = new Scene(grid, PAGEWIDTH, PAGEHEIGHT);
         
         setColumnSizes(grid, 20, 250, 175, 190, 170, 20);
         setRowSizes(grid, 50);

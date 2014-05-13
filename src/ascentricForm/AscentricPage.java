@@ -110,9 +110,8 @@ public abstract class AscentricPage{
 	}
 	
 	public abstract void fillPage(Client theClient) throws IOException, DocumentException;
-	
-	public void fillPage(MakeClients theClient) throws IOException, DocumentException{}
-	
+	public abstract void fillPage(MakeClients theClient) throws IOException, DocumentException;
+		
 	protected void shutDown() throws DocumentException, IOException {
 		
 		stamper.close();

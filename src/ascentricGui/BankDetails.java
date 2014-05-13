@@ -52,7 +52,7 @@ public class BankDetails extends Page{
 	        grid.add(sceneTitle, 1, 1, 2, 2);
 		}
         
-        thisScene = new Scene(grid, pageWidth, pageHeight);       
+        thisScene = new Scene(grid, PAGEWIDTH, PAGEHEIGHT);       
         
         createFields(grid);
         

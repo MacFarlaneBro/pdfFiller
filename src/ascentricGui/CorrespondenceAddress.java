@@ -28,7 +28,7 @@ public class CorrespondenceAddress extends Page {
         grid.setHgap(15);
         grid.setVgap(15);
                 
-        thisScene = new Scene(grid, pageWidth, pageHeight);
+        thisScene = new Scene(grid, PAGEWIDTH, PAGEHEIGHT);
         createFields(grid);
         
         setColumnSizes(grid, 150, 120, 150, 150);

@@ -26,8 +26,8 @@ import ascentricClientDetails.ClientHolder;
 
 public abstract class Page {
 	
-	public static final int pageWidth = 900;
-	public static final int pageHeight = 500;
+	public static final int PAGEWIDTH = 900;
+	public static final int PAGEHEIGHT = 500;
 	protected Page nextPage;
 	protected Scene thisScene;
 	protected Scene previousScene;
@@ -88,6 +88,7 @@ public abstract class Page {
             
             @Override
             public void handle(ActionEvent e){
+//            	setSize();
                 primaryStage.setScene(previousScene);
             }
         });
@@ -110,9 +111,8 @@ public abstract class Page {
 			@Override
             public void handle(ActionEvent e){
             	try {
-            		System.out.println("Before fill and save");
+//            		setSize();
 					fillAndSaveClientInfo();
-            		System.out.println("After fill and save");
 					nextPage.setUp(primaryStage, thisScene, client);
 				} catch(DataFormatException dfe){ 
 					warning(dfe.getMessage());
@@ -124,6 +124,11 @@ public abstract class Page {
         });	
 	}
 	
+	protected void setSize() {
+		primaryStage.setHeight(PAGEHEIGHT);
+		primaryStage.setWidth(PAGEWIDTH);
+	}
+
 	public void setTitle(GridPane grid, String title, Stage primaryStage){
 		
 		Text sceneTitle = new Text(title);

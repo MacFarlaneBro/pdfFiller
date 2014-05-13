@@ -42,7 +42,7 @@ public class FinancialAdviserDetailsGui extends Page {
 
         setColumnSizes(grid, 3, 150, 200, 30, 200, 200);
         setRowSizes(grid, 5, 12, 12, 30, 32, 18, 18, 25, 18, 18);
-        thisScene = new Scene(grid, pageWidth, pageHeight);
+        thisScene = new Scene(grid, PAGEWIDTH, PAGEHEIGHT);
          
         createBoxes();
 

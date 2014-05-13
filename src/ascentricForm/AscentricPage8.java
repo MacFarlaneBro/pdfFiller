@@ -6,6 +6,7 @@ import java.util.Date;
 
 import ascentricClientDetails.Client;
 import ascentricClientDetails.FinancialAdviserDetails;
+import ascentricClientDetails.MakeClients;
 
 import com.itextpdf.text.DocumentException;
 
@@ -77,6 +78,13 @@ public class AscentricPage8 extends AscentricPage {
 
 	private void tickFacetoFace(boolean b) {
 			if(b) stamp(280, 483, "X");
+	}
+
+	@Override
+	public void fillPage(MakeClients theClient) throws IOException,
+			DocumentException {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

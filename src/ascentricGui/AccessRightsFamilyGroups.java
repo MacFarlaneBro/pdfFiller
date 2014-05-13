@@ -37,7 +37,7 @@ public class AccessRightsFamilyGroups extends Page {
         setColumnSizes(grid, 100, 140, 140, 140, 140);
         setRowSizes(grid, 20,20,20,20,20,20,20,20,20);
         
-        thisScene = new Scene(grid, pageWidth, pageHeight);
+        thisScene = new Scene(grid, PAGEWIDTH, PAGEHEIGHT);
         
         if(client.getJointAccount() == null){
         	nextPage = FirstProductDetails.INSTANCE;
