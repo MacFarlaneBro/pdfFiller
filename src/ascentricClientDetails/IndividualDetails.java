@@ -1,5 +1,6 @@
 package ascentricClientDetails;
 
+
 public class IndividualDetails{
 	
 	private String title;
@@ -27,6 +28,8 @@ public class IndividualDetails{
 	private boolean existingAccount;
 	private String exisingAcctRefNumber;
 	private boolean isSameDetails;
+	private boolean correspondenceAddressSame;
+	private CorrespondenceDetails correspondenceDetails;
 
 	
 	public void setEmail(String email){
@@ -181,8 +184,20 @@ public class IndividualDetails{
 	}
 	
 	public boolean isSameDetails() {
-		// TODO Auto-generated method stub
 		return isSameDetails;
+	}
+	public boolean isCorrespondenceAddressSame() {
+		return correspondenceAddressSame;
+	}
+
+	public CorrespondenceDetails getCorrespondenceDetails() {
+		if(correspondenceDetails == null){
+			correspondenceDetails = new CorrespondenceDetails();
+		}
+		return correspondenceDetails;
+	}
+	public void setSameCorrDetails(boolean correspondenceAddressSame) {
+		this.correspondenceAddressSame = correspondenceAddressSame;
 	}
 
 }

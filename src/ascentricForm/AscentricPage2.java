@@ -20,9 +20,11 @@ public class AscentricPage2 extends AscentricPage1{
 		tinDepth+=168;
 		cliRef+=168;
 		passInfo += 150;
-		natInYN +=165;
+		natInYN +=169;
 		usPersonDepth +=148;
+		corrDepth +=150;
 	}
+
 	
 	@Override
 	public void fillPage(Client theClient) throws IOException, DocumentException{
@@ -39,6 +41,7 @@ public class AscentricPage2 extends AscentricPage1{
 		} else {
 			fillContactDetails(id);
 		}
+		fillCorrespondenceAddress(id.getCorrespondenceDetails());
 		usPerson(id.isUsPerson());
 		additionalInfo(id);
 		shutDown();

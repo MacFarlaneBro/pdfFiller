@@ -16,7 +16,8 @@ public class BankAccountDetails{
 	private String natIncomeWrappers;
 	private String payTiming;
 	
-	private String paymentFromDeposit;
+	private String paymentFromDepositAccount;
+	private String paymentFromReserveAccount;
 	private String depositPayTiming;
 	private String regWithdrawlWrappers;
 	private String startDate;
@@ -95,12 +96,6 @@ public class BankAccountDetails{
 	public void setNatIncomePayTiming(String payTiming) {
 		this.payTiming = payTiming;
 	}
-	public String getPaymentFromDeposit() {
-		return paymentFromDeposit;
-	}
-	public void setPaymentFromDeposit(String string) {
-		this.paymentFromDeposit = string;
-	}
 	public String getDepositPayTiming() {
 		return depositPayTiming;
 	}
@@ -126,7 +121,6 @@ public class BankAccountDetails{
 		this.sameDetails = same;
 	}
 	public String getRegWithdrawalAmount() {
-		// TODO Auto-generated method stub
 		return regWithdrawalAmount;
 	}
 	public void setRegWithdrawalAmount(String regw){
@@ -134,6 +128,18 @@ public class BankAccountDetails{
 	}
 	public void setPaymentTiming(String paymentTiming) {
 		this.payTiming = paymentTiming;	
+	}
+	public String getPaymentFromDepositAccount() {
+		return paymentFromDepositAccount;
+	}
+	public void setPaymentFromDepositAccount(String paymentFromDepositAccount) {
+		this.paymentFromDepositAccount = paymentFromDepositAccount;
+	}
+	public String getPaymentFromReserveAccount() {
+		return paymentFromReserveAccount;
+	}
+	public void setPaymentFromReserveAccount(String paymentFromReserveAccount) {
+		this.paymentFromReserveAccount = paymentFromReserveAccount;
 	}
 
 }

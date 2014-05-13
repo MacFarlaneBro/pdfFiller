@@ -47,27 +47,27 @@ public class Print {
 		this.previousScene = previousScene;
 		
 		primaryStage.setTitle("Save File");
-        
+        primaryStage.setHeight(400);
+        primaryStage.setWidth(400);
         grid = new GridPane();
         grid.setHgap(10);
         grid.setVgap(10);
         grid.setAlignment(Pos.CENTER);
-        
-//        grid.setGridLinesVisible(true);
-        
+                
 		save = new Button("Save Document");
         grid.add(save, 4, 2, 2, 1);
 
     	Page page = new GenericPage();
-    	page.setRowSizes(grid, 100, 100, 100, 100, 100);
-    	page.setColumnSizes(grid, 100, 100, 100, 100, 100, 100, 100);
+    	page.setRowSizes(grid, 0, 100, 100, 100);
+    	page.setColumnSizes(grid, 0, 100, 100, 100, 100);
         
         Label tf = new Label("You have now completed filling in the document,"
         		+ " click 'Save Document' to produce a finished document."
         		+ " The document will then be opened in adobe acrobat"
         		+ " so that you may check it to make sure everything is correct"
         		+ " before returning to the home screen.");
-        
+		System.out.println("Entering print section");
+
         grid.add(tf, 1, 1, 4, 1);
         tf.setWrapText(true);
         
@@ -77,29 +77,34 @@ public class Print {
             public void handle(ActionEvent e){
             	
             	FileChooser fileChooser = new FileChooser();
-            	
+
                 fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PDF files (*.pdf)", "*.pdf"));
-                fileChooser.setInitialFileName(client.getFirstClient().getIndividualDetails().getSurname() + " "
-                		+ client.getFirstClient().getIndividualDetails().getForename().charAt(0)
-                		+ " Ascentric App "
-                		+ (new SimpleDateFormat("ddMMyyyy")).format(new Date()));
-                File file = fileChooser.showSaveDialog(primaryStage);
-                
-                if(!file.getName().contains(".")){
+                File file;
+                if(client.getFirstClient().getIndividualDetails().getSurname().length() >= 2
+                		&& client.getFirstClient().getIndividualDetails().getForename().length() >= 2){
+	                fileChooser.setInitialFileName(client.getFirstClient().getIndividualDetails().getSurname() + " "
+	                		+ client.getFirstClient().getIndividualDetails().getForename().charAt(0)
+	                		+ " Ascentric App "
+	                		+ (new SimpleDateFormat("ddMMyyyy")).format(new Date()));
+	                file = fileChooser.showSaveDialog(primaryStage);
+                	printDocument(file);
+                } else {
+                	file = fileChooser.showSaveDialog(primaryStage);
+                }
+                if(!file.getName().contains(".pdf")){
                 	file = new File(file.getAbsolutePath() + ".pdf");
                 }
-                printDocument(file);
+            	printDocument(file);
             }
         });
         
         actionTarget = new Text();
-        actionTarget.setWrappingWidth(600);
-        grid.add(actionTarget, 1, 4, 6, 1);
+        actionTarget.setWrappingWidth(300);
+        grid.add(actionTarget, 1, 2, 3, 1);
         actionTarget.setFont(Font.font(null, FontWeight.BOLD, 15));
         createMovementButtons(3);
         thisScene = new Scene(grid, 900, 500);  
         primaryStage.setScene(thisScene);
-        
 	}
 	
 	public void warning(String warningString){
@@ -121,21 +126,22 @@ public class Print {
 		warningStage.show();
 	}
 	
-	protected void printDocument(File file) {
+	protected void printDocument(File file){
 		AscentricForm af = new AscentricForm();
 		try {
 			printed = true;
 			actionTarget.setFill(Color.BLUE);
             actionTarget.setText("Filling PDF");
 			af.fillIt(client, file);
-			Desktop dt = Desktop.getDesktop();
-			dt.open(file);
+			System.out.println(file.getName());
+			Desktop.getDesktop().open(file); 
 			actionTarget.setFill(Color.BLACK);
 			actionTarget.setText("Document Filled!");
 		} catch (IOException | DocumentException e) {
     		actionTarget.setFill(Color.FIREBRICK);
     		actionTarget.setText("The document has failed to fill, please check to see if a previous instance of the"
     				+  " document, or of the pdf filler application is open, if so, please close it and try again.");
+    		e.printStackTrace();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -152,6 +158,8 @@ public class Print {
             
             @Override
             public void handle(ActionEvent e){
+            	primaryStage.setHeight(Page.PAGEHEIGHT);
+            	primaryStage.setWidth(Page.PAGEWIDTH);
                 primaryStage.setScene(previousScene);
             }
         });
@@ -179,6 +187,5 @@ public class Print {
             }
         });	
 	}
-	
 } 
 

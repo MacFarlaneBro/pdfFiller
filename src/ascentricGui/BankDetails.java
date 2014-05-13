@@ -52,7 +52,7 @@ public class BankDetails extends Page{
 	        grid.add(sceneTitle, 1, 1, 2, 2);
 		}
         
-        thisScene = new Scene(grid, pageWidth, pageHeight);       
+        thisScene = new Scene(grid, PAGEWIDTH, PAGEHEIGHT);       
         
         createFields(grid);
         
@@ -157,6 +157,17 @@ public class BankDetails extends Page{
 		if(type.equals("second") && same.isSelected()){
 			bd.setSameDetails(true);
 		} else {
+			
+			if(textFields.get("accountNumber").getText().length()< 6
+					|| textFields.get("accountNumber").getText().length()> 8){
+					throw new DataFormatException("The account number given must be between 6 and 8 numbers");
+				}
+				
+				for(char a: textFields.get("accountNumber").getText().toCharArray()){
+					if(Character.isAlphabetic(a)){
+						throw new DataFormatException("The account number must contain only numbers");
+					}
+				}
 			
 			if(textFields.get("sortCode").getText()!= null 
 					&& textFields.get("sortCode").getText().length() > 1){

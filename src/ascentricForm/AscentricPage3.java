@@ -135,13 +135,13 @@ public class AscentricPage3 extends AscentricPage{
 		//Wrappers
 		stamp(wrapWidth, yAxis, "X");
 		//Cash
-		stamp(wrapWidth+25, yAxis,"" + wrapper.getCash());
+		stamp(wrapWidth+25, yAxis, wrapper.getCash());
 		//Source of funds
 		stamp(wrapWidth+77, yAxis, wrapper.getSourceOfFunds());
 		//Transfer/Approx
-		stamp(wrapWidth+150, yAxis, "" + wrapper.getCashToBeTransferred());
+		stamp(wrapWidth+150, yAxis, wrapper.getCashToBeTransferred());
 		//Transfer/Assets
-		stamp(wrapWidth+212, yAxis,"" + wrapper.getAssetsToBeReregistered());
+		stamp(wrapWidth+212, yAxis, wrapper.getAssetsToBeReregistered());
 		//Reserve Account
 		stamp(wrapWidth+260, yAxis, wrapper.getReserverAccount());
 		
@@ -160,7 +160,7 @@ public class AscentricPage3 extends AscentricPage{
 		//Third Party Name
 		stamp(thirdPartyWidth, thirdPartyDepth, pd.getThirdPartyProductAccounts());
 		//Amount to be received
-		stamp(thirdPartyWidth+150, thirdPartyDepth,"" + pd.getAmountToBeReceived());
+		stamp(thirdPartyWidth+150, thirdPartyDepth, pd.getAmountToBeReceived());
 		//source of funds
 		stamp(thirdPartyWidth+200, thirdPartyDepth, pd.getSourceOfFunds());
 		

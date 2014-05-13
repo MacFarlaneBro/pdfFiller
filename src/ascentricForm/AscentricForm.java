@@ -53,15 +53,18 @@ public class AscentricForm{
 		page = new AscentricPage7();
 		page.fillPage(theClient.getFirstClient());
 		
-//		page = new AscentricPage8();
-//		page.fillPage(theClient);
+		page = new AscentricPage8();
+		page.fillPage(theClient.getFirstClient());
+		
+		page = new AscentricPage9();
+		page.fillPage(theClient);
 		String finishedFile = page.getFileName();
 		
 		cleanUp(file, finishedFile);
 		
 		System.out.println("finished printing");
 	}
-
+	
 	private void cleanUp(File file, String finishedFile) throws IOException {
 		FileChannel src = null;
 		FileChannel dest = null;

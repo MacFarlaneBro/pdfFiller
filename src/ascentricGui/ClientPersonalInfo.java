@@ -8,7 +8,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.zip.DataFormatException;
 
-import utilities.AutoCompleteComboBoxListener;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -16,7 +15,6 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
-import javafx.geometry.VPos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -28,11 +26,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
+import utilities.AutoCompleteComboBoxListener;
 import ascentricClientDetails.ClientHolder;
 import ascentricClientDetails.IndividualDetails;
 import databaseAccess.GetDatabase;
@@ -52,12 +49,12 @@ public class ClientPersonalInfo extends Page{
     private Map<String, String> clientData;
     private Map<String, TextField> fieldMap;
     private Button autoFillClientButton;
-	private String sceneT = "Client Personal Info";
 	private ComboBox<String> applicationType;
 	private CheckBox natInsTickClient;
 	private CheckBox facetoface;
 	private Text actionTarget;
     private boolean duplicateFirstNames = false;
+	private CheckBox correspondenceAddress;
 	
 	private ClientPersonalInfo(){}
 
@@ -69,17 +66,15 @@ public class ClientPersonalInfo extends Page{
     	this.client = client;
         this.previousScene = firstScene;
         this.primaryStage = primaryStage;
-        primaryStage.setTitle("Personal Information - Client");
         grid = new GridPane();
         grid.setHgap(15);
         grid.setVgap(15);
-        
-        thisScene = new Scene(grid, pageWidth, pageHeight);
+                
+        thisScene = new Scene(grid, PAGEWIDTH, PAGEHEIGHT);
         
         setColumnSizes(grid, 20, 250, 175, 190, 170, 20);
         setRowSizes(grid, 50);
-        setRowSizes(grid);
-        
+                
     	fieldMap = new HashMap<String, TextField>();
         
         createAutoFillFields(grid);
@@ -94,6 +89,8 @@ public class ClientPersonalInfo extends Page{
         createMovementButtons(12, 5);
         
         createClearButton();
+        
+        setTitle(grid, "Client Personal Info", primaryStage);
         
         primaryStage.setScene(thisScene);
         
@@ -243,7 +240,12 @@ public class ClientPersonalInfo extends Page{
     	
     	facetoface = new CheckBox("Tick here if you have confirmed the clients identity\nin a face"
     			+ " to face meeting");
-    	grid.add(facetoface, 3, 1, 2, 1);
+    	grid.add(facetoface, 1, 2, 2, 1);
+    	
+    	correspondenceAddress = new CheckBox("Tick here if the clients the clients correspondence\naddress differs"
+    			+ " from that given below");
+    	correspondenceAddress.setDisable(false);
+    	grid.add(correspondenceAddress, 3, 1, 2, 1);
         
         //Client First Name
         Label firstName = new Label("First name");
@@ -344,13 +346,6 @@ public class ClientPersonalInfo extends Page{
         clientHomeAddress2.setId("HomeAddress2");
         clientHomeAddress2.setPrefWidth(fieldWidth);
         grid.add(clientHomeAddress2, 4, ++gridVert);
-        //line3
-        TextField clientHomeAddress3 = new TextField();
-        fieldMap.put("HomeAddress3", clientHomeAddress3);
-        theFields.add(clientHomeAddress3);
-        clientHomeAddress3.setId("HomeAddress3");
-        clientHomeAddress3.setPrefWidth(fieldWidth);
-        grid.add(clientHomeAddress3, 4, ++gridVert);
         
         //Client PostCode
         Label postcode = new Label("Postcode");
@@ -375,7 +370,7 @@ public class ClientPersonalInfo extends Page{
         grid.add(clientEmail, 4, gridVert);
         
         //Does the client have a national insurance number?
-        Label natInsTick = new Label("Tick if client has no national Insurance number");
+        Label natInsTick = new Label("Tick if client has no National Insurance number");
         theLabels.add(email);
         grid.add(natInsTick, 1, 9);
         natInsTickClient = new CheckBox();
@@ -397,21 +392,15 @@ public class ClientPersonalInfo extends Page{
     */
     private void createAutoFillFields(GridPane grid) {
         
-        Text sceneTitle = new Text(sceneT);
-        sceneTitle.setFont(Font.font("courier", FontWeight.NORMAL, 21));
-        sceneTitle.setId("sceneTitle");
-        GridPane.setValignment(sceneTitle, VPos.CENTER);
-        grid.add(sceneTitle, 1, 0, 2, 2);
-        
       //Type of Application
-        Label appType = new Label("Application Type");
-        grid.add(appType, 1, ++gridVert);
-        ObservableList<String> formTypes =
-                FXCollections.observableArrayList(
-                        "Single Client",
-                        "Two Clients",
-                        "Joint Account"
-                );
+	  Label appType = new Label("Application Type");
+	  grid.add(appType, 1, ++gridVert);
+	  ObservableList<String> formTypes =
+	          FXCollections.observableArrayList(
+	                  "Single Client",
+	                  "Two Clients",
+	                  "Joint Account"
+	          );
             
         applicationType = new ComboBox<String>(formTypes);
         setNextPage(applicationType);
@@ -431,13 +420,13 @@ public class ClientPersonalInfo extends Page{
 
 	private void setNextPage(ComboBox<String> comboBox) {
 		comboBox.valueProperty().addListener(new ChangeListener<String>() {
-            @Override public void changed(ObservableValue<? extends String> ov, String t, String t1) {                
-               if(t1.equals("Single Client")){
-            	   nextPage = AccessRightsFamilyGroups.INSTANCE;
-               } else {
-            	   nextPage = PartnerPersonalInfo.INSTANCE;
-               }
-            }    
+            @Override public void changed(ObservableValue<? extends String> ov, String t, String t1) { 
+                if(t1.equals("Single Client")){
+            	    nextPage = AccessRightsFamilyGroups.INSTANCE;
+                } else {
+            	    nextPage = PartnerPersonalInfo.INSTANCE;
+                }
+            }   
 	    });
 	}
 
@@ -510,6 +499,15 @@ public class ClientPersonalInfo extends Page{
     
 	@SuppressWarnings("unchecked")
 	protected void fillAndSaveClientInfo() throws DataFormatException{
+		IndividualDetails id = client.getFirstClient().getIndividualDetails();
+		if(correspondenceAddress.isSelected()){
+			id.setSameCorrDetails(true);
+			Page nextNextPage = nextPage;
+			nextPage = CorrespondenceAddress.INSTANCE;
+			nextPage.setNextPage(nextNextPage);
+		}
+		
+		System.out.println(natInsTickClient.isSelected());
 		
 		if(!natInsTickClient.isSelected()){
 						
@@ -519,6 +517,7 @@ public class ClientPersonalInfo extends Page{
 			if(fieldMap.get("nas").getText() != null && !fieldMap.get("nas").getText().equals("")){
 				nas = fieldMap.get("nas").getText().replace("-", "");
 			}
+			
 			//If the field is null
     		if(nas == null || nas.equals("")){
     			throw new DataFormatException("Warning! No national insurance number has been entered!\n"
@@ -533,12 +532,9 @@ public class ClientPersonalInfo extends Page{
     			throw new DataFormatException("The NI number entered: " 
 				+ nas 
 				+ " is incorrectly formatted, please re-enter it and try again.\n");	
-
     		}
 		}
 		
-		System.out.println("is not selected");
-
 		client.getFirstClient().getfinancialAdviserDetails().setFaceToFaceContact(facetoface.isSelected());
 		client.getFirstClient().setApplicationType(applicationType.getValue());
 		
@@ -547,13 +543,16 @@ public class ClientPersonalInfo extends Page{
 		};
 		System.out.print("I made a new " + applicationType.getValue());
 		
-		IndividualDetails id = client.getFirstClient().getIndividualDetails();
 		id.setSurname(clientSurname.getText());
-		
-		if(!clientSurname.getText().equals("")){
+				
+		//Checking whether clientfirstname is in combobox or textfield name before adding it to the db
+		if(clientFirstName.getClass().equals(ComboBox.class)){
 			id.setForename(((ComboBox<String>)clientFirstName).getValue());
-			id.setTitle(fieldMap.get("Title").getText());
+		} else {
+			id.setForename(((TextField)clientFirstName).getText());
 		}
+		
+		id.setTitle(fieldMap.get("Title").getText());
 		
 		if(fieldMap.get("DOB").getText()!= null && fieldMap.get("DOB").getText().length()>4){
 			//Rearranges date of birth from DB from YYYY-MM-DD to DDMMYYYY
@@ -585,8 +584,7 @@ public class ClientPersonalInfo extends Page{
 		
 		//address lines separated by ':' to provide a string split character at stamp time
 		id.setAddress(fieldMap.get("HomeAddress1").getText() + ":"
-		+ fieldMap.get("HomeAddress2").getText() + ":" 
-				+ fieldMap.get("HomeAddress3").getText());
+		+ fieldMap.get("HomeAddress2").getText());
 		id.setPostcode(fieldMap.get("HomePostCode").getText());
 		id.setEmail(fieldMap.get("Email").getText());
 	}

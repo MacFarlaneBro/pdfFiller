@@ -21,10 +21,9 @@ public class AscentricPage5 extends AscentricPage {
 	public void fillPage(MakeClients theClient) throws IOException, DocumentException {
 		
 		setUp(PAGENUMBER);
-		
-		if(theClient.getJointAccount() == null){//If the account is not joint use the first client information
-			accDetails(theClient.getFirstClient().getBankAccountDetails(), "first");
-		} else {
+		accDetails(theClient.getFirstClient().getBankAccountDetails(), "first");
+
+		if(theClient.getJointAccount() != null){//If the account is not joint use the first client information
 			accDetails(theClient.getSecondClient().getBankAccountDetails(), "joint");
 		}
 		
@@ -67,50 +66,56 @@ public class AscentricPage5 extends AscentricPage {
 		
 		int firstRowWidth = 10;
 		
-		if(bad.getPayTiming().equals("Quarterly")){
-			firstRowWidth+=65;
-		} else if(bad.getPayTiming().equals("Half Yearly")){
-			firstRowWidth+=130;
-		} else if(bad.getPayTiming().equals("Annually")){
-			firstRowWidth+=195;
+		if(bad.getPayTiming()!= null){
+			if(bad.getPayTiming().equals("Quarterly")){
+				firstRowWidth+=65;
+			} else if(bad.getPayTiming().equals("Half Yearly")){
+				firstRowWidth+=130;
+			} else if(bad.getPayTiming().equals("Annually")){
+				firstRowWidth+=195;
+			}
 		}
 		stamp(firstRowWidth+=65, 148, "X");
 		
 		//Regular Withdrawal Instructions
-		int rwiDepth = 254;
-		//Amount
-		stamp(482, rwiDepth, bad.getPaymentFromDeposit());
-		
+		int rwiDepth = 240;
+		//Payment from deposit account (if present)
+		stamp(460, rwiDepth, bad.getPaymentFromDepositAccount());
+		//Payment from reserve account (if present)
+		stamp(460, rwiDepth-35, bad.getPaymentFromReserveAccount());
 		//TimeFrame
 		int secondRowWidth = 282;
 
-		//Regular WithdrawalWrappers
-		if(bad.getDepositPayTiming().equals("Monthly")){
-			secondRowWidth+=65;
+		//Regular Withdrawal Wrapper timing
+		if(bad.getDepositPayTiming()!= null){
+			if(bad.getDepositPayTiming().equals("Monthly")){
+				secondRowWidth+=65;
+			}
+			if(bad.getDepositPayTiming().equals("Quarterly")){
+				secondRowWidth+=130;
+			}
+			if(bad.getDepositPayTiming().equals("Half Yearly")){
+				secondRowWidth+=195;
+			}
+			if(bad.getDepositPayTiming().equals("Annually")){
+				secondRowWidth+=260;
+			}
+			stamp(secondRowWidth, 180, "X");
+			
+			//Regular withdrawal wrapper name
+			stamp(370, 160, bad.getRegWithdrawlWrappers());			
 		}
-		if(bad.getDepositPayTiming().equals("Quarterly")){
-			secondRowWidth+=130;
-		}
-		if(bad.getDepositPayTiming().equals("Half Yearly")){
-			secondRowWidth+=195;
-		}
-		if(bad.getDepositPayTiming().equals("Annually")){
-			secondRowWidth+=260;
-		}
-		stamp(370, 208, bad.getRegWithdrawlWrappers());
-		stamp(secondRowWidth, 229, "X");
 		
 		
 		secondRowWidth = 350;
 		//StartDate
 		if(bad.getStartDate()!= null && bad.getStartDate().length() >= 4){
 		String startDate = bad.getStartDate();
-		System.out.println(startDate);
-			for(int i = 0; i < 8; i++){
+			for(int i = 0, l = startDate.length(); i < l; i++){
 				if(i == 2 ||i == 4){
-					stamp(secondRowWidth+=35, 188,""+startDate.charAt(i));
+					stamp(secondRowWidth+=35, 140, startDate.charAt(i));
 				} else {
-					stamp(secondRowWidth+=20, 188,""+startDate.charAt(i));
+					stamp(secondRowWidth+=20, 140, startDate.charAt(i));
 				}
 			}
 		}
@@ -146,10 +151,13 @@ public class AscentricPage5 extends AscentricPage {
 	private void bankDetails(BankAccountDetails bad, int depth) {
 		//Bank Name
 		stamp(bankDetailsWidth, depth, bad.getBankName());
-		//Split the bank address into lines and then print them out
-		String[] bankAddress = bad.getBankAddress().split(":");
-		for(int i = 0; i < bankAddress.length; i++){
-			stamp(bankDetailsWidth, depth-20 -(i*20), bankAddress[i]);
+		//Split the bank address into separate lines and then print them out
+		if(bad.getBankAddress()!= null){
+			String[] bankAddress = bad.getBankAddress().split(":");
+		
+			for(int i = 0; i < bankAddress.length; i++){
+				stamp(bankDetailsWidth, depth-20 -(i*20), bankAddress[i]);
+			}
 		}
 		//Bank postcode
 		stamp(bankDetailsWidth, depth-80, bad.getBankPostCode());
@@ -159,7 +167,7 @@ public class AscentricPage5 extends AscentricPage {
 	private void sortCode(String sortCode, int depth) {
 		int tempWidth = accDetailsWidth-20;
 		for(int i = 0; i <= 5; i++){
-			stamp(tempWidth+=22, depth, ""+ sortCode.charAt(i));
+			stamp(tempWidth+=22, depth, sortCode.charAt(i));
 		}		
 	}
 
@@ -168,7 +176,7 @@ public class AscentricPage5 extends AscentricPage {
 		
 		if(accNum!= null){//The use of the n variable means the costly length method is only called once
 			for(int i = 0, n = accNum.length(); i < n; i++){
-				stamp(tempWidth+=21, depth, ""+ accNum.charAt(i));
+				stamp(tempWidth+=21, depth, accNum.charAt(i));
 			}
 		}
 	}

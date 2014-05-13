@@ -28,10 +28,10 @@ public class IncomePayment extends Page {
 	private IncomePayment(){}
 	
 	@Override
-	public void setUp(Stage primaryStage, Scene firstScene, ClientHolder client) {
+	public void setUp(Stage primaryStage, Scene previousScene, ClientHolder client) {
 
 		this.client = client;
-        this.previousScene = firstScene;
+        this.previousScene = previousScene;
         this.primaryStage = primaryStage;
         primaryStage.setTitle("Income Payment Instructions");
         
@@ -40,14 +40,14 @@ public class IncomePayment extends Page {
         grid.setVgap(10);
         grid.setAlignment(Pos.CENTER);
         
-        setColumnSizes(grid);
+        setColumnSizes(grid, 10, 150, 150, 150, 200);
         setRowSizes(grid, 40, 20, 20, 20, 20, 50, 20, 20, 20, 20, 20, 20);        
         
 		Text sceneTitle = new Text("Income Payment Instructions");
         sceneTitle.setFont(Font.font("courier", FontWeight.NORMAL, 21));
         grid.add(sceneTitle, 1, 1, 2, 2);
         
-        thisScene = new Scene(grid, pageWidth, pageHeight);       
+        thisScene = new Scene(grid, PAGEWIDTH, PAGEHEIGHT);       
         
         createFields(grid);
         
@@ -65,28 +65,34 @@ public class IncomePayment extends Page {
 		checkBoxes = new HashMap<String, CheckBox>();
 		textFields = new HashMap<String, TextField>();
 		
+		int gridVert = 2;
+		
 		Label nipi = new Label("Natural Income Payment Instructions");
 		nipi.setFont(Font.font(null, FontWeight.BOLD, 12));
 		GridPane.setHalignment(nipi, HPos.CENTER);
 		grid.add(nipi, 1, 4, 2, 1);
 		
-		Label noIncWith = new Label("No income widthdrawal (transfer to deposit)");
+		Label noIncWith = new Label("No income widthdrawal (transfer to deposit):");
 		grid.add(noIncWith, 1, 5, 2, 1);
 		CheckBox noInc = new CheckBox();
 		checkBoxes.put("noIncomeWithdrawl", noInc);
+		GridPane.setHalignment(noInc, HPos.CENTER);
 		grid.add(noInc, 3, 5);
 		
-		Label leaveIncAcc = new Label("Leave in income account pending instructions");
+		Label leaveIncAcc = new Label("Leave in income account pending instructions:");
 		grid.add(leaveIncAcc, 1, 6, 2, 1);
 		CheckBox incAcc = new CheckBox();
 		checkBoxes.put("leaveIncomeAccount", incAcc);
+		GridPane.setHalignment(incAcc, HPos.CENTER);
 		grid.add(incAcc, 3, 6);
 		
-		Label withdraw = new Label("Withdraw the Natural Income\n (This will be paid out upon receipt unless\n otherwise "
-				+ "indicated below)");
+		Label withdraw = new Label("Withdraw the Natural Income (This will be paid out upon receipt unless otherwise "
+				+ "indicated below):");
+		withdraw.setWrapText(true);
 		grid.add(withdraw, 1, 7, 2, 2);
 		CheckBox natInc = new CheckBox();
 		checkBoxes.put("withdrawNaturalIncome", natInc);
+		GridPane.setHalignment(natInc, HPos.CENTER);
 		grid.add(natInc, 3, 7);
 		
 		Label wrapper = new Label("Wrapper(s)");
@@ -110,34 +116,45 @@ public class IncomePayment extends Page {
 		regWithDraw.setFont(Font.font(null, FontWeight.BOLD, 12));
 		grid.add(regWithDraw, 4, 4);
 		
-		Label pfd = new Label("Payment from deposit (or reserve\naccount"
-				+ "where applicable) and\nwithdraw the"
-				+ " following fixed\namount:");
+		gridVert = 5;
+		Label pfd = new Label("You can choose whether a fixed payment is withdrawn from the deposit"
+				+ " or the reserve account. Please insert the amount into the appropriate box:");
+		pfd.setWrapText(true);
 		GridPane.setValignment(pfd, VPos.CENTER);
+		grid.add(pfd, 4, gridVert++, 2, 2);
 		
-		grid.add(pfd , 4, 5, 2, 2);
-		TextField amount = new TextField();
-		textFields.put("amount", amount);
-		grid.add(amount, 5, 6);
+		Label pfda = new Label("Payment From Deposit Account");
+		grid.add(pfda, 4, gridVert);
+		TextField pdaAmount = new TextField();
+		textFields.put("pfda", pdaAmount);
+		grid.add(pdaAmount, 5, gridVert++);
 		
-		grid.add(new Label("Regularity:"), 4, 7);
+		grid.add(new Label("OR"), 4, gridVert++);
+		
+		Label pfra = new Label("Payment From Reserve Account");
+		grid.add(pfra, 4, gridVert);
+		TextField pfaAmount = new TextField();
+		textFields.put("pfra", pfaAmount);
+		grid.add(pfaAmount, 5, gridVert++);
+		
+		grid.add(new Label("Regularity:"), 4, gridVert);
 		natTiming = new ComboBox<String>(FXCollections.observableArrayList(
                 "Monthly",
                 "Quarterly",
                 "Half Yearly",
                 "Annually"
         ));
-		grid.add(natTiming, 5, 7);
-		grid.add(new Label("Wrapper(s)"), 4, 8);
+		grid.add(natTiming, 5, gridVert++);
+		grid.add(new Label("Wrapper(s)"), 4, gridVert);
 		
 		TextField regWrap = new TextField();
 		textFields.put("regularWrapper", regWrap);
-		grid.add(regWrap, 5, 8);
+		grid.add(regWrap, 5, gridVert++);
 		
-		grid.add(new Label("Start Date (DDMMYYYY)"), 4, 9);
+		grid.add(new Label("Start Date (DDMMYYYY)"), 4, gridVert);
 		TextField startDate = new TextField();
 		textFields.put("startDate", startDate);
-		grid.add(startDate, 5, 9);
+		grid.add(startDate, 5, gridVert);
 	}
 
 	protected void fillAndSaveClientInfo() {
@@ -147,7 +164,8 @@ public class IncomePayment extends Page {
 		bad.setWithdrawNaturalIncome(checkBoxes.get("withdrawNaturalIncome").isSelected());
 		bad.setNatIncomeWrappers(textFields.get("natWrapper").getText());
 		bad.setPaymentTiming(timing.getValue());
-		bad.setPaymentFromDeposit(textFields.get("amount").getText());
+		bad.setPaymentFromDepositAccount(textFields.get("pfda").getText());
+		bad.setPaymentFromReserveAccount(textFields.get("pfra").getText());
 		bad.setRegWithdrawalPayTiming(natTiming.getValue());
 		bad.setRegWithdrawlWrappers(textFields.get("regularWrapper").getText());
 		
@@ -156,6 +174,8 @@ public class IncomePayment extends Page {
 			bad.setStartDate(textFields.get("startDate").getText().replace("/", ""));
 		} else if(textFields.get("startDate").getText().contains("-")){
 			bad.setStartDate(textFields.get("startDate").getText().replace("-", ""));
+		} else if(textFields.get("startDate").getText().contains(" ")){
+			bad.setStartDate(textFields.get("startDate").getText().replace(" ", ""));
 		} else {
 			bad.setStartDate(textFields.get("startDate").getText());
 		}

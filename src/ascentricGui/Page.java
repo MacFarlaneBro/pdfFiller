@@ -17,6 +17,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBoxBuilder;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -24,8 +26,8 @@ import ascentricClientDetails.ClientHolder;
 
 public abstract class Page {
 	
-	public static final int pageWidth = 900;
-	public static final int pageHeight = 500;
+	public static final int PAGEWIDTH = 900;
+	public static final int PAGEHEIGHT = 500;
 	protected Page nextPage;
 	protected Scene thisScene;
 	protected Scene previousScene;
@@ -49,7 +51,7 @@ public abstract class Page {
 	 * @param warningString - The message that will appear in the warning box
 	 */
 	private void warning(String warningString){
-
+		
 		System.out.println("Warning!");
 		final Stage warningStage = new Stage();
 		Button button = new Button("OK");
@@ -68,6 +70,8 @@ public abstract class Page {
 	}
 	
 	public void createMovementButtons(int depth, int nextWidth) {
+		
+//		grid.setGridLinesVisible(true);
 					    
 		Button backBtn = new Button("Back");//Create button with the name sign in
         HBox hbBtn = new HBox(21);//Layout pane with 21 pixel spacing
@@ -84,6 +88,7 @@ public abstract class Page {
             
             @Override
             public void handle(ActionEvent e){
+//            	setSize();
                 primaryStage.setScene(previousScene);
             }
         });
@@ -93,6 +98,7 @@ public abstract class Page {
         hNextBtn.setAlignment(Pos.BOTTOM_RIGHT);
         nextBtn.setPrefWidth(100);
         hNextBtn.getChildren().add(nextBtn);
+        
         if(movementButtonWidth){
         	 grid.add(hNextBtn, nextWidth-1, depth, 2, 1);
         } else { 
@@ -105,9 +111,8 @@ public abstract class Page {
 			@Override
             public void handle(ActionEvent e){
             	try {
-            		System.out.println("Before fill and save");
+//            		setSize();
 					fillAndSaveClientInfo();
-            		System.out.println("After fill and save");
 					nextPage.setUp(primaryStage, thisScene, client);
 				} catch(DataFormatException dfe){ 
 					warning(dfe.getMessage());
@@ -118,7 +123,28 @@ public abstract class Page {
             }
         });	
 	}
+	
+	protected void setSize() {
+		primaryStage.setHeight(PAGEHEIGHT);
+		primaryStage.setWidth(PAGEWIDTH);
+	}
 
+	public void setTitle(GridPane grid, String title, Stage primaryStage){
+		
+		Text sceneTitle = new Text(title);
+		primaryStage.setTitle(title);
+		sceneTitle.setFont(Font.font("courier", FontWeight.NORMAL, 21));
+        sceneTitle.setId("sceneTitle");
+        grid.add(sceneTitle, 0, 0, 4, 2);
+	}
+	
+	/**
+	 * Allows specification of the column widths for the current window of the gui each argument specifies
+	 * a column progressing from the left to the right, passing no arguments sets the content of the window
+	 * to fill all available space
+	 * @param grid - the gridpane relating to the current window
+	 * @param sizes - the widths in pixels you want  the rows to be
+	 */
     public void setColumnSizes(GridPane grid, int... sizes){
     	for(int size: sizes){
     		grid.getColumnConstraints().add(new ColumnConstraints(size));
@@ -129,6 +155,13 @@ public abstract class Page {
     	grid.getColumnConstraints().add(c);
     }
     
+    /**
+     * Allows specification of the row heights for the current window of the gui each argument specifies
+	 * a row progressing from the top to the bottom, passing no arguments sets the content of the window
+	 * to fill all available space
+     * @param grid - the gridpane relating to the current window
+	 * @param sizes - the widths in pixels you want  the rows to be
+     */
     public void setRowSizes(GridPane grid, int... sizes){
     	for(int size: sizes){
     		grid.getRowConstraints().add(new RowConstraints(size));
@@ -138,5 +171,9 @@ public abstract class Page {
     	r.setVgrow(Priority.ALWAYS);
     	grid.getRowConstraints().add(r);
     }
+
+	public void setNextPage(Page nextNextPage) {
+		nextPage = nextNextPage;
+	}
 
 }

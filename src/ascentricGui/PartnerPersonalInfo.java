@@ -64,7 +64,7 @@ public class PartnerPersonalInfo extends Page{
         grid.setVgap(15);
         grid.setAlignment(Pos.CENTER);
         
-        thisScene = new Scene(grid, pageWidth, pageHeight);
+        thisScene = new Scene(grid, PAGEWIDTH, PAGEHEIGHT);
         
         nextPage = AccessRightsFamilyGroups.INSTANCE;
         		

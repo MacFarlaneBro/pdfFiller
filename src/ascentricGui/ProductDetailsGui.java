@@ -19,6 +19,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import utilities.Money;
 import ascentricClientDetails.ClientHolder;
 import ascentricClientDetails.ProductDetails;
 import ascentricClientDetails.Wrapper;
@@ -31,6 +32,7 @@ public abstract class ProductDetailsGui extends Page {
 	protected Set<Label> theLabels;
 	private ComboBox<String> giaSourceOfFunds;
 	private ComboBox<String> sasSourceOfFunds;
+	private ComboBox<String> secondLayerSourceOfFunds;
 
 	@Override
 	public void setUp(Stage primaryStage, Scene previousScene, ClientHolder client) {
@@ -54,7 +56,7 @@ public abstract class ProductDetailsGui extends Page {
         if(!appType.equals("Joint")){
         	generate1stLayerFields(grid, "sas");
         }
-        
+                
         generate2ndLayerLabels(grid);
         generate2ndLayerFields(grid);
         
@@ -65,9 +67,12 @@ public abstract class ProductDetailsGui extends Page {
         	if(tf.getId().startsWith("gia") || tf.getId().startsWith("sas")){
         		tf.setDisable(true);
         	}
+//        	GridPane.set
         }
         giaSourceOfFunds.setDisable(true);
-        sasSourceOfFunds.setDisable(true);
+        if(sasSourceOfFunds != null){
+        	sasSourceOfFunds.setDisable(true);
+        }
         
         for(Label label: theLabels){
         	GridPane.setHalignment(label, HPos.CENTER);
@@ -84,7 +89,7 @@ public abstract class ProductDetailsGui extends Page {
         movementButtons2Columns(true);
         createMovementButtons(12, 9);
         
-        thisScene = new Scene(grid, pageWidth, pageHeight);
+        thisScene = new Scene(grid, PAGEWIDTH, PAGEHEIGHT);
         primaryStage.setScene(thisScene);
 	}
 
@@ -253,16 +258,16 @@ public abstract class ProductDetailsGui extends Page {
 		}
 		
 		pd.setPlatformAccountNameChoice(textFields.get("accountName").getText());
-		
+				
 		//If the general investment account is selected then fill the details
 		if(checkBoxes.get("giaCheckBox").isSelected()){
 			pd.makeGeneralInvestmentAccount();
 			Wrapper gia = pd.getGeneralInvestmentAccount();
-			gia.setCash(textFields.get("gia0").getText());
+			gia.setCash((new Money(textFields.get("gia0").getText())).toString());
 			gia.setSourceOfFunds(giaSourceOfFunds.getValue());
-			gia.setCashToBeTransferred(textFields.get("gia2").getText());
-			gia.setAssetsToBeReregistered(textFields.get("gia3").getText());
-			gia.setReserverAccount(textFields.get("gia4").getText());
+			gia.setCashToBeTransferred((new Money(textFields.get("gia2").getText())).toString());
+			gia.setAssetsToBeReregistered((new Money(textFields.get("gia3").getText())).toString());
+			gia.setReserverAccount(new Money(textFields.get("gia4").getText()).toString());
 			gia.setAdvisoryWrapper(checkBoxes.get("advgia").isSelected());
 			gia.setDiscretionaryWrapper(checkBoxes.get("discgia").isSelected());
 		}
@@ -270,18 +275,18 @@ public abstract class ProductDetailsGui extends Page {
 		if(!appType.equals("Joint") && checkBoxes.get("sasCheckBox").isSelected()){
 			pd.makeStocksAndSharesISA();
 			Wrapper sas = pd.getStocksAndSharesISA();
-			sas.setCash(textFields.get("sas0").getText());
+			sas.setCash((new Money(textFields.get("sas0").getText())).toString());
 			sas.setSourceOfFunds(sasSourceOfFunds.getValue());
-			sas.setCashToBeTransferred(textFields.get("sas2").getText());
-			sas.setAssetsToBeReregistered(textFields.get("sas3").getText());
-			sas.setReserverAccount(textFields.get("sas4").getText());
+			sas.setCashToBeTransferred((new Money(textFields.get("sas2").getText())).toString());
+			sas.setAssetsToBeReregistered((new Money(textFields.get("sas3").getText())).toString());
+			sas.setReserverAccount(new Money(textFields.get("sas4").getText()).toString());
 			sas.setAdvisoryWrapper(checkBoxes.get("advsas").isSelected());
 			sas.setDiscretionaryWrapper(checkBoxes.get("discsas").isSelected());
 		}
 		
 		pd.setThirdPartyProductAccounts(textFields.get("Third0").getText());
-		pd.setAmountToBeReceived(textFields.get("Third1").getText());
-		pd.setSourceOfFunds(textFields.get("Third2").getText());
+		pd.setAmountToBeReceived((new Money(textFields.get("Third1").getText())).toString());
+		pd.setSourceOfFunds(secondLayerSourceOfFunds.getValue());
 		pd.setAdvisoryWrapper(checkBoxes.get("ThirdAdv").isSelected());
 		pd.setDiscretionaryWrapper(checkBoxes.get("ThirdDisc").isSelected());
 	}
@@ -291,31 +296,37 @@ public abstract class ProductDetailsGui extends Page {
 		thirdPartyProdAcc.setWrapText(true);
 		GridPane.setHalignment(thirdPartyProdAcc, HPos.CENTER);
 		GridPane.setValignment(thirdPartyProdAcc, VPos.CENTER);
+		theLabels.add(thirdPartyProdAcc);
 		grid.add(thirdPartyProdAcc, 2, ++gridVert, 2, 2);
 		
 		Label amountToBeReceived = new Label("Amount to be received");
 		GridPane.setHalignment(amountToBeReceived, HPos.CENTER);
 		GridPane.setValignment(amountToBeReceived, VPos.CENTER);
 		amountToBeReceived.setWrapText(true);
+		theLabels.add(amountToBeReceived);
 		grid.add(amountToBeReceived, 4, gridVert, 1, 2);
 		
 		Label sourceOfFunds = new Label ("Source of Funds\n(Cheque, BACS, Transfer)");
 		sourceOfFunds.setWrapText(true);
 		GridPane.setHalignment(sourceOfFunds, HPos.CENTER);
 		GridPane.setValignment(sourceOfFunds, VPos.CENTER);
+		theLabels.add(sourceOfFunds);
 		grid.add(sourceOfFunds, 5, gridVert, 1, 2);
 		
 		Label approxTransCash = new Label ("Wrapper Type");
 		GridPane.setHalignment(approxTransCash, HPos.CENTER);
 		approxTransCash.setWrapText(true);
+		theLabels.add(approxTransCash);
 		grid.add(approxTransCash, 6, gridVert, 2, 1);
 
 		Label thirdAdvWrap = new Label ("Advisory\nWrapper");
 		GridPane.setHalignment(thirdAdvWrap, HPos.CENTER);
+		theLabels.add(thirdAdvWrap);
 		grid.add(thirdAdvWrap, 6, gridVert+1);
 		
 		Label thirdDiscWrap = new Label ("Discretionary\nWrapper");
 		GridPane.setHalignment(thirdDiscWrap, HPos.CENTER);
+		theLabels.add(thirdDiscWrap);
 		grid.add(thirdDiscWrap, 7, gridVert+1);
 		
 		gridVert+=2;
@@ -327,18 +338,31 @@ public abstract class ProductDetailsGui extends Page {
 		
 		//generating all the textfields for the wrapper info
 		for(int i = 0; i < 3; i++){
-			TextField newField = new TextField();
-			newField.setId("Third" + i);
-			newField.setMaxWidth(70);
-			textFields.put("Third"+i, newField);
-			if(i == 0){
-				newField.setPrefWidth(70);
-				grid.add(newField,  fieldWidth+i, gridVert, 2, 1);
-				fieldWidth++;
-				continue;
+			if(i!=2){
+				TextField newField = new TextField();
+				newField.setId("Third" + i);
+				newField.setMaxWidth(70);
+				textFields.put("Third"+i, newField);
+				if(i == 0){
+					newField.setPrefWidth(70);
+					grid.add(newField,  fieldWidth+i, gridVert, 2, 1);
+					fieldWidth++;
+					continue;
+				}
+				grid.add(newField, fieldWidth+i, gridVert);
 			}
-			grid.add(newField, fieldWidth+i, gridVert);
 		}
+		
+		ObservableList<String> sofOptions =
+                FXCollections.observableArrayList(
+                        "Cheque",
+                        "BACS",
+                        "Transfer"
+                );
+		
+		secondLayerSourceOfFunds = new ComboBox<String>(sofOptions);
+		secondLayerSourceOfFunds.setMaxWidth(100);
+		grid.add(secondLayerSourceOfFunds, 5, gridVert);
 		
 		CheckBox advWrap = new CheckBox();
 		checkBoxes.put("ThirdAdv", advWrap);

@@ -1,84 +1,130 @@
 package ascentricForm;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import ascentricClientDetails.Client;
+import ascentricClientDetails.ConfirmationDetails;
 import ascentricClientDetails.FinancialAdviserDetails;
+import ascentricClientDetails.MakeClients;
 
 import com.itextpdf.text.DocumentException;
 
-public class AscentricPage7 extends AscentricPage {
+public class AscentricPage7 extends AscentricPage{
+	
+	public static final int PAGENUMBER = 7;
 
-	private static final int PAGENUMBER = 7;
-	private static final String FIRMNAME = "Master Adviser";
-	private static final String FIRMREF = "458919";
-	
-	
-	public void fillPage(Client theClient) throws IOException, DocumentException {
+	@Override
+	public void fillPage(Client theClient) throws IOException,
+			DocumentException {
 		setUp(PAGENUMBER);
-		tickFacetoFace(theClient.getfinancialAdviserDetails().isFaceToFaceContact());
-		declaration(theClient.getfinancialAdviserDetails());
+		
+		ConfirmationDetails con = theClient.getConfirmationDetails();
+		fillPrivateIndividual(con);
+		fillConfirmation(con, theClient.getfinancialAdviserDetails());
+		
 		shutDown();
 	}
 
-	private void declaration(FinancialAdviserDetails fad) {
-		int formHeight = 667;
-		int formWidth = 317;
+	private void fillPrivateIndividual(ConfirmationDetails con) {
+		
+		int firstIndividualColumnWidth = 110;
+		int privateIndividualHeight = 518;
+		int secondIndividualColumnWidth = 380;
+		
+		//Name of individual
+		stamp(firstIndividualColumnWidth, privateIndividualHeight-=20, con.getName());
+		//Individual's current address
+		if(con.getCurrentAddress() != null && con.getCurrentAddress().length() > 2){
+			String[] address = con.getCurrentAddress().split(":");
+			
+			for(String line: address)
+			{
+				stamp(firstIndividualColumnWidth, privateIndividualHeight-=20, line);
+			}
+		}
+		//Postcode
+		stamp(firstIndividualColumnWidth, privateIndividualHeight-=20, con.getCurrentPostCode());
+		privateIndividualHeight-=23;
+		//Date of Birth
+		String dob = con.getDob();
+		if(dob!= null && dob.length() > 3){
+			stamp(firstIndividualColumnWidth,
+					privateIndividualHeight,
+					dob.charAt(0));
+			int extraDistance = 0;
+			for(int i = 1; i < dob.length(); i++)
+			{
+				if(i == 2 || i == 4){
+					extraDistance+=30;
+				} else {
+					extraDistance+=20;
+				}
+				stamp(firstIndividualColumnWidth + extraDistance, privateIndividualHeight, dob.charAt(i));
+			}
+		}
+		
+		//Resetting the row height prior to printing out the second column
+		privateIndividualHeight = 520;
+		
+		//Individuals previous address
+		if(con.getCurrentAddress() != null && con.getCurrentAddress().length() > 2){
+			String[] address = con.getPreviousAddress().split(":");
+			for(String line: address)
+			{
+				stamp(secondIndividualColumnWidth, privateIndividualHeight-=20, line);
+			}
+			privateIndividualHeight-=21;
+			//Post code
+			stamp(secondIndividualColumnWidth, privateIndividualHeight, con.getPreviousPostCode());
+		}
+	}
+
+
+	private void fillConfirmation(ConfirmationDetails con,
+			FinancialAdviserDetails fad) {
+		
+		int confirmationHeight = 307;
+		int firstConfirmationColumnWidth = 47;
+		int secondConfirmationColumnWidth = 314;
+		int firstAdvRow = 227;
+		int secondAdvRow = 182;
+		int thirdAdvRow = 142;
+		
+		//Joint Money Laundering Tick Box
+		if(con.isMoneyLaunderingCheck()) stamp(firstConfirmationColumnWidth, confirmationHeight, "X");
+		
+		//Client Identity Tick Box
+		if(con.isClientIdentityCheck()) stamp(firstConfirmationColumnWidth, confirmationHeight-29, "X");
 		
 		//Firm Name
-		stamp(formWidth, formHeight, FIRMNAME);
-		
-		//Firm Ref No.
-		int temp = formWidth;
-		stamp(temp, formHeight - 40, "" + FIRMREF.charAt(0));
-		for(int i = 1; i < 6; i++){
-			stamp(temp+=20, formHeight-40, FIRMREF.charAt(i) + "");
-		}
-		
+		stamp(firstConfirmationColumnWidth, firstAdvRow, "Master Adviser");
+
+		//FCA Firm Reference Number
+		stamp(firstConfirmationColumnWidth, secondAdvRow, fad.getFcaFirmNumber());
 		//Registered Individual
-		stamp(formWidth, formHeight-84, fad.getRegisteredIndividual());
-		
+		stamp(firstConfirmationColumnWidth, thirdAdvRow, fad.getRegisteredIndividual());
 		//FCA Individual Reference Number
-		temp = formWidth;
-		
-		
-		
-		stamp(temp, formHeight-126, fad.getFcaIndividualReferenceNumber().charAt(0) + "");
-		for(int i = 1; i < 8; i++){
-			stamp(temp+=20, formHeight-126, fad.getFcaIndividualReferenceNumber().charAt(i) + "");
-		}
-		
+		stamp(secondConfirmationColumnWidth, firstAdvRow, fad.getFcaIndividualReferenceNumber());	
 		//Date
-		temp = formWidth+52;
-		if(fad.getDate()!= null){
-			stamp(temp, formHeight-206, fad.getDate().charAt(0) + "");
-			for(int i = 1; i < fad.getDate().length(); i++){
-				if(i %2 == 0 && i < 5){
-					stamp(temp+=35, formHeight-206, fad.getDate().charAt(i) + "");
+		String dob = fad.getDate();
+		if(dob!= null){
+			stamp(secondConfirmationColumnWidth+=55,
+					thirdAdvRow,
+					dob.charAt(0));
+			int extraDistance = 0;
+			for(int i = 1; i < dob.length(); i++)
+			{
+				if(i == 2 || i == 4){
+					extraDistance+=35;
 				} else {
-					stamp(temp+=20, formHeight-206, fad.getDate().charAt(i) + "");
+					extraDistance+=20;
 				}
-			}
-		} else {
-			SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-			String date = df.format(new Date());
-			stamp(temp, formHeight-206, date.charAt(0) + "");
-			System.out.println(date.length());
-			for(int i = 1,n = date.length(); i < n; i++){
-				System.out.println(n);
-				if(date.charAt(i) == '/'){
-					temp+=17;
-				} else {
-					stamp(temp+=20, formHeight-206, date.charAt(i) + "");
-				}
+				stamp(secondConfirmationColumnWidth + extraDistance, thirdAdvRow, dob.charAt(i));
 			}
 		}
 	}
 
-	private void tickFacetoFace(boolean b) {
-			if(b) stamp(271, 477, "X");
-	}
-
+	@Override
+	public void fillPage(MakeClients theClient) throws IOException,
+			DocumentException {}
 }
