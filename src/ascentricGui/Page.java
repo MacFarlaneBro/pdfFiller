@@ -78,6 +78,7 @@ public abstract class Page {
         hbBtn.setAlignment(Pos.BOTTOM_LEFT);
         backBtn.setPrefWidth(100);
         hbBtn.getChildren().add(backBtn);
+        
         if(movementButtonWidth){
         	grid.add(hbBtn, 0, depth, 2, 1);
         } else { 

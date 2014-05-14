@@ -77,9 +77,9 @@ public class FinancialAdviserDetailsGui extends Page {
 			.stroke(Color.BLACK)
 			.opacity(0.1)
 			.width(boxWidth)
-			.height(81)
+			.height(86)
 			.translateX(leftBoundary)
-			.translateY(220)
+			.translateY(221)
 			.build();
 		
 		Rectangle r3 = RectangleBuilder.create()
@@ -88,9 +88,9 @@ public class FinancialAdviserDetailsGui extends Page {
 			.stroke(Color.BLACK)
 			.opacity(0.1)
 			.width(boxWidth)
-			.height(70)
+			.height(72)
 			.translateX(leftBoundary)
-			.translateY(299)
+			.translateY(303)
 			.build();
 		
 		Rectangle r4 = RectangleBuilder.create()
@@ -99,9 +99,9 @@ public class FinancialAdviserDetailsGui extends Page {
 				.stroke(Color.BLACK)
 				.opacity(0.1)
 				.width(boxWidth)
-				.height(120)
+				.height(121)
 				.translateX(leftBoundary)
-				.translateY(397)
+				.translateY(402)
 				.build();
 		
 		grid.getChildren().add(r1);

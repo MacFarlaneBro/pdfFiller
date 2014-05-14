@@ -44,10 +44,10 @@ public abstract class ProductDetailsGui extends Page {
         grid.setHgap(5);
         grid.setVgap(10);
         grid.setAlignment(Pos.CENTER);
-        
+
         setColumnSizes(grid, 5, 90, 80, 120 ,110 ,90 ,80 ,100 , 80);
-        setRowSizes(grid, 10, 20, 20, 20, 20, 50, 20, 20, 20, 30, 20, 20);
-        
+        setRowSizes(grid, 10, 20, 20, 20, 20, 50, 20, 20, 20, 30, 30, 20);
+       
 		setTitleAndHeader(grid);
         set1stLayerLabels(grid);
         
@@ -67,7 +67,6 @@ public abstract class ProductDetailsGui extends Page {
         	if(tf.getId().startsWith("gia") || tf.getId().startsWith("sas")){
         		tf.setDisable(true);
         	}
-//        	GridPane.set
         }
         giaSourceOfFunds.setDisable(true);
         if(sasSourceOfFunds != null){
@@ -299,7 +298,7 @@ public abstract class ProductDetailsGui extends Page {
 		theLabels.add(thirdPartyProdAcc);
 		grid.add(thirdPartyProdAcc, 2, ++gridVert, 2, 2);
 		
-		Label amountToBeReceived = new Label("Amount to be received");
+		Label amountToBeReceived = new Label("Amount to be \n    received");
 		GridPane.setHalignment(amountToBeReceived, HPos.CENTER);
 		GridPane.setValignment(amountToBeReceived, VPos.CENTER);
 		amountToBeReceived.setWrapText(true);

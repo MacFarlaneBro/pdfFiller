@@ -55,7 +55,6 @@ public class IdentityVerification extends Page{
         setRowSizes(grid, 0, 20, 20, 30, 30, 30, 30, 30, 30, 30, 40, 100);        
         
         thisScene = new Scene(grid, PAGEWIDTH, PAGEHEIGHT);
-        
 		Text sceneTitle = new Text("Confirmation of Identity");
         sceneTitle.setFont(Font.font("courier", FontWeight.NORMAL, 21));
         grid.add(sceneTitle, 1, 1, 2, 2);
@@ -200,7 +199,7 @@ public void createMovementButtons(int depth,int nextWidth) {
         hNextBtn.setAlignment(Pos.BOTTOM_RIGHT);
         nextBtn.setPrefWidth(100);
         hNextBtn.getChildren().add(nextBtn);
-        grid.add(hNextBtn, nextWidth, depth);
+        grid.add(hNextBtn, nextWidth-1, depth, 2, 1);
         
         nextBtn.setOnAction(new EventHandler<ActionEvent>(){
 

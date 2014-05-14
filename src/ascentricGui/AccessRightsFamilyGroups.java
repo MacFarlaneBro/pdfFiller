@@ -33,9 +33,9 @@ public class AccessRightsFamilyGroups extends Page {
         this.grid = grid;
         grid.setHgap(10);
         grid.setVgap(10);
-        
+
         setColumnSizes(grid, 100, 140, 140, 140, 140);
-        setRowSizes(grid, 20,20,20,20,20,20,20,20,20);
+        setRowSizes(grid, 20,20,20,20,20,20,20,15,15,30,0,20,20,25);
         
         thisScene = new Scene(grid, PAGEWIDTH, PAGEHEIGHT);
         
