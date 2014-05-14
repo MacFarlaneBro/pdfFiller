@@ -94,15 +94,15 @@ public class FinancialAdviserDetailsGui extends Page {
 			.build();
 		
 		Rectangle r4 = RectangleBuilder.create()
-				.fill(Color.WHITE)
-				.strokeWidth(2)
-				.stroke(Color.BLACK)
-				.opacity(0.1)
-				.width(boxWidth)
-				.height(121)
-				.translateX(leftBoundary)
-				.translateY(402)
-				.build();
+			.fill(Color.WHITE)
+			.strokeWidth(2)
+			.stroke(Color.BLACK)
+			.opacity(0.1)
+			.width(boxWidth)
+			.height(121)
+			.translateX(leftBoundary)
+			.translateY(402)
+			.build();
 		
 		grid.getChildren().add(r1);
 		grid.getChildren().add(r2);

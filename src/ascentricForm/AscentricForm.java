@@ -58,7 +58,7 @@ public class AscentricForm{
 		
 		page = new AscentricPage9();
 		page.fillPage(theClient);
-		String finishedFile = page.getFileName();
+		String finishedFile ="temp/" + page.getFileName();
 		
 		cleanUp(file, finishedFile);
 		

@@ -101,11 +101,11 @@ public abstract class AscentricPage{
 	protected void setUp(int pageNumber) throws IOException, DocumentException {
 		this.pageNumber = pageNumber;
 		if(pageNumber > 1){
-			reader = new PdfReader(pageNumber-1 + FORM);
+			reader = new PdfReader("temp/" + (pageNumber-1) + FORM);
 		} else {
-			reader = new PdfReader(FORM);
+			reader = new PdfReader("temp/" + FORM);
 		}
-		 stamper = new PdfStamper(reader, new FileOutputStream(pageNumber + FORM));
+		 stamper = new PdfStamper(reader, new FileOutputStream("lib/" + pageNumber + FORM));
 		 canvas = stamper.getOverContent(pageNumber);
 	}
 	

@@ -15,15 +15,14 @@ import java.util.Set;
 public class MSSQLDatabase implements GetDatabase{
 	
 	private static MSSQLDatabase instance;
-	protected String url = "jdbc:sqlserver://localhost;databaseName=Main1st;integratedSecurity=true";
+	protected String url = "jdbc:sqlserver://MAD10;username=sa;password=Password123;";
 	protected String driver = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
 	protected String dbName;
-	protected String userName;
-	protected String password;
+	protected String userName = "sa";
+	protected String password = "Password123";
 	protected Connection conn;
 	protected DatabaseMetaData md;
 	protected ResultSet rs;
-		//Hooray!
 	
 	public static MSSQLDatabase getDatabaseConnector(){
 		return instance;
@@ -86,7 +85,7 @@ public class MSSQLDatabase implements GetDatabase{
 					IllegalAccessException,
 					ClassNotFoundException,
 					SQLException{
-		Class.forName(driver).newInstance();
+		  Class.forName(driver).newInstance();
 	      conn = DriverManager.getConnection(url);
 	      
 	      System.out.println("Connected to MSSQL Database");

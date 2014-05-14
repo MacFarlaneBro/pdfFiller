@@ -77,9 +77,9 @@ public class Print {
             public void handle(ActionEvent e){
             	
             	FileChooser fileChooser = new FileChooser();
-
+            	File file = new File("G:/MasterAdviser/Ascentric Auto-Applications/");
+            	fileChooser.setInitialDirectory(file);
                 fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PDF files (*.pdf)", "*.pdf"));
-                File file;
                 if(client.getFirstClient().getIndividualDetails().getSurname().length() >= 2
                 		&& client.getFirstClient().getIndividualDetails().getForename().length() >= 2){
 	                fileChooser.setInitialFileName(client.getFirstClient().getIndividualDetails().getSurname() + " "
@@ -91,6 +91,7 @@ public class Print {
                 } else {
                 	file = fileChooser.showSaveDialog(primaryStage);
                 }
+                
                 if(!file.getName().contains(".pdf")){
                 	file = new File(file.getAbsolutePath() + ".pdf");
                 }
