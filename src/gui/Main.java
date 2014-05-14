@@ -40,6 +40,7 @@ public class Main extends Application{
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+    	
         this.primaryStage = primaryStage;
         primaryStage.setTitle("PDF Filler 0.9");
         primaryStage.setMinWidth(500);

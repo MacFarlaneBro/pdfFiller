@@ -15,7 +15,7 @@ import java.util.Set;
 public class MSSQLDatabase implements GetDatabase{
 	
 	private static MSSQLDatabase instance;
-	protected String url = "jdbc:sqlserver://MAD10;username=sa;password=Password123;";
+	protected String url = "jdbc:sqlserver://MAD10;userName=dougb;password=brodied";
 	protected String driver = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
 	protected String dbName;
 	protected String userName = "sa";
