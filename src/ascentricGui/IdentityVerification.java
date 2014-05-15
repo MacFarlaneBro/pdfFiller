@@ -113,8 +113,10 @@ public class IdentityVerification extends Page{
 		int thirdColumn = 3;
 		int fourthColumn = 4;
 		
+		
+		
 		//Individual's previous address
-		grid.add(new Label("Individual's previous address"), thirdColumn, ++gridVert);
+		grid.add(new Label("Individual's previous address*"), thirdColumn, ++gridVert);
 		TextField prevAdd1 = new TextField();
 		grid.add(prevAdd1, fourthColumn, gridVert++);
 		textFields.put("prevAdd1", prevAdd1);
@@ -130,6 +132,10 @@ public class IdentityVerification extends Page{
 		TextField previousPostCode = new TextField();
 		grid.add(previousPostCode, fourthColumn, gridVert++);
 		textFields.put("previousPostCode", previousPostCode);
+		
+		Label warning = new Label("*Only complete if the individual has changed address in the last three months.");
+		warning.setWrapText(true);
+		grid.add(warning, thirdColumn, gridVert++, 2, 1);
 	}
 
 	private void createConfirmationFields(GridPane grid) {
