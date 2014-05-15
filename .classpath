@@ -3,8 +3,8 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="C:/Program Files/Java/jre7/lib/jfxrt.jar"/>
-	<classpathentry kind="lib" path="C:/jdk1.6.0_45/lib/Microsoft JDBC Driver 4.0 for SQL Server/sqljdbc_4.0/enu/sqljdbc4.jar"/>
-	<classpathentry kind="lib" path="C:/jdk1.6.0_45/lib/itext-5.5.0/itextpdf-5.5.0.jar"/>
+	<classpathentry kind="lib" path="lib/itextpdf-5.5.0.jar"/>
+	<classpathentry kind="lib" path="lib/jfxrt.jar"/>
+	<classpathentry kind="lib" path="lib/sqljdbc4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
