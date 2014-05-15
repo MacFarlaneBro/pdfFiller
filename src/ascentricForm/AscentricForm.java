@@ -59,7 +59,7 @@ public class AscentricForm{
 		page = new AscentricPage9();
 		page.fillPage(theClient);
 		String finishedFile ="temp/" + page.getFileName();
-		
+		System.out.println(finishedFile);
 		cleanUp(file, finishedFile);
 		
 		System.out.println("finished printing");

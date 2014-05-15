@@ -85,9 +85,9 @@ public class Print {
 	                fileChooser.setInitialFileName(client.getFirstClient().getIndividualDetails().getSurname() + " "
 	                		+ client.getFirstClient().getIndividualDetails().getForename().charAt(0)
 	                		+ " Ascentric App "
-	                		+ (new SimpleDateFormat("ddMMyyyy")).format(new Date()));
+	                		+ (new SimpleDateFormat("ddMMyyyy")).format(new Date())
+	                		+ ".pdf");
 	                file = fileChooser.showSaveDialog(primaryStage);
-                	printDocument(file);
                 } else {
                 	file = fileChooser.showSaveDialog(primaryStage);
                 }

@@ -105,8 +105,9 @@ public abstract class AscentricPage{
 		} else {
 			reader = new PdfReader("temp/" + FORM);
 		}
-		 stamper = new PdfStamper(reader, new FileOutputStream("lib/" + pageNumber + FORM));
-		 canvas = stamper.getOverContent(pageNumber);
+		System.out.println(pageNumber);
+		stamper = new PdfStamper(reader, new FileOutputStream("temp/" + pageNumber + FORM));
+		canvas = stamper.getOverContent(pageNumber);
 	}
 	
 	public abstract void fillPage(Client theClient) throws IOException, DocumentException;
