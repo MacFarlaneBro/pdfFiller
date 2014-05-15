@@ -23,7 +23,7 @@ import ascentricGui.ClientPersonalInfo;
 
 /**
  *
- * @author charlie brodie
+ * @author Charlie Brodie
  */
 public class Main extends Application{
     
