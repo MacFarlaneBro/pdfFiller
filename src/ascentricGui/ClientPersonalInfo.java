@@ -73,10 +73,10 @@ public class ClientPersonalInfo extends Page{
         thisScene = new Scene(grid, PAGEWIDTH, PAGEHEIGHT);
         
         setColumnSizes(grid, 20, 250, 175, 190, 170, 20);
-        setRowSizes(grid, 50);
+        setRowSizes(grid, 35, 35);
                 
     	fieldMap = new HashMap<String, TextField>();
-        
+    	        
         createAutoFillFields(grid);
    
         createRemainingFields(grid);
@@ -241,11 +241,6 @@ public class ClientPersonalInfo extends Page{
     	facetoface = new CheckBox("Tick here if you have confirmed the clients identity\nin a face"
     			+ " to face meeting");
     	grid.add(facetoface, 1, 2, 2, 1);
-    	
-    	correspondenceAddress = new CheckBox("Tick here if the clients the clients correspondence\naddress differs"
-    			+ " from that given below");
-    	correspondenceAddress.setDisable(false);
-    	grid.add(correspondenceAddress, 3, 1, 2, 1);
         
         //Client First Name
         Label firstName = new Label("First name");
@@ -338,19 +333,26 @@ public class ClientPersonalInfo extends Page{
         clientHomeAddress1.setId("HomeAddress1");
         theFields.add(clientHomeAddress1);
         clientHomeAddress1.setPrefWidth(fieldWidth);
-        grid.add(clientHomeAddress1, 4, gridVert);
+        grid.add(clientHomeAddress1, 4, gridVert++);
         //line 2
         TextField clientHomeAddress2 = new TextField();
         fieldMap.put("HomeAddress2", clientHomeAddress2);
         theFields.add(clientHomeAddress2);
         clientHomeAddress2.setId("HomeAddress2");
         clientHomeAddress2.setPrefWidth(fieldWidth);
-        grid.add(clientHomeAddress2, 4, ++gridVert);
+        grid.add(clientHomeAddress2, 4, gridVert++);
+        
+        //Correspondence Address Check box
+    	correspondenceAddress = new CheckBox("Tick here if the clients the clients correspondence address differs"
+    			+ " from that given above");
+    	correspondenceAddress.setDisable(false);
+    	correspondenceAddress.setWrapText(true);
+    	grid.add(correspondenceAddress, 3, gridVert++, 2, 1);
         
         //Client PostCode
         Label postcode = new Label("Postcode");
         theLabels.add(postcode);
-        grid.add(postcode, 3, ++gridVert);
+        grid.add(postcode, 3, gridVert);
         TextField clientHomePostCode = new TextField();
         fieldMap.put("HomePostCode", clientHomePostCode);
         clientHomePostCode.setId("HomePostCode");
@@ -502,13 +504,13 @@ public class ClientPersonalInfo extends Page{
 		IndividualDetails id = client.getFirstClient().getIndividualDetails();
 		if(correspondenceAddress.isSelected()){
 			id.setSameCorrDetails(true);
-			Page nextNextPage = nextPage;
-			nextPage = CorrespondenceAddress.INSTANCE;
-			nextPage.setNextPage(nextNextPage);
+			if(applicationType.getValue().equals("Single Client")){
+				Page nextNextPage = nextPage;
+				nextPage = CorrespondenceAddress.INSTANCE;
+				nextPage.setNextPage(nextNextPage);
+			}
 		}
-		
-		System.out.println(natInsTickClient.isSelected());
-		
+				
 		if(!natInsTickClient.isSelected()){
 						
 			//This hideous lump is where I make sure that the NI number is accounted for
@@ -591,7 +593,7 @@ public class ClientPersonalInfo extends Page{
 	
 	public void createClearButton(){
 		Button clear = new Button("Clear Details");
-		grid.add(clear, 4, 0);
+		grid.add(clear, 4, 1);
 		clear.setOnAction(new EventHandler<ActionEvent>(){
 				
 				public void handle(ActionEvent e){

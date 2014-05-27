@@ -32,11 +32,11 @@ public class CorrespondenceAddress extends Page {
         createFields(grid);
         
         setColumnSizes(grid, 150, 120, 150, 150);
-        setRowSizes(grid, 35, 35, 35, 20, 20, 20, 70);
+        setRowSizes(grid, 35, 35, 20, 20, 20, 20, 20, 20, 20);
                         
         movementButtons2Columns(true);
         
-        createMovementButtons(7, 5);
+        createMovementButtons(11, 5);
                 
         setTitle(grid, "Correspondence Address", primaryStage);
         
@@ -46,7 +46,19 @@ public class CorrespondenceAddress extends Page {
 	private void createFields(GridPane grid) {
     	textFields = new HashMap<String, TextField>();
     	
+    	boolean secondClient = false;
+    	
+    	if(client.getSecondClient()!= null
+        		&& !client.getSecondClient().getIndividualDetails().isSameDetails()
+        		&& client.getSecondClient().getIndividualDetails().isCorrespondenceAddressSame()){
+    		secondClient = true;
+    	}
+    	
     	int gridVert = 2;
+    	
+    	if(client.getSecondClient()!= null){
+	    	grid.add(new Label("First Client"), 1, gridVert++);
+    	}
     	
     	//Correspondence Address Line 1
         Label address = new Label("Address");
@@ -70,6 +82,33 @@ public class CorrespondenceAddress extends Page {
         TextField postCode = new TextField();
         textFields.put("postCode", postCode);
         grid.add(postCode, 2, gridVert++, 2, 1);
+        
+        //If a second client exists and their contact details are not the same as the first or those of their home address
+        if(secondClient){
+	    	grid.add(new Label("Second Client"), 1, gridVert++);
+	    	//Correspondence Address Line 1
+	        Label address2 = new Label("Address");
+	        address2.setTextAlignment(TextAlignment.RIGHT);
+	        GridPane.setHalignment(address2, HPos.RIGHT);
+	        grid.add(address2, 1, ++gridVert);
+	        TextField address2Line1 = new TextField();
+	        textFields.put("addressLine1", address2Line1);
+	        grid.add(address2Line1, 2, gridVert++, 2, 1);
+	        
+	        //Correspondence Address Line 2
+	        TextField address2Line2 = new TextField();
+	        textFields.put("addressLine2", address2Line2);
+	        grid.add(address2Line2, 2, gridVert++, 2, 1);
+	        
+	        //Correspondence PostCode
+	        Label pCode2 = new Label("Post Code");
+	        pCode2.setTextAlignment(TextAlignment.RIGHT);
+	        GridPane.setHalignment(pCode2, HPos.RIGHT);
+	        grid.add(pCode2, 1, gridVert);
+	        TextField postCode2 = new TextField();
+	        textFields.put("postCode", postCode2);
+	        grid.add(postCode2, 2, gridVert++, 2, 1);
+        }
 	}
 
 

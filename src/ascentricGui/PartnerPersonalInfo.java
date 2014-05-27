@@ -50,6 +50,7 @@ public class PartnerPersonalInfo extends Page{
     private Button autoFillClientButton;
 	private String sceneT = "Partner Personal Info";
 	private CheckBox natInsTickClient;
+	private CheckBox correspondenceAddress;
 	
 	private PartnerPersonalInfo(){}
 	
@@ -89,8 +90,11 @@ public class PartnerPersonalInfo extends Page{
          * autofill the partner personal information fields as soon as the page is loaded
          */
 		try {
-			getClientInfo();
-			fillClientInfo();
+			if(clientSurname.getText() != null 
+					&& clientSurname.getText().length() > 2){
+				getClientInfo();
+				fillClientInfo();
+			}
 		} catch (InstantiationException | IllegalAccessException
 				| ClassNotFoundException | SQLException e) {
 			// TODO Auto-generated catch block
@@ -214,7 +218,7 @@ public class PartnerPersonalInfo extends Page{
         clientSurname.setId("Surname");
         clientSurname.setPrefWidth(fieldWidth);
         grid.add(clientSurname, 2, gridVert);
-        
+                
         checkBoxes = new HashMap<String, CheckBox>();
         
         CheckBox sameDetails = new CheckBox("If your contact details (including e-mail address)"
@@ -334,8 +338,18 @@ public class PartnerPersonalInfo extends Page{
 		id.setTitle(fieldMap.get("Title").getText());
 		id.setDob(fieldMap.get("DOB").getText());
 		
+		
+		if(correspondenceAddress.isSelected()){
+			id.setSameCorrDetails(true);
+				Page nextNextPage = nextPage;
+				nextPage = CorrespondenceAddress.INSTANCE;
+				nextPage.setNextPage(nextNextPage);
+		}
+		
 		//Rearranges date of birth from DB from YYYY-MM-DD to DDMMYYYY
-		if(fieldMap.get("DOB").getText() != null && fieldMap.get("DOB").getText().charAt(4) == '-'){
+		if(fieldMap.get("DOB").getText() != null
+				&& fieldMap.get("DOB").getText().length() > 3
+				&& fieldMap.get("DOB").getText().charAt(4) == '-'){
 			//Using string builder to increase performance
 			String original = clientData.get("DOB");
 			StringBuilder dob = new StringBuilder();
@@ -348,7 +362,8 @@ public class PartnerPersonalInfo extends Page{
 			//Year
 			dob.append(original.substring(0, 4));
 			id.setDob(dob.toString());
-		} else if(fieldMap.get("DOB").getText() != null) {
+		} else if(fieldMap.get("DOB").getText() != null
+				&& fieldMap.get("DOB").getText().length() > 3) {
 			id.setDob(clientData.get("DOB").replace("/", ""));
 		}
 		
@@ -441,7 +456,7 @@ public class PartnerPersonalInfo extends Page{
         //Client Home Number
         Label homeNumber = new Label("Home Telephone Number");
         theLabels.add(homeNumber);
-        grid.add(homeNumber, 3, ++gridVert);
+        grid.add(homeNumber, 3, gridVert);
         TextField clientHomeTel = new TextField();
         clientHomeTel.setId("HomeTel");
         theFields.add(clientHomeTel);
@@ -478,24 +493,26 @@ public class PartnerPersonalInfo extends Page{
         clientHomeAddress1.setId("HomeAddress1");
         theFields.add(clientHomeAddress1);
         clientHomeAddress1.setPrefWidth(fieldWidth);
-        grid.add(clientHomeAddress1, 4, gridVert);
+        grid.add(clientHomeAddress1, 4, gridVert++);
         //line 2
         TextField clientHomeAddress2 = new TextField();
         theFields.add(clientHomeAddress2);
         clientHomeAddress2.setId("HomeAddress2");
         clientHomeAddress2.setPrefWidth(fieldWidth);
-        grid.add(clientHomeAddress2, 4, ++gridVert);
-        //line3
-        TextField clientHomeAddress3 = new TextField();
-        theFields.add(clientHomeAddress3);
-        clientHomeAddress3.setId("HomeAddress3");
-        clientHomeAddress3.setPrefWidth(fieldWidth);
-        grid.add(clientHomeAddress3, 4, ++gridVert);
+        grid.add(clientHomeAddress2, 4, gridVert++);
+        
+        //Correspondence Address Check box
+    	correspondenceAddress = new CheckBox("Tick here if the clients the clients correspondence address differs"
+    			+ " from that given above");
+    	correspondenceAddress.setDisable(false);
+    	correspondenceAddress.setWrapText(true);
+
+    	grid.add(correspondenceAddress, 3, gridVert++, 2, 1);
         
         //Client PostCode
         Label postcode = new Label("Postcode");
         theLabels.add(postcode);
-        grid.add(postcode, 3, ++gridVert);
+        grid.add(postcode, 3, gridVert);
         TextField clientHomePostCode = new TextField();
         clientHomePostCode.setId("HomePostCode");
         theFields.add(clientHomePostCode);
