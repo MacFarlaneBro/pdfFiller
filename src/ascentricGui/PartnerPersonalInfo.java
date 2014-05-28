@@ -90,11 +90,8 @@ public class PartnerPersonalInfo extends Page{
          * autofill the partner personal information fields as soon as the page is loaded
          */
 		try {
-			if(clientSurname.getText() != null 
-					&& clientSurname.getText().length() > 2){
 				getClientInfo();
 				fillClientInfo();
-			}
 		} catch (InstantiationException | IllegalAccessException
 				| ClassNotFoundException | SQLException e) {
 			// TODO Auto-generated catch block
@@ -109,7 +106,7 @@ public class PartnerPersonalInfo extends Page{
         HBox hbBtn = new HBox(21);//Layout pane with 21 pixel spacing
         hbBtn.setAlignment(Pos.BOTTOM_RIGHT);
         hbBtn.getChildren().add(autoFillClientButton);
-        grid.add(hbBtn, 3, 2);
+        grid.add(hbBtn, 3, 1);
         
         final Text actionTarget = new Text();
         grid.add(actionTarget, 2, ++gridVert);
@@ -146,6 +143,8 @@ public class PartnerPersonalInfo extends Page{
 		String holder;
 		int homeAddress = 1;
 		
+    	System.out.println("Beginning default autofill");
+		
 		while(fields.hasNext()){
 			TextField current = (TextField)fields.next();
 			//Remove the time portion from the date of birth value
@@ -170,7 +169,6 @@ public class PartnerPersonalInfo extends Page{
 					}
 				}
 			}
-			
 			current.setText(clientData.get(current.getId()));
 		}
 	}
@@ -292,7 +290,6 @@ public class PartnerPersonalInfo extends Page{
 		GetDatabase db = MSSQLDatabase.getDatabaseConnector();
 		firstnames = db.fetchInfoUsingName(clientSurname.getText());
 	}
-
 
 	protected void fillAndSaveClientInfo() throws DataFormatException {
 		

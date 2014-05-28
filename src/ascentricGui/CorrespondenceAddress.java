@@ -32,7 +32,7 @@ public class CorrespondenceAddress extends Page {
         createFields(grid);
         
         setColumnSizes(grid, 150, 120, 150, 150);
-        setRowSizes(grid, 35, 35, 20, 20, 20, 20, 20, 20, 20);
+        setRowSizes(grid, 35, 35, 20, 20, 20, 20, 20, 20, 20, 20, 20);
                         
         movementButtons2Columns(true);
         
