@@ -1,5 +1,7 @@
 package gui;
 
+import java.net.URL;
+
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -12,6 +14,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
@@ -44,8 +47,8 @@ public class Main extends Application{
         this.primaryStage = primaryStage;
         primaryStage.setTitle("PDF Filler 0.95");
         primaryStage.setMinWidth(500);
-        
-//        primaryStage.getIcons().add(new Image("/logo.gif"));
+                
+        primaryStage.getIcons().add(new Image("file:C:\\Program Files\\Ascentric Application Filler\\Lib\\logo.jpg"));
         
         GridPane grid = new GridPane();
         Scene firstScene = new Scene(grid, 300, 300);

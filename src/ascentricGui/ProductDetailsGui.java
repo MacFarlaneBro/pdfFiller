@@ -378,7 +378,8 @@ public abstract class ProductDetailsGui extends Page {
 	}
 	
 	/**
-	 * Controls whether the wrapper specific text fields and check-boxes are enabled or disabled, dependent on whether
+	 * Controls whether the wrapper specific text fields and
+	 * check-boxes are enabled or disabled, dependent on whether
 	 * the relevant check box has been selected
 	 * @param cBox The check box associated with wrapper to be enabled or disabled
 	 */
