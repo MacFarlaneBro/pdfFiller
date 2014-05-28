@@ -112,7 +112,7 @@ public class MSSQLDatabase implements GetDatabase{
 		      if(rs.getString("PartnerDOB")!= null){
 		    	  dob = rs.getString("PartnerDOB").substring(0,10);
 		      }
-		      
+		      System.out.println("entered partner saving data in database area");
 		      pData.put("ForeNames", rs.getString("PartnerForenames"));
 		      pData.put("Surname", rs.getString("PartnerSurname"));
 		      pData.put("DOB", dob);
@@ -127,6 +127,7 @@ public class MSSQLDatabase implements GetDatabase{
 		      pData.put("HomePostCode", rs.getString("PartnerPostCode"));
 		      pData.put("Email", rs.getString("PartnerEmailAddress"));
 		      cliRef = rs.getInt("clientRef");
+		      getPartnerNationalInsuranceNumber(pData, cliRef);
 	      }
 	      
 	      
@@ -140,6 +141,9 @@ public class MSSQLDatabase implements GetDatabase{
 	}
 
 	@Override
+	/**
+	 * 
+	 */
 	public Map<String, String> getClientPersonalData(String name) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
 		  Class.forName(driver).newInstance();
 	      conn = DriverManager.getConnection(url);
@@ -228,8 +232,30 @@ public class MSSQLDatabase implements GetDatabase{
 			 pData.put("NationalInsuranceNumber", rs.getString("NINO"));
 		 }
 	}
-
+	/**
+	 * Fetching the partner NINO was moved to a different method because it accesses a different table and field
+	 * therefore requires a different query execution
+	 * @param pData - The map containing all the autofill data
+	 * @param clientRef - The unique reference number of the client under scrutiny
+	 * @throws SQLException
+	 */
+	private void getPartnerNationalInsuranceNumber(Map<String, String> pData, int clientRef) throws SQLException{
+		 Statement st = conn.createStatement();
+		 System.out.println(clientRef);
+		 ResultSet rs = st.executeQuery("SELECT PartnerNINO FROM ClientExtraDetails WHERE ClientRef = " + clientRef);
+		 System.out.println("Before while loop");
+		 while(rs.next()){
+			 pData.put("PartnerNationalInsuranceNumber", rs.getString("PartnerNINO"));
+			 System.out.println("in database: " + rs.getString("PartnerNINO"));
+		 }
+		 System.out.println("After while loop");
+	}
+	
 	@Override
+	/**
+	 * This method is the same as the one above except requires an additional argument and is only used in the event
+	 * of multiple clients having the same first name and the same surname
+	 */
 	public Map<String, String> getClientPersonalData(String name, String postcode) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
 		Class.forName(driver).newInstance();
 		conn = DriverManager.getConnection(url);
@@ -253,10 +279,10 @@ public class MSSQLDatabase implements GetDatabase{
     		+ postcode
     		+ "';");
       
-     Map<String,String> pData = new HashMap<String, String>();
-            
-     rs.beforeFirst();
-      while(rs.next()){
+	    Map<String,String> pData = new HashMap<String, String>();
+	    rs.beforeFirst();
+	    
+	    while(rs.next()){
     	  System.out.println("No Dupes");
 	      pData.put("Title", rs.getString("Title"));
 	      //Removing the time portion of the date object returned by the database before adding it to the map
@@ -283,7 +309,6 @@ public class MSSQLDatabase implements GetDatabase{
 	      cliRef = rs.getInt("clientRef");
 	      getNationalInsuranceNumber(pData, cliRef);
       }
-      
       
       if(conn != null){
     	  conn.close();

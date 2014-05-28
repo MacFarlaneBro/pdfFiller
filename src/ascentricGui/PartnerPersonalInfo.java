@@ -144,6 +144,7 @@ public class PartnerPersonalInfo extends Page{
 		
 		while(fields.hasNext()){
 			TextField current = (TextField)fields.next();
+			System.out.println(current.getId() + ": " + clientData.get(current.getId()));
 			//Remove the time portion from the date of birth value
 			if(current.getId()
 					.equals("PartnerDOB") && current.getId()!= null){
@@ -438,7 +439,7 @@ public class PartnerPersonalInfo extends Page{
         theLabels.add(natIns);
         grid.add(natIns, 1, ++gridVert);
         TextField clientNatIns = new TextField();
-        clientNatIns.setId("NationalInsuranceNumber");
+        clientNatIns.setId("PartnerNationalInsuranceNumber");
         theFields.add(clientNatIns);
         fieldMap.put("NationalInsuranceNumber", clientNatIns);
         clientNatIns.setPrefWidth(fieldWidth);
