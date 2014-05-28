@@ -159,23 +159,25 @@ public class AccessRightsFamilyGroups extends Page {
 		GridPane.setHalignment(singleApp, HPos.CENTER);
 		grid.add(singleApp, 2, gridVert);
 		singleApp.setId("SingleApp" + row);
-		singleApp.setSelected(false);
+		if(row.equals("EnqOnly")) singleApp.setSelected(true);
 		checkBoxes.put("SingleApp" + row, singleApp);
 		
+		//setting middle checkbox
 		if(client.getSecondClient()!= null){
 			CheckBox secondApp = new CheckBox();
 			GridPane.setHalignment(secondApp, HPos.CENTER);
 			grid.add(secondApp, 3, gridVert);
 			secondApp.setId("SecondApp" + row);
-			singleApp.setSelected(false);
+			if(row.equals("EnqOnly")) secondApp.setSelected(true);
 			checkBoxes.put("SecondApp" + row, secondApp);
 		}
+		//setting rightmost checkbox
 		if(client.getJointAccount()!= null){
 			CheckBox jointAcc = new CheckBox();
 			GridPane.setHalignment(jointAcc, HPos.CENTER);
 			grid.add(jointAcc, 4, gridVert);
 			jointAcc.setId("JointAcc" + row);
-			singleApp.setSelected(false);
+			if(row.equals("EnqOnly")) jointAcc.setSelected(true);
 			checkBoxes.put("JointAcc" + row, jointAcc);
 		}
 	}
