@@ -215,7 +215,7 @@ public class PartnerPersonalInfo extends Page{
                 
         checkBoxes = new HashMap<String, CheckBox>();
         
-        CheckBox sameDetails = new CheckBox("If your contact details (including e-mail address)"
+        CheckBox sameDetails = new CheckBox("If their contact details (including e-mail address)"
         		+ " are the same as the first applicant, please tick this box.");
         sameDetails.setWrapText(true);
         sameDetails.setTranslateX(50);
