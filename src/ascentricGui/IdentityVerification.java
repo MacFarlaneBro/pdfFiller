@@ -82,30 +82,38 @@ public class IdentityVerification extends Page{
 		//Name of Individual
 		grid.add(new Label("Name of Individual"), firstColumn, gridVert);
 		TextField name = new TextField();
+		name.setText(client.getFirstClient().getIndividualDetails().getForename() + " "
+				+ client.getFirstClient().getIndividualDetails().getSurname());
 		grid.add(name, secondColumn, gridVert++);
 		textFields.put("name", name);
+		
+		String[] address = client.getFirstClient().getIndividualDetails().getAddress().split(":");
 		
 		//Individuals Current Address
 		grid.add(new Label("Individual's current address"), firstColumn, gridVert);
 		TextField currAdd1 = new TextField();
+		currAdd1.setText(address[0]);
 		grid.add(currAdd1, secondColumn, gridVert++);
 		textFields.put("currAdd1", currAdd1);
 		TextField currAdd2 = new TextField();
 		grid.add(currAdd2, secondColumn, gridVert++);
 		textFields.put("currAdd2", currAdd2);
 		TextField currAdd3 = new TextField();
+		currAdd3.setText(address[1]);
 		grid.add(currAdd3, secondColumn, gridVert++);
 		textFields.put("currAdd3", currAdd3);
 		
 		//Current Postcode
 		grid.add(new Label("Current Postcode"), firstColumn, gridVert);
 		TextField postCode = new TextField();
+		postCode.setText(client.getFirstClient().getIndividualDetails().getPostcode());
 		grid.add(postCode, secondColumn, gridVert++);
 		textFields.put("currPostCode", postCode);
 		
 		//Date of Birth
 		grid.add(new Label("Date of Birth (DDMMYYYY)"), firstColumn, gridVert);
 		TextField dob = new TextField();
+		dob.setText(client.getFirstClient().getIndividualDetails().getDob());
 		grid.add(dob, secondColumn, gridVert);
 		textFields.put("dob", dob);
 		
