@@ -7,6 +7,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import ascentricClientDetails.ClientHolder;
@@ -15,7 +17,7 @@ import ascentricClientDetails.CorrespondenceDetails;
 public class CorrespondenceAddress extends Page {
 
 	public static final Page INSTANCE = new CorrespondenceAddress();
-	
+	boolean secondClient = false;
 	private CorrespondenceAddress(){}
 
 	@Override
@@ -30,7 +32,6 @@ public class CorrespondenceAddress extends Page {
                 
         thisScene = new Scene(grid, PAGEWIDTH, PAGEHEIGHT);
         createFields(grid);
-        grid.setGridLinesVisible(true);
         setColumnSizes(grid, 150, 120, 150, 150);
         setRowSizes(grid, 35, 35, 20, 20, 20, 20, 20, 20, 20, 20, 20);
                         
@@ -46,9 +47,7 @@ public class CorrespondenceAddress extends Page {
 	private void createFields(GridPane grid) {
     	textFields = new HashMap<String, TextField>();
     	
-    	boolean secondClient = false;
-    	System.out.println("Second client has same contact details as the first? "
-    			+ client.getSecondClient().getIndividualDetails().isSameDetails());
+    	
     	if(client.getSecondClient()!= null
         		&& !client.getSecondClient().getIndividualDetails().isSameDetails()
         		&& client.getSecondClient().getIndividualDetails().isCorrespondenceAddressSame()){
@@ -58,7 +57,9 @@ public class CorrespondenceAddress extends Page {
     	int gridVert = 2;
     	
     	if(client.getSecondClient()!= null){
-	    	grid.add(new Label("First Client"), 1, gridVert++);
+    		Label first = new Label("First Client");
+    		first.setFont(Font.font(null,FontWeight.BOLD, 12));
+	    	grid.add(first, 1, gridVert++);
     	}
     	
     	//Correspondence Address Line 1
@@ -84,21 +85,25 @@ public class CorrespondenceAddress extends Page {
         textFields.put("postCode", postCode);
         grid.add(postCode, 2, gridVert++, 2, 1);
         
-        //If a second client exists and their contact details are not the same as the first or those of their home address
+        //If a second client exists and their contact details are not the same as the first
+        //or those of their home address. All the map entry strings are the same as the first client
+        //but with a p for 'partner' added to the front.
         if(secondClient){
-	    	grid.add(new Label("Second Client"), 1, gridVert++);
+        	Label second = new Label("Second Client");
+	    	grid.add(second, 1, gridVert++);
+    		second.setFont(Font.font(null,FontWeight.BOLD, 12));
 	    	//Correspondence Address Line 1
 	        Label address2 = new Label("Address");
 	        address2.setTextAlignment(TextAlignment.RIGHT);
 	        GridPane.setHalignment(address2, HPos.RIGHT);
 	        grid.add(address2, 1, gridVert);
 	        TextField address2Line1 = new TextField();
-	        textFields.put("addressLine1", address2Line1);
+	        textFields.put("paddressLine1", address2Line1);
 	        grid.add(address2Line1, 2, gridVert++, 2, 1);
 	        
 	        //Correspondence Address Line 2
 	        TextField address2Line2 = new TextField();
-	        textFields.put("addressLine2", address2Line2);
+	        textFields.put("paddressLine2", address2Line2);
 	        grid.add(address2Line2, 2, gridVert++, 2, 1);
 	        
 	        //Correspondence PostCode
@@ -107,7 +112,7 @@ public class CorrespondenceAddress extends Page {
 	        GridPane.setHalignment(pCode2, HPos.RIGHT);
 	        grid.add(pCode2, 1, gridVert);
 	        TextField postCode2 = new TextField();
-	        textFields.put("postCode", postCode2);
+	        textFields.put("ppostCode", postCode2);
 	        grid.add(postCode2, 2, gridVert++, 2, 1);
         }
 	}
@@ -116,10 +121,16 @@ public class CorrespondenceAddress extends Page {
 	@Override
 	protected void fillAndSaveClientInfo() throws Exception {
 		CorrespondenceDetails cd = client.getFirstClient().getIndividualDetails().getCorrespondenceDetails();
-		
 		cd.setFirstAdd(textFields.get("addressLine1").getText());
 		cd.setSecondAdd(textFields.get("addressLine2").getText());
 		cd.setPostCode(textFields.get("postCode").getText());
+		
+		if(secondClient){
+			cd = client.getSecondClient().getIndividualDetails().getCorrespondenceDetails();
+			cd.setFirstAdd(textFields.get("paddressLine1").getText());
+			cd.setSecondAdd(textFields.get("paddressLine2").getText());
+			cd.setPostCode(textFields.get("ppostCode").getText());
+		}
 		
 	}
 
