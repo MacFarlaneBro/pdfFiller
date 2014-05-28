@@ -109,7 +109,7 @@ public class ClientPersonalInfo extends Page{
         HBox hbBtn = new HBox(21);//Layout pane with 21 pixel spacing
         hbBtn.setAlignment(Pos.BOTTOM_RIGHT);
         hbBtn.getChildren().add(autoFillClientButton);
-        grid.add(hbBtn, 3, 2);
+        grid.add(hbBtn, 1, 5);
         
         gridVert = 2;
         
@@ -124,15 +124,18 @@ public class ClientPersonalInfo extends Page{
 						fillClientInfo();
 						actionTarget.setVisible(false);
                 	} else {
+                		actionTarget.setVisible(true);
 	                	System.out.println(clientSurname.getText());
 	                	if(clientSurname.getText().equals("")){
 	                		actionTarget.setFill(Color.FIREBRICK);
 	                		actionTarget.setText("More information Required, please\n enter a Surname and click 'Search Surname\n'"
 	                				+ " first, then select the clients first\n name from the dropdown when it appears");
-	                	} else if(((ComboBox<String>)clientFirstName).getValue()==null) {
-	        				actionTarget.setText("A firstname and surname are required to search for a client, please select"
-	        						+ "a first\nname from the dropdown or click 'clear fields' to enter the details manually.");
+	                	} else if(((ComboBox<String>)clientFirstName).getValue()==null
+	                			|| ((ComboBox<String>)clientFirstName).getValue().equals("")) {
+	        				actionTarget.setText("A first name and surname are required to search for a client, please select"
+	        						+ " a first name from the dropdown or click 'clear fields' to enter the details manually.");
 	                	} else {
+	                		
 	                		actionTarget.setFill(Color.BLUE);
 	                        actionTarget.setText("Finding Client Information");
 	                        Map<String,String> info = getClientInfo();
@@ -235,8 +238,9 @@ public class ClientPersonalInfo extends Page{
     	theFields = new HashSet<TextField>();
     	theLabels = new HashSet<Label>();
     	
-    	facetoface = new CheckBox("Tick here if you have confirmed the clients identity\nin a face"
+    	facetoface = new CheckBox("Tick here if you have confirmed the clients identity in a face"
     			+ " to face meeting");
+    	facetoface.setWrapText(true);
     	grid.add(facetoface, 1, 2, 2, 1);
         
         //Client First Name
@@ -439,11 +443,12 @@ public class ClientPersonalInfo extends Page{
         HBox hbBtn = new HBox(21);//Layout pane with 21 pixel spacing
         hbBtn.setAlignment(Pos.BOTTOM_RIGHT);
         hbBtn.getChildren().add(btn);
-        grid.add(hbBtn, 2, 2);
+        grid.add(hbBtn, 1, 4);
         
         gridVert++;
         
         actionTarget = new Text();
+        actionTarget.setWrappingWidth(400);
         grid.add(actionTarget, 1, 10);
         btn.setOnAction(new EventHandler<ActionEvent>(){
             
