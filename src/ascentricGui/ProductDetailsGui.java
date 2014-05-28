@@ -230,11 +230,13 @@ public abstract class ProductDetailsGui extends Page {
 		fieldWidth +=5;
 		
 		CheckBox advWrap = new CheckBox();
+		advWrap.setDisable(true);
 		checkBoxes.put("adv" + wrap, advWrap);
 		GridPane.setHalignment(advWrap, HPos.CENTER);
 		grid.add(advWrap, fieldWidth++, gridVert);
 		
 		CheckBox discWrap = new CheckBox();
+		discWrap.setDisable(true);
 		checkBoxes.put("disc" + wrap, discWrap);
 		GridPane.setHalignment(discWrap, HPos.CENTER);
 		grid.add(discWrap, fieldWidth, gridVert);
@@ -376,7 +378,7 @@ public abstract class ProductDetailsGui extends Page {
 	}
 	
 	/**
-	 * Controls whether the wrapper specific text fields are enabled or disabled, dependent on whether
+	 * Controls whether the wrapper specific text fields and check-boxes are enabled or disabled, dependent on whether
 	 * the relevant check box has been selected
 	 * @param cBox The check box associated with wrapper to be enabled or disabled
 	 */
@@ -391,8 +393,14 @@ public abstract class ProductDetailsGui extends Page {
 			        }
 			        if(cBox.getId().equals("giaCheckBox")){
 			        	giaSourceOfFunds.setDisable(false);
+			        	checkBoxes.get("discgia").setDisable(false);
+			        	checkBoxes.get("advgia").setDisable(false);
+			        	checkBoxes.get("advgia").setSelected(true);
 			        } else {
 			        	sasSourceOfFunds.setDisable(false);
+			        	checkBoxes.get("discsas").setDisable(false);
+			        	checkBoxes.get("advsas").setDisable(false);
+			        	checkBoxes.get("advsas").setSelected(true);
 			        }
 				}
 				if(oldVal){
@@ -401,8 +409,14 @@ public abstract class ProductDetailsGui extends Page {
 			        }
 			        if(cBox.getId().equals("giaCheckBox")){
 			        	giaSourceOfFunds.setDisable(true);
+			        	checkBoxes.get("discgia").setDisable(true);
+			        	checkBoxes.get("advgia").setDisable(true);
+			        	checkBoxes.get("advgia").setSelected(false);
 			        } else {
 			        	sasSourceOfFunds.setDisable(true);
+			        	checkBoxes.get("discsas").setDisable(true);
+			        	checkBoxes.get("advsas").setDisable(true);
+			        	checkBoxes.get("advsas").setSelected(false);
 			        }
 				}
 			}
