@@ -140,10 +140,7 @@ public class PartnerPersonalInfo extends Page{
     
 	private void fillClientInfo() {
 		Iterator<TextField> fields = theFields.iterator();
-		String holder;
-		int homeAddress = 1;
-		
-    	System.out.println("Beginning default autofill");
+		String holder;		
 		
 		while(fields.hasNext()){
 			TextField current = (TextField)fields.next();
@@ -156,17 +153,16 @@ public class PartnerPersonalInfo extends Page{
 				continue;
 			}
 			
-			//As the address data is not stored in a coherent fashion in the database, this conditional branch sorts it
-			//into the three fields necessary for the form
-			if(current.getId().startsWith("PartnerAddress")){
-				for(int i = 0; i < 5; i++){
-					if(clientData.get("PartnerAddress" + homeAddress) != null){
-						current.setText(clientData.get("PartnerAddress" + homeAddress));
-						homeAddress++;
-						break;
-					} else {
-						homeAddress++;
-					}
+			//As the address data is stored in a possible 5 fields in the database, this conditional branch sorts it
+			//into the two fields necessary for the form
+			if(current.getId().equals("HomeAddress1")){
+				current.setText(clientData.get("PartnerAddress1"));
+			}
+			if(current.getId().equals("HomeAddress2")){
+				if(clientData.get("PartnerAddress2")!= null){
+					current.setText(clientData.get("PartnerAddress2"));
+				} else {
+					current.setText(clientData.get("PartnerAddress3"));
 				}
 			}
 			current.setText(clientData.get(current.getId()));
@@ -376,6 +372,7 @@ public class PartnerPersonalInfo extends Page{
 			id.setAddress(firstID.getAddress());
 			id.setPostcode(firstID.getPostcode());
 			id.setEmail(firstID.getEmail());
+			id.setSameDetails(true);
 		} else {
 			id.setHomeNumber(clientData.get("HomeTel"));
 			id.setWorkNumber(clientData.get("WorkTel"));

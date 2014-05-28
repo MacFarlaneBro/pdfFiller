@@ -170,7 +170,6 @@ public class ClientPersonalInfo extends Page{
 
 	private void fillClientInfo() {
 		String holder;
-		int homeAddress = 1;
 		
 		//Use of a for loop prevents premature declaration
 		for(Iterator<TextField> fields = theFields.iterator(); fields.hasNext(); ){
@@ -183,22 +182,20 @@ public class ClientPersonalInfo extends Page{
 				current.setText(holder);
 				continue;
 			}
-			
-			//As the address data is not stored in a coherent fashion in the database, this conditional branch sorts it
-			//into the three fields necessary for the form
-			if(current.getId().startsWith("HomeAddress")){
-				for(int i = 0; i < 5; i++){
-					if(clientData.get("HomeAddress" + homeAddress) != null){
-						current.setText(clientData.get("HomeAddress" + homeAddress));
-						homeAddress++;
-						break;
-					} else {
-						homeAddress++;
-					}
+			current.setText(clientData.get(current.getId()));
+		
+			//As the address data is stored in a possible 5 fields in the database, this conditional branch sorts it
+			//into the two fields necessary for the form
+			if(current.getId().equals("HomeAddress1")){
+				current.setText(clientData.get("HomeAddress1"));
+			}
+			if(current.getId().equals("HomeAddress2")){
+				if(clientData.get("HomeAddress2")!= null){
+					current.setText(clientData.get("HomeAddress2"));
+				} else {
+					current.setText(clientData.get("HomeAddress3"));
 				}
 			}
-			current.setText(clientData.get(current.getId()));
-			System.out.println(current.getId());
 		}
 	}
 	

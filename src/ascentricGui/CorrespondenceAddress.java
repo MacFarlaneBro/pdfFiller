@@ -30,7 +30,7 @@ public class CorrespondenceAddress extends Page {
                 
         thisScene = new Scene(grid, PAGEWIDTH, PAGEHEIGHT);
         createFields(grid);
-        
+        grid.setGridLinesVisible(true);
         setColumnSizes(grid, 150, 120, 150, 150);
         setRowSizes(grid, 35, 35, 20, 20, 20, 20, 20, 20, 20, 20, 20);
                         
@@ -47,7 +47,8 @@ public class CorrespondenceAddress extends Page {
     	textFields = new HashMap<String, TextField>();
     	
     	boolean secondClient = false;
-    	
+    	System.out.println("Second client has same contact details as the first? "
+    			+ client.getSecondClient().getIndividualDetails().isSameDetails());
     	if(client.getSecondClient()!= null
         		&& !client.getSecondClient().getIndividualDetails().isSameDetails()
         		&& client.getSecondClient().getIndividualDetails().isCorrespondenceAddressSame()){
@@ -64,7 +65,7 @@ public class CorrespondenceAddress extends Page {
         Label address = new Label("Address");
         address.setTextAlignment(TextAlignment.RIGHT);
         GridPane.setHalignment(address, HPos.RIGHT);
-        grid.add(address, 1, ++gridVert);
+        grid.add(address, 1, gridVert);
         TextField addressLine1 = new TextField();
         textFields.put("addressLine1", addressLine1);
         grid.add(addressLine1, 2, gridVert++, 2, 1);
@@ -90,7 +91,7 @@ public class CorrespondenceAddress extends Page {
 	        Label address2 = new Label("Address");
 	        address2.setTextAlignment(TextAlignment.RIGHT);
 	        GridPane.setHalignment(address2, HPos.RIGHT);
-	        grid.add(address2, 1, ++gridVert);
+	        grid.add(address2, 1, gridVert);
 	        TextField address2Line1 = new TextField();
 	        textFields.put("addressLine1", address2Line1);
 	        grid.add(address2Line1, 2, gridVert++, 2, 1);

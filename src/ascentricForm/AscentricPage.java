@@ -51,7 +51,7 @@ public abstract class AscentricPage{
 		.showTextAligned(
 				canvas, 
 				Element.ALIGN_LEFT, 
-				new Phrase(text), 
+				new Phrase(text.toUpperCase()), 
 				x, 
 				y,
 				0);
