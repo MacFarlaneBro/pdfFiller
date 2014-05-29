@@ -38,7 +38,7 @@ public class AscentricPage1Test {
 		theClient.getFirstClient().getIndividualDetails().setSurname("Brodie");
 		theClient.getFirstClient().getIndividualDetails().setForename("Charlie");
 		theClient.getFirstClient().getIndividualDetails().setNationalInsuranceNumber(null);
-		theClient.getFirstClient().getIndividualDetails().setEmail("rabidwolves911@hotmail.com");
+		theClient.getFirstClient().getIndividualDetails().setEmail("Doug.Brodie@masteradviser.co.uk");
 		theClient.getFirstClient().getIndividualDetails().setUsPerson(false);
 		theClient.getFirstClient().getIndividualDetails().setNationality("Scottish");
 		theClient.getFirstClient().getIndividualDetails().setTin("12826294291234322842");

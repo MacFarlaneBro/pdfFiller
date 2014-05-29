@@ -139,7 +139,7 @@ public class AscentricPage1 extends AscentricPage{
 		stamp(contactWidth+52, contactDepth - 117, id.getPostcode());
 		
 		//E-mail
-		stamp(contactWidth+52, contactDepth - 215, id.getEmail());
+		stamp(contactWidth+52, contactDepth - 215, id.getEmail(), 9);
 	}
 
 	protected void natInsurance(boolean natIn){

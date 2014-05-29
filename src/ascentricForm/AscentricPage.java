@@ -72,7 +72,7 @@ public abstract class AscentricPage{
 	.showTextAligned(
 			canvas, 
 			Element.ALIGN_LEFT, 
-			new Phrase(text + "",new Font(bf, 10)), 
+			new Phrase((text + "").toUpperCase(),new Font(bf, 10)), 
 			x, 
 			y,
 			0);
@@ -87,12 +87,6 @@ public abstract class AscentricPage{
 	 * @param textSize
 	 */
 	protected void stamp(int x, int y, String text, int textSize){
-		PdfContentByte tempCanvas = canvas;
-		tempCanvas.setFontAndSize(
-				(new Font(
-						FontFamily.HELVETICA))
-						.getBaseFont()
-						, textSize);
 		if(text == null
 				|| text.equals("null")){ // if null print nothing
 			System.out.println("Not printed: " + text);
@@ -100,9 +94,9 @@ public abstract class AscentricPage{
 			System.out.println("Printed: " + text);
 		ColumnText
 		.showTextAligned(
-				tempCanvas, 
+				canvas, 
 				Element.ALIGN_LEFT, 
-				new Phrase(text,new Font(bf, textSize)), 
+				new Phrase(text.toUpperCase(),new Font(bf, textSize)), 
 				x, 
 				y,
 				0);
