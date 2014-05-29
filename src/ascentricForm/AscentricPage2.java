@@ -21,7 +21,7 @@ public class AscentricPage2 extends AscentricPage1{
 		cliRef+=168;
 		passInfo += 150;
 		natInYN +=169;
-		usPersonDepth +=148;
+		usPersonDepth +=150;
 		corrDepth +=150;
 	}
 

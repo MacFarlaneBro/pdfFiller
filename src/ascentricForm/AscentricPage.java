@@ -11,6 +11,7 @@ import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.Font.FontFamily;
 import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.ColumnText;
 import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfReader;
@@ -34,6 +35,8 @@ public abstract class AscentricPage{
 	protected PdfContentByte canvas;
 	protected Client theClient;
 	protected int pageNumber;
+	private BaseFont bf;
+
 	
 	/**
 	 * Prints text onto the pdf document specified by the FORM field and the page specified by the pagenumber field
@@ -51,7 +54,7 @@ public abstract class AscentricPage{
 		.showTextAligned(
 				canvas, 
 				Element.ALIGN_LEFT, 
-				new Phrase(text.toUpperCase()), 
+				new Phrase(text.toUpperCase(),new Font(bf, 10)), 
 				x, 
 				y,
 				0);
@@ -59,7 +62,7 @@ public abstract class AscentricPage{
 	}
 	
 	/**
-	 * Overloading of the above stamp method to remove the costly concatenation of a null string prior to char printing
+	 * Overloading of the above stamp method to simplify the printing of individual characters
 	 * @param x - The distance in pixels from the left margin of the page
 	 * @param y - The distance in pixels from the bottom of the page
 	 * @param text - The char to be printed at the specified x and y location
@@ -69,12 +72,20 @@ public abstract class AscentricPage{
 	.showTextAligned(
 			canvas, 
 			Element.ALIGN_LEFT, 
-			new Phrase(text + ""), 
+			new Phrase(text + "",new Font(bf, 10)), 
 			x, 
 			y,
 			0);
 	}
 	
+	/**
+	 * This stamp method includes a textsize field and is used in cases where the string tends to be much longer
+	 * thank the form field it is intended for e.g. the email field in the individual details section
+	 * @param x
+	 * @param y
+	 * @param text
+	 * @param textSize
+	 */
 	protected void stamp(int x, int y, String text, int textSize){
 		PdfContentByte tempCanvas = canvas;
 		tempCanvas.setFontAndSize(
@@ -91,7 +102,7 @@ public abstract class AscentricPage{
 		.showTextAligned(
 				tempCanvas, 
 				Element.ALIGN_LEFT, 
-				new Phrase(text), 
+				new Phrase(text,new Font(bf, textSize)), 
 				x, 
 				y,
 				0);
@@ -108,6 +119,7 @@ public abstract class AscentricPage{
 		System.out.println(pageNumber);
 		stamper = new PdfStamper(reader, new FileOutputStream("temp/" + pageNumber + FORM));
 		canvas = stamper.getOverContent(pageNumber);
+		bf = BaseFont.createFont();
 	}
 	
 	public abstract void fillPage(Client theClient) throws IOException, DocumentException;
