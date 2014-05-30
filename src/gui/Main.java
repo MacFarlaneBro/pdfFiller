@@ -46,7 +46,7 @@ public class Main extends Application{
         primaryStage.setTitle("PDF Filler 0.95");
         primaryStage.setMinWidth(500);
                 
-        primaryStage.getIcons().add(new Image("file:C:\\Program Files\\Ascentric Application Filler\\Lib\\logo.jpg"));
+        primaryStage.getIcons().add(new Image("file:G:\\MasterAdviser\\Ascentric Application Filler\\Lib\\logo.jpg"));
         
         GridPane grid = new GridPane();
         Scene firstScene = new Scene(grid, 300, 300);

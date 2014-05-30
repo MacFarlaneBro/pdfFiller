@@ -19,7 +19,7 @@ public class AscentricForm{
 	
 	private AscentricPage page;
 	
-	/*
+	/**
 	 * Fills the page chosen by the calling class
 	 * @return String address of the form with corresponding page filled
 	 */
@@ -65,6 +65,12 @@ public class AscentricForm{
 		System.out.println("finished printing");
 	}
 	
+	/**
+	 * Reads the created document into a file named by the user dialogue box then closes the file
+	 * @param file - The generically named PDF file in the temporary folder which has just been filled
+	 * @param finishedFile - The user-name for the final output file stored on the G drive
+	 * @throws IOException
+	 */
 	private void cleanUp(File file, String finishedFile) throws IOException {
 		FileChannel src = null;
 		FileChannel dest = null;

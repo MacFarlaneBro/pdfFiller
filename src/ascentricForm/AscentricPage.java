@@ -102,6 +102,13 @@ public abstract class AscentricPage{
 		}
 	}
 	
+	/**
+	 * Prepares the relevant pdf page as indicated by the pagenumber for filling by reading it into the file 
+	 * output stream
+	 * @param pageNumber - The number of the page to be filled
+	 * @throws IOException
+	 * @throws DocumentException
+	 */
 	protected void setUp(int pageNumber) throws IOException, DocumentException {
 		this.pageNumber = pageNumber;
 		if(pageNumber > 1){
@@ -117,16 +124,27 @@ public abstract class AscentricPage{
 	
 	public abstract void fillPage(Client theClient) throws IOException, DocumentException;
 	public abstract void fillPage(MakeClients theClient) throws IOException, DocumentException;
-		
+	
+	/**
+	 * Closes the access of the application to the page once it has been filled
+	 * @throws DocumentException
+	 * @throws IOException
+	 */
 	protected void shutDown() throws DocumentException, IOException {
-		
 		stamper.close();
 	}
-
+	
 	public String getFileName() {
 		return pageNumber + FORM;	
 	}
-
+	
+	/**
+	 * If there is no data to be filled on the current page then this method is used to skip
+	 * over it
+	 * @param pageNumber - The page to be skipped over
+	 * @throws IOException
+	 * @throws DocumentException
+	 */
 	public void skipPage(int pageNumber) throws IOException, DocumentException {
 		setUp(pageNumber);
 		shutDown();
