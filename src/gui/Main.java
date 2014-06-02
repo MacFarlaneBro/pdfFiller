@@ -43,7 +43,7 @@ public class Main extends Application{
     public void start(Stage primaryStage) throws Exception {
     	
         this.primaryStage = primaryStage;
-        primaryStage.setTitle("PDF Filler 0.95");
+        primaryStage.setTitle("PDF Filler 1.0");
         primaryStage.setMinWidth(500);
                 
         primaryStage.getIcons().add(new Image("file:G:\\MasterAdviser\\Ascentric Application Filler\\Lib\\logo.jpg"));
@@ -59,7 +59,7 @@ public class Main extends Application{
         grid.setVgap(10);
         grid.setPadding(new Insets(25, 25, 25, 25));
         
-        Text sceneTitle = new Text("Welcome to the PDF Filler mark 0.9");
+        Text sceneTitle = new Text("Welcome to the PDF Filler mark 1.0");
         sceneTitle.setId("sceneTitle");
         sceneTitle.setLayoutX(20);
         grid.add(sceneTitle, 0, 0, 3, 1);
