@@ -11,6 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -56,6 +57,7 @@ public abstract class Page {
 		final Stage warningStage = new Stage();
 		Button button = new Button("OK");
 		warningStage.setTitle("Warning!");
+		warningStage.getIcons().add(new Image("file:G:\\MasterAdviser\\Ascentric Application Filler\\Lib\\warning.png"));
 		warningStage.initModality(Modality.WINDOW_MODAL);
 		warningStage.setScene(new Scene(VBoxBuilder.create().children(new Text(warningString), button).alignment(Pos.CENTER).padding(new Insets(5)).build()));
 				button.setOnAction(
