@@ -92,16 +92,19 @@ public class IdentityVerification extends Page{
 		//Individuals Current Address
 		grid.add(new Label("Individual's current address"), firstColumn, gridVert);
 		TextField currAdd1 = new TextField();
-		currAdd1.setText(address[0]);
 		grid.add(currAdd1, secondColumn, gridVert++);
 		textFields.put("currAdd1", currAdd1);
 		TextField currAdd2 = new TextField();
 		grid.add(currAdd2, secondColumn, gridVert++);
 		textFields.put("currAdd2", currAdd2);
 		TextField currAdd3 = new TextField();
-		currAdd3.setText(address[1]);
 		grid.add(currAdd3, secondColumn, gridVert++);
 		textFields.put("currAdd3", currAdd3);
+		
+		if(address.length > 1){
+			currAdd1.setText(address[0]);
+			currAdd3.setText(address[1]);
+		}
 		
 		//Current Postcode
 		grid.add(new Label("Current Postcode"), firstColumn, gridVert);
@@ -120,8 +123,6 @@ public class IdentityVerification extends Page{
 		gridVert = 3; //resetting gridvert to its original value prior to printing the second column;
 		int thirdColumn = 3;
 		int fourthColumn = 4;
-		
-		
 		
 		//Individual's previous address
 		grid.add(new Label("Individual's previous address*"), thirdColumn, ++gridVert);

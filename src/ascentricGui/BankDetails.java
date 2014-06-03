@@ -87,6 +87,8 @@ public class BankDetails extends Page{
 		TextField names1 = new TextField();
 		names1.setId("names1");
 		textFields.put("names1", names1);
+		names1.setText(client.getFirstClient().getIndividualDetails().getForename()
+				+ " " + client.getFirstClient().getIndividualDetails().getSurname());
 		grid.add(names1, 2, 6, 2, 1);
 		TextField names2 = new TextField();
 		names2.setId("names2");
@@ -148,9 +150,7 @@ public class BankDetails extends Page{
 		
 		if(type.equals("first")){
 			bd = client.getFirstClient().getBankAccountDetails();
-			System.out.println("first");
 		} else if(type.equals("second")){
-			System.out.println("second");
 			bd = client.getSecondClient().getBankAccountDetails();
 		}
 		
