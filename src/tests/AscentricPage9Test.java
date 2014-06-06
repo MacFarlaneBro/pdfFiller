@@ -18,8 +18,6 @@ public class AscentricPage9Test {
 	
 	@Before
 	public void setUp(){
-		theClient.makeNewFirstClient();
-		theClient.makeNewSecondClient();
 		
 		theClient.getFirstClient().getIndividualDetails().setForename("Dave");
 		theClient.getFirstClient().getIndividualDetails().setSurname("Davison");

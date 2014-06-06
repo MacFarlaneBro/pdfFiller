@@ -21,9 +21,6 @@ public class AscentricPage3Test {
 	
 	@Before
 	public void setUp() throws IOException, DocumentException{
-		theClient.makeNewFirstClient();
-		theClient.makeNewSecondClient();
-		theClient.makeNewJointClient();
 		
 		IndividualDetails fid = theClient.getFirstClient().getIndividualDetails();
 		IndividualDetails sid = theClient.getSecondClient().getIndividualDetails();

@@ -126,7 +126,6 @@ public class Main extends Application{
             	} else {
             		actionTarget.setVisible(false);
 	            	client = ClientHolder.getInstance();
-	            	client.makeNewFirstClient();
 	            	client.getFirstClient().getfinancialAdviserDetails()
 	            	.setRegisteredIndividual(registeredIndividual.getValue());
 	            	

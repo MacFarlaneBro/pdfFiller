@@ -23,19 +23,22 @@ public class ClientHolder implements MakeClients{
 		instance = new ClientHolder();
 	}
 	
-	public void makeNewFirstClient(){
+	private void makeNewFirstClient(){
 		firstClient = makeClients.getFirstClient();
 	}
 	
-	public void makeNewSecondClient(){
+	private void makeNewSecondClient(){
 		secondClient = makeClients.getSecondClient();
 	}
 	
-	public void makeNewJointClient(){
+	private void makeNewJointAccount(){
 		jointAccount = makeClients.getJointAccount();
 	}
 
 	public Client getFirstClient() {
+		if(firstClient == null){
+			makeNewFirstClient();
+		}
 		return firstClient;
 	}
 
@@ -44,6 +47,9 @@ public class ClientHolder implements MakeClients{
 	}
 
 	public Client getSecondClient() {
+		if(secondClient == null){
+			makeNewSecondClient();
+		}
 		return secondClient;
 	}
 
@@ -52,6 +58,9 @@ public class ClientHolder implements MakeClients{
 	}
 
 	public Client getJointAccount() {
+		if(jointAccount == null){
+			makeNewJointAccount();
+		}
 		return jointAccount;
 	}
 

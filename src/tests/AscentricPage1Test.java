@@ -18,7 +18,7 @@ public class AscentricPage1Test {
 	
 	@Before
 	public void setUp() throws IOException, DocumentException{
-		theClient.makeNewFirstClient();
+		theClient.getFirstClient();
 		setPersonalDetails();
 	}
 

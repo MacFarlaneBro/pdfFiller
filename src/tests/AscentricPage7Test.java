@@ -21,7 +21,7 @@ public class AscentricPage7Test {
 	
 	@Before
 	public void setUp(){
-		theClientHolder.makeNewFirstClient();
+		theClientHolder.getFirstClient();
 		theClient = theClientHolder.getFirstClient();
 		ConfirmationDetails con = theClient.getConfirmationDetails();
 		FinancialAdviserDetails fad = theClient.getfinancialAdviserDetails();

@@ -19,7 +19,6 @@ public class AscentricPage2Test {
 	
 	@Before
 	public void setUp() throws IOException, DocumentException{
-		theClient.makeNewSecondClient();
 		IndividualDetails spd = theClient.getSecondClient().getIndividualDetails();	
 		setPersonalDetails(spd);
 	}

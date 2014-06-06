@@ -318,9 +318,7 @@ public class PartnerPersonalInfo extends Page{
 				+ " is incorrectly formatted, please re-enter it and try again.\n");		
     		}
 		}
-		
-		client.makeNewSecondClient();
-		
+				
 		//Putting all form data in a new map, otherwise only auto-filled fields are included
 		for(TextField field: theFields){
 			fieldMap.put(field.getId(), field);

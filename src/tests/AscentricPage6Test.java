@@ -23,7 +23,7 @@ public class AscentricPage6Test {
 	
 	@Before
 	public void setUp(){
-		theClient.makeNewFirstClient();
+		theClient.getFirstClient();
 		Client firstClient = theClient.getFirstClient();
 		
 		FinancialAdviserDetails fad = firstClient.getfinancialAdviserDetails();

@@ -18,9 +18,7 @@ public class AscentricPage5Test {
 	
 	@Before
 	public void setUp() throws IOException, DocumentException{
-		theClient.makeNewFirstClient();
-		theClient.getFirstClient().setApplicationType("Second Applicant");
-		theClient.makeNewSecondClient();
+
 		BankAccountDetails fbd = theClient.getFirstClient().getBankAccountDetails();
 		BankAccountDetails sbd = theClient.getSecondClient().getBankAccountDetails();
 		setBankAccountDetails(fbd);

@@ -543,7 +543,7 @@ public class ClientPersonalInfo extends Page{
 		client.getFirstClient().setApplicationType(applicationType.getValue());
 		
 		if(applicationType.getValue().equals("Joint Account")){
-			client.makeNewJointClient();
+			client.getJointAccount();
 		};
 		System.out.print("I made a new " + applicationType.getValue());
 		
@@ -593,7 +593,8 @@ public class ClientPersonalInfo extends Page{
 		id.setEmail(fieldMap.get("Email").getText());
 	}
 	
-	public void createClearButton(){
+	
+	private void createClearButton(){
 		Button clear = new Button("Clear Details");
 		grid.add(clear, 4, 1);
 		clear.setOnAction(new EventHandler<ActionEvent>(){

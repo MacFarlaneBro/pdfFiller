@@ -19,8 +19,6 @@ public class AscentricPage4Test {
 	
 	@Before
 	public void setUp() throws IOException, DocumentException{
-		theClient.makeNewSecondClient();
-		theClient.makeNewJointClient();
 
 		ProductDetails spd = theClient.getSecondClient().getProductDetails();
 		
