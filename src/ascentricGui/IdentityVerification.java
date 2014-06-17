@@ -174,14 +174,16 @@ public class IdentityVerification extends Page{
 		cd.setCurrentPostCode(textFields.get("currPostCode").getText());
 		
 		//Sanitising the dob input prior to storage
-		if(textFields.get("dob").getText().contains("/")){
-			cd.setDob(textFields.get("dob").getText().replace("/", ""));
-		} else if(textFields.get("dob").getText().contains("-")){
-			cd.setDob(textFields.get("dob").getText().replace("-", ""));
-		} else if(textFields.get("dob").getText().contains(" ")){
-			cd.setDob(textFields.get("dob").getText().replace(" ", ""));
-		} else {
-			cd.setDob(textFields.get("dob").getText());
+		if(textFields.get("dob").getText()!= null){
+			if(textFields.get("dob").getText().contains("/")){
+				cd.setDob(textFields.get("dob").getText().replace("/", ""));
+			} else if(textFields.get("dob").getText().contains("-")){
+				cd.setDob(textFields.get("dob").getText().replace("-", ""));
+			} else if(textFields.get("dob").getText().contains(" ")){
+				cd.setDob(textFields.get("dob").getText().replace(" ", ""));
+			} else {
+				cd.setDob(textFields.get("dob").getText());
+			}
 		}
 		
 		cd.setPreviousAddress(textFields.get("prevAdd1").getText() + ":"

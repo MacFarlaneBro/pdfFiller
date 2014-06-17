@@ -5,11 +5,12 @@ public class ClientHolder implements MakeClients{
 	private Client firstClient;
 	private Client secondClient;
 	private Client jointAccount;
-	private Client nonSpecifiedInfo;
-	private String clientNumber;
 	private static ClientHolder instance;
+	private MakeClients makeClients;
 	
-	MakeClients makeClients;
+	static{
+		instance = new ClientHolder();
+	}
 	
 	private ClientHolder(){
 		 makeClients = new ClientFactory();
@@ -18,11 +19,7 @@ public class ClientHolder implements MakeClients{
 	public static ClientHolder getInstance(){
 		return instance;
 	}
-	
-	static{
-		instance = new ClientHolder();
-	}
-	
+
 	private void makeNewFirstClient(){
 		firstClient = makeClients.getFirstClient();
 	}
@@ -41,11 +38,7 @@ public class ClientHolder implements MakeClients{
 		}
 		return firstClient;
 	}
-
-	public void setFirstClient(Client firstClient) {
-		this.firstClient = firstClient;
-	}
-
+	
 	public Client getSecondClient() {
 		if(secondClient == null){
 			makeNewSecondClient();
@@ -53,42 +46,10 @@ public class ClientHolder implements MakeClients{
 		return secondClient;
 	}
 
-	public void setSecondClient(Client secondClient) {
-		this.secondClient = secondClient;
-	}
-
 	public Client getJointAccount() {
 		if(jointAccount == null){
 			makeNewJointAccount();
 		}
 		return jointAccount;
-	}
-
-	public void setJointAccount(Client jointAccount) {
-		this.jointAccount = jointAccount;
-	}
-
-	public Client getNonSpecifiedInfo() {
-		return nonSpecifiedInfo;
-	}
-
-	public void setNonSpecifiedInfo(Client nonSpecifiedInfo) {
-		this.nonSpecifiedInfo = nonSpecifiedInfo;
-	}
-
-	public String getClientNumber() {
-		return clientNumber;
-	}
-
-	public void setClientNumber(String clientNumber) {
-		this.clientNumber = clientNumber;
-	}
-
-	public MakeClients getMakeClients() {
-		return makeClients;
-	}
-
-	public void setMakeClients(MakeClients makeClients) {
-		this.makeClients = makeClients;
 	}
 }

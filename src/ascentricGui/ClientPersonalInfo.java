@@ -125,7 +125,6 @@ public class ClientPersonalInfo extends Page{
 						actionTarget.setVisible(false);
                 	} else {
                 		actionTarget.setVisible(true);
-	                	System.out.println(clientSurname.getText());
 	                	if(clientSurname.getText().equals("")){
 	                		actionTarget.setFill(Color.FIREBRICK);
 	                		actionTarget.setText("More information Required, please\n enter a Surname and click 'Search Surname\n'"
@@ -512,9 +511,8 @@ public class ClientPersonalInfo extends Page{
 				nextPage.setNextPage(nextNextPage);
 			}
 		}
-				
-		if(!natInsTickClient.isSelected()){
-						
+		if(natInsTickClient.isSelected() == false){
+			
 			//This hideous lump is where I make sure that the NI number is accounted for
 			String nas = null;
 			//If client has not been declared as having no NI number and the field isn't null then check the input for validity
@@ -537,6 +535,12 @@ public class ClientPersonalInfo extends Page{
 				+ nas 
 				+ " is incorrectly formatted, please re-enter it and try again.\n");	
     		}
+
+    		id.setNationalInsuranceNumber(fieldMap.get("nas").getText().replace("-", ""));
+
+		} else { 
+			client.getFirstClient().getIndividualDetails().setNationalInsuranceNumber(null);
+			System.out.println("made it null");
 		}
 		
 		client.getFirstClient().getfinancialAdviserDetails().setFaceToFaceContact(facetoface.isSelected());
@@ -577,10 +581,7 @@ public class ClientPersonalInfo extends Page{
 				id.setDob(fieldMap.get("DOB").getText().replace("/", ""));
 			}
 		}
-		
-		if(fieldMap.get("nas").getText()!= null){
-			id.setNationalInsuranceNumber(fieldMap.get("nas").getText().replace("-", ""));
-		}
+
 		
 		id.setHomeNumber(fieldMap.get("HomeTel").getText());
 		id.setWorkNumber(fieldMap.get("WorkTel").getText());
